@@ -17,30 +17,13 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="container">
-            <a class="logo" href="#">
-                Luxury Chauffeur Service
-            </a>
-            <nav>
-                <ul class="navbar-nav">
-                    <li class="navbar-item"><a href="#">Home</a></li>
-                    <li class="navbar-item"><a href="#">Services</a></li>
-                    <li class="navbar-item"><a href="#">Our Chauffeurs</a></li>
-                    <li class="navbar-item"><a href="#">Contact us</a></li>
-                </ul>
-            </nav>
-            <div class="account">
-                <a href="#">Login</a>
-                <a href="#">Signup</a>
-                <i class="fa-regular fa-circle-user"></i>
-            </div>
-        </div>
-    </header>
+    {% include 'includes/header.html' %}
+
     {% block content %}
     {% endblock %}
+
     <footer class="footer">
-        <p>© 2025 Luxury Chauffeur Service - Website for educational purposes only</p>
+        <p>&copy; 2025 Luxury Chauffeur Service - Website for educational purposes only</p>
     </footer>
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/759c893288.js" crossorigin="anonymous"></script>
