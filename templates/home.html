@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,50 +10,61 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
+    <!-- Tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
     <header class="header">
         <div class="container">
-            <h1>Luxury Chauffeur Service</h1>
+            <a class="logo" href="#">
+                Luxury Chauffeur Service
+            </a>
             <nav>
                 <ul class="navbar-nav">
-                    <li class="navbar-item"><a href="">Home</a></li>
-                    <li class="navbar-item"><a href="">Services</a></li>
-                    <li class="navbar-item"><a href="">Our Chauffeurs</a></li>
-                    <li class="navbar-item"><a href="">Contact us</a></li>
+                    <li class="navbar-item"><a href="#">Home</a></li>
+                    <li class="navbar-item"><a href="#">Services</a></li>
+                    <li class="navbar-item"><a href="#">Our Chauffeurs</a></li>
+                    <li class="navbar-item"><a href="#">Contact us</a></li>
                 </ul>
             </nav>
             <div class="account">
-                Login
+                <a href="#">Login</a>
+                <a href="#">Signup</a>
+                <i class="fa-regular fa-circle-user"></i>
             </div>
         </div>
-    </header>  
-    <main>
+    </header>
+    <main class="main home">
         <!-- Hero section -->
         <section id="hero">
-            <h2>Welcome</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad totam praesentium eveniet saepe explicabo? Nihil quae ab similique id sed asperiores qui natus repudiandae! Eaque unde non assumenda blanditiis? Eligendi!</p>
+            <h2>Travel Like a Royal</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad totam praesentium eveniet saepe explicabo?
+                Nihil quae ab similique id sed asperiores qui natus repudiandae! Eaque unde non assumenda blanditiis?
+                Eligendi!</p>
             <img src="" alt="">
         </section>
         <!-- Services section -->
-         <section id="services">
+        <section id="services">
             <div class="benefit">Benefit 1</div>
             <div class="benefit">Benefit 2</div>
             <div class="benefit">Benefit 3</div>
-         </section>
+        </section>
         <!-- Book a ride section -->
-         <section id="book-now">
+        <section id="book-now">
             <div>
                 <p>Its time to make a booking</p>
             </div>
             <button>Book Now!</button>
-         </section>
-    </main>  
+        </section>
+    </main>
     <footer class="footer">
         <p>© 2025 Luxury Chauffeur Service - Website for educational purposes only</p>
     </footer>
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/759c893288.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
