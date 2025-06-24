@@ -113,8 +113,8 @@ section {
 .modal-container button {
     background-color: rgb(183, 198, 20);
     /* box-shadow: 0 2px #091f0a; */
-    margin: 10px 0;
-    border-radius: 50px;
+    margin: 15px 0 0;
+    border-radius: 10px;
     width: 90px;
     height: 35px;
     color: white;
@@ -124,4 +124,38 @@ section {
 .modal-container button:hover {
     transform: scale(1.04);
     box-shadow: 0 4px #091f0a;
+}
+
+.modal-container label {
+    margin: 10px 0 5px;
+}
+
+.modal-container label[for="id_remember"] {
+    display: inline-block;
+    width: auto;
+    /* margin-right: 0.5rem; */
+    margin: 15px 10px 0 0;
+}
+
+.modal-container input {
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: #f3f4f6;
+    height: 40px;
+    padding: 8px 10px;
+    margin-bottom: 5px;
+}
+
+.modal-container [type="checkbox"] {
+    width: auto;
+    height: auto;
+
+}
+
+.helptext a {
+    text-decoration: underline;
+}
+
+.errorlist {
+    display: none;
 }
