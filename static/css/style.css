@@ -8,12 +8,15 @@ body {
 main.home {
     display: flex;
     flex-direction: column;
-    flex: 1 0 auto;
     justify-content: space-evenly;
     width: 100vw;
     align-items: center;
     /* border: 3px solid black;
     margin: 20px; */
+}
+
+.push-footer {
+    flex: 1 0 auto;
 }
 
 .header {
@@ -84,18 +87,41 @@ section {
 
 /* rotate arrow */
 .arrow-icons {
-  transition: transform 0.3s ease-in-out;
-} 
+    transition: transform 0.3s ease-in-out;
+}
 
 .rotate {
-  transform: rotate(-180deg);
+    transform: rotate(-180deg);
 }
 
 .hidden-item {
     display: none;
 }
 
-.menu-item{
+.menu-item {
     background-color: lightgrey;
     color: red;
+}
+
+/* Modal style */
+.modal-container h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.modal-container button {
+    background-color: rgb(183, 198, 20);
+    /* box-shadow: 0 2px #091f0a; */
+    margin: 10px 0;
+    border-radius: 50px;
+    width: 90px;
+    height: 35px;
+    color: white;
+    font-weight: 500;
+}
+
+.modal-container button:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px #091f0a;
 }
