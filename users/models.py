@@ -11,7 +11,7 @@ TITLE_OPTIONS = [
                 ('Sir', 'Sir'),
             ]
 
-class Passenger(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="client")
     preferred_name = models.CharField(max_length=100, blank=True, null=True)
     title = models.CharField(max_length=20, choices=TITLE_OPTIONS, blank=True, null=True)
