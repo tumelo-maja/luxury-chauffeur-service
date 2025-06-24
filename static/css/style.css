@@ -81,3 +81,21 @@ section {
     align-items: center;
     margin: 0 30px 20px;
 }
+
+/* rotate arrow */
+.arrow-icons {
+  transition: transform 0.3s ease-in-out;
+} 
+
+.rotate {
+  transform: rotate(-180deg);
+}
+
+.hidden-item {
+    display: none;
+}
+
+.menu-item{
+    background-color: lightgrey;
+    color: red;
+}
