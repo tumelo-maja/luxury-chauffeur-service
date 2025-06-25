@@ -1,0 +1,30 @@
+{% extends 'layouts/blank.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="main push-footer">
+        
+        <section id="hero">
+            <h1>Meet our Professional Chauffeurs</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad totam praesentium eveniet saepe explicabo?
+                Nihil quae ab similique id sed asperiores qui natus repudiandae! Eaque unde non assumenda blanditiis?
+                Eligendi!</p>
+            <img src="" alt="">
+        </section>
+
+        <!-- Chauffeurs section -->
+        <section class="chauffeurs-container">
+            <div class="chauffeur">
+                <div class="chauffeur-head">Head</div>
+                <div class="chauffeur-body">Body</div>
+                <div class="chauffeur-cta">CTA</div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

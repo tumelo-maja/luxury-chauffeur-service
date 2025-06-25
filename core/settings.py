@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_htmx',
     'home',
     'users',
+    'chauffeurs',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

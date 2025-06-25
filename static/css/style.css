@@ -256,3 +256,26 @@ section {
     padding: 5px 10px;
     background-color: rgb(205, 17, 17);
 }
+
+/* Chauffeur page */
+.chauffeurs-container{
+    border: 2px solid red;
+    padding: 20px;
+}
+
+.chauffeur {
+    height: 400px;
+    width: 250px;
+    border: 2px solid blue;
+    background-color: yellowgreen;
+}
+
+.chauffeur-head{
+    background-color: red;
+    height: 200px;
+}
+
+.chauffeur-body{
+    border: 2px solid purple;
+    height: 150px;
+}
