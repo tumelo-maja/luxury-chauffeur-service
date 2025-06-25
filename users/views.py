@@ -27,3 +27,16 @@ def profile_edit_view(request):
         is_new_user = False    
 
     return render(request, 'users/profile_edit.html', {'form': form,'is_new_user':is_new_user})
+
+@login_required
+def profile_settings_view(request):
+    return render(request, 'users/profile_settings.html')
+
+@login_required
+def profile_settings_partial_view(request):
+
+    if request.htmx:
+        form = ProfileSettingsForm(instance=request.user)
+        return render(request, 'partials/settings_form.html', {'form':form})
+    
+    return redirect('home')
