@@ -48,11 +48,11 @@ def profile_settings_partial_view(request):
             # Check if the email already exists 
             email= form.cleaned_data['email']
             if User.objects.filter(email=email).exclude(id=request.user.id).exists():
-                #need code to warn user
+                messages.warning(request, f"{email} is already in use.")
                 return redirect('profile-settings')
             
             form.save()
-
+            messages.success(request, "Success! Changes saved.")
             # Then signal.py updates emailaddresses and set verified to False
 
             return redirect('profile-settings')

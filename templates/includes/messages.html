@@ -1,0 +1,13 @@
+<!-- displaying Django messages -->
+<div id="message-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message alert-{{ message.tags }}">
+                <div class="message-content">
+                    <div class="message-text">{{ message }}</div>
+                    <div class="close-btn" onclick="closeMessage(this)">X</div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
