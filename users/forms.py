@@ -6,7 +6,7 @@ from .models import Profile
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        exclude = ['user']
-        fields = ['preferred_name', 'title', 'email', 'phone', 'home_address'] 
+        exclude = ['user', 'email']
+        fields = ['displayname', 'title', 'phone', 'home_address'] 
 
 

@@ -1,0 +1,36 @@
+{% extends 'layouts/modal.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1 class="mb-4">Edit your Profile</h1>
+
+<div class="text-center flex flex-col items-center">
+    <img id="avatar" class="w-36 h-36 rounded-full object-cover my-4" src="{{ user.profile.avatar }}" />
+    <div class="text-center max-w-md">
+        <h1 id="displayname">{{ user.profile.name }}</h1>
+    </div>
+</div>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <div class="flex justify-around w-full">
+    <button type="submit">Submit</button>
+    {% if onboarding %}
+    <a class="button button-gray" href="{% url 'home' %}">Skip</a>
+    {% else %}
+    <a class="button-style button-gray items-center" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    {% endif %}
+    </div>
+</form>
+
+<script>
+    // This updates the name
+    $(document).ready(function () {
+        $('#id_displayname').on('input', function () {
+            $('#displayname').text($(this).val());
+        });
+    });
+</script>
+
+{% endblock %}
