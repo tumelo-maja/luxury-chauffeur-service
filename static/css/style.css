@@ -124,10 +124,10 @@ section {
 
 .modal-container button {
     background-color: rgb(183, 198, 20);
-    /* box-shadow: 0 2px #091f0a; */
-    margin: 15px 0 0;
+    margin: 15px 0 10px;
+    padding: 5px 10px;
     border-radius: 10px;
-    width: 90px;
+    width: auto;
     height: 35px;
     color: white;
     font-weight: 500;
@@ -175,7 +175,7 @@ section {
 .button-style {
     margin: 15px 0 5px;
     border-radius: 10px;
-    width: 90px;
+    width: auto;
     height: 35px;
     color: white;
     font-weight: 500;
@@ -183,12 +183,13 @@ section {
     display: flex;
     text-align: center;
     justify-content: center;
+    align-items: center;
 }
 
 .button-style:hover {
     transform: scale(1.04);
     box-shadow: 0 4px #091f0a;
-    color: white; 
+    color: white;
 }
 
 .button-gray {
@@ -199,7 +200,7 @@ section {
     height: 120px;
 }
 
-.hoverlist{
+.hoverlist {
     transition: all 0.15s ease;
 }
 
@@ -237,14 +238,21 @@ section {
 }
 
 .alert-warning {
-    background-color: #f6603bb3; 
+    background-color: #f6603bb3;
 }
 
 .alert-success {
-    background-color: #7df63bb3; 
+    background-color: #7df63bb3;
 }
+
 .message-text {
     font-size: 16px;
     flex-grow: 1;
 }
 
+#delete-btn {
+    width: auto;
+    height: 35px;
+    padding: 5px 10px;
+    background-color: rgb(205, 17, 17);
+}

@@ -1,0 +1,14 @@
+{% extends 'layouts/modal.html' %}
+
+{% block content %}
+
+<h1>Delete Account</h1>
+<p>Are you sure you want to delete your account?</p>
+
+<form method='POST' class="flex">
+    {% csrf_token %}
+    <button type="submit" class="button-red mt-6" id="delete-btn" >Yes, I want to delete my account</button>
+    <a class="button-style button-gray ml-4" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+</form>
+
+{% endblock %}

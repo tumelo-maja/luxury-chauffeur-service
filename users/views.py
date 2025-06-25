@@ -2,6 +2,7 @@ from allauth.account.utils import send_email_confirmation
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.urls import reverse
 from .forms import *
 
@@ -73,3 +74,14 @@ def profile_settings_partial_view(request):
 def profile_emailverify(request):
     send_email_confirmation(request, request.user)
     return redirect('profile-settings')
+
+@login_required
+def profile_delete_view(request):
+    user =request.user
+    if request.method == "POST":
+        logout(request)
+        user.delete()
+        messages.success(request, 'Account deleted! See you next time')
+        return redirect('home')
+        
+    return render(request, 'users/profile_delete.html')
