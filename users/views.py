@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.urls import reverse
 from .forms import *
 
@@ -38,5 +39,23 @@ def profile_settings_partial_view(request):
     if request.htmx:
         form = ProfileSettingsForm(instance=request.user)
         return render(request, 'partials/settings_form.html', {'form':form})
+
+    if request.method == "POST":
+        form = ProfileSettingsForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+
+            # Check if the email already exists 
+            email= form.cleaned_data['email']
+            if User.objects.filter(email=email).exclude(id=request.user.id).exists():
+                #need code to warn user
+                return redirect('profile-settings')
+            
+            form.save()
+
+            # Then signal.py updates emailaddresses and set verified to False
+
+            return redirect('profile-settings')
+                
     
     return redirect('home')

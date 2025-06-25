@@ -20,6 +20,22 @@
                 </a>
             </td>
         </tr>
+        <tr class="border-b">
+            <th scope="row" class="pb-4 font-medium text-gray-900">
+            </th>
+            <td class="px-6 pb-4">
+                {% if user.emailaddress_set.first.verified %}
+                <span class="text-green-500">Verified</span>{% else %}
+                <span class="text-amber-500">Not verified</span>
+                {% endif %}
+            </td>
+            <td class="px-6 pb-4">
+                <a href="" class="font-medium text-blue-600 hover:underline">
+                    {% if not user.emailaddress_set.first.verified %}Verify{% endif %}
+                </a>
+            </td>
+        </tr>
+
 
         <tr class="border-b">
             <th scope="row" class="py-4 text-base font-bold text-gray-900">
