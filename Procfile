@@ -1,1 +1,1 @@
-web: gunicorn chauffeur.wsgi
+web: gunicorn core.wsgi
