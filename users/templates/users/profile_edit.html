@@ -3,7 +3,11 @@
 
 {% block content %}
 
+{% if is_new_user %}
+<h1 class="mb-4">Complete your Profile</h1>
+{% else %}
 <h1 class="mb-4">Edit your Profile</h1>
+{% endif %}
 
 <div class="text-center flex flex-col items-center">
     <img id="avatar" class="w-36 h-36 rounded-full object-cover my-4" src="{{ user.profile.avatar }}" />
@@ -16,8 +20,8 @@
     {{ form | crispy }}
     <div class="flex justify-around w-full">
     <button type="submit">Submit</button>
-    {% if onboarding %}
-    <a class="button button-gray" href="{% url 'home' %}">Skip</a>
+    {% if is_new_user %}
+    <a class="button-style button-gray items-center" href="{% url 'home' %}">Skip</a>
     {% else %}
     <a class="button-style button-gray items-center" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
     {% endif %}

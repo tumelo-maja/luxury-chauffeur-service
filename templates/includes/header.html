@@ -1,7 +1,7 @@
 {% load static %}
 <header class="header">
     <div class="container">
-        <a class="logo" href="#">
+        <a class="logo" href="{% url 'home' %}">
             Luxury Chauffeur Service
         </a>
         <nav>
@@ -30,7 +30,7 @@
             </div>
             {% else %}
             <a href="{% url 'account_login' %}">Login</a>
-            <a href="{% url 'account_signup' %}?next={% url 'home' %}">Signup</a>
+            <a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Signup</a>
             {% endif %}
         </div>
     </div>
