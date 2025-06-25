@@ -3,5 +3,9 @@
     {% for field in form %}
         {{ field }}
     {% endfor %}
-    <button class="block !bg-gray-800" type="submit">Submit</button>
+    <button class="block bg-gray-800 mt-1" type="submit">Save</button>
 </form>
+
+<a hx-swap-oob="true" id="email-edit" href="{% url 'profile-settings' %}" class="font-medium text-blue-600 hover:underline">
+    Cancel
+</a>
