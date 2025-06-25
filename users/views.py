@@ -68,3 +68,8 @@ def profile_settings_partial_view(request):
                 
     
     return redirect('home')
+
+@login_required
+def profile_emailverify(request):
+    send_email_confirmation(request, request.user)
+    return redirect('profile-settings')

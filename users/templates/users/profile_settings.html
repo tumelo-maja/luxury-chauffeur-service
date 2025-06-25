@@ -30,9 +30,11 @@
                 {% endif %}
             </td>
             <td class="px-6 pb-4">
-                <a href="" class="font-medium text-blue-600 hover:underline">
-                    {% if not user.emailaddress_set.first.verified %}Verify{% endif %}
+                {% if not user.emailaddress_set.first.verified %}
+                <a href="{% url 'profile-emailverify' %}" class="font-medium text-blue-600 hover:underline">
+                    Verify
                 </a>
+                {% endif %}
             </td>
         </tr>
 

@@ -7,4 +7,5 @@ urlpatterns =[
     path('onboarding/', profile_edit_view, name='profile-onboarding'),
     path('settings/', profile_settings_view, name='profile-settings'),
     path('settingschange/', profile_settings_partial_view, name='profile-settingschange'),
+    path('emailverify/', profile_emailverify, name='profile-emailverify'),
 ]
