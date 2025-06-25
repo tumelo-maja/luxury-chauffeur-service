@@ -1,3 +1,4 @@
+from allauth.account.utils import send_email_confirmation
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -56,6 +57,13 @@ def profile_settings_partial_view(request):
             messages.success(request, "Success! Changes saved.")
             # Then signal.py updates emailaddresses and set verified to False
 
+            #send verification email
+            send_email_confirmation(request, request.user)
+
+            return redirect('profile-settings')
+        
+        else:
+            messages.warning(request, "Form not valid")
             return redirect('profile-settings')
                 
     

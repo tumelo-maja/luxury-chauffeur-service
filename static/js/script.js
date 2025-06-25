@@ -5,29 +5,26 @@ $(document).ready(function () {
         $(".dropdown-body").toggleClass('hidden-item');
     });
 
-    console.log("hello world");
+    console.log("hello world - Yes");
 
     // Handle message displays
-    $(document).ready(function () {
-        const messages = $('.message');
+    const messages = $('.message');
 
-        messages.each(function (index) {
-            const message = $(this);
+    messages.each(function (index) {
+        const message = $(this);
 
-            // Show the message with a delay, and hide after 6 seconds.
-            setTimeout(function () {
-                message.addClass('show'); // Show the message
-            }, 200 + index * 300); // Add a delay between messages
+        setTimeout(function () {
+            message.addClass('show');
+        }, 200 + index * 300);
 
-            setTimeout(function () {
-                message.removeClass('show'); // Hide the message
-            }, 6000 + index * 300); // Keep the message visible for 6 seconds
-        });
+        setTimeout(function () {
+            message.removeClass('show');
+        }, 6000 + index * 300);
+    });
 
-        // Close a message when the close button is clicked
-        $('.close-btn').click(function () {
-            $(this).closest('.message').removeClass('show');
-        });
+    
+    $('.close-btn').click(function () {
+        $(this).closest('.message').removeClass('show');
     });
 
 });
