@@ -54,6 +54,22 @@ main.home {
     color: black
 }
 
+.hero-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 48rem;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;   
+}
+
 #services {
     border: 2px solid orange;
     display: flex;
