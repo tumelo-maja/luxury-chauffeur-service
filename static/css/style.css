@@ -49,8 +49,8 @@ main.home {
 }
 
 .h2-style {
-    font-size: 38px; 
-    font-weight: bold; 
+    font-size: 38px;
+    font-weight: bold;
     color: black
 }
 
@@ -67,12 +67,18 @@ main.home {
     height: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    overflow: hidden;   
+    overflow: hidden;
 }
 
 #services {
-    border: 2px solid orange;
-    display: flex;
+    /* border: 2px solid orange; */
+    width: 100%;
+    max-width: 48rem;
+}
+
+.carousel-item img {
+    max-width: 35rem;
+    border-radius: 15px;
 }
 
 .benefit {
