@@ -44,8 +44,14 @@ main.home {
     margin: 0 10px;
 }
 
-#hero {
-    border: 2px solid green;
+#hero p {
+    margin: 20px 5px;
+}
+
+.h1-style {
+    font-size: 38px; 
+    font-weight: bold; 
+    color: black
 }
 
 #services {
@@ -258,24 +264,81 @@ section {
 }
 
 /* Chauffeur page */
-.chauffeurs-container{
-    border: 2px solid red;
-    padding: 20px;
+.chauffeurs-container {
+    /* border: 2px solid red; */
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .chauffeur {
-    height: 400px;
+    height: auto;
     width: 250px;
     border: 2px solid blue;
     background-color: yellowgreen;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 20px 40px;
 }
 
-.chauffeur-head{
+.chauffeur-head {
     background-color: red;
-    height: 200px;
+    height: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
 }
 
-.chauffeur-body{
+.chauffeur-body {
     border: 2px solid purple;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.chauffeur-image {
+    border: 2px solid black;
     height: 150px;
+    width: 150px;
+    margin: 10px 0;
+}
+
+.chauffeur-image img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background-position: center;
+    border: 3px solid whitesmoke;
+}
+
+.chauffeur-cta {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.chauffeur-speciality {
+    margin: 15px 2px;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-items: center;
+}
+
+.chauffeur-speciality .speciality {
+    margin: 3px 5px;
+    background-color: #f3f4f6;
+    border-radius: 10px;
+    padding: 1px 6px;
+    border: 1px solid darkgrey;
+    width: fit-content;
 }

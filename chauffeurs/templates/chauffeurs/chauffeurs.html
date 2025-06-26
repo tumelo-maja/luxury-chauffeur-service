@@ -2,26 +2,93 @@
 {% load static %}
 
 {% block content %}
-    <main class="main push-footer">
-        
-        <section id="hero">
-            <h1>Meet our Professional Chauffeurs</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad totam praesentium eveniet saepe explicabo?
-                Nihil quae ab similique id sed asperiores qui natus repudiandae! Eaque unde non assumenda blanditiis?
-                Eligendi!</p>
-            <img src="" alt="">
-        </section>
+<main class="main push-footer">
 
-        <!-- Chauffeurs section -->
-        <section class="chauffeurs-container">
-            <div class="chauffeur">
-                <div class="chauffeur-head">Head</div>
-                <div class="chauffeur-body">Body</div>
-                <div class="chauffeur-cta">CTA</div>
+    <section id="hero">
+        <h1 class="h1-style text-center">Meet our Professional Chauffeurs</h1>
+        <p class="text-center">Discover the elite chauffeurs dedicated to providing an exceptional blend of comfort, luxury and safety with
+            every ride. We ensure that each journey with us is not only seamless and secure but also provides an
+            unforgettable and pleasant experience.</p>
+        <img src="" alt="">
+    </section>
+
+    <!-- Chauffeurs section -->
+    <section class="chauffeurs-container">
+        <div class="chauffeur">
+            <div class="chauffeur-head">
+                <div class="chauffeur-image rounded-full">
+                    <img src="{% static 'images/avatar.png' %}" alt="">
+                </div>
+                <p class="chauffeur-name">King Vegeta</p>
+                <p class="chauffeur-rating">4.7</p>
             </div>
-        </section>
+            <div class="chauffeur-body">
+                <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
+                <p class="chauffeur-speciality">
+                    <span class="speciality">Airport Transfers</span>
+                    <span class="speciality">VIP Events</span>
+                    <span class="speciality">City Tours</span>
+                </p>
+            </div>
+            <a class="chauffeur-cta" href="">Book Chauffeur</a>
+        </div>
+        <div class="chauffeur">
+            <div class="chauffeur-head">
+                <div class="chauffeur-image rounded-full">
+                    <img src="{% static 'images/avatar.png' %}" alt="">
+                </div>
+                <p class="chauffeur-name">King Vegeta</p>
+                <p class="chauffeur-rating">4.7</p>
+            </div>
+            <div class="chauffeur-body">
+                <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
+                <p class="chauffeur-speciality">
+                    <span class="speciality">Airport Transfers</span>
+                    <span class="speciality">VIP Events</span>
+                    <span class="speciality">City Tours</span>
+                </p>
+            </div>
+            <a class="chauffeur-cta" href="">Book Chauffeur</a>
+        </div>
+        <div class="chauffeur">
+            <div class="chauffeur-head">
+                <div class="chauffeur-image rounded-full">
+                    <img src="{% static 'images/avatar.png' %}" alt="">
+                </div>
+                <p class="chauffeur-name">King Vegeta</p>
+                <p class="chauffeur-rating">4.7</p>
+            </div>
+            <div class="chauffeur-body">
+                <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
+                <p class="chauffeur-speciality">
+                    <span class="speciality">Airport Transfers</span>
+                    <span class="speciality">VIP Events</span>
+                    <span class="speciality">City Tours</span>
+                </p>
+            </div>
+            <a class="chauffeur-cta" href="">Book Chauffeur</a>
+        </div> 
+        <div class="chauffeur">
+            <div class="chauffeur-head">
+                <div class="chauffeur-image rounded-full">
+                    <img src="{% static 'images/avatar.png' %}" alt="">
+                </div>
+                <p class="chauffeur-name">King Vegeta</p>
+                <p class="chauffeur-rating">4.7</p>
+            </div>
+            <div class="chauffeur-body">
+                <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
+                <p class="chauffeur-speciality">
+                    <span class="speciality">Airport Transfers</span>
+                    <span class="speciality">VIP Events</span>
+                    <span class="speciality">City Tours</span>
+                </p>
+            </div>
+            <a class="chauffeur-cta" href="">Book Chauffeur</a>
+        </div>             
+    </section>
 
-    </main>
+</main>
 
 {% endblock %}
 
