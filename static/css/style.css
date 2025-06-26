@@ -364,3 +364,28 @@ section {
     border: 1px solid darkgrey;
     width: fit-content;
 }
+
+/* Our fleet */
+
+.vehicle-container {
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.vehicle {
+    margin: 20px 10px;
+}
+
+.vehicle img {
+    max-width: 35rem;
+    width: 400px;
+    border-radius: 15px;
+}
+
+.vehicle p {
+text-align: center;
+font-size: 25px;
+}
