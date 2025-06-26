@@ -1,14 +1,17 @@
 {% load static %}
+
+{% url 'home' as home_url %}
+{% url 'chauffeurs' as chauffeurs_url %}
+
 <header class="header">
     <div class="container">
-        <a class="logo" href="{% url 'home' %}">
+        <a class="logo" href="{{ home_url }}">
             Luxury Chauffeur Service
         </a>
         <nav>
             <ul class="navbar-nav">
-                <li class="navbar-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="navbar-item"><a href="#">Services</a></li>
-                <li class="navbar-item"><a href="#">Our Chauffeurs</a></li>
+                <li class="navbar-item"><a href="{{ home_url }}" class="{% if request.path == home_url %}active" aria-current="page{% endif %}">Home</a></li>
+                <li class="navbar-item"><a href="{{ chauffeurs_url }}" class="{% if request.path == chauffeurs_url %}active" aria-current="page{% endif %}">Our Chauffeurs</a></li>
                 <li class="navbar-item"><a href="#">Contact us</a></li>
             </ul>
         </nav>
