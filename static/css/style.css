@@ -1,5 +1,5 @@
 body {
-    min-height: 100vh;
+    min-height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -24,6 +24,7 @@ main.home {
     /* background-color: aqua; */
     /* border:2px solid red; */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 .header .container {
@@ -31,7 +32,7 @@ main.home {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 90px;
 }
 
 .navbar-nav {
@@ -52,6 +53,16 @@ main.home {
     font-size: 38px;
     font-weight: bold;
     color: black
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    width: 90px;
 }
 
 .hero-image {
@@ -386,6 +397,6 @@ section {
 }
 
 .vehicle p {
-text-align: center;
-font-size: 25px;
+    text-align: center;
+    font-size: 25px;
 }
