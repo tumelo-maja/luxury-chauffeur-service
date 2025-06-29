@@ -1,15 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    min-height: 100%;
-    width: 100%;
+    min-height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 main.home {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 100vw;
+    width: 100%;
     align-items: center;
     /* border: 3px solid black;
     margin: 20px; */
@@ -81,15 +89,83 @@ main.home {
     overflow: hidden;
 }
 
+/* services section */
 #services {
-    /* border: 2px solid orange; */
     width: 100%;
     max-width: 48rem;
 }
 
-.carousel-item img {
-    max-width: 35rem;
-    border-radius: 15px;
+.services-slider {
+   position: relative;
+   width: 400px;
+   height: 250px; 
+   margin: 10px;
+   background-color: darkmagenta;
+}
+
+.service-item {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    clip-path: circle(0% at 0 50%);
+}
+
+.service-item.active{
+    clip-path: circle(150% at 0 50%);
+    transition: 1s;
+    transition-property: clip-path;
+}
+
+.service-image {
+    z-index: 1;
+    width: 100%;
+    border-radius:5px ;
+}
+
+.service-text {
+position: absolute;
+top: 0;
+padding: 15px 30px;
+} 
+
+.service-text h3 {
+    color: purple;
+    font-size: 45px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.service-text p {
+color: yellow;
+background-color: rgba(0, 0, 0, 0.15);
+font-size: 16px;
+width: 60%;
+padding: 10px;
+border-radius: 4px;
+}
+
+.slide-control {
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slide-control .btn-item {
+   background: rgba(255, 255, 255, 0.5);
+   width: 12px; 
+   height: 12px;
+   margin: 10px;
+   border-radius: 50%;
+   cursor: pointer;
+}
+
+.slide-control .btn-item.active {
+    background: rgb(153, 153, 239);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.059);
 }
 
 .benefit {
