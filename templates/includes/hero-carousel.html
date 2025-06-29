@@ -1,0 +1,61 @@
+{% load static %}
+
+<div id="hero-home" class="flex flex-col justify-center items-center">
+    <!-- Custom image carousel -->
+    <div class="hero-slider">
+        <!-- Service Item 1 -->
+        <div class="hero-item active">
+            <img src="{% static 'images/rolls-royce-car.jpg' %}" class="hero-image" alt="welcome">
+            <div class="hero-text">
+                <h3>Welcome to Lux Chauffeurs</h3>
+                <p>Personalized chauffeur services for VIPs, ensuring maximum comfort and security for your
+                    private or high-profile travels.</p>
+            </div>
+        </div>
+        <!-- Service Item 2 -->
+        <div class="hero-item hidden-item">
+            <img src="{% static 'images/airport-chauffeur.jpg' %}" class="hero-image" alt="Airport Transfers">
+            <div class="hero-text">
+                <h3>Airport Transfers</h3>
+                <p>Effortless, timely pick-ups and drop-offs to and from all major airports, ensuring a smooth
+                    start or end to your travels.</p>
+            </div>
+        </div>
+        <!-- Service Item 3 -->
+        <div class="hero-item hidden-item">
+            <img src="{% static 'images/business-chauffeur.jpg' %}" class="hero-image" alt="corporate chauffeur">
+            <div class="hero-text">
+                <h3>Corporate Chauffeur</h3>
+                <p>Professional, discreet drivers for business meetings and corporate events, ensuring
+                    punctuality and comfort.</p>
+            </div>
+        </div>
+        <!-- Service Item 4 -->
+        <div class="hero-item hidden-item">
+            <img src="{% static 'images/wedding-chauffeur.jpg' %}" class="hero-image" alt="special events">
+            <div class="hero-text">
+                <h3>Special Events</h3>
+                <p>Elegant and luxurious vehicles for weddings, galas, and other significant occasions, designed
+                    to make your event unforgettable.</p>
+            </div>
+        </div>
+
+        <!-- Service Item 5 -->
+        <div class="hero-item hidden-item">
+            <img src="{% static 'images/private-chauffeur2.jpg' %}" class="hero-image" alt="private & VIP chauffeur">
+            <div class="hero-text">
+                <h3>Private & VIP Chauffeur</h3>
+                <p>Personalized chauffeur services for VIPs, ensuring maximum comfort and security for your
+                    private or high-profile travels.</p>
+            </div>
+        </div>
+        <!-- Slide control/tracker  -->
+        <div class="slide-control">
+            <div class="btn-item active"></div>
+            <div class="btn-item"></div>
+            <div class="btn-item"></div>
+            <div class="btn-item"></div>
+            <div class="btn-item"></div>
+        </div>
+    </div>
+</div>

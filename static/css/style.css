@@ -73,7 +73,7 @@ main.home {
     width: 90px;
 }
 
-.hero-image {
+/* .hero-image {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,80 +87,86 @@ main.home {
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-}
+} */
 
 /* services section */
-#services {
+#hero-home {
     width: 100%;
     max-width: 48rem;
 }
 
-.services-slider {
-   position: relative;
-   width: 400px;
-   height: 250px; 
-   margin: 10px;
-   background-color: darkmagenta;
+.hero-slider {
+    position: relative;
+    width: 100%;
+    max-width: 48rem;
+    height: auto;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.15);
 }
 
-.service-item {
-    z-index: 1;
-    position: absolute;
+.hero-item {
+    /* z-index: 1; */
     width: 100%;
     clip-path: circle(0% at 0 50%);
 }
 
-.service-item.active{
+.hero-item.active {
     clip-path: circle(150% at 0 50%);
-    transition: 1s;
+    transition: 2s;
     transition-property: clip-path;
 }
 
-.service-image {
-    z-index: 1;
+.hero-image {
+    /* z-index: 1; */
     width: 100%;
-    border-radius:5px ;
+    max-width: 48rem;
+    height: 100%;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
 }
 
-.service-text {
-position: absolute;
-top: 0;
-padding: 15px 30px;
-} 
+.hero-text {
+    padding: 15px 30px;
+}
 
-.service-text h3 {
+.hero-text h3 {
     color: purple;
-    font-size: 45px;
+    font-size: 40px;
     text-transform: uppercase;
     font-weight: 800;
     letter-spacing: 2px;
+    margin-top: 10px;
+    text-align: center;
 }
 
-.service-text p {
-color: yellow;
-background-color: rgba(0, 0, 0, 0.15);
-font-size: 16px;
-width: 60%;
-padding: 10px;
-border-radius: 4px;
+.hero-text p {
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    width: 60%;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
 }
 
 .slide-control {
     z-index: 2;
     position: absolute;
     display: flex;
-    bottom: 15px;
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .slide-control .btn-item {
-   background: rgba(255, 255, 255, 0.5);
-   width: 12px; 
-   height: 12px;
-   margin: 10px;
-   border-radius: 50%;
-   cursor: pointer;
+    background: rgb(255, 255, 255);
+    width: 40px;
+    height: 6px;
+    margin: 10px;
+    /* border-radius: 50%; */
+    cursor: pointer;
 }
 
 .slide-control .btn-item.active {

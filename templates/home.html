@@ -9,9 +9,10 @@
         <p class="col-md-7 text-center">Begin your journey of elegance with our world-class chauffeur service, designed
             to offer you a
             seamless, luxurious travel experience from start to end.</p>
-        <div class="hero-image">
+        <!-- <div class="hero-image">
             <img src="{% static 'images/rolls-royce-car.jpg' %}" alt="">
-        </div>
+        </div> -->
+        {% include 'includes/hero-carousel.html' %}
     </section>
     <!-- Services section -->
     <section id="services" class="flex flex-col justify-center items-center">
@@ -20,56 +21,7 @@
             tailored to meet your
             every need.</p>
 
-        <!-- Custom image carousel -->
-        <div class="services-slider">
-            <!-- Service Item 1 -->
-            <div class="service-item active">
-                <img src="{% static 'images/airport-chauffeur.jpg' %}" class="service-image" alt="Airport Transfers">
-                <div class="service-text">
-                    <h3>Airport Transfers</h3>
-                    <p>Effortless, timely pick-ups and drop-offs to and from all major airports, ensuring a smooth
-                        start or end to your travels.</p>
-                </div>
-            </div>
-            <!-- Service Item 2 -->
-            <div class="service-item">
-                <img src="{% static 'images/business-chauffeur.jpg' %}" class="service-image"
-                    alt="Corporate Chauffeur Service">
-                <div class="service-text">
-                    <h3>Corporate Chauffeur Service</h3>
-                    <p>Professional, discreet drivers for business meetings and corporate events, ensuring
-                        punctuality and comfort.</p>
-                </div>
-            </div>
-            <!-- Service Item 3 -->
-            <div class="service-item">
-                <img src="{% static 'images/wedding-chauffeur.jpg' %}" class="service-image"
-                    alt="Special Event & Wedding Transport">
-                <div class="service-text">
-                    <h3>Special Event & Wedding Transport</h3>
-                    <p>Elegant and luxurious vehicles for weddings, galas, and other significant occasions, designed
-                        to make your event unforgettable.</p>
-                </div>
-            </div>
 
-            <!-- Service Item 4 -->
-            <div class="service-item">
-                <img src="{% static 'images/private-chauffeur2.jpg' %}" class="service-image"
-                    alt="Private & VIP Chauffeur Services">
-                <div class="service-text">
-                    <h3>Private & VIP Chauffeur Services</h3>
-                    <p>Personalized chauffeur services for VIPs, ensuring maximum comfort and security for your
-                        private or high-profile travels.</p>
-                </div>
-            </div>
-
-            <div class="slide-control">
-                <div class="btn-item active"></div>
-                <div class="btn-item"></div>
-                <div class="btn-item"></div>
-                <div class="btn-item"></div>
-            </div>
-        </div>
     </section>
     <!-- book a ride -->
     <div id="book-now">

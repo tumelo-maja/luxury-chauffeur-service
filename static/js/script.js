@@ -27,17 +27,19 @@ $(document).ready(function () {
         $(this).closest('.message').removeClass('show');
     });
 
-$(document).ready(function () {
-    const $slideElements = $('.service-item');
+    const $slideElements = $('.hero-item');
     const $buttonElements = $('.btn-item');
     let currentSlide = 1;
 
     // Manual carousel navigation
     const manualNav = function (manual) {
         $slideElements.removeClass('active');
+        $slideElements.addClass('hidden-item');
         $buttonElements.removeClass('active');
 
+        // $($slideElements[manual]).toggleClass('active hidden-item');
         $($slideElements[manual]).addClass('active');
+        $($slideElements[manual]).removeClass('hidden-item');
         $($buttonElements[manual]).addClass('active');
     }
 
@@ -56,9 +58,14 @@ $(document).ready(function () {
         const repeater = function () {
             setTimeout(function () {
                 $slideElements.removeClass('active');
+                $slideElements.addClass('hidden-item');
                 $buttonElements.removeClass('active');
 
+                // $($slideElements[i]).toggleClass('active hidden-item');
+                $($slideElements[i]).removeClass('hidden-item');
                 $($slideElements[i]).addClass('active');
+                $($slideElements[i]).show();
+                // $($slideElements[i]).removeClass('hidden-item');
                 $($buttonElements[i]).addClass('active');
                 i++;
 
@@ -69,14 +76,11 @@ $(document).ready(function () {
                 if (i < $slideElements.length) {
                     repeater();
                 }
-            }, 5000);
+            }, 4000);
         }
 
         repeater();
     }
 
     repeat();
-});
-
-
 });
