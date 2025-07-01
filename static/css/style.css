@@ -379,15 +379,15 @@ section {
 .chauffeur {
     height: auto;
     width: 250px;
-    border: 2px solid blue;
-    background-color: yellowgreen;
+    border: 2px solid purple;
+    /* background-color: gold; */
     border-radius: 15px;
     overflow: hidden;
     margin: 20px 40px;
 }
 
 .chauffeur-head {
-    background-color: red;
+    /* background-color: rgb(182, 137, 182); */
     height: auto;
     padding: 8px;
     display: flex;
@@ -397,7 +397,8 @@ section {
 }
 
 .chauffeur-body {
-    border: 2px solid purple;
+    /* border: 2px solid purple; */
+    background-color: #a99005;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -427,6 +428,9 @@ section {
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    background-color: purple;
+    color: white;
+    padding: 6px;
 }
 
 .chauffeur-speciality {
@@ -445,6 +449,14 @@ section {
     padding: 1px 6px;
     border: 1px solid darkgrey;
     width: fit-content;
+}
+
+.chauffeur .details {
+    font-size: 1.5rem;
+    color: purple;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
 }
 
 /* Our fleet */
