@@ -89,7 +89,7 @@ main.home {
     overflow: hidden;
 } */
 
-/* services section */
+/* hero section */
 #hero-home {
     width: 100%;
     max-width: 48rem;
@@ -139,16 +139,6 @@ main.home {
     letter-spacing: 2px;
     margin-top: 10px;
     text-align: center;
-}
-
-.hero-text p {
-    color: yellow;
-    background-color: rgba(0, 0, 0, 0.15);
-    font-size: 16px;
-    width: 60%;
-    padding: 10px;
-    border-radius: 4px;
-    display: none;
 }
 
 .slide-control {
@@ -300,7 +290,6 @@ section {
     height: 35px;
     color: white;
     font-weight: 500;
-    display: inline-block;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -481,4 +470,76 @@ section {
 .vehicle p {
     text-align: center;
     font-size: 25px;
+}
+
+/* our services */
+#services {
+    margin: 20px 30px;
+}
+
+.services-container {
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    /* gap: 20px; */
+    padding: 10px 20px;
+}
+
+.service-item {
+    margin: 10px 30px;
+    max-width: 35rem;
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-item img {
+    max-width: 35rem;
+    width: 100%;
+    border-radius: 15px;
+    height: 270px;
+    margin: 10px;
+}
+
+.service-item p {
+    text-align: center;
+    width: 90%;
+}
+
+.service-item h3 {
+    color: purple;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.button-book {
+    margin: 20px 0 5px;
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    color: white;
+    background-color: purple;
+    font-size: 1.3rem;
+    font-weight: 500;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-book:hover {
+    transform: scale(1.04);
+    /* box-shadow: 0 4px #091f0a; */
+    color: purple;
+    background-color: white;
+    border: 2px solid purple;
 }
