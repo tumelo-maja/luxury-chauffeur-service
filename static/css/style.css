@@ -478,7 +478,7 @@ section {
 }
 
 .vehicle h3 {
-    background-color: rgb(169, 144, 5);
+    background-color: #a99005;
     color: white;
     font-size: 1.5rem;
     text-transform: uppercase;
@@ -580,4 +580,43 @@ section {
     color: purple;
     background-color: white;
     border: 2px solid purple;
+}
+
+/* get started section  */
+
+.steps-container {
+    background-color: rgba(128, 0, 128, 0.548);
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.steps-container .step {
+    border: 1px solid gold;
+    margin: 10px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.step span {
+    background-color: #a99005;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 20px 0 10px;
+}
+
+.step p {
+    text-align: center;
 }
