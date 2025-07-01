@@ -457,11 +457,11 @@ section {
     align-items: center;
 }
 
-.vehicle-container .wrapper {
+/* .vehicle-container .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .vehicle {
     margin: 20px;
