@@ -21,12 +21,12 @@
             tailored to meet your
             every need.</p>
         <div class="services-container">
-            <div class="flex">
+            <div class="wrapper">
                 <div class="service-item">
                     <img src="{% static 'images/airport-chauffeur-2.jpg' %}" alt="Luxury Sedan">
                     <h3>Airport Transfers</h3>
                     <p>Effortless, timely pick-ups and drop-offs to and from all major airports, ensuring a smooth
-                    start or end to your travels.</p>
+                        start or end to your travels.</p>
                     <a href="" class="button-book" aria-label="">Book now</a>
                 </div>
                 <div class="service-item">
@@ -37,7 +37,7 @@
                     <a href="" class="button-book" aria-label="">Book now</a>
                 </div>
             </div>
-            <div class="flex">
+            <div class="wrapper">
                 <div class="service-item">
                     <img src="{% static 'images/wedding-chauffeur-3.jpg' %}" alt="Spacious Van">
                     <h3>Special Events</h3>
@@ -55,35 +55,64 @@
             </div>
         </div>
     </section>
-    <!-- book a ride -->
-    <div id="book-now">
-        <div>
-            <p>Its time to make a booking</p>
-        </div>
-        <button>Book Now!</button>
-    </div>
     <section id="fleet">
         <h2 class="h2-style text-center">Our Fleet</h2>
         <div class="vehicle-container">
-            <div class="vehicle">
-                <img src="{% static 'images/vehicle-sedan.jpg' %}" alt="Luxury Sedan">
-                <p>Luxury Sedan</p>
+            <div class="wrapper">
+                <div class="vehicle">
+                    <img src="{% static 'images/vehicle-sedan.jpg' %}" alt="rolls royce phantom">
+                    <h3>Rolls Royce Phantom</h3>
+                    <div class="vehicle-details">
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-3</span></div>
+                        <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 200</span></div>
+                        <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 180</span></div>
+                        <a href="" class="button-book" aria-label="">Book now</a>
+                    </div>                    
+                </div>
+                <div class="vehicle">
+                    <img src="{% static 'images/vehicle-suv.jpg' %}" alt="range rover voque">
+                    <h3>Range Rover Voque</h3>
+                    <div class="vehicle-details">
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-4</span></div>
+                        <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 170</span></div>
+                        <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 150</span></div>
+                        <a href="" class="button-book" aria-label="">Book now</a>
+                    </div>
+                </div>
             </div>
-            <div class="vehicle">
-                <img src="{% static 'images/vehicle-suv.jpg' %}" alt="Executive SUV">
-                <p>Executive SUV</p>
+            <div class="wrapper">
+                <div class="vehicle">
+                    <img src="{% static 'images/vehicle-van.jpg' %}" alt="mercedes benz v-class">
+                    <h3>Mercedes Benz V-Class</h3>
+                    <div class="vehicle-details">
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-7</span></div>
+                        <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 150</span></div>
+                        <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 130</span></div>
+                        <a href="" class="button-book" aria-label="">Book now</a>
+                    </div>                    
+                </div>
+                <div class="vehicle">
+                    <img src="{% static 'images/vehicle-limo.jpg' %}" alt="Premium Limousine">
+                    <h3>Premium Limousine</h3>
+                    <div class="vehicle-details">
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-10</span></div>
+                        <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 250</span></div>
+                        <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 230</span></div>
+                        <a href="" class="button-book" aria-label="">Book now</a>
+                    </div>                    
+                </div>
             </div>
-            <div class="vehicle">
-                <img src="{% static 'images/vehicle-van.jpg' %}" alt="Spacious Van">
-                <p>Spacious Van</p>
-            </div>
-            <div class="vehicle">
-                <img src="{% static 'images/vehicle-limo.jpg' %}" alt="Premium Limousine">
-                <p>Premium Limousine</p>
-            </div>
-            <div class="vehicle">
-                <img src="{% static 'images/vehicle-vintage.jpg' %}" alt="Vintage Car">
-                <p>Classic Vintage Car</p>
+            <div class="wrapper">
+                <div class="vehicle">
+                    <img src="{% static 'images/vehicle-vintage.jpg' %}" alt="Vintage Car">
+                    <h3>Classic Vintage Cars</h3>
+                    <div class="vehicle-details">
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-4</span></div>
+                        <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 250</span></div>
+                        <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 230</span></div>
+                        <a href="" class="button-book" aria-label="">Book now</a>
+                    </div>                    
+                </div>
             </div>
         </div>
     </section>
