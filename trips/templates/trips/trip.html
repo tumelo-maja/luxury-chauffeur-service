@@ -1,0 +1,56 @@
+{% extends 'layouts/blank.html' %}
+{% load static %}
+
+{% block content %}
+<div class="greeting">
+    <h1>Hello Lord Beerus, welcome back</h1>
+    <p>Manage your trips with ease.</p>
+</div>
+
+<section class="new-trip">
+    <h2>Create a New Trip</h2>
+
+    <div class="form-container">
+        <form action="">
+            <div class="trip-input">
+                <label for="pickup">Pickup Location:</label><br>
+                <input id="pickup" name="pickup" type="text" required class="form-fields">
+            </div>
+            <div class="trip-input">
+                <label for="destination">Destination:</label><br>
+                <input id="destination" name="destination" type="text" required class="form-fields">
+            </div>
+            <div class="trip-input">
+                <label for="date">Date:</label><br>
+                <input id="date" name="date" type="text" required class="form-fields">
+            </div>
+            <div class="trip-input">
+                <label for="time">Time:</label><br>
+                <input id="time" name="time" type="text" required class="form-fields">
+            </div>
+            <div class="trip-input">
+                <label for="trip-type">Trip Type:</label><br>
+                <input id="trip-type" name="trip-type" type="text" required class="form-fields">
+            </div>
+            <div class="trip-input">
+                <label for="driver">Driver:</label><br>
+                <input id="driver" name="driver" type="text" required class="form-fields">
+            </div>            
+            <div class="col-12 trip-input">
+                <label for="trip-comment">Message</label><br>
+                <textarea rows="5" id="trip-comment" name="trip-comment" class="form-fields" required class="form-fields"
+                    placeholder="Share any details about your trip request."></textarea>
+            </div>
+            <div class="col-12 trip-input submit-button">
+                <button type="submit" class="" value="submit">Request Trip</button>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/trips.js' %}"></script>
+{% endblock %}
