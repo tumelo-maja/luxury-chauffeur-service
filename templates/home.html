@@ -63,17 +63,21 @@
                     <img src="{% static 'images/vehicle-sedan.jpg' %}" alt="rolls royce phantom">
                     <h3>Rolls Royce Phantom</h3>
                     <div class="vehicle-details">
-                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-3</span></div>
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i>
+                            <span>1-3</span>
+                        </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 200</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 180</span></div>
                         <a href="" class="button-book" aria-label="">Book now</a>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="vehicle">
                     <img src="{% static 'images/vehicle-suv.jpg' %}" alt="range rover voque">
                     <h3>Range Rover Voque</h3>
                     <div class="vehicle-details">
-                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-4</span></div>
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i>
+                            <span>1-4</span>
+                        </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 170</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 150</span></div>
                         <a href="" class="button-book" aria-label="">Book now</a>
@@ -85,21 +89,25 @@
                     <img src="{% static 'images/vehicle-van.jpg' %}" alt="mercedes benz v-class">
                     <h3>Mercedes Benz V-Class</h3>
                     <div class="vehicle-details">
-                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-7</span></div>
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i>
+                            <span>1-7</span>
+                        </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 150</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 130</span></div>
                         <a href="" class="button-book" aria-label="">Book now</a>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="vehicle">
                     <img src="{% static 'images/vehicle-limo.jpg' %}" alt="Premium Limousine">
                     <h3>Premium Limousine</h3>
                     <div class="vehicle-details">
-                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-10</span></div>
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i>
+                            <span>1-10</span>
+                        </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 250</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 230</span></div>
                         <a href="" class="button-book" aria-label="">Book now</a>
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="wrapper">
@@ -107,30 +115,57 @@
                     <img src="{% static 'images/vehicle-vintage.jpg' %}" alt="Vintage Car">
                     <h3>Classic Vintage Cars</h3>
                     <div class="vehicle-details">
-                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i> <span>1-4</span></div>
+                        <div class="vehicle-detail add-rate"><i class="fa-solid fa-users-between-lines"></i>
+                            <span>1-4</span>
+                        </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 250</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 230</span></div>
                         <a href="" class="button-book" aria-label="">Book now</a>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <section id="get-started">
         <h2 class="h2-style text-center">How to Get Started</h2>
-        <p>Ready for a first-class experience? Follow these simple steps to book your next luxurious ride.</p>
+        <p class="started-text">Ready for a first-class experience? Follow these simple steps to book your next luxurious ride.</p>
         <div class="steps-container">
-            <div class="step">
-                <span><i class="fa-solid fa-user-plus"></i></span>
-                 <p>Register an account with us.</p>
+            <div>
+                <div class="wrapper">
+                    <p class="step-label">Step 1</p>
+                    <div class="step">
+                        <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
+                        <p><a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}"><span
+                                    class="link">Register</span></a> an account or
+                            <a href="{% url 'account_login' %}"><span class="link">Login</span></a> if you already have
+                            an
+                            account.
+                        </p>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <p class="step-label">Step 2</p>
+                    <div class="step">
+                        <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+                        <p>Enter your pick-up, drop-off locations and other trip details.</p>
+                    </div>
+                </div>
             </div>
-            <div class="step">
-                <span><i class="fa-solid fa-location-dot"></i></span>
-                <p>Enter your pick-up, drop-off locations and other trip details.</p>
-            </div>
-            <div class="step">
-                <span><i class="fa-solid fa-circle-check"></i></span>
-                <p>Confirm your details and submit a booking request.</p>
+            <div>
+                <div class="wrapper">
+                    <p class="step-label">Step 3</p>
+                    <div class="step">
+                        <span class="icon"><i class="fa-solid fa-circle-check"></i></span>
+                        <p>Confirm your details and submit a booking request.</p>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <p class="step-label">Step 4</p>
+                    <div class="step">
+                        <span class="icon"><i class="fa-solid fa-car-side"></i></span>
+                        <p>Vehicle arrives and your luxury experience begins.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -590,23 +590,29 @@ section {
     height: auto;
     padding: 20px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
 
+.steps-container .step-label {
+    font-size: 1.3rem;
+    margin: 20px 20px 10px;
+}
 
 .steps-container .step {
     border: 1px solid gold;
-    margin: 10px;
+    margin: 10px 20px;
     width: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px;
 }
 
-.step span {
-    background-color: #a99005;
+.step .icon {
+    background-color: #f6d206;
     height: 50px;
     width: 50px;
     border-radius: 50%;
@@ -617,6 +623,15 @@ section {
     margin: 20px 0 10px;
 }
 
+.step .link {
+    font-weight: 800;
+}
+
 .step p {
     text-align: center;
+}
+
+.started-text {
+    text-align: center;
+    padding: 15px;
 }
