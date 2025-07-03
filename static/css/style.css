@@ -16,7 +16,7 @@ body {
 main {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     width: 100%;
     align-items: center;
     /* border: 3px solid black;
@@ -650,9 +650,13 @@ section {
 
 /* trips style */
 .greeting {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     width: 100%;
     padding: 10px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .greeting h1 {
@@ -661,8 +665,8 @@ section {
 }
 
 .greeting p {
-font-style: italic;
-padding: 5px 0;
+    font-style: italic;
+    padding: 5px 0;
 }
 
 .new-trip h2 {
@@ -673,6 +677,217 @@ padding: 5px 0;
     text-align: center;
 }
 
+/* trip view */
+.trips-container {
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.trip-head h3 {
+    text-align: center;
+    font-weight: bold;
+    margin: 12px;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+.trip-wrapper {
+    width: 300px;
+    min-height: 560px;
+    padding: 0 20px 10px;
+}
+
+.col-sep {
+    width: 1px;
+    background-color: darkgray;
+    border-radius: 4px;
+    margin: 40px 0;
+}
+
+.trip-item {
+    border: 1px solid gray;
+    border-radius: 8px;
+    margin: 4px;
+    padding: 6px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.trip-item .driver {
+    /* background-color: red; */
+    font-size: 15px;
+    text-align: center;
+}
+
+.trip-item .date-loc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trip-item .date {
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+}
+
+.trip-item .destination {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.trip-item .trip-status {
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 22px;
+    width: 70px;
+}
+
+.status-complete {
+    background-color: rgb(15, 201, 15);
+}
+
+.status-upcoming {
+    background-color: orange;
+}
+
+.status-cancelled {
+    background-color: rgb(251, 113, 113);
+}
+
+.status-ongoing {
+    background-color: lightgray;
+}
+
+
+
+.trip-status p {
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+    text-transform: capitalize;
+    color: black;
+    font-weight: bold;
+}
+
+/* .trip-summary {
+    border: 2px solid purple;
+    margin: 20px 10px;
+    width: 300px;
+} */
+
+.sum-item {
+    /* border: 1px solid black; */
+    margin: 10px 6px;
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+.sub-items {
+    border-radius: 8px;
+    box-shadow: 0 0 6px gray;
+    padding-bottom: 20px;
+    height: max-content;
+    width: 300px;
+    min-height: 560px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.sub-items .status {
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 25px;
+    width: 90px;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.sum-item .sub-head {
+    text-align: center;
+    font-weight: bold;
+}
+
+.sum-item.status-container {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    margin-bottom: 0;
+    padding: 5px 20px;
+}
+
+.sum-item.status-container .title {
+    font-weight: bold;
+}
+
+.sum-item .driver{
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: purple;
+}
+
+.trip-image {
+    /* height: 130px;
+    width: 150px;
+    border-radius: 50%;
+    border: 1px solid red;
+    overflow: hidden; */
+    display: flex;
+    justify-content: center;
+    margin: 15px 10px;
+}
+
+.trip-image img {
+    height: 140px;
+    width: 150px;
+    border: 3px solid purple;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.vehicle-summary .name {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: purple;
+}
+
+.vehicle-summary .reg {
+    /* text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: purple; */
+    display: flex;
+    justify-content: space-around;
+}
+
+.trip-controls {
+    margin: 30px 15px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.trip-controls .trip-btn {
+    border: 1px solid gray;
+    height: 30px;
+    width: 80px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 /* trip form */
 .form-container {
     display: flex;
@@ -681,21 +896,21 @@ padding: 5px 0;
 
 .trip-input input:focus,
 .trip-input textarea:focus {
-  border: 2px solid purple;
-  box-shadow: 0 0 10px gold;
+    border: 2px solid purple;
+    box-shadow: 0 0 10px gold;
 }
 
 .form-fields {
-  width: 100%;
-  border: 1px solid purple;
-  border-radius: 5px;
-  padding: 6px 12px;    
+    width: 100%;
+    border: 1px solid purple;
+    border-radius: 5px;
+    padding: 6px 12px;
 }
 
 .trip-label {
-  padding: 0 5px;
-  height: 45px;
-  text-transform: capitalize;
+    padding: 0 5px;
+    height: 45px;
+    text-transform: capitalize;
 }
 
 .submit-button {
