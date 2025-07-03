@@ -713,27 +713,33 @@ section {
     border-radius: 8px;
     margin: 4px;
     padding: 6px;
+}
+
+.trip-item .trip-top {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    /* margin: 4px;
+    padding: 6px; */
 }
 
 .trip-item .driver {
     /* background-color: red; */
     font-size: 15px;
-    text-align: center;
+    text-align: left;
 }
 
-.trip-item .date-loc {
+/* .trip-item .date-loc {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
 .trip-item .date {
     font-size: 12px;
     font-style: italic;
-    text-align: center;
+    text-align: left;
+    margin: 5px 0;
 }
 
 .trip-item .destination {
@@ -827,7 +833,7 @@ section {
     font-weight: bold;
 }
 
-.sum-item .driver{
+.sum-item .driver {
     text-align: center;
     font-size: 1.1rem;
     font-weight: bold;
@@ -841,7 +847,7 @@ section {
 }
 
 .text-bold {
-font-weight: bold;
+    font-weight: bold;
 }
 
 .trip-image {

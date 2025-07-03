@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="greeting">
-    <h1>Hello Lord Beerus, welcome back</h1>
+    <h1>Hello {{ user.username }}, welcome back</h1>
     <p>Manage your trips with ease.</p>
 </div>
 <div class="trips-container">
@@ -67,6 +67,20 @@
                     <p>Completed</p>
                 </div>
             </div>
+            {% for trip in trips reversed %}
+            <div class="trip-item">
+                <div class="trip-top">
+                    <div class="trip-details">
+                        <p class="driver">Driver: {{ trip.driver }}</p>
+                        <p class="date">{{ trip.travel_date }} - {{ trip.travel_time }}</p>
+                    </div>
+                    <div class="trip-status status-complete">
+                        <p>{{ trip.status }}</p>
+                    </div>
+                </div>
+                <p class="destination">{{ trip.location_end }}</p>
+            </div>
+            {% endfor %}
         </div>
 
     </div>
@@ -110,24 +124,13 @@
                         <img src="{% static 'images/driver-a-8.jpg' %}" alt="member of staff">
                     </div>
                     <div class="driver"><span>Chauffeur: </span><span>Whis Zeno</span></div>
-                    <!-- <div class="trip-image">
-                        <img src="{% static 'images/merceds-benz-logo.png' %}" alt="rolls royce phantom">
-                    </div>
-                    <div class="trip-image">
-                        <img src="{% static 'images/bentley-logo.png' %}" alt="rolls royce phantom">
-                    </div>
-                    <div class="trip-image">
-                        <img src="{% static 'images/chrysler-logo.png' %}" alt="rolls royce phantom">
-                    </div>  
-                    <div class="trip-image">
-                        <img src="{% static 'images/range-rover-logo.png' %}" alt="rolls royce phantom">
-                    </div>-->
                 </div>
             </div>
             <div class="type sum-item">
                 <p class="sub-head">Other details</p>
                 <p class="trip-type"><span class="text-bold">Trip type: </span>wedding</p>
-                <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span>Please call my phone with you
+                <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span>Please call my
+                        phone with you
                         arrived. Let them know you're here for me</span></p>
             </div>
             <div class="trip-controls">
