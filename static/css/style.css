@@ -835,6 +835,15 @@ section {
     color: purple;
 }
 
+.sum-item .trip-type {
+    text-transform: capitalize;
+    margin: 10px 0;
+}
+
+.text-bold {
+font-weight: bold;
+}
+
 .trip-image {
     /* height: 130px;
     width: 150px;
