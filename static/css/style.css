@@ -698,7 +698,7 @@ section {
 .trip-wrapper {
     width: 300px;
     min-height: 560px;
-    padding: 0 20px 10px;
+    padding: 0 10px 10px;
 }
 
 .col-sep {
@@ -719,21 +719,12 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* margin: 4px;
-    padding: 6px; */
 }
 
 .trip-item .driver {
-    /* background-color: red; */
     font-size: 15px;
     text-align: left;
 }
-
-/* .trip-item .date-loc {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
 
 .trip-item .date {
     font-size: 12px;
