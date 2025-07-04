@@ -72,7 +72,7 @@
                 <div class="trip-top">
                     <div class="trip-details">
                         <p class="driver">Driver: {{ trip.driver }}</p>
-                        <p class="date">{{ trip.travel_date }} - {{ trip.travel_time }}</p>
+                        <p class="date">{{ trip.travel_date| date:"Y M d" }} - {{ trip.travel_time }}</p>
                     </div>
                     <div class="trip-status status-complete">
                         <p>{{ trip.status }}</p>

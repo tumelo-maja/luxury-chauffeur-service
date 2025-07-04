@@ -1,15 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+import shortuuid
 
 # Create your models here.
 
 
 class Trip(models.Model):
+    trip_name = models.CharField(max_length=128, unique=True, default=shortuuid.uuid)
     passenger = models.ForeignKey(User, on_delete=models.CASCADE)
     location_start = models.CharField(max_length=200)
     location_end = models.CharField(max_length=200)
     travel_date = models.DateField()
     travel_time = models.TimeField()
+    travel_datetime = models.DateTimeField(blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -35,7 +38,7 @@ class Trip(models.Model):
     STATUS_OPTIONS = [
         ("pending", "Pending"),
         ("confirmed", "Confirmed"),
-        ("in_progress", "In Progress"),
+        ("in progress", "In Progress"),
         ("cancelled", "Cancelled"),
         ("modified", "Modified"),
         ("completed", "Completed"),
