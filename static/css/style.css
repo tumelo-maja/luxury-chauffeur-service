@@ -699,6 +699,7 @@ section {
     width: 300px;
     min-height: 560px;
     padding: 0 10px 10px;
+    position: relative;
 }
 
 .col-sep {
@@ -708,11 +709,22 @@ section {
     margin: 40px 0;
 }
 
+.trip-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .trip-item {
     border: 1px solid gray;
     border-radius: 8px;
     margin: 4px;
     padding: 6px;
+    cursor: pointer;
+    width: 100%;
 }
 
 .trip-item .trip-top {
@@ -772,11 +784,59 @@ section {
     font-weight: bold;
 }
 
-/* .trip-summary {
-    border: 2px solid purple;
-    margin: 20px 10px;
-    width: 300px;
-} */
+.trip-summary {
+    min-width: 350px;
+}
+
+.no-trip {
+    margin: 30px 0;
+    border: 1px dashed gray;
+    width: 70%;
+    text-align: center;
+    font-style: italic;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.empty-container {
+    width: 100%;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-container a {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: purple;
+    color: white;
+    font-weight: bold;
+}
+
+.empty-list {
+    margin: 30px 0;
+    border: 1px dashed gray;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.fixed-button {
+    padding: 5px;
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: purple;
+    color: white;
+    font-weight: bold; 
+    width: 250px;
+    text-align: center;  
+    position: absolute;
+    bottom: 40px;
+}
 
 .sum-item {
     /* border: 1px solid black; */
@@ -790,7 +850,7 @@ section {
     box-shadow: 0 0 6px gray;
     padding-bottom: 20px;
     height: max-content;
-    width: 300px;
+    min-width: 350px;
     min-height: 560px;
     margin: 20px;
     padding: 10px;
@@ -860,22 +920,22 @@ section {
     border-radius: 50%;
 }
 
-.vehicle-summary .name {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    font-style: italic;
-    color: purple;
+.vehicle-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.vehicle-summary .reg {
-    /* text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    font-style: italic;
-    color: purple; */
+.vehicle-summary p {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.vehicle-summary .value {
+    color: purple;
+font-weight: 500;
 }
 
 .trip-controls {

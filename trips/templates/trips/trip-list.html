@@ -1,0 +1,23 @@
+{% if trips %}
+{% for trip in trips reversed %}
+<div class="trip-item" hx-get="{% url 'trip-detail' trip.trip_name %}" hx-trigger="click"
+    hx-target="#trip-detail-container">
+    <div class="trip-top">
+        <div class="trip-details">
+            <p class="driver">Driver: {{ trip.driver }}</p>
+            <p class="date">{{ trip.travel_date| date:"Y M d" }} - {{ trip.travel_time }}</p>
+        </div>
+        <div class="trip-status status-complete">
+            <p>{{ trip.status }}</p>
+        </div>
+    </div>
+    <p class="destination">{{ trip.location_end }}</p>
+</div>
+{% endfor %}
+<a href="" class="fixed-button" aria-label="">Create a new trip</a>
+{% else %}
+<div class="empty-container">
+    <p class="empty-list">You do not have any trips.</p>
+    <a href="" aria-label="">Create a new trip</a>
+</div>
+{% endif %}

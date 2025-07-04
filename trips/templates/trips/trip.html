@@ -12,131 +12,21 @@
         <div class="trip-head">
             <h3>My trips</h3>
         </div>
-        <div class="trip-list">
-            <div class="trip-item">
-                <div class="trip-details">
-                    <p class="driver">Driver: Robert, Jones</p>
-                    <p class="date-loc"><span class="date">1 May 2028</span><span class="destination">Glasgow</span></p>
-                </div>
-                <div class="trip-status status-upcoming">
-                    <p>Upcoming</p>
-                </div>
-            </div>
-            <div class="trip-item">
-                <div class="trip-details">
-                    <p class="driver">Driver: Robert, Jones</p>
-                    <p class="date-loc"><span class="date">1 May 2028</span><span class="destination">Glasgow</span></p>
-                </div>
-                <div class="trip-status status-ongoing">
-                    <p>Ongoing</p>
-                </div>
-            </div>
-            <div class="trip-item">
-                <div class="trip-details">
-                    <p class="driver">Driver: Robert, Jones</p>
-                    <p class="date-loc"><span class="date">1 May 2028</span><span class="destination">Glasgow</span></p>
-                </div>
-                <div class="trip-status status-complete">
-                    <p>completed</p>
-                </div>
-            </div>
-            <div class="trip-item">
-                <div class="trip-details">
-                    <p class="driver">Driver: Robert, Jones</p>
-                    <p class="date-loc"><span class="date">1 May 2028</span><span class="destination">Glasgow</span></p>
-                </div>
-                <div class="trip-status status-cancelled">
-                    <p>Cancelled</p>
-                </div>
-            </div>
-            <div class="trip-item">
-                <div class="trip-details">
-                    <p class="driver">Driver: Robert, Jones</p>
-                    <p class="date-loc"><span class="date">1 May 2028</span><span class="destination">Glasgow</span></p>
-                </div>
-                <div class="trip-status  status-complete">
-                    <p>completed</p>
-                </div>
-            </div>
-            <div class="trip-item">
-                <div class="trip-details">
-                    <p class="driver">Driver: Robert, Jones</p>
-                    <p class="date-loc"><span class="date">1 May 2028</span><span class="destination">Glasgow</span></p>
-                </div>
-                <div class="trip-status status-complete">
-                    <p>Completed</p>
-                </div>
-            </div>
-            {% for trip in trips reversed %}
-            <div class="trip-item">
-                <div class="trip-top">
-                    <div class="trip-details">
-                        <p class="driver">Driver: {{ trip.driver }}</p>
-                        <p class="date">{{ trip.travel_date| date:"Y M d" }} - {{ trip.travel_time }}</p>
-                    </div>
-                    <div class="trip-status status-complete">
-                        <p>{{ trip.status }}</p>
-                    </div>
-                </div>
-                <p class="destination">{{ trip.location_end }}</p>
-            </div>
-            {% endfor %}
+        <div id="trip_list" class="trip-list">
+            {% include 'trips/trip-list.html' %}
         </div>
 
     </div>
     <div class="col-sep"></div>
-    <div class="trip-summary">
+    <div id="trip-detail-container" class="trip-summary">
         <div class="trip-head">
-            <h3>Journey to Glasgow</h3>
+            <h3>Trip Details</h3>
         </div>
-        <div class="sub-items">
-            <div class="sum-item status-container">
-                <p class="title">Status: </p>
-                <p class="status status-upcoming">Upcoming</p>
-            </div>
-            <div class="locations sum-item">
-                <p class="sub-head">Locations</p>
-                <div class="pickup">
-                    Pickup: <address>3 Sovereign Pl, Wallingford, OX10 9GF, UK</address>
-                </div>
-                <div class="destination">
-                    Destination: <address>14 Oxford Rd, Oxford, OX4 3FD, UK</address>
-                </div>
-            </div>
-            <div class="datetime sum-item">
-                <p class="sub-head">Date & Time</p>
-                <div class="date">Date: <span>01 May 2028</span></div>
-                <div class="time">Time: <span>14:30</span></div>
-            </div>
-            <div class="sum-item">
-                <p class="sub-head">Vehicle & Driver</p>
-                <div class="vehicle-summary">
-                    <div class="trip-image">
-                        <img src="{% static 'images/rolls-royce-logo.png' %}" alt="rolls royce phantom">
-                    </div>
-                    <p class="name">Rolls Royce Phantom</p>
-                    <p class="reg"><span>Color: White</span><span>Reg: RF 789Z</span></p>
-                    <!-- <div class="color">Color: <span>Black</span></div>
-                    <div class="registration"><span>Reg: </span><span>RF 789Z</span></div> -->
-                </div>
-                <div>
-                    <div class="trip-image">
-                        <img src="{% static 'images/driver-a-8.jpg' %}" alt="member of staff">
-                    </div>
-                    <div class="driver"><span>Chauffeur: </span><span>Whis Zeno</span></div>
-                </div>
-            </div>
-            <div class="type sum-item">
-                <p class="sub-head">Other details</p>
-                <p class="trip-type"><span class="text-bold">Trip type: </span>wedding</p>
-                <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span>Please call my
-                        phone with you
-                        arrived. Let them know you're here for me</span></p>
-            </div>
-            <div class="trip-controls">
-                <a href="" class="trip-cancel trip-btn">Cancel <i class="fa-solid fa-trash-can"></i></a>
-                <a href="" class="trip-edit trip-btn">Edit <i class="fa-solid fa-pen-to-square"></i></a>
-            </div>
+        <div class="sub-items flex flex-col items-center">
+            <p class="no-trip">
+                Select a Trip to view from the left panel
+            </p>
+
         </div>
     </div>
 </div>
