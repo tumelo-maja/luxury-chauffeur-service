@@ -41,3 +41,19 @@ class Profile(models.Model):
         except:
             avatar = static('images/avatar.png')
         return avatar
+
+class PassengerProfile(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='passenger_profile')
+    emergency_name = models.CharField(max_length=100)
+    emergency_phone = models.CharField(max_length=15)    
+
+    def __str__(self):
+        return f"Passenger: {self.profile.user.username}"
+
+
+class DriverProfile(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='driver_profile')
+    experience = models.IntegerField()
+
+    def __str__(self):
+        return f"Driver: {self.profile.user.username}"

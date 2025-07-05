@@ -25,11 +25,6 @@
         </div>
         <div class="sum-item">
             <p class="sub-head">Chauffeur</p>
-            <div class="vehicle-summary">
-                <p><span class="label">Vehicle: </span><span class="value">Rolls Royce Phantom</span></p>
-                <p><span class="label">Color: </span><span class="value">White</span></p>
-                <p><span class="label">Reg: </span><span class="value">RF 789Z</span></p>
-            </div>
             <div>
                 <div class="trip-image">
                     <img src="{% static 'images/driver-a-8.jpg' %}" alt="member of staff">
@@ -37,10 +32,14 @@
                 <div class="driver"><span>Chauffeur: </span><span>{{ trip.driver }}</span></div>
             </div>
         </div>
+        <div class="sum-item">
+            <div class="vehicle-summary">
+                <p><span  class="sub-head">Vehicle: </span><span class="bold-value">{{ trip.vehicle }}</span></p>
+            </div>
+        </div>
         <div class="type sum-item">
-            <p class="sub-head">Other details</p>
-            <p class="trip-type"><span class="text-bold">Trip type: </span>{{ trip.trip_type }}</p>
-            <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span>{{ trip.comments }}</span></p>
+            <p class="trip-type"><span class="text-bold">Trip type: </span><span class="bold-value">{{ trip.trip_type }}</span></p>
+            <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span class="italic-value">{{ trip.comments }}</span></p>
         </div>
         <div class="trip-controls">
             <a href="" class="trip-cancel trip-btn">Cancel <i class="fa-solid fa-trash-can"></i></a>
