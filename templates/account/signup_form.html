@@ -1,0 +1,16 @@
+{% extends 'layouts/modal.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="form-head">{{ user_type }} Registration</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form | crispy }}
+
+        <div class="flex justify-around w-full">
+            <button type="submit">Register as {{ user_type }}</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

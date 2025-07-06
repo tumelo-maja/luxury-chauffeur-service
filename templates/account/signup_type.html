@@ -1,0 +1,47 @@
+{% extends 'layouts/modal.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="usertype-container">
+
+    <div class="signup-head">
+        <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
+        <h1 class="display-5 mb-0">Join Lux Chauffeurs</h1>
+    </div>
+
+    <div class="signup-body">
+        <div class="row-sep"></div>
+        <div class="signup-item">
+            <h3 class="type-head">Passenger</h3>
+            <p class="type-text">Experience the comfort and elegance of personalized chauffeur services, tailored for
+                your needs.
+            </p>
+            <a href="{% url 'passenger_signup' %}" class="signup-btn">
+                Sign Up as Passenger
+            </a>
+        </div>
+        <div class="row-sep"></div>
+        <div class="signup-item">
+            <h3 class="type-head">Chauffeur</h3>
+            <p class="type-text">Join our exclusive team of chauffeurs and enjoy the prestige of providing luxury
+                experience.
+            </p>
+
+            <a href="{% url 'driver_signup' %}" class="signup-btn">
+                Sign Up as Driver
+            </a>
+        </div>
+        <div class="row-sep"></div>
+    </div>
+
+    <div class="signin-body">
+        <p class="signin-text">Already have an account?</p>
+        <a href="{% url 'account_login' %}" class="signup-btn">
+            Sign In Here
+        </a>
+    </div>
+</div>
+
+{% endblock %}

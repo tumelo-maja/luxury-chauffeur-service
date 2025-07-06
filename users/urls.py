@@ -1,8 +1,12 @@
 from django.urls import path
-from users.views import *
+from .views import *
 
-urlpatterns =[
+
+urlpatterns = [
     path('', profile_view, name='profile'),
+    path('signup/', signup_type, name='signup_type'),
+    path('signup/driver/', driver_signup, name='driver_signup'),
+    path('signup/passenger/', passenger_signup, name='passenger_signup'),
     path('edit/', profile_edit_view, name='profile-edit'),
     path('onboarding/', profile_edit_view, name='profile-onboarding'),
     path('settings/', profile_settings_view, name='profile-settings'),

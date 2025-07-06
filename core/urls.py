@@ -19,10 +19,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import home_view
+from users.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',  include('allauth.urls')),
+    path('accounts/signup/', signup_type, name='signup_type'),
+    path('accounts/signup/driver/', driver_signup, name='driver_signup'),
+    path('accounts/signup/passenger/', passenger_signup, name='passenger_signup'),
     path('profile/', include('users.urls')),
     path('chauffeurs/', include('chauffeurs.urls')),
     path('trips/', include('trips.urls')),
@@ -30,4 +34,4 @@ urlpatterns = [
 ]
 
 # to Be removed fir production
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

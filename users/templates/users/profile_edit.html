@@ -16,15 +16,28 @@
     </div>
 </div>
 <form method="POST" enctype="multipart/form-data">
+    <h2 class="form-subhead">Personal Profile</h2>
     {% csrf_token %}
-    {{ form | crispy }}
+    {{ profile_form | crispy }}
+
+    <h2 class="form-subhead">
+        {% if user_type == 'driver' %}
+        Driver Information
+        {% else %}
+        Passenger Information
+        {% endif %}
+    </h2>
+    {{ role_form | crispy }}
+
     <div class="flex justify-around w-full">
-    <button type="submit">Submit</button>
-    {% if is_new_user %}
-    <a class="button-style button-gray items-center" href="{% url 'home' %}">Skip</a>
-    {% else %}
-    <a class="button-style button-gray items-center" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
-    {% endif %}
+        {% if is_new_user %}
+        <button type="submit">Complete Profile</button>
+        <a class="button-style button-gray items-center" href="{% url 'home' %}">Skip</a>
+        {% else %}
+        <button type="submit">Save Changes</button>
+        <a class="button-style button-gray items-center" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+        {% endif %}
+
     </div>
 </form>
 

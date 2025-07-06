@@ -36,8 +36,9 @@
             </div>
             {% else %}
             <a href="{% url 'account_login' %}">Login</a>
-            <a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Signup</a>
+            <a href="{% url 'signup_type' %}">Signup</a>
             {% endif %}
+            
         </div>
     </div>
 </header>

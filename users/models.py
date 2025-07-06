@@ -11,15 +11,21 @@ TITLE_OPTIONS = [
     ('Lord', 'Lord'),
     ('Sir', 'Sir'),
 ]
+USER_TYPE_CHOICES = [
+    ('driver', 'Driver'),
+    ('passenger', 'Passenger'),
+]
 
 class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='passenger') 
+
     image = models.ImageField(upload_to='avatars/', null=True, blank=True)
     displayname= models.CharField(max_length=20, null=True,blank=True)
     title = models.CharField(max_length=20, choices=TITLE_OPTIONS, blank=True, null=True)
     email = models.EmailField()
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=15, null=True,blank=True)
     home_address = models.TextField(blank=True, null=True)
 
 
@@ -53,7 +59,7 @@ class PassengerProfile(models.Model):
 
 class DriverProfile(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='driver_profile')
-    experience = models.IntegerField()
+    experience = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
         return f"Driver: {self.profile.user.username}"
