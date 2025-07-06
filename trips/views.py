@@ -6,7 +6,10 @@ from .models import Trip
 
 def trip_view(request):
     # get all trips and filter for logged in user
-    trips = Trip.objects.filter(passenger=request.user)
+    # trips = Trip.objects.filter(passenger=request.user)
+    trips = Trip.objects.filter(
+        passenger__profile__user=request.user
+    )
 
     context = {
         'trips': trips,
