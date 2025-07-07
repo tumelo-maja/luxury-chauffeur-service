@@ -24,9 +24,7 @@ from users.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',  include('allauth.urls')),
-    path('accounts/signup/', signup_type, name='signup_type'),
-    path('accounts/signup/driver/', driver_signup, name='driver_signup'),
-    path('accounts/signup/passenger/', passenger_signup, name='passenger_signup'),
+    path('accounts/signup/', include('users.urls')),
     path('profile/', include('users.urls')),
     path('chauffeurs/', include('chauffeurs.urls')),
     path('trips/', include('trips.urls')),
