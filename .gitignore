@@ -3,3 +3,4 @@ env.py
 __pycache__/
 *.py[cod]
 users/fixtures/
+db.sqlite3
