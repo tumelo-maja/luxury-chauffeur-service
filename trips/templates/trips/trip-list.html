@@ -5,7 +5,7 @@
     <div class="trip-top">
         <div class="trip-details">
             <p class="driver">Driver: {{ trip.driver }}</p>
-            <p class="date">{{ trip.travel_date| date:"Y M d" }} - {{ trip.travel_time }}</p>
+            <p class="date">{{ trip.travel_datetime | date:"Y M d - H:i" }}</p>
         </div>
         <div class="trip-status status-complete">
             <p>{{ trip.status }}</p>
@@ -14,10 +14,8 @@
     <p class="destination">{{ trip.location_end }}</p>
 </div>
 {% endfor %}
-<a href="" class="fixed-button" aria-label="">Create a new trip</a>
 {% else %}
 <div class="empty-container">
     <p class="empty-list">You do not have any trips.</p>
-    <a href="" aria-label="">Create a new trip</a>
 </div>
 {% endif %}

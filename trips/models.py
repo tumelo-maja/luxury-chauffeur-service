@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 import shortuuid
 from users.models import DriverProfile, PassengerProfile
 
@@ -36,9 +35,7 @@ class Trip(models.Model):
     passenger = models.ForeignKey(PassengerProfile, on_delete=models.CASCADE, related_name='trips_passenger')
     location_start = models.CharField(max_length=200)
     location_end = models.CharField(max_length=200)
-    travel_date = models.DateField()
-    travel_time = models.TimeField()
-    travel_datetime = models.DateTimeField(blank=True, null=True)
+    travel_datetime = models.DateTimeField()
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -48,11 +45,11 @@ class Trip(models.Model):
 
     status = models.CharField(max_length=50, choices=STATUS_OPTIONS, default="pending")
 
-    vehicle = models.CharField(max_length=100, choices=VEHICLE_CHOICES, default="Range Rover Vogue")
+    vehicle = models.CharField(max_length=100, choices=VEHICLE_CHOICES)
 
     class Meta:
-        ordering = ["-travel_date"]
+        ordering = ["-travel_datetime"]
 
     def __str__(self):
-        return f"Trip {self.id} for {self.passenger} - {self.location_end} ({self.travel_date} {self.travel_time})"
+        return f"Trip {self.id} for {self.passenger} - {self.location_end} ({self.travel_datetime})"
     

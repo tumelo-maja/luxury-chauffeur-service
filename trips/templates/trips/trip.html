@@ -14,6 +14,7 @@
         </div>
         <div id="trip_list" class="trip-list">
             {% include 'trips/trip-list.html' %}
+            <a href="{% url 'trip-request' %}" class="fixed-button" aria-label="create a new trip">Create a new trip</a>
         </div>
 
     </div>
@@ -35,6 +36,16 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'js/trips.js' %}"></script>
+<script>
+    const minTime = "{{ min_valid_time_str }}";
+
+            flatpickr("#trip_datetime", {
+                enableTime: true,
+                minDate: minTime,
+                dateFormat: "Y-m-d H:i",
+                minuteIncrement: 15,
+                time_24hr: true,
+            });
+</script>
 <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'layouts/modal.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>Create a Trip Request</h1>
+<p>Enter the details of your trip below</p>
+
+<form method='POST'>
+    {% csrf_token %}
+    {{ form | crispy }}
+    <div class="flex justify-around w-full">
+        <span id="min_valid_time_str" class="hidden-item">{{ min_valid_time_str }}</span>
+        <button type="submit">Create Trip</button>
+        <a class="button-style button-gray ml-4" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    </div>
+</form>
+
+
+{% endblock %}

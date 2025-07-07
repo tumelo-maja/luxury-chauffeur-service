@@ -83,4 +83,15 @@ $(document).ready(function () {
     }
 
     repeat();
+
+    const minTime = $('#min_valid_time_str').text();
+
+    flatpickr("#trip_datetime", {
+        enableTime: true,
+        minDate: minTime,
+        dateFormat: "Y-m-d H:i",
+        minuteIncrement: 15,
+        time_24hr: true,
+    });
+
 });

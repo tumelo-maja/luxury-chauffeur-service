@@ -5,7 +5,7 @@ from .models import *
 from django.contrib.auth.models import User
 
 
-class ProfileEditForm(forms.ModelForm):
+class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['title', 'displayname', 'image', 'phone', 'home_address']
@@ -22,20 +22,20 @@ class MainSignupForm(UserCreationForm):
 
 
 
-class ProfileEditForm(forms.ModelForm):
+class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['title', 'displayname', 'image', 'phone', 'home_address']
 
 
-class DriverEditForm(forms.ModelForm):
+class DriverEditForm(ModelForm):
     class Meta:
         model = DriverProfile
         fields = ['experience']
         labels = {'experience': 'Years of driving experience'}
 
 
-class PassengerEditForm(forms.ModelForm):
+class PassengerEditForm(ModelForm):
     class Meta:
         model = PassengerProfile
         fields = ['emergency_name', 'emergency_phone']
