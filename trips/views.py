@@ -81,18 +81,14 @@ def trip_edit_view(request, trip_name):
         if form.is_valid():
 
             trip = form.save(commit=False)
+            trip.status = "modified"
             trip.passenger = request.user.profile.passenger_profile
             trip.save()
 
             # messages.success(request, "Changes saved successfully.")
 
-            # return redirect('trips')
             return HttpResponse(status=204, headers ={'HX-trigger': 'tripListChanged'})
-            # context = {
-            #     'trip': trip,
-            #     'user': request.user,
-            # }
-            # return render(request, 'trips/partials/trip-detail.html', context)
+
     else:
         form = TripRequestForm(instance=trip)
 
