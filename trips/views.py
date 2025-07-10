@@ -17,8 +17,8 @@ def trip_view(request):
 @login_required
 def trips_list_view(request):
     trips = Trip.objects.filter(
-        passenger__profile__user=request.user
-    )
+        passenger__profile__user=request.user,
+    ).exclude(status='cancelled')
 
     context = {
         'trips': trips,
@@ -110,13 +110,14 @@ def trip_delete_view(request, trip_name):
 
     if request.method == 'POST':
         form = TripRequestForm(instance=trip)
-        if form.is_valid():
-            trip = form.save(commit=False)
-            trip.status = "cancelled"
-            trip.passenger = request.user.profile.passenger_profile
-            trip.save()
+        print("Foooooorm")
+        trip = form.save(commit=False)
+        trip.status = "cancelled"
+        trip.passenger = request.user.profile.passenger_profile
+        trip.save()
+        print("stoooooooooooooooooooooooop")
 
-            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+        return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
     context = {
         'trip': trip,
