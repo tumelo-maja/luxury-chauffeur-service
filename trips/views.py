@@ -79,7 +79,7 @@ def trip_edit_view(request, trip_name):
     # form = TripRequestForm(instance=trip)
 
     if request.method == 'POST':
-        form = TripRequestForm(request.POST)
+        form = TripRequestForm(request.POST, instance=trip)
         if form.is_valid():
 
             trip = form.save(commit=False)
