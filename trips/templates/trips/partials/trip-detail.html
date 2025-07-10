@@ -9,7 +9,7 @@
     <div class="sub-items">
         <div class="sum-item status-container">
             <p class="title">Status: </p>
-            <p class="status status-upcoming">{{ trip.status }}</p>
+            <p class="status status-{{ trip.status_class }}">{{ trip.status_str }}</p>
         </div>
         <div class="locations sum-item">
             <p class="sub-head">Locations</p>

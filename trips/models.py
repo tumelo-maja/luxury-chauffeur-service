@@ -23,7 +23,7 @@ TRIP_TYPES = [
 STATUS_OPTIONS = [
         ("pending", "Pending"),
         ("confirmed", "Confirmed"),
-        ("in progress", "In Progress"),
+        ("in_progress", "In progress"),
         ("cancelled", "Cancelled"),
         ("modified", "Modified"),
         ("completed", "Completed"),
@@ -53,3 +53,10 @@ class Trip(models.Model):
     def __str__(self):
         return f"Trip {self.id} for {self.passenger} - {self.location_end} ({self.travel_datetime})"
     
+    @property
+    def status_class(self):
+        return self.status.replace('_', '-').lower()
+
+    @property
+    def status_str(self):
+        return self.status.replace('_', ' ').capitalize()    

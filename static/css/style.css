@@ -764,26 +764,34 @@ section {
 .trip-item .trip-status {
     border: 1px solid gray;
     border-radius: 10px;
-    height: 22px;
-    width: 70px;
+    height: 25px;
+    width: max-content;
 }
 
-.status-complete {
-    background-color: rgb(15, 201, 15);
+.status-pending,
+.status-modified {
+    background-color: #fd7e14;
 }
 
-.status-upcoming {
-    background-color: orange;
+.status-confirmed {
+    background-color: #28a745;
+}
+
+.status-in-progress {
+    background-color: #4a99b1;
 }
 
 .status-cancelled {
-    background-color: rgb(251, 113, 113);
+    background-color: #dc3545;
 }
 
-.status-ongoing {
-    background-color: lightgray;
+.status-completed {
+    background-color: #828181;
 }
 
+.status {
+    color: white;
+}
 
 
 .trip-status p {
@@ -791,8 +799,9 @@ section {
     font-style: italic;
     text-align: center;
     text-transform: capitalize;
-    color: black;
+    color: whitesmoke;
     font-weight: bold;
+    padding: 3px 10px;
 }
 
 .trip-summary {
@@ -872,12 +881,15 @@ section {
 .sub-items .status {
     border: 1px solid gray;
     border-radius: 10px;
-    height: 25px;
-    width: 90px;
+    height: 30px;
+    width: max-content;
     text-align: center;
     font-weight: bold;
     font-style: italic;
     font-size: 0.8rem;
+    text-transform: capitalize;
+    padding: 4px 10px;
+    margin-bottom: 3px;
 }
 
 .sum-item .sub-head {
@@ -888,7 +900,7 @@ section {
 .sum-item.status-container {
     display: flex;
     justify-content: space-between;
-    height: 40px;
+    height: 50px;
     margin-bottom: 0;
     padding: 5px 20px;
 }
@@ -975,7 +987,7 @@ section {
     padding: 5px 10px;
 }
 
-.trip-btn i { 
+.trip-btn i {
     margin-left: 10px;
 }
 
@@ -1108,120 +1120,116 @@ section {
 }
 
 #baseModalContainer {
-display: none;
--webkit-box-pack: center;
--ms-flex-pack: center;
-justify-content: center;
--webkit-box-align: center;
--ms-flex-align: center;
-align-items: center;
-position: fixed;
-top: 0;
-left: 0;
-width: 100vw;
-height: 100vh;
-background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .disable {
-pointer-events: none;
-opacity: 0.7;
+    pointer-events: none;
+    opacity: 0.7;
 }
 
 .btn-close {
-background-color: white;
+    background-color: white;
 }
 
 .modal-title {
-color: #091152;
-margin: 0 0 15px;
-font-size: 1.5rem;
+    color: #091152;
+    margin: 0 0 15px;
+    font-size: 1.5rem;
 }
 
 .game-modal {
-background: -o-radial-gradient(
-center,
-circle,
-#b9e495 0%,
-#9fda6f 60%,
-#7fce3f 100%
-);
-background: radial-gradient(
-circle at center,
-#b9e495 0%,
-#9fda6f 60%,
-#7fce3f 100%
-);
-width: 300px;
-padding: 30px 10px;
-border-radius: 10px;
--webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-text-align: center;
-display: -webkit-box;
-display: -ms-flexbox;
-display: flex;
--webkit-box-orient: vertical;
--webkit-box-direction: normal;
--ms-flex-direction: column;
-flex-direction: column;
--webkit-box-align: center;
--ms-flex-align: center;
-align-items: center;
--webkit-box-pack: center;
--ms-flex-pack: center;
-justify-content: center;
-border: 2px solid lightcyan;
+    background: -o-radial-gradient(center,
+            circle,
+            #b9e495 0%,
+            #9fda6f 60%,
+            #7fce3f 100%);
+    background: radial-gradient(circle at center,
+            #b9e495 0%,
+            #9fda6f 60%,
+            #7fce3f 100%);
+    width: 300px;
+    padding: 30px 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 2px solid lightcyan;
 }
 
 .game-modal p {
-margin: 2px;
-color: #091152;
+    margin: 2px;
+    color: #091152;
 }
 
 .modal-buttons {
-display: -webkit-box;
-display: -ms-flexbox;
-display: flex;
--webkit-box-pack: space-evenly;
--ms-flex-pack: space-evenly;
-justify-content: space-evenly;
--webkit-box-align: baseline;
--ms-flex-align: baseline;
-align-items: baseline;
-margin: 20px 10px;
-height: -webkit-max-content;
-height: -moz-max-content;
-height: max-content;
-width: 250px;
--ms-flex-wrap: wrap;
-flex-wrap: wrap;
-gap: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    margin: 20px 10px;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    width: 250px;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .modal-buttons button {
-border-radius: 50px;
-border: 2px solid lightcyan;
-color: #e0ffff;
-background-color: #2f44e8;
--webkit-box-shadow: 0 4px #1b5e20;
-box-shadow: 0 4px #1b5e20;
--webkit-transition: all 0.2s ease-in-out;
--o-transition: all 0.2s ease-in-out;
-transition: all 0.2s ease-in-out;
-height: 50px;
-width: 150px;
-font-weight: 700;
-text-shadow: -2px 1px 0 black;
-text-transform: uppercase;
-font-size: 0.9rem;
-letter-spacing: 1px;
+    border-radius: 50px;
+    border: 2px solid lightcyan;
+    color: #e0ffff;
+    background-color: #2f44e8;
+    -webkit-box-shadow: 0 4px #1b5e20;
+    box-shadow: 0 4px #1b5e20;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    height: 50px;
+    width: 150px;
+    font-weight: 700;
+    text-shadow: -2px 1px 0 black;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
 }
 
 .modal-buttons button:hover {
--webkit-transform: scale(1.04);
--ms-transform: scale(1.04);
-transform: scale(1.04);
--webkit-box-shadow: 0 6px #1b5e20;
-box-shadow: 0 6px #1b5e20;
+    -webkit-transform: scale(1.04);
+    -ms-transform: scale(1.04);
+    transform: scale(1.04);
+    -webkit-box-shadow: 0 6px #1b5e20;
+    box-shadow: 0 6px #1b5e20;
 }

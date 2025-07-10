@@ -7,8 +7,8 @@
             <p class="driver">{{ trip.driver }}</p>
             <p class="date">{{ trip.travel_datetime | date:"Y M d - H:i" }}</p>
         </div>
-        <div class="trip-status status-complete">
-            <p>{{ trip.status }}</p>
+        <div class="trip-status status-{{ trip.status_class }}">
+            <p>{{ trip.status_str }}</p>
         </div>
     </div>
     <p class="destination">{{ trip.location_end }}</p>
