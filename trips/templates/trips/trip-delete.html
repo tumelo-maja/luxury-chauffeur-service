@@ -1,0 +1,32 @@
+{% load crispy_forms_tags %}
+
+<form hx-post="{{ request.path }}" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" >Cancel Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {% csrf_token %}
+        <div class="delete-head">
+            <p class="icon"><i class="fa-solid fa-triangle-exclamation"></i></p>
+            <p class="warn-text">Warning! You are about to cancel the Trip:</p>
+        </div>
+
+        <div class="trip-delete-details">
+            <div class="locations">
+                <p><span class="sub-head">Pickup: </span><address class="bold-value">{{ trip.location_start }}</address></p>
+                <p><span class="sub-head">Destination: </span><address class="bold-value">{{ trip.location_end }}</address></p>
+            </div>
+            <p class="one-row"><span class="sub-head">Date & Time: </span><span class="bold-value">{{ trip.travel_datetime | date:"Y M d - H:i" }}</span></p>
+            <p class="one-row"><span class="sub-head">Chauffeur: </span><span class="bold-value">{{ trip.driver }}</span></p>
+            <p class="one-row"><span class="sub-head">Vehicle: </span><span class="bold-value">{{ trip.vehicle }}</span></p>
+            <p class="one-row"><span class="sub-head">Trip type: </span><span class="bold-value">{{ trip.trip_type }}</span></p>
+        </div>
+
+        <p class="warning-note"><span>NB:</span> This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer flex justify-around items-center w-full">
+        <button type="submit" class="button-red">Yes, Cancel Trip</button>
+        <button type="button" class="button-style button-gray ml-4" data-bs-dismiss="modal" >Go back</button>
+    </div>
+</form>

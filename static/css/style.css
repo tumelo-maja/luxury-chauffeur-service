@@ -287,7 +287,8 @@ section {
 .button-style {
     margin: 15px 0 5px;
     border-radius: 10px;
-    width: 70px;
+    width: max-content;
+    padding: 10px 15px ;
     height: 35px;
     color: white;
     font-weight: 500;
@@ -1114,124 +1115,66 @@ section {
     padding: 15px;
 }
 
-/* Modal styles */
+/* Delete trip modal */
 
-#baseModal {
-    display: none;
-
+.trip-delete-details {
+    padding: 30px 15px;
 }
 
-#baseModalContainer {
-    display: none;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.disable {
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.btn-close {
-    background-color: white;
-}
-
-.modal-title {
-    color: #091152;
-    margin: 0 0 15px;
-    font-size: 1.5rem;
-}
-
-.game-modal {
-    background: -o-radial-gradient(center,
-            circle,
-            #b9e495 0%,
-            #9fda6f 60%,
-            #7fce3f 100%);
-    background: radial-gradient(circle at center,
-            #b9e495 0%,
-            #9fda6f 60%,
-            #7fce3f 100%);
-    width: 300px;
-    padding: 30px 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    display: -webkit-box;
-    display: -ms-flexbox;
+.trip-delete-details .locations {
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    border: 2px solid lightcyan;
+    align-items: center;
+    margin: 10px 0;
 }
 
-.game-modal p {
-    margin: 2px;
-    color: #091152;
-}
 
-.modal-buttons {
-    display: -webkit-box;
-    display: -ms-flexbox;
+.trip-delete-details .one-row {
     display: flex;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
-    -webkit-box-align: baseline;
-    -ms-flex-align: baseline;
-    align-items: baseline;
-    margin: 20px 10px;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    width: 250px;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
 }
 
-.modal-buttons button {
-    border-radius: 50px;
-    border: 2px solid lightcyan;
-    color: #e0ffff;
-    background-color: #2f44e8;
-    -webkit-box-shadow: 0 4px #1b5e20;
-    box-shadow: 0 4px #1b5e20;
-    -webkit-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    height: 50px;
-    width: 150px;
-    font-weight: 700;
-    text-shadow: -2px 1px 0 black;
+.trip-delete-details .sub-head {
+    font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
 }
 
-.modal-buttons button:hover {
-    -webkit-transform: scale(1.04);
-    -ms-transform: scale(1.04);
-    transform: scale(1.04);
-    -webkit-box-shadow: 0 6px #1b5e20;
-    box-shadow: 0 6px #1b5e20;
+
+.delete-head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-head .icon {
+    font-size: 3rem;
+    color: red;
+    margin-bottom: 15px;
+}
+
+.delete-head .warn-text {
+    color: red;
+    font-size: 1.2rem;
+}
+
+.warning-note {
+    font-style: italic;
+    text-align: center;
+}
+
+.button-red {
+    padding: 5px;
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    width: max-content;
+    height: 35px;
+    text-align: center;
+   padding: 5px 20px;
 }

@@ -13,6 +13,7 @@ from .forms import *
 def trip_view(request):
     return render(request, 'trips/trip.html')
 
+
 @login_required
 def trips_list_view(request):
     trips = Trip.objects.filter(
@@ -25,6 +26,7 @@ def trips_list_view(request):
     }
 
     return render(request, 'trips/trips-list.html', context)
+
 
 @login_required
 def trip_detail_view(request, trip_name):
@@ -52,8 +54,8 @@ def trip_request_view(request):
 
             # messages.success(request, "Trip created successfully.")
             # return redirect('trips')
-        
-            return HttpResponse(status=204, headers ={'HX-trigger': 'tripListChanged'})
+
+            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
     else:
         form = TripRequestForm()
@@ -87,7 +89,7 @@ def trip_edit_view(request, trip_name):
 
             # messages.success(request, "Changes saved successfully.")
 
-            return HttpResponse(status=204, headers ={'HX-trigger': 'tripListChanged'})
+            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
     else:
         form = TripRequestForm(instance=trip)
@@ -100,3 +102,25 @@ def trip_edit_view(request, trip_name):
 
     return render(request, 'trips/trip-edit.html', context)
 
+
+@login_required
+def trip_delete_view(request, trip_name):
+
+    trip = get_object_or_404(Trip, trip_name=trip_name)
+
+    if request.method == 'POST':
+        form = TripRequestForm(instance=trip)
+        if form.is_valid():
+            trip = form.save(commit=False)
+            trip.status = "cancelled"
+            trip.passenger = request.user.profile.passenger_profile
+            trip.save()
+
+            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+
+    context = {
+        'trip': trip,
+        'user': request.user
+    }
+
+    return render(request, 'trips/trip-delete.html', context)

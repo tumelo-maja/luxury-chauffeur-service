@@ -43,7 +43,10 @@
                     class="italic-value">{{ trip.comments }}</span></p>
         </div>
         <div class="trip-controls">
-            <button type="button"  class="trip-cancel trip-btn">Cancel Trip <i class="fa-solid fa-trash-can"></i></button>
+            <button type="button"  class="trip-cancel trip-btn"
+            hx-get="{% url 'trip-delete' trip.trip_name %}"
+             hx-target="#baseDialog"
+             >Cancel Trip <i class="fa-solid fa-trash-can"></i></button>
             <button type="button" class="trip-edit trip-btn" id="editTripButton"
              hx-get="{% url 'trip-edit' trip.trip_name %}"
              hx-target="#baseDialog"
