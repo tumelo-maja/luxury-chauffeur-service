@@ -791,6 +791,7 @@ section {
 
 .status {
     color: white;
+    letter-spacing: 1px;
 }
 
 
@@ -802,6 +803,7 @@ section {
     color: whitesmoke;
     font-weight: bold;
     padding: 3px 10px;
+    letter-spacing: 0.5px;
 }
 
 .trip-summary {
