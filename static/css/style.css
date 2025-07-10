@@ -967,11 +967,16 @@ section {
 .trip-controls .trip-btn {
     border: 1px solid gray;
     height: 30px;
-    width: 80px;
+    width: max-content;
     border-radius: 8px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    padding: 5px 10px;
+}
+
+.trip-btn i { 
+    margin-left: 10px;
 }
 
 /* trip form */
