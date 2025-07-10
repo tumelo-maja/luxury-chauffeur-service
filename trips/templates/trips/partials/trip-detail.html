@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 
 <div id="trip-detail-container" class="trip-summary">
     <div class="trip-head">
@@ -20,8 +22,7 @@
         </div>
         <div class="datetime sum-item">
             <p class="sub-head">Date & Time</p>
-            <div class="date">Date: <span>{{ trip.travel_date }}</span></div>
-            <div class="time">Time: <span>{{ trip.travel_time }}</span></div>
+            <div class="date">Date: <span>{{ trip.travel_datetime | date:"Y M d - H:i" }}</span></div>
         </div>
         <div class="sum-item">
             <p class="sub-head">Chauffeur</p>
@@ -34,16 +35,21 @@
         </div>
         <div class="sum-item">
             <div class="vehicle-summary">
-                <p><span  class="sub-head">Vehicle: </span><span class="bold-value">{{ trip.vehicle }}</span></p>
+                <p><span class="sub-head">Vehicle: </span><span class="bold-value">{{ trip.vehicle }}</span></p>
             </div>
         </div>
         <div class="type sum-item">
             <p class="trip-type"><span class="text-bold">Trip type: </span><span class="bold-value">{{ trip.trip_type }}</span></p>
-            <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span class="italic-value">{{ trip.comments }}</span></p>
+            <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span
+                    class="italic-value">{{ trip.comments }}</span></p>
         </div>
         <div class="trip-controls">
-            <a href="" class="trip-cancel trip-btn">Cancel <i class="fa-solid fa-trash-can"></i></a>
-            <a href="" class="trip-edit trip-btn">Edit <i class="fa-solid fa-pen-to-square"></i></a>
+            <button type="button"  class="trip-cancel trip-btn">Cancel <i class="fa-solid fa-trash-can"></i></button>
+            <button type="button" class="trip-edit trip-btn" id="editTripButton"
+             hx-get="{% url 'trip-edit' trip.trip_name %}"
+             hx-target="#baseDialog"
+            >Edit <i class="fa-solid fa-pen-to-square"></i></button>
+
         </div>
     </div>
 </div>

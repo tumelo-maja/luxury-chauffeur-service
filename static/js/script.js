@@ -84,14 +84,42 @@ $(document).ready(function () {
 
     repeat();
 
-    const minTime = $('#min_valid_time_str').text();
+    function initializeFlatpicker() {
+        let minTime = $('#min_valid_time_str').text();
+        flatpickr(".trip_datetime", {
+            enableTime: true,
+            minDate: minTime,
+            dateFormat: "Y-m-d H:i",
+            minuteIncrement: 15,
+            time_24hr: true,
+        });
 
-    flatpickr("#trip_datetime", {
-        enableTime: true,
-        minDate: minTime,
-        dateFormat: "Y-m-d H:i",
-        minuteIncrement: 15,
-        time_24hr: true,
-    });
+        console.log("New picker created!");
+
+    }
+
+    initializeFlatpicker();
+
+    const modal = new bootstrap.Modal($('#baseModal'));
+
+    htmx.on('htmx:afterSwap', (e) => {
+        if (e.detail.target.id === 'baseDialog') {
+            modal.show();
+            initializeFlatpicker();
+        }
+    })
+
+    htmx.on('htmx:beforeSwap', (e) => {
+        if (e.detail.target.id === 'baseDialog' && !e.detail.xhr.response) {
+            modal.hide();
+        }
+    })
+
+    htmx.on('hidden:bs.modal', (e) => {
+        $('#baseDialog')
+        document.getElementById('baseDialog').innerHTML='';
+        
+    })
+
 
 });

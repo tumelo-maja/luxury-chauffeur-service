@@ -27,7 +27,7 @@ class TripRequestForm(ModelForm):
                 'placeholder': 'Enter destination...',
             }),
             'travel_datetime': forms.DateTimeInput(
-                attrs={'id': 'trip_datetime', 'placeholder': 'Select Date and Time',}
+                attrs={'class':'trip_datetime', 'placeholder': 'Select Date and Time',}
             ),
             'comments': forms.Textarea(attrs={
                 'placeholder': 'Add special instructions...',

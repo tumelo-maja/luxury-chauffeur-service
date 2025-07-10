@@ -21,11 +21,11 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <!-- Tailwind css -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- Flatpickr for DateTime Picker -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
@@ -36,6 +36,12 @@
 
     {% block layout %}
     {% endblock %}
+    <!-- Modal Container -->
+<div class="modal fade" id="baseModal" tabindex="-1" aria-labelledby="baseModalLabel" aria-hidden="true">
+    <div id="baseDialog" class="modal-dialog" hx-target="this">
+        
+    </div>
+</div>
 
     <footer class="footer">
         <p>&copy; 2025 Luxury Chauffeur Service - Website for educational purposes only</p>
@@ -48,6 +54,11 @@
     <!-- Flat picker JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.min.js"
+        integrity="sha512-zKeerWHHuP3ar7kX2WKBSENzb+GJytFSBL6HrR2nPSR1kOX1qjm+oHooQtbDpDBSITgyl7QXZApvDfDWvKjkUw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
     {% block javascript %}
     <script src="{% static 'js/script.js' %}"></script>
     {% endblock %}
