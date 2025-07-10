@@ -14,15 +14,14 @@
         <div class="locations sum-item">
             <p class="sub-head">Locations</p>
             <div class="pickup">
-                Pickup: <address>{{ trip.location_start }}</address>
+                <span class="sub-head">Pickup: </span><address class="bold-value">{{ trip.location_start }}</address>
             </div>
             <div class="destination">
-                Destination: <address>{{ trip.location_end }}</address>
+                <span class="sub-head">Destination: </span><address class="bold-value">{{ trip.location_end }}</address>
             </div>
         </div>
         <div class="datetime sum-item">
-            <p class="sub-head">Date & Time</p>
-            <div class="date">Date: <span>{{ trip.travel_datetime | date:"Y M d - H:i" }}</span></div>
+            <p class="date one-row"><span class="sub-head">Date & Time: </span><span class="bold-value">{{ trip.travel_datetime | date:"Y M d - H:i" }}</span></p>
         </div>
         <div class="sum-item">
             <p class="sub-head">Chauffeur</p>
@@ -39,7 +38,7 @@
             </div>
         </div>
         <div class="type sum-item">
-            <p class="trip-type"><span class="text-bold">Trip type: </span><span class="bold-value">{{ trip.trip_type }}</span></p>
+            <p class="one-row"><span class="text-bold">Trip type: </span><span class="bold-value">{{ trip.trip_type }}</span></p>
             <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span
                     class="italic-value">{{ trip.comments }}</span></p>
         </div>
