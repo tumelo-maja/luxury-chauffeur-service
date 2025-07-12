@@ -1,0 +1,92 @@
+{% extends 'layouts/blank.html' %}
+{% load static %}
+
+{% block content %}
+<main class="push-footer main-dash">
+    <div class="dashboard-menu">
+        <div class="dash-body">
+            <ul>
+                <li class="dash-item">Dashboard</li>
+                <li class="dash-item">All Trips</li>
+                <li class="dash-item">Trip History</li>
+                <li class="dash-item">Upcoming</li>
+            </ul>
+        </div>
+        <div class="dash-tail">
+            <button type="button" class="dash-button" aria-label="create a new trip">+ Create Trip</button>
+        </div>
+    </div>
+    <div class="dashboard-container">
+        <section class="dash-stats">
+            <h2 class="dash-header">Trips Summary</h2>
+            <ul>
+                <li class="stats-item"><span class="stat-value">44</span> <span class="stat-label">Trips
+                        Completed</span></li>
+                <li class="stats-item"><span class="stat-value">0</span> <span class="stat-label">Trips Cancelled</span>
+                </li>
+                <li class="stats-item"><span class="stat-value">2</span> <span class="stat-label">Trips Pending</span>
+                </li>
+                <li class="stats-item"><span class="stat-value">340</span> <span class="stat-label">Total Trips</span>
+                </li>
+            </ul>
+
+        </section>
+        <div class="dash-details">
+            <section class="dash-ratings">
+                <h2 class="dash-header">Ratings</h2>
+                <ol>
+                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
+                            5</span><span>137</span></li>
+                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
+                            4</span><span>66</span></li>
+                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
+                            3</span><span>29</span></li>
+                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
+                            2</span><span>12</span></li>
+                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
+                            1</span><span>2</span></li>
+                </ol>
+            </section>
+            <section class="dash-activities">
+                <h2 class="dash-header">Recent Activities</h2>
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="trip-to">Trip to</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="trip-no">1.</td>
+                            <td>10 Downing Street</td>
+                            <td>2023-09-15</td>
+                            <td>Upcoming</td>
+                            <td>View Details</td>
+                        </tr>
+                        <tr>
+                            <td class="trip-no">2.</td>
+                            <td>82 George Square</td>
+                            <td>2023-09-10</td>
+                            <td>Pending</td>
+                            <td>View Details</td>
+                        </tr>
+                        <tr>
+                            <td class="trip-no">3.</td>
+                            <td>15 O'Connell Street</td>
+                            <td>2023-09-05</td>
+                            <td>Completed</td>
+                            <td>View Details</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+        </div>
+    </div>
+</main>
+{% endblock %}
