@@ -13,7 +13,7 @@
             <h3>My trips</h3>
         </div>
         <div id="trip_list" class="trip-list"
-        hx-get="{% url 'trips-list' %}"
+        hx-get="{% url 'trips-list' 'all' %}"
         hx-trigger="load, tripListChanged from:body">
         </div>
         <button type="button" 

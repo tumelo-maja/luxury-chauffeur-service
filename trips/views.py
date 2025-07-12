@@ -19,17 +19,29 @@ def trips_dashboard_view(request):
 
 
 @login_required
-def trips_list_view(request):
+def trips_list_view(request, filter_trips='all'):
     trips = Trip.objects.filter(
         passenger__profile__user=request.user,
     ).exclude(status='cancelled')
 
-    context = {
-        'trips': trips,
-        'user': request.user
-    }
+    if filter_trips == "recent":
 
-    return render(request, 'trips/trips-list.html', context)
+        context = {
+            'trips': trips.order_by('-updated_on')[:4],
+            'user': request.user
+        }
+
+        return render(request, 'trips/partials/dash-table.html', context)
+
+
+    else:
+
+        context = {
+            'trips': trips,
+            'user': request.user
+        }
+
+        return render(request, 'trips/trips-list.html', context)
 
 
 @login_required

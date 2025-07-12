@@ -809,6 +809,9 @@ body {
 
 .trip-summary {
     min-width: 350px;
+    background-color: #fff;
+    padding-bottom: 10px;
+    border-radius: 12px;
 }
 
 .no-trip {
@@ -1315,7 +1318,7 @@ body {
 }
 
 .dash-ratings {
-    width: 160px;
+    width: 180px;
     border-radius: 12px;
     padding: 15px;
     display: flex;
@@ -1337,18 +1340,21 @@ body {
     flex: 1 0 calc(70% - 35px);
     min-width: calc(70% - 35px);
     border-radius: 12px;
+    max-width: 300px;
 }
 
 /* Dash actiivities  */
 
 .activity-table {
     width: 100%;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    /* table-layout: auto; */
+    /* white-space: nowrap; */
 }
 
 th,
 td {
-    padding: 12px;
+    padding: 6px;
     text-align: left;
     border-top: 1px solid #ddd;
 }
@@ -1360,6 +1366,7 @@ th {
 
 .trip-no {
     padding-right: 3px;
+
 }
 
 

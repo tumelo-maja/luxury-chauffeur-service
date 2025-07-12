@@ -14,7 +14,10 @@
             <div class="row-sep"></div>
         </div>
         <div class="dash-tail">
-            <button type="button" class="dash-button" aria-label="create a new trip">+ Create Trip</button>
+            <button type="button" class="dash-button" aria-label="create a new trip"
+            hx-get="{% url 'trip-request' %}" 
+        hx-target="#baseDialog"
+            >+ Create Trip</button>
         </div>
     </div>
     <div class="dashboard-container">
@@ -49,52 +52,11 @@
                 </ol>
             </section>
             <div class="col-sep"></div>
-            <section class="dash-activities">
-                <h2 class="dash-header">Recent Activities</h2>
-                <table class="activity-table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th class="trip-to">Trip to</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <div class="col-sep"></div>
-                    <tbody>
-                        <tr>
-                            <td class="trip-no">1.</td>
-                            <td>10 Downing Street</td>
-                            <td>2023-09-15</td>
-                            <td>Upcoming</td>
-                            <td>
-                                <button type="button" class="dash-tab-btn">View Details
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="trip-no">2.</td>
-                            <td>82 George Square</td>
-                            <td>2023-09-10</td>
-                            <td>Pending</td>
-                            <td>
-                                <button type="button" class="dash-tab-btn">View Details
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="trip-no">3.</td>
-                            <td>15 O'Connell Street</td>
-                            <td>2023-09-05</td>
-                            <td>Completed</td>
-                            <td>
-                                <button type="button" class="dash-tab-btn">View Details
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <section class="dash-activities" id="dashTable"
+            hx-get="{% url 'trips-list' 'recent' %}"
+            hx-trigger="load, tripListChanged from:body"
+            >
+            {% include 'trips/partials/dash-table.html' %}
             </section>
         </div>
     </div>

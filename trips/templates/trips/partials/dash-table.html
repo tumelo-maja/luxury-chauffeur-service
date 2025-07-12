@@ -1,0 +1,36 @@
+<h2 class="dash-header">Recent Activities</h2>
+<table class="activity-table">
+    <thead>
+        <tr>
+            <th class="trip-no"></th>
+            <th class="trip-to">Trip to</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <div class="col-sep"></div>
+    <tbody>
+        {% if trips %}
+        {% for trip in trips reversed %}
+        <tr>
+            <td class="trip-no">1.</td>
+            <td>{{ trip.location_end_short }}</td>
+            <td>{{ trip.travel_datetime | date:"Y M d - H:i" }}</td>
+            <td>{{ trip.status_str }}</td>
+            <td>
+                <button type="button" class="dash-tab-btn" hx-get="{% url 'trip-detail' trip.trip_name %}"
+                    hx-target="#baseDialog">View Details
+                </button>
+
+
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr class="empty-row">
+            <td colspan="4">Full Width Header (Spanning All 4 Columns)</th>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>

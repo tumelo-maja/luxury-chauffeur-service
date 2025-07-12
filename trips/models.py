@@ -59,4 +59,8 @@ class Trip(models.Model):
 
     @property
     def status_str(self):
-        return self.status.replace('_', ' ').capitalize()    
+        return self.status.replace('_', ' ').capitalize()
+
+    @property
+    def location_end_short(self):
+        return self.location_end.split(',')[0]       
