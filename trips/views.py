@@ -13,9 +13,25 @@ from .forms import *
 def trip_view(request):
     return render(request, 'trips/trip.html')
 
+
 @login_required
 def trips_dashboard_view(request):
     return render(request, 'trips/trips-dashboard.html')
+
+
+@login_required
+def trips_dashboard_stats_view(request):
+
+    context = {
+        'stats': {
+            'cancelled': Trip.objects.filter(status='cancelled').count(),
+            'completed': Trip.objects.filter(status='completed').count(),
+            'pending': Trip.objects.filter(status='pending').count(),
+            'modified': Trip.objects.filter(status='modified').count(),
+        },
+    }
+
+    return render(request, 'trips/partials/dash-trips-summary.html', context)
 
 
 @login_required
@@ -28,11 +44,10 @@ def trips_list_view(request, filter_trips='all'):
 
         context = {
             'trips': trips.order_by('-updated_on')[:4],
-            'user': request.user
+            'user': request.user,
         }
 
         return render(request, 'trips/partials/dash-table.html', context)
-
 
     else:
 
@@ -50,9 +65,13 @@ def trip_detail_view(request, trip_name):
     queryset = Trip.objects.filter(trip_name=trip_name)
     trip = get_object_or_404(queryset)
 
+    is_modal = request.GET.get('modal', 'true') == 'true'
+
+
     context = {
         'trip': trip,
         'user': request.user,
+        'is_modal': is_modal,
     }
     return render(request, 'trips/partials/trip-detail.html', context)
 

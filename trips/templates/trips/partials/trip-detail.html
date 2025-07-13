@@ -2,11 +2,14 @@
 {% load crispy_forms_tags %}
 
 
-<div id="trip-detail-container" class="trip-summary">
-    <div class="trip-head">
+<div id="trip-detail-container" {% if not is_modal %} hx-swap-oob="outerHTML" {% endif %} class="trip-summary {% if is_modal %} modal-content {% endif %}">
+    <div class="trip-head {% if is_modal %} modal-header {% endif %}">
         <h3>Trip Details</h3>
+        {% if is_modal %} 
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        {% endif %}
     </div>
-    <div class="sub-items">
+    <div class="sub-items {% if is_modal %} modal-body {% endif %}">
         <div class="sum-item status-container">
             <p class="title">Status: </p>
             <p class="status status-{{ trip.status_class }}">{{ trip.status_str }}</p>

@@ -14,26 +14,15 @@
             <div class="row-sep"></div>
         </div>
         <div class="dash-tail">
-            <button type="button" class="dash-button" aria-label="create a new trip"
-            hx-get="{% url 'trip-request' %}" 
-        hx-target="#baseDialog"
-            >+ Create Trip</button>
+            <button type="button" class="dash-button" aria-label="create a new trip" hx-get="{% url 'trip-request' %}"
+                hx-target="#baseDialog">+ Create Trip</button>
         </div>
     </div>
     <div class="dashboard-container">
-        <section class="dash-stats">
-            <h2 class="dash-header">Trips Summary</h2>
-            <ul>
-                <li class="stats-item"><span class="stat-value">44</span> <span class="stat-label">Trips
-                        Completed</span></li>
-                <li class="stats-item"><span class="stat-value">0</span> <span class="stat-label">Trips Cancelled</span>
-                </li>
-                <li class="stats-item"><span class="stat-value">2</span> <span class="stat-label">Trips Pending</span>
-                </li>
-                <li class="stats-item"><span class="stat-value">340</span> <span class="stat-label">Total Trips</span>
-                </li>
-            </ul>
-
+        <section class="dash-stats" 
+        hx-get="{% url 'trips-dashboard-stats' %}"
+        hx-trigger="load, tripListChanged from:body">
+            {% include 'trips/partials/dash-trips-summary.html' %}
         </section>
         <div class="dash-details">
             <section class="dash-ratings">
@@ -52,11 +41,9 @@
                 </ol>
             </section>
             <div class="col-sep"></div>
-            <section class="dash-activities" id="dashTable"
-            hx-get="{% url 'trips-list' 'recent' %}"
-            hx-trigger="load, tripListChanged from:body"
-            >
-            {% include 'trips/partials/dash-table.html' %}
+            <section class="dash-activities" id="dashTable" hx-get="{% url 'trips-list' 'recent' %}"
+                hx-trigger="load, tripListChanged from:body">
+                {% include 'trips/partials/dash-table.html' %}
             </section>
         </div>
     </div>

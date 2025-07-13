@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 body {
@@ -808,7 +808,7 @@ body {
 }
 
 .trip-summary {
-    min-width: 350px;
+    /* min-width: 350px; */
     background-color: #fff;
     padding-bottom: 10px;
     border-radius: 12px;
@@ -1298,9 +1298,20 @@ body {
 }
 
 .stats-item .stat-value {
-    color: red;
     font-size: 2rem;
     font-weight: bold;
+}
+
+.stat-value.completed {
+color:green
+}
+
+.stat-value.cancelled {
+color:red
+}
+
+.stat-value.pending {
+color:orange
 }
 
 .dash-details {

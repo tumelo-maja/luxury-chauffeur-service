@@ -1,6 +1,6 @@
 {% if trips %}
 {% for trip in trips reversed %}
-<div class="trip-item" hx-get="{% url 'trip-detail' trip.trip_name %}" hx-trigger="click"
+<div class="trip-item" hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false" hx-trigger="click"
     hx-target="#trip-detail-container">
     <div class="trip-top">
         <div class="trip-details">
