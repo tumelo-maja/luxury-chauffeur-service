@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from datetime import datetime, timedelta
 from .models import Trip
 from .forms import *
+from .filters import TripFilter
 
 # Create your views here.
 
@@ -20,7 +21,7 @@ def trips_dashboard_view(request):
 
 
 @login_required
-def dash_details_view(request,partial):
+def dash_details_view(request, partial):
     return render(request, f'trips/partials/dash-{partial}.html')
 
 
@@ -41,11 +42,11 @@ def trips_dashboard_stats_view(request):
 
 @login_required
 def trips_list_view(request, filter_trips='all'):
-    trips = Trip.objects.filter(
-        passenger__profile__user=request.user,
-    ).exclude(status='cancelled')
 
     if filter_trips == "recent":
+        trips = Trip.objects.filter(
+            passenger__profile__user=request.user,
+        ).exclude(status='cancelled')
 
         context = {
             'trips': trips.order_by('-updated_on')[:4],
@@ -56,8 +57,17 @@ def trips_list_view(request, filter_trips='all'):
 
     else:
 
+        status_filter = TripFilter(
+            request.GET,
+            queryset=Trip.objects.filter(passenger__profile__user=request.user))
+        # trips = status_filter.qs
+        trips = Trip.objects.filter(
+            passenger__profile__user=request.user,
+        ).exclude(status='cancelled')
+
         context = {
             'trips': trips,
+            'filter': status_filter,
             'user': request.user
         }
 
@@ -71,7 +81,6 @@ def trip_detail_view(request, trip_name):
     trip = get_object_or_404(queryset)
 
     is_modal = request.GET.get('modal', 'true') == 'true'
-
 
     context = {
         'trip': trip,
@@ -150,12 +159,10 @@ def trip_delete_view(request, trip_name):
 
     if request.method == 'POST':
         form = TripRequestForm(instance=trip)
-        print("Foooooorm")
         trip = form.save(commit=False)
         trip.status = "cancelled"
         trip.passenger = request.user.profile.passenger_profile
         trip.save()
-        print("stoooooooooooooooooooooooop")
 
         return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 

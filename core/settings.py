@@ -51,11 +51,21 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_htmx',
+    'widget_tweaks',
+    'tailwind',
+    'theme',
     'home',
     'users',
     'chauffeurs',
     'trips',
 ]
+
+TAILWIND_APP_NAME ='theme'
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
+
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -73,6 +83,13 @@ MIDDLEWARE = [
     'django_htmx.middleware.HtmxMiddleware',
 ]
 
+# Auto reloads - Dev env only
+if DEBUG:
+    INSTALLED_APPS += ['django_browser_reload']
+    MIDDLEWARE += [
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    ]
+    
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
