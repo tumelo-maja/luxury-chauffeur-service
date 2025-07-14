@@ -2,49 +2,61 @@
 {% load static %}
 
 {% block content %}
-<main class="push-footer main-dash">
-    <div class="dashboard-menu">
-        <div class="dash-body">
-            <ul>
-                <li class="dash-item">Dashboard</li>
-                <li class="dash-item">All Trips</li>
-                <li class="dash-item">Trip History</li>
-                <li class="dash-item">Upcoming</li>
-            </ul>
-            <div class="row-sep"></div>
-        </div>
-        <div class="dash-tail">
-            <button type="button" class="dash-button" aria-label="create a new trip" hx-get="{% url 'trip-request' %}"
-                hx-target="#baseDialog">+ Create Trip</button>
-        </div>
+<main class="push-footer main-dash max-w-6xl">
+    <div class="greeting">
+        <h1>Hello {{ user.username }}, welcome back</h1>
+        <p>Manage your trips with ease.</p>
     </div>
-    <div class="dashboard-container">
-        <section class="dash-stats" 
-        hx-get="{% url 'trips-dashboard-stats' %}"
-        hx-trigger="load, tripListChanged from:body">
-            {% include 'trips/partials/dash-trips-summary.html' %}
-        </section>
-        <div class="dash-details">
-            <section class="dash-ratings">
-                <h2 class="dash-header">Ratings</h2>
-                <ol>
-                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                            5</span><span>137</span></li>
-                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                            4</span><span>66</span></li>
-                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                            3</span><span>29</span></li>
-                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                            2</span><span>12</span></li>
-                    <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                            1</span><span>2</span></li>
-                </ol>
-            </section>
-            <div class="col-sep"></div>
-            <section class="dash-activities" id="dashTable" hx-get="{% url 'trips-list' 'recent' %}"
-                hx-trigger="load, tripListChanged from:body">
-                {% include 'trips/partials/dash-table.html' %}
-            </section>
+    <div class="flex">
+        <div class="dashboard-menu">
+            <div class="dash-body">
+                <ul>
+                    <li>
+                        <button type="button" class="dash-item selected">Dashboard</button>
+                    </li>
+                    <li>
+                        <button type="button" class="dash-item">All Trips</button>
+                    </li>
+                    <li>
+                        <button type="button" class="dash-item">Trip History</button>
+                    </li>
+                    <li>
+                        <button type="button" class="dash-item">Upcoming</button>
+                    </li>
+                </ul>
+                <div class="row-sep"></div>
+            </div>
+            <div class="dash-tail">
+                <button type="button" class="dash-button" aria-label="create a new trip"
+                    hx-get="{% url 'trip-request' %}" hx-target="#baseDialog">+ Create Trip</button>
+            </div>
+        </div>
+        <div class="dashboard-container">
+            <div class="trips-container">
+                <div class="trip-wrapper">
+                    <div class="trip-head">
+                        <h3>My trips</h3>
+                    </div>
+                    <div id="trip_list" class="trip-list" hx-get="{% url 'trips-list' 'all' %}"
+                        hx-trigger="load, tripListChanged from:body">
+                    </div>
+                    <button type="button" hx-get="{% url 'trip-request' %}" hx-target="#baseDialog" class="fixed-button"
+                        aria-label="create a new trip">Create a new trip</button>
+                </div>
+                <div class="col-sep"></div>
+                <div id="trip-detail-container" class="trip-summary">
+                    <div class="trip-head">
+                        <h3>Trip Details</h3>
+                    </div>
+                    <div class="sub-items flex flex-col items-center">
+                        <p class="no-trip">
+                            Select a Trip to view from the left panel
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </main>

@@ -1,7 +1,12 @@
 {% if trips %}
 {% for trip in trips reversed %}
-<div class="trip-item" hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false" hx-trigger="click"
-    hx-target="#trip-detail-container">
+<div class="trip-item" hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
+    hx-target="#trip-detail-container"
+    {% if forloop.first %}
+        hx-trigger="click, load, tripListChanged from:body"
+    {% else %}
+        hx-trigger="click"
+    {% endif %}>
     <div class="trip-top">
         <div class="trip-details">
             <p class="driver">{{ trip.driver }}</p>
