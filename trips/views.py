@@ -20,6 +20,11 @@ def trips_dashboard_view(request):
 
 
 @login_required
+def dash_details_view(request,partial):
+    return render(request, f'trips/partials/dash-{partial}.html')
+
+
+@login_required
 def trips_dashboard_stats_view(request):
 
     context = {

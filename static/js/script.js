@@ -117,9 +117,15 @@ $(document).ready(function () {
 
     htmx.on('hidden:bs.modal', (e) => {
         $('#baseDialog')
-        document.getElementById('baseDialog').innerHTML='';
-        
+        document.getElementById('baseDialog').innerHTML = '';
+
     })
+
+    // handle dashboard button clicks
+    $('.dash-item').click(function () {
+        $('.dash-item').removeClass('selected');
+        $(this).addClass('selected');
+    });
 
 
 });
