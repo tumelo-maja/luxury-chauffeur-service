@@ -34,7 +34,6 @@ $(document).ready(function () {
 
             }
 
-
             htmx.on('htmx:afterSwap', (e) => {
                 if ($(e.target).id === $('#trip_list').id) {
                     const selectedStatus = $('#status-filter').val();
@@ -44,6 +43,41 @@ $(document).ready(function () {
                 }
 
             })
+
+            // sort trip-list by fields
+            $('#field-sort').on('change', function () {
+                sortTrips($(this).val());
+                console.log('iterms sorted');
+            });
+
+            function sortTrips(sortValue) {
+
+                const [sortField, order] = sortValue.split('_');
+
+                const trips = $('#trip_list .trip-item');
+
+                console.log('Sorrt ready');
+                console.log(`sortField: ${sortField}`);
+                console.log(`order: ${order}`);
+
+                trips.sort(function (a, b) {
+                    const aValue = $(a).data(sortField);
+                    const bValue = $(b).data(sortField);
+
+                    if (sortField === 'status') {
+                        return order === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                    }
+
+                    if (order === 'asc') {
+                        return aValue - bValue;
+                    } else {
+                        return bValue - aValue;
+                    }
+                });
+
+                $('#trip_list ol').html(trips);
+
+            }
 
         }, 100);
     });

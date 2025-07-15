@@ -1417,9 +1417,18 @@ th {
 /* Filter buttons */
 .display-controls {
     margin-bottom: 20px;
+    display: flex;
 }
 
 .filter-select {
+    padding: 5px;
+    width: 105px;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+.sort-select {
     padding: 5px;
     width: 105px;
     font-size: 14px;

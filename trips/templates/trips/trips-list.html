@@ -1,7 +1,11 @@
 {% if trips %}
 <ol>
 {% for trip in trips reversed %}
-<li class="trip-item"  data-status="{{ trip.status }}"
+<li class="trip-item" 
+    data-status="{{ trip.status }}"
+    data-created="{{ trip.created_on | date:'YmdHi' }}"
+    data-updated="{{ trip.updated_on | date:'YmdHi' }}"
+    data-travel="{{ trip.travel_datetime | date:'YmdHi' }}"
     hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
     hx-target="#trip-detail-container"
     {% if forloop.first %}
