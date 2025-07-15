@@ -1426,3 +1426,8 @@ th {
     border: 1px solid black;
     border-radius: 6px;
 }
+
+.no-more-changes {
+    text-align: center;
+    color: purple;
+}

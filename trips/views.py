@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from datetime import datetime, timedelta
 from .models import Trip
 from .forms import *
@@ -121,6 +121,9 @@ def trip_edit_view(request, trip_name):
     trip = get_object_or_404(Trip, trip_name=trip_name)
     # form = TripRequestForm(instance=trip)
 
+    # chek if trip allows edits 
+    check_action_allowed(trip)
+
     if request.method == 'POST':
         form = TripRequestForm(request.POST, instance=trip)
         if form.is_valid():
@@ -151,6 +154,9 @@ def trip_delete_view(request, trip_name):
 
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
+    # chek if trip allows delete 
+    check_action_allowed(trip)
+
     if request.method == 'POST':
         form = TripRequestForm(instance=trip)
         trip = form.save(commit=False)
@@ -166,3 +172,10 @@ def trip_delete_view(request, trip_name):
     }
 
     return render(request, 'trips/trip-delete.html', context)
+
+def check_action_allowed(trip):
+
+    if trip.status in ['completed', 'canceled']:
+        # chek if trip allows edits 
+        return HttpResponseForbidden("You cannot edit or cancel a trip that is completed or canceled.")
+    

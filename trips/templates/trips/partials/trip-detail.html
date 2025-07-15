@@ -46,6 +46,7 @@
                     class="italic-value">{{ trip.comments }}</span></p>
         </div>
         <div class="trip-controls">
+            {% if trip.status_class != 'cancelled' and trip.status_class != 'completed' %}
             <button type="button"  class="trip-cancel trip-btn"
             hx-get="{% url 'trip-delete' trip.trip_name %}"
              hx-target="#baseDialog"
@@ -54,6 +55,9 @@
              hx-get="{% url 'trip-edit' trip.trip_name %}"
              hx-target="#baseDialog"
             >Edit Trip <i class="fa-solid fa-pen-to-square"></i></button>
+            {% else %}
+            <p class="no-more-changes">No more changes/actions for this trip.</p>
+            {% endif %}
 
         </div>
     </div>
