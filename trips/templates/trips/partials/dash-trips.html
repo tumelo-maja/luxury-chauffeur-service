@@ -5,19 +5,21 @@
         <div class="trip-head">
             <h3>My trips</h3>
         </div>
-        <p>Filter by</p>
-        <form hx-get="{% url 'trips-list' 'all' %}"
-        hx-target="#trip_list"
-        >
-            {% csrf_token %}
-            <div class="mb-2 form-control">
-                {{ form.status_type|add_label_class:"label text-white" }}
-                {{ check }}
-                {% render_field form.status_type class="select bg-gray-50 text-gray-900 status-type " %}
-            </div>
-            <button type="submit" class="btn btn-success">Submit</button>
-        </form>
-        <div id="trip_list" class="trip-list" hx-get="{% url 'trips-list' 'all' %}"
+        <div class="display-controls">
+            <label for="status-filter">Filter:</label>
+            <select id="status-filter" class="filter-select">
+                <option value="all">Show All</option>
+                <option value="in_progress">In progress</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="pending">Pending</option>
+                <option value="modified">Modified</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+        </div>
+
+
+        <div id="trip_list" class="trip-list" hx-get="{% url 'trips-list' 'all'%}"
             hx-trigger="load, tripListChanged from:body">
         </div>
         <button type="button" hx-get="{% url 'trip-request' %}" hx-target="#baseDialog" class="fixed-button"

@@ -1,7 +1,8 @@
 {% if trips %}
 <ol>
 {% for trip in trips reversed %}
-<li class="trip-item" hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
+<li class="trip-item"  data-status="{{ trip.status }}"
+    hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
     hx-target="#trip-detail-container"
     {% if forloop.first %}
         hx-trigger="click, load, tripListChanged from:body"
@@ -20,6 +21,8 @@
     <p class="destination">{{ trip.location_end }}</p>
 </li>
 {% endfor %}
+<li class="empty-filter-list"></li>
+
 </ol>
 {% else %}
 <ul class="empty-container">

@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from datetime import datetime, timedelta
 from .models import Trip
 from .forms import *
-from .filters import TripFilter
 
 # Create your views here.
 
@@ -22,22 +21,7 @@ def trips_dashboard_view(request):
 
 @login_required
 def dash_details_view(request, partial):
-    context={}
-    if partial=='trips':
-        status_filter = TripFilter(
-            request.GET,
-            queryset=Trip.objects.filter(passenger__profile__user=request.user))
-
-        print('foooooooooooooooooooooooooooooooooorms below')
-        print(status_filter.form)
-
-        context = {
-            'trips': status_filter.qs,
-            'form': status_filter.form,
-            'user': request.user,
-        }
-
-    return render(request, f'trips/partials/dash-{partial}.html', context)
+    return render(request, f'trips/partials/dash-{partial}.html')
 
 
 @login_required
@@ -61,10 +45,10 @@ def trips_list_view(request, filter_trips='all'):
     if filter_trips == "recent":
         trips = Trip.objects.filter(
             passenger__profile__user=request.user,
-        ).exclude(status='cancelled')
+        ).order_by('-updated_on')[:4]
 
         context = {
-            'trips': trips.order_by('-updated_on')[:4],
+            'trips': trips,
             'user': request.user,
         }
 
@@ -72,17 +56,12 @@ def trips_list_view(request, filter_trips='all'):
 
     else:
 
-        status_filter = TripFilter(
-            request.GET,
-            queryset=Trip.objects.filter(passenger__profile__user=request.user))
-        trips = status_filter.qs
-        # trips = Trip.objects.filter(
-        #     passenger__profile__user=request.user,
-        # ).exclude(status='cancelled')
+        trips = Trip.objects.filter(
+            passenger__profile__user=request.user,
+        )
 
         context = {
             'trips': trips,
-            'filter': status_filter,
             'user': request.user
         }
 

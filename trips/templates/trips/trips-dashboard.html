@@ -20,6 +20,7 @@
                     </li>
                     <li>
                         <button type="button" class="dash-item"
+                        id="all-trips-button"
                         hx-get="{% url 'dash-details' 'trips' %}"
                         hx-target="#display-container"
                         hx-trigger="click"
@@ -52,4 +53,9 @@
         </div>
     </div>
 </main>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
