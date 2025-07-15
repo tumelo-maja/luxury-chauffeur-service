@@ -22,7 +22,22 @@ def trips_dashboard_view(request):
 
 @login_required
 def dash_details_view(request, partial):
-    return render(request, f'trips/partials/dash-{partial}.html')
+    context={}
+    if partial=='trips':
+        status_filter = TripFilter(
+            request.GET,
+            queryset=Trip.objects.filter(passenger__profile__user=request.user))
+
+        print('foooooooooooooooooooooooooooooooooorms below')
+        print(status_filter.form)
+
+        context = {
+            'trips': status_filter.qs,
+            'form': status_filter.form,
+            'user': request.user,
+        }
+
+    return render(request, f'trips/partials/dash-{partial}.html', context)
 
 
 @login_required
@@ -60,10 +75,10 @@ def trips_list_view(request, filter_trips='all'):
         status_filter = TripFilter(
             request.GET,
             queryset=Trip.objects.filter(passenger__profile__user=request.user))
-        # trips = status_filter.qs
-        trips = Trip.objects.filter(
-            passenger__profile__user=request.user,
-        ).exclude(status='cancelled')
+        trips = status_filter.qs
+        # trips = Trip.objects.filter(
+        #     passenger__profile__user=request.user,
+        # ).exclude(status='cancelled')
 
         context = {
             'trips': trips,

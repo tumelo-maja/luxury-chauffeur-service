@@ -1,16 +1,19 @@
 {% load widget_tweaks %}
 
-<div class="trips-container">
+<div id="tripsContainer" class="trips-container">
     <div class="trip-wrapper">
         <div class="trip-head">
             <h3>My trips</h3>
         </div>
         <p>Filter by</p>
-        <form method="GET" >
+        <form hx-get="{% url 'trips-list' 'all' %}"
+        hx-target="#trip_list"
+        >
             {% csrf_token %}
             <div class="mb-2 form-control">
-                {{ filter.form.status_type | add_label_class:"label text-white" }}
-                {% render_field filter.form.status_type class="select bg-gray-50 text-gray-900" %}
+                {{ form.status_type|add_label_class:"label text-white" }}
+                {{ check }}
+                {% render_field form.status_type class="select bg-gray-50 text-gray-900 status-type " %}
             </div>
             <button type="submit" class="btn btn-success">Submit</button>
         </form>

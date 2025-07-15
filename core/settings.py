@@ -52,8 +52,9 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_htmx',
     'widget_tweaks',
-    'tailwind',
-    'theme',
+    'django_filters',
+    # 'tailwind',
+    # 'theme',
     'home',
     'users',
     'chauffeurs',
@@ -89,7 +90,7 @@ if DEBUG:
     MIDDLEWARE += [
         "django_browser_reload.middleware.BrowserReloadMiddleware",
     ]
-    
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'

@@ -889,7 +889,7 @@ body {
     border: 1px solid gray;
     border-radius: 10px;
     height: 30px;
-    width: max-content;
+    /* width: max-content; */
     text-align: center;
     font-weight: bold;
     font-style: italic;
@@ -897,6 +897,10 @@ body {
     text-transform: capitalize;
     padding: 4px 10px;
     margin-bottom: 3px;
+}
+
+.status-type {
+    height: 50px;
 }
 
 .sum-item .sub-head {
