@@ -3,19 +3,7 @@
 </section>
 <div class="dash-details">
     <section class="dash-ratings">
-        <h2 class="dash-header">Ratings</h2>
-        <ol>
-            <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                    5</span><span>137</span></li>
-            <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                    4</span><span>66</span></li>
-            <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                    3</span><span>29</span></li>
-            <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                    2</span><span>12</span></li>
-            <li class="rating-item"><span class="icon-number"><i class="fa-solid fa-star"></i>
-                    1</span><span>2</span></li>
-        </ol>
+        {% include 'trips/partials/dash-ratings.html' %}
     </section>
     <div class="col-sep"></div>
     <section class="dash-activities" id="dashTable" hx-get="{% url 'trips-list' 'recent' %}"

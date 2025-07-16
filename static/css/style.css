@@ -1293,7 +1293,7 @@ body {
     /* border: 1px solid orange; */
     /* width: 100%; */
     /* height: 300px; */
-    padding: 15px 20px 20px;
+    padding: 15px 40px 20px;
 }
 
 .dash-stats ul {
@@ -1339,10 +1339,10 @@ body {
 .dash-details {
     /* border: 1px solid green; */
     margin: 20px 0 0;
-    padding: 15px;
+    padding: 15px 5px;
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    /* gap: 20px; */
     flex-wrap: wrap;
 }
 
@@ -1351,21 +1351,77 @@ body {
 }
 
 .dash-ratings {
-    width: 180px;
+    width: 200px;
     border-radius: 12px;
-    padding: 15px;
-    display: flex;
+    margin-right: 10px;
+    /* padding: 15px; */
+    /* display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
 }
 
-.dash-ratings li {
+.ratings-total {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.ratings-total-value {
+    font-weight: bold;
+}
+
+
+.dash-ratings ol {
+    width: 100%;
+}
+
+.dash-ratings .icon-number {
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+.icon-number i {
+    color: gold;
+    text-shadow: 1px 1px 1px purple, 0px 0px 1px purple;
+}
+
+
+.rating-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 5px 20px;
+    /* border: 1px solid red; */
+    margin: 15px 0 20px;
+    position: relative;
+
+}
+
+.rating-bar {
+    background-color: rgb(175, 128, 175);
+    border-radius: 5px;
+    width: 125px;
+    height: 15px;
+    margin: 5px 20px 5px 5px;
+    overflow: hidden;
+}
+
+.rating-fill {
+    background-color: purple;
+    width: 0;
+    height: 100%;
+}
+
+.rating-value {
+    color: black;
+    position: absolute;
+    bottom: 0;
+    right: -25px;
+    font-size: 1rem;
+    /* font-weight: bold; */
+    text-align: left;
+    width: 45px;
 }
 
 .dash-activities {
