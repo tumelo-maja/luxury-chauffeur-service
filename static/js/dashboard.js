@@ -112,57 +112,25 @@ $(document).ready(function () {
 
     setTimeout(() => {
 
-        // handle the ratings section
-        // const ratingsTotal = parseFloat($('.ratings-total-value').text());
-        // const ratingFill = $('.rating-fill').css('width');
-        // const ratingValue = parseFloat($('#rating-value-5').text());
-        // let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100, 2);
-
-        // console.log(`ratingsTotal: ${ratingsTotal}`);
-        // console.log(`ratingFill: ${ratingFill}`);
-        // console.log(`ratingValue: ${ratingValue}`);
-        // console.log(`newRatingFill: ${newRatingFill}`);
-        // $('.rating-fill').css('width', newRatingFill + '%');
-        // console.log(`after change: ${$('.rating-fill').css('width')}`);
-
-        const ratingsTotal = parseFloat($('.ratings-total-value').text());
-        $('.rating-item').each(function(rateIndex) {
+        let ratingsTotal = 0;
+        $('.rating-item').each(function (rateIndex) {
 
             const ratingValue = parseFloat($(this).find('.rating-value').text());
-            console.log(this)
-            console.log(`ratingValue ${rateIndex}: ${ratingValue}`)
+            // totalRatings = totalRatings
+            ratingsTotal += ratingValue;
+
+        });
+        console.log(`This is the totalRatings: ${ratingsTotal}`);
+        $('.ratings-total-value').text(ratingsTotal);
+
+
+        // const ratingsTotal = parseFloat($('.ratings-total-value').text());
+        $('.rating-item').each(function (rateIndex) {
+
+            const ratingValue = parseFloat($(this).find('.rating-value').text());
             let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100, 2);
             $(this).find('.rating-fill').css('width', newRatingFill + '%');
-            console.log(`after change: ${$('.rating-fill').css('width')}`);
         });
-
-
-        function updateMovesRemaining(moveType) {
-
-            // const attributeValue = parseFloat(getComputedStyle(object).getPropertyValue(attribute));
-
-            const ratingItem = $('.rating-bar');
-            const ratingFill = $('.rating-fill');
-            const ratingValue = $('.rating-value-5');
-
-            let newRatingFill = Math.round(ratingValue / ratingsTotal, 2) * 100;
-            ratingFill.style.width = newRatingFill + '%';
-            // const ratingItem = Math.round(100 / gameMode.maximumMoves, 2);
-            userMoves = movesNumberElement.textContent;
-
-            let currentBarwidth = (getCssStyleValue(movesBar, 'width') / getCssStyleValue(gameMoves, 'width')) * 100;
-            let newBarwidth = 0;
-            if (moveType === 'forward') {
-                newBarwidth = currentBarwidth - widthIncrements;
-                --userMoves;
-            } else {
-                newBarwidth = currentBarwidth + widthIncrements;
-                ++userMoves;
-            }
-
-            movesNumberElement.textContent = userMoves;
-            movesBar.style.width = newBarwidth + '%';
-        }
 
     }, 200);
 
