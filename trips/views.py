@@ -58,7 +58,7 @@ def trips_list_view(request, filter_trips='all'):
 
         trips = Trip.objects.filter(
             passenger__profile__user=request.user,
-        )
+        ).order_by('travel_datetime')
 
         context = {
             'trips': trips,

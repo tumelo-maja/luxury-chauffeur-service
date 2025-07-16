@@ -7,30 +7,55 @@
         </div>
         <div class="display-controls">
             <div class="filter-wrapper">
-                <label for="status-filter">Filter:</label>
-                <select id="status-filter" class="filter-select">
-                    <option value="all">Show All</option>
-                    <option value="in_progress">In progress</option>
-                    <option value="confirmed">Confirmed</option>
-                    <option value="pending">Pending</option>
-                    <option value="updated">Updated</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
-                </select>
+                <button type="button" id="filter-button" class="display-controls-item"><i class="fa-solid fa-filter"></i> Filter: <span class="set-value">All</span></button>
+                <ul id="filter-options" class="display-controls-options">
+                    <li data-status="all" class="default-filter">All</li>
+                    <li data-status="in_progress">In Progress</li>
+                    <li data-status="confirmed">Confirmed</li>
+                    <li data-status="pending">Pending</li>
+                    <li data-status="modified">Modified</li>
+                    <li data-status="completed">Completed</li>
+                    <li data-status="cancelled">Cancelled</li>
+                </ul>
             </div>
             <div class="sort-wrapper">
-                <label for="field-sort">Sort by:</label>
-                <select id="field-sort" class="sort-select">
-                    <option value="travel_asc">Trip Date (Asc.)</option>
-                    <option value="travel_desc">Trip Date on (Desc.)</option>
-                    <option value="created_asc">Created on (Asc.)</option>
-                    <option value="created_desc">Created on (Desc.)</option>
-                    <option value="updated_asc">Last Updated (Asc.)</option>
-                    <option value="updated_desc">Last Updated (Desc.)</option>
-                    <option value="status_asc">Status (Asc.)</option>
-                    <option value="status_desc">Status (Desc.)</option>
-                </select>
+                <button type="button" id="sort-button" class="display-controls-item"><i class="fa-solid fa-sort"></i> Sort: <span class="set-value">Trip Date</span></button>
+                <ul id="sort-options" class="display-controls-options">
+                    <li data-sort="travel_asc">
+                        <i class="fa-solid fa-arrow-up"></i> 
+                        <span>Trip Date</span>
+                    </li>
+                    <li data-sort="travel_desc">
+                        <i class="fa-solid fa-arrow-down"></i> 
+                        <span>Trip Date</span>
+                    </li>
+                    <li data-sort="created_asc">
+                        <i class="fa-solid fa-arrow-up"></i> 
+                        <span>Created on</span>
+                    </li>
+                    <li data-sort="created_desc">
+                        <i class="fa-solid fa-arrow-down"></i> 
+                        <span>Created on</span>
+                    </li>
+                    <li data-sort="updated_asc">
+                        <i class="fa-solid fa-arrow-up"></i> 
+                        <span>Last Updated</span>
+                    </li>
+                    <li data-sort="updated_desc">
+                        <i class="fa-solid fa-arrow-down"></i> 
+                        <span>Last Updated</span>
+                    </li>
+                    <li data-sort="status_asc">
+                        <i class="fa-solid fa-arrow-up"></i> 
+                        <span>Trip Status</span>
+                    </li>
+                    <li data-sort="status_desc">
+                        <i class="fa-solid fa-arrow-down"></i> 
+                        <span>Trip Status</span>
+                    </li>
+                </ul>
             </div>
+
 
 
         </div>

@@ -5,15 +5,22 @@ $(document).ready(function () {
     $('#all-trips-button').click(() => {
         setTimeout(() => {
             console.log("Its ready now")
+            $('#filter-button').on('click', function () {
+                $('#filter-options').toggleClass('show');
+            });
 
-            $('#status-filter').on('change', function () {
-                filterTrips($(this).val());
+            $('#filter-options li').on('click', function () {
+                filterTrips($(this).data('status'));
+                $('#filter-options').removeClass('show');
+                $('#filter-button .set-value').text($(this).text());
+
             });
 
             function filterTrips(status) {
+                const trips = $('#trip_list .trip-item');
                 let visibleTrips = 0;
 
-                $('#trip_list .trip-item').each(function () {
+                trips.each(function () {
                     const tripStatus = $(this).data('status');
                     if (status === 'all' || tripStatus === status) {
                         $(this).show();
@@ -22,10 +29,9 @@ $(document).ready(function () {
                         $(this).hide();
                     }
                 });
-                console.log("Its all changed.")
 
                 if (visibleTrips === 0) {
-                    $('.empty-filter-list').text(`You do not have '${status.replace('_', ' ')}' trips`);
+                    $('.empty-filter-list').text(`You do not have '${status}' trips`);
                     $('.empty-filter-list').show();
                 } else {
                     $('.empty-filter-list').text("hidden");
@@ -34,9 +40,13 @@ $(document).ready(function () {
 
             }
 
+            filterTrips('all');
+
+            ///
+
             htmx.on('htmx:afterSwap', (e) => {
                 if ($(e.target).id === $('#trip_list').id) {
-                    const selectedStatus = $('#status-filter').val();
+                    const selectedStatus = $('#filter-button .set-value').text().toLowerCase();
                     filterTrips(selectedStatus);
                     console.log("filter via Htmx has updated")
 
@@ -44,21 +54,29 @@ $(document).ready(function () {
 
             })
 
-            // sort trip-list by fields
-            $('#field-sort').on('change', function () {
-                sortTrips($(this).val());
-                console.log('iterms sorted');
+            $('#sort-button').on('click', function () {
+                $('#sort-options').toggleClass('show');
+                console.log("sort button cliked")
             });
 
-            function sortTrips(sortValue) {
 
-                const [sortField, order] = sortValue.split('_');
+            $('#sort-options li').on('click', function () {
 
-                const trips = $('#trip_list .trip-item');
+                const [sortField, order] = $(this).data('sort').split('_');
 
-                console.log('Sorrt ready');
-                console.log(`sortField: ${sortField}`);
+                const fieldStr = $(this).find('span').text();
+                sortTrips(sortField, order);
+                $('#sort-options').removeClass('show');
+                const iconType = order === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+                console.log(`iconType: ${iconType}`);
                 console.log(`order: ${order}`);
+                console.log(`sortField: ${sortField}`);
+                $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
+            });
+
+            // sort trip-list li elements basedOn field
+            function sortTrips(sortField, order) {
+                const trips = $('#trip_list .trip-item');
 
                 trips.sort(function (a, b) {
                     const aValue = $(a).data(sortField);
