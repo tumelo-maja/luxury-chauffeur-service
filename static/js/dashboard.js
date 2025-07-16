@@ -16,6 +16,16 @@ $(document).ready(function () {
 
             });
 
+            
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('#sort-button, #sort-options').length) {
+                    $('#sort-options').removeClass('show');
+                }
+                if (!$(event.target).closest('#filter-button, #filter-options').length) {
+                    $('#filter-options').removeClass('show');
+                }
+            });
+
             function filterTrips(status) {
                 const trips = $('#trip_list .trip-item');
                 let visibleTrips = 0;
@@ -31,7 +41,7 @@ $(document).ready(function () {
                 });
 
                 if (visibleTrips === 0) {
-                    $('.empty-filter-list').text(`You do not have '${status}' trips`);
+                    $('.empty-filter-list').text(`You do not have '${status.replace('_',' ')}' trips`);
                     $('.empty-filter-list').show();
                 } else {
                     $('.empty-filter-list').text("hidden");
