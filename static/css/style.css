@@ -1307,17 +1307,31 @@ body {
 }
 
 .stats-item {
-    border: 1px solid green;
     height: 100px;
     width: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* flex: 1 0 calc(50% - 35px);
-    min-width: calc(50% - 35px); */
     border-radius: 12px;
 }
+
+.stats-completed {
+    border: 3px solid green;
+}
+
+.stats-cancelled {
+    border: 3px solid red;
+}
+
+.stats-pending {
+    border: 3px solid orange;
+}
+
+.stats-item .stat-label {
+    font-weight: 500;
+}
+
 
 .stats-item .stat-value {
     font-size: 2rem;
