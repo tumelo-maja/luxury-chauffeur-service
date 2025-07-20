@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete/<trip_name>/', trip_delete_view, name="trip-delete"),
     path('request/', trip_request_view, name="trip-request"),
     path('trip/<trip_name>', trip_detail_view, name="trip-detail"),
+    path('feedback/<trip_name>', rate_trip_view, name="trip-feedback"),
 ]

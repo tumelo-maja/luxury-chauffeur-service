@@ -62,6 +62,9 @@ class Trip(models.Model):
     passenger_rating = models.IntegerField(choices=RATING_OPTIONS, null=True, blank=True)
     driver_rating = models.IntegerField(choices=RATING_OPTIONS, null=True, blank=True)
 
+    passenger_rating_comments = models.TextField(blank=True, null=True)
+    driver_rating_comments = models.TextField(blank=True, null=True)
+
     class Meta:
         ordering = ["-travel_datetime"]
 

@@ -1,31 +1,24 @@
 {% if trips %}
 <ol>
-{% for trip in trips reversed %}
-<li class="trip-item" 
-    data-status="{{ trip.status }}"
-    data-created="{{ trip.created_on | date:'YmdHi' }}"
-    data-updated="{{ trip.updated_on | date:'YmdHi' }}"
-    data-travel="{{ trip.travel_datetime | date:'YmdHi' }}"
-    hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
-    hx-target="#trip-detail-container"
-    {% if forloop.first %}
-        hx-trigger="click, load, tripListChanged from:body"
-    {% else %}
-        hx-trigger="click"
-    {% endif %}>
-    <div class="trip-top">
-        <div class="trip-details">
-            <p class="driver">{{ trip.driver }}</p>
-            <p class="date">{{ trip.travel_datetime | date:"Y M d - H:i" }}</p>
+    {% for trip in trips reversed %}
+    <li class="trip-item" data-status="{{ trip.status }}" data-created="{{ trip.created_on | date:'YmdHi' }}"
+        data-updated="{{ trip.updated_on | date:'YmdHi' }}" data-travel="{{ trip.travel_datetime | date:'YmdHi' }}"
+        data-id="{{ trip.trip_name }}" hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
+        hx-target="#trip-detail-container" {% if forloop.first %} hx-trigger="click, load, tripListChanged from:body" {%
+        else %} hx-trigger="click" {% endif %}>
+        <div class="trip-top">
+            <div class="trip-details">
+                <p class="driver">{{ trip.driver }}</p>
+                <p class="date">{{ trip.travel_datetime | date:"Y M d - H:i" }}</p>
+            </div>
+            <div class="trip-status status-{{ trip.status_class }}">
+                <p>{{ trip.status_str }}</p>
+            </div>
         </div>
-        <div class="trip-status status-{{ trip.status_class }}">
-            <p>{{ trip.status_str }}</p>
-        </div>
-    </div>
-    <p class="destination">{{ trip.location_end }}</p>
-</li>
-{% endfor %}
-<li class="empty-filter-list"></li>
+        <p class="destination">{{ trip.location_end }}</p>
+    </li>
+    {% endfor %}
+    <li class="empty-filter-list"></li>
 
 </ol>
 {% else %}
@@ -33,3 +26,12 @@
     <li class="empty-list">You do not have any trips.</li>
 </ul>
 {% endif %}
+
+
+<!-- <script>
+    $('.trip-item').on('click', function () {
+        $('.trip-item').removeClass('current-detail');
+        $(this).addClass('current-detail');
+    });
+
+</script> -->

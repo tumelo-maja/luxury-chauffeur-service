@@ -10,10 +10,10 @@ $(document).ready(function () {
             });
 
             $('#filter-options li').on('click', function () {
-                filterTrips($(this).data('status'));
-                $('#filter-options').removeClass('show');
-                $('#filter-button .set-value').text($(this).text());
+                $('#filter-options li').removeClass('current-filter');
+                $(this).addClass('current-filter');
 
+                filterTrips();
             });
 
 
@@ -26,17 +26,23 @@ $(document).ready(function () {
                 }
             });
 
-            function filterTrips(status) {
+
+            function filterTrips() {
+                const status = $('.current-filter').text().toLowerCase();
+
                 const trips = $('#trip_list .trip-item');
                 let visibleTrips = 0;
 
-                trips.each(function () {
+                trips.each(function (trip_idx) {
                     const tripStatus = $(this).data('status');
                     if (status === 'all' || tripStatus === status) {
                         $(this).show();
                         visibleTrips++;
+                        $(this).addClass('filtered');
+                        $(this).attr('id', `trip${trip_idx + 1}`);
                     } else {
                         $(this).hide();
+                        $(this).removeClass('filtered');
                     }
                 });
 
@@ -46,22 +52,31 @@ $(document).ready(function () {
                 } else {
                     $('.empty-filter-list').text("hidden");
                     $('.empty-filter-list').hide();
+
                 }
 
+                $('#trip_list .filtered').first().click();
+
+                $('#filter-options').removeClass('show');
+                $('#filter-button .set-value').text($('.current-filter').text());
             }
 
-            filterTrips('all');
+            //run initial for and fildter
+            filterTrips();
+            sortTrips();
+            addTripItemListener(); // add click event for current-detail
 
             ///
-
-            htmx.on('htmx:afterSwap', (e) => {
-                if ($(e.target).id === $('#trip_list').id) {
-                    const selectedStatus = $('#filter-button .set-value').text().toLowerCase();
-                    filterTrips(selectedStatus);
-                    console.log("filter via Htmx has updated")
-
+            htmx.on('htmx:beforeSwap', (e) => {
+                if ($(e.target).id === $('#trip_list').id && !e.detail.xhr.response) {
+                    filterTrips();
+                    sortTrips();
+                    addTripItemListener();
+                    detailID= $('#tripDetail').data('id')
+                    // $('.current-detail').click();
+                    $(`#trip_list #${detailID}`).click();
+                    console.log(`Lets click this trip: ${detailID}`);
                 }
-
             })
 
             $('#sort-button').on('click', function () {
@@ -71,22 +86,17 @@ $(document).ready(function () {
 
 
             $('#sort-options li').on('click', function () {
+                $('#sort-options li').removeClass('current-sort');
+                $(this).addClass('current-sort');
+                sortTrips();
 
-                const [sortField, order] = $(this).data('sort').split('_');
-
-                const fieldStr = $(this).find('span').text();
-                sortTrips(sortField, order);
-                $('#sort-options').removeClass('show');
-                const iconType = order === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
-                console.log(`iconType: ${iconType}`);
-                console.log(`order: ${order}`);
-                console.log(`sortField: ${sortField}`);
-                $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
             });
 
             // sort trip-list li elements basedOn field
-            function sortTrips(sortField, order) {
+            function sortTrips() {
+                const [sortField, order] = $('.current-sort').data('sort').split('_');
                 const trips = $('#trip_list .trip-item');
+
 
                 trips.sort(function (a, b) {
                     const aValue = $(a).data(sortField);
@@ -104,8 +114,18 @@ $(document).ready(function () {
                 });
 
                 $('#trip_list ol').html(trips);
+                $('#trip_list .filtered').first().click();
+
+                const fieldStr = $('.current-sort').find('span').text();
+                $('#sort-options').removeClass('show');
+                const iconType = order === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+                $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
 
             }
+
+            console.log("This was the last list");
+            let clickedTripID = $('#tripDetail').data('id');
+            console.log(`Hello: ${clickedTripID}`);
 
         }, 100);
     });
@@ -114,19 +134,13 @@ $(document).ready(function () {
 
         let ratingsTotal = 0;
         $('.rating-item').each(function (rateIndex) {
-
             const ratingValue = parseFloat($(this).find('.rating-value').text());
             // totalRatings = totalRatings
             ratingsTotal += ratingValue;
-
         });
-        console.log(`This is the totalRatings: ${ratingsTotal}`);
+
         $('.ratings-total-value').text(ratingsTotal);
-
-
-        // const ratingsTotal = parseFloat($('.ratings-total-value').text());
         $('.rating-item').each(function (rateIndex) {
-
             const ratingValue = parseFloat($(this).find('.rating-value').text());
             let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100, 2);
             $(this).find('.rating-fill').css('width', newRatingFill + '%');
@@ -134,8 +148,13 @@ $(document).ready(function () {
 
     }, 200);
 
-
-
     console.log("Were working on ratings");
 
+
+    function addTripItemListener() {
+        $('.trip-item').on('click', function () {
+            $('.trip-item').removeClass('current-detail');
+            $(this).addClass('current-detail');
+        });
+    }
 });

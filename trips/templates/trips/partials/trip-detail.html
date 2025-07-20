@@ -2,14 +2,16 @@
 {% load crispy_forms_tags %}
 
 
-<div id="trip-detail-container" {% if not is_modal %} hx-swap-oob="outerHTML" {% endif %} class="trip-summary {% if is_modal %} modal-content {% endif %}">
+<div id="trip-detail-container" {% if not is_modal %} hx-swap-oob="outerHTML" {% endif %}
+    class="trip-summary {% if is_modal %} modal-content {% endif %}">
     <div class="trip-head {% if is_modal %} modal-header {% endif %}">
         <h3>Trip Details</h3>
-        {% if is_modal %} 
+        {% if is_modal %}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         {% endif %}
     </div>
-    <div class="sub-items {% if is_modal %} modal-body {% endif %}">
+    <div class="sub-items {% if is_modal %} modal-body {% endif %}" id="tripDetail"
+    data-id="{{ trip.trip_name }}" >
         <div class="sum-item status-container">
             <p class="title">Status: </p>
             <p class="status status-{{ trip.status_class }} max-w-max">{{ trip.status_str }}</p>
@@ -17,14 +19,17 @@
         <div class="locations sum-item">
             <p class="sub-head">Locations</p>
             <div class="pickup">
-                <span class="sub-head">Pickup: </span><address class="bold-value">{{ trip.location_start }}</address>
+                <span class="sub-head">Pickup: </span>
+                <address class="bold-value">{{ trip.location_start }}</address>
             </div>
             <div class="destination">
-                <span class="sub-head">Destination: </span><address class="bold-value">{{ trip.location_end }}</address>
+                <span class="sub-head">Destination: </span>
+                <address class="bold-value">{{ trip.location_end }}</address>
             </div>
         </div>
         <div class="datetime sum-item">
-            <p class="date one-row"><span class="sub-head">Date & Time: </span><span class="bold-value">{{ trip.travel_datetime | date:"Y M d - H:i" }}</span></p>
+            <p class="date one-row"><span class="sub-head">Date & Time:</span><span class="bold-value">
+                {{ trip.travel_datetime | date:"Y M d - H:i" }}</span></p>
         </div>
         <div class="sum-item">
             <p class="sub-head">Chauffeur</p>
@@ -45,16 +50,36 @@
             <p class="comments-text flex flex-col"><span class="text-bold">Comments: </span><span
                     class="italic-value">{{ trip.comments }}</span></p>
         </div>
-        <div class="trip-controls">
+
+        <div class="trip-controls {% if trip.status_class == 'completed' %}justify-center{% endif %}">
             {% if trip.status_class != 'cancelled' and trip.status_class != 'completed' %}
-            <button type="button"  class="trip-cancel trip-btn"
-            hx-get="{% url 'trip-delete' trip.trip_name %}"
-             hx-target="#baseDialog"
-             >Cancel Trip <i class="fa-solid fa-trash-can"></i></button>
+            <button type="button" class="trip-cancel trip-btn" hx-get="{% url 'trip-delete' trip.trip_name %}"
+                hx-target="#baseDialog">Cancel Trip <i class="fa-solid fa-trash-can"></i></button>
             <button type="button" class="trip-edit trip-btn" id="editTripButton"
-             hx-get="{% url 'trip-edit' trip.trip_name %}"
-             hx-target="#baseDialog"
-            >Edit Trip <i class="fa-solid fa-pen-to-square"></i></button>
+                hx-get="{% url 'trip-edit' trip.trip_name %}" hx-target="#baseDialog">Edit Trip <i
+                    class="fa-solid fa-pen-to-square"></i></button>
+            {% elif trip.status_class == 'completed' %}
+            {% if user_trip_rating %}
+
+            <div class="rated-wrapper">
+                <p>You gave a {{ user_trip_rating }} star rating for this trip</p>
+                <ol class="rated-stars">
+                    {% for num in ratings_num %}
+                    <li class="star rate-star {% if user_trip_rating < num %}inactive-star{% else %}active-star{% endif %}">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            {% else %}
+            <button type="button" class="trip-rate trip-btn" id="rateTripButton"
+                hx-get="{% url 'trip-feedback' trip.trip_name %}" hx-target="#baseDialog">Rate Trip <i
+                    class="fa-solid fa-list-check"></i></button>
+            {% endif %}
             {% else %}
             <p class="no-more-changes">No more changes/actions for this trip.</p>
             {% endif %}

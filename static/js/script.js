@@ -112,6 +112,7 @@ $(document).ready(function () {
     htmx.on('htmx:beforeSwap', (e) => {
         if (e.detail.target.id === 'baseDialog' && !e.detail.xhr.response) {
             modal.hide();
+            $('.current-detail').click();
         }
     })
 

@@ -1537,3 +1537,26 @@ th {
     color: purple;
     padding: 0 10px;
 }
+
+/* trip detail ratings */
+
+.star {
+    width: 60px;
+    height: 60px;
+}
+
+.active-star path {
+    fill: #FFD700;
+    stroke: #D4AF37;
+    stroke-width: 1px;
+}
+
+.inactive-star path {
+    fill: #ddd;
+    stroke: #aaa;
+    stroke-width: 1px;
+}
+
+.rated-stars {
+    display: flex;
+}

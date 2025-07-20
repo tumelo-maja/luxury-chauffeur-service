@@ -1,0 +1,18 @@
+{% load crispy_forms_tags %}
+
+<form hx-post="{{ request.path }}" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" >Trip Feedback Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <p>How was your experience with {{ rated_user }} on this trip?</p>
+
+        {% csrf_token %}
+        {{ form | crispy }}
+    </div>
+    <div class="modal-footer flex justify-around w-full">
+        <button type="submit">Submit</button>
+        <button type="button" class="button-style button-gray ml-4" data-bs-dismiss="modal" >Cancel</button>
+    </div>
+</form>
