@@ -4,7 +4,7 @@ $(document).ready(function () {
     // Filter trips by button cliks
     $('#all-trips-button').click(() => {
         setTimeout(() => {
-            console.log("Its ready now")
+
             $('#filter-button').on('click', function () {
                 $('#filter-options').toggleClass('show');
             });
@@ -39,7 +39,6 @@ $(document).ready(function () {
                         $(this).show();
                         visibleTrips++;
                         $(this).addClass('filtered');
-                        // $(this).attr('id', `trip${trip_idx + 1}`);
                     } else {
                         $(this).hide();
                         $(this).removeClass('filtered');
@@ -61,35 +60,21 @@ $(document).ready(function () {
                 $('#filter-button .set-value').text($('.current-filter').text());
             }
 
-            //run initial for and fildter
-            filterTrips();
-            sortTrips();
-            addTripItemListener(); // add click event for current-detail
-
             ///
             htmx.on('htmx:beforeSwap', (e) => {
                 if ($(e.target).id === $('#trip_list').id && !e.detail.xhr.response) {
+                    detailID = $('#tripDetail').data('id')
+                    $(`#trip_list #${detailID}`).click();
                     filterTrips();
                     sortTrips();
                     addTripItemListener();
-                    detailID = $('#tripDetail').data('id')
-                    // $('.current-detail').click();
-                    $(`#trip_list #${detailID}`).click();
-                    console.log(`Lets click this trip: ${detailID}`);
                 }
             })
-
-            $('#sort-button').on('click', function () {
-                $('#sort-options').toggleClass('show');
-                console.log("sort button cliked")
-            });
-
 
             $('#sort-options li').on('click', function () {
                 $('#sort-options li').removeClass('current-sort');
                 $(this).addClass('current-sort');
                 sortTrips();
-
             });
 
             // sort trip-list li elements basedOn field
@@ -122,10 +107,6 @@ $(document).ready(function () {
                 $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
 
             }
-
-            console.log("This was the last list");
-            let clickedTripID = $('#tripDetail').data('id');
-            console.log(`Hello: ${clickedTripID}`);
 
         }, 100);
     });
@@ -183,7 +164,7 @@ $(document).ready(function () {
                 //     start: '2023-06-01',
                 //     end: '2023-12-31'
                 // },
-                initialView: 'dayGridMonth',    
+                initialView: 'dayGridMonth',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -192,10 +173,10 @@ $(document).ready(function () {
                 events: '/allocated_trips',
                 contentHeight: 'auto',
                 // height: 500,
-                eventContent: function(arg) {
-                    const time = arg.event.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                return { html: `<div class="day-content"><span class="time">${time}</span><span class="title">${arg.event.title}</span></div>` };
-            },
+                eventContent: function (arg) {
+                    const time = arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    return { html: `<div class="day-content"><span class="time">${time}</span><span class="title">${arg.event.title}</span></div>` };
+                },
             });
 
             calendar.render();

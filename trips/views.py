@@ -99,10 +99,10 @@ def trip_detail_view(request, trip_name):
 
     is_modal = request.GET.get('modal', 'true') == 'true'
 
-    if request.user == trip.passenger.profile.user:
+    if request.user.profile.user_type == "passenger":
         user_trip_rating = trip.passenger_rating
-    elif request.user == trip.driver.profile.user:
-        user_trip_rating = trip.passenger_rating
+    elif request.user.profile.user_type == "driver":
+        user_trip_rating = trip.driver_rating
 
     context = {
         'trip': trip,

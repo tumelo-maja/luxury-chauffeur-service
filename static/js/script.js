@@ -5,8 +5,6 @@ $(document).ready(function () {
         $(".dropdown-body").toggleClass('hidden-item');
     });
 
-    console.log("hello world - Yes");
-
     // Handle message displays
     const messages = $('.message');
 
@@ -94,8 +92,6 @@ $(document).ready(function () {
             time_24hr: true,
         });
 
-        console.log("New picker created!");
-
     }
 
     initializeFlatpicker();
@@ -117,9 +113,7 @@ $(document).ready(function () {
     })
 
     htmx.on('hidden:bs.modal', (e) => {
-        $('#baseDialog')
         document.getElementById('baseDialog').innerHTML = '';
-
     })
 
     // handle dashboard button clicks

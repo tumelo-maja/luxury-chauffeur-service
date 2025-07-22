@@ -48,7 +48,7 @@ class PassengerRatingForm(forms.ModelForm):
         label='Rate your Chauffeur:'
     )
 
-    passenger_rating_comments = forms.ChoiceField(
+    passenger_rating_comments = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}),
         required=False,
         label='Comments:'
@@ -70,7 +70,7 @@ class DriverRatingForm(forms.ModelForm):
         label='Rate your Passenger:'
     )
 
-    driver_rating_comments = forms.ChoiceField(
+    driver_rating_comments = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}),
         required=False,
         label='Comments:'
