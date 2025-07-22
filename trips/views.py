@@ -209,8 +209,6 @@ def check_action_allowed(trip):
 
 # DriverRatingForm PassengerRatingForm
 
-import json
-from django.urls import reverse
 @login_required
 def rate_trip_view(request, trip_name):
 
@@ -218,9 +216,9 @@ def rate_trip_view(request, trip_name):
 
     # Handle form submission
     if request.method == "POST":
-        if request.user == trip.passenger.profile.user:
+        if request.user.profile.user_type == "passenger":
             form = PassengerRatingForm(request.POST, instance=trip)
-        elif request.user == trip.driver.profile.user:
+        elif request.user.profile.user_type == "driver":
             form = DriverRatingForm(request.POST, instance=trip)
         else:
             print("Error - page not found")  # change to 404 error page
@@ -232,11 +230,11 @@ def rate_trip_view(request, trip_name):
             # trigger new event - ratingsUpdated
             return HttpResponse(status=204)
 
-    if request.user == trip.passenger.profile.user:
+    if request.user.profile.user_type == "passenger":
         form = PassengerRatingForm(instance=trip)
         rating_user = trip.passenger.profile.user
         rated_user = trip.driver.profile.user
-    elif request.user == trip.driver.profile.user:
+    elif request.user.profile.user_type == "driver":
         form = DriverRatingForm(instance=trip)
         rating_user = trip.driver.profile.user
         rated_user = trip.passenger.profile.user
@@ -254,6 +252,7 @@ def rate_trip_view(request, trip_name):
     return render(request, 'trips/trip-ratings.html', context)
 
 # Drriver availability wrt trips:
+@login_required
 def driver_availability_view(request):
 
     if request.user.profile.user_type == "driver":
@@ -269,6 +268,7 @@ def driver_availability_view(request):
     
     return render(request, 'users/driver-availability.html',context)
 
+@login_required
 def allocated_trips(request):
     if request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
@@ -294,4 +294,6 @@ def allocated_trips(request):
         })
 
     return JsonResponse(trips_list, safe=False)
+
+
   
