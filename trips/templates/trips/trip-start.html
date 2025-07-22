@@ -1,0 +1,29 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" >Start Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {% csrf_token %}
+        <div class="start-head">
+            <p class="icon"><i class="fa-solid fa-car-side"></i></p>
+            <p class="good-text">Confirm the passenger and trip details:</p>
+        </div>
+
+        <div class="trip-delete-details">
+            <div class="locations">
+                <p><span class="sub-head">Pickup: </span><address class="bold-value">{{ trip.location_start }}</address></p>
+                <p><span class="sub-head">Destination: </span><address class="bold-value">{{ trip.location_end }}</address></p>
+            </div>
+            <p class="one-row"><span class="sub-head">Date & Time: </span><span class="bold-value">{{ trip.travel_datetime | date:"Y M d - H:i" }}</span></p>
+            <p class="one-row"><span class="sub-head">Chauffeur: </span><span class="bold-value">{{ trip.driver }}</span></p>
+            <p class="one-row"><span class="sub-head">Vehicle: </span><span class="bold-value">{{ trip.vehicle }}</span></p>
+            <p class="one-row"><span class="sub-head">Trip type: </span><span class="bold-value">{{ trip.trip_type }}</span></p>
+        </div>
+
+    </div>
+    <div class="modal-footer flex justify-around items-center w-full">
+        <button type="submit" class="button-green">Star Trip <i class="fa-solid fa-car-side"></i></button>
+        <button type="button" class="button-style button-gray ml-4" data-bs-dismiss="modal" >Cancel</button>
+    </div>
+</form>

@@ -296,4 +296,37 @@ def allocated_trips(request):
     return JsonResponse(trips_list, safe=False)
 
 
-  
+@login_required
+def driver_action_view(request, trip_name):
+
+    trip = get_object_or_404(Trip, trip_name=trip_name)
+
+    # ensure user driver on this trip:
+    if request.user.profile.user_type == "driver" and trip.driver.profile.user == request.user:
+        if request.method == "POST":
+            if trip.status == 'confirmed':
+                trip.start_trip()
+            elif trip.status == 'in_progress':
+                trip.end_trip()
+            else:
+                return HttpResponseForbidden("Action not authorized for this trip.")
+
+
+            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+               
+        context = {
+        'trip': trip,
+        'user': request.user
+        }
+
+        if trip.status == 'confirmed':
+            return render(request, 'trips/trip-start.html', context)
+        elif trip.status == 'in_progress':
+            return render(request, 'trips/trip-end.html', context)
+        else:
+            return HttpResponseForbidden("Action not authorized for this trip.")
+
+
+    else:
+        return HttpResponseForbidden("Action not authorized for this trip.")
+          

@@ -28,7 +28,7 @@ $(document).ready(function () {
 
 
             function filterTrips() {
-                const status = $('.current-filter').text().toLowerCase();
+                const status = $('.current-filter').data('status');
 
                 const trips = $('#trip_list .trip-item');
                 let visibleTrips = 0;
@@ -39,7 +39,7 @@ $(document).ready(function () {
                         $(this).show();
                         visibleTrips++;
                         $(this).addClass('filtered');
-                        $(this).attr('id', `trip${trip_idx + 1}`);
+                        // $(this).attr('id', `trip${trip_idx + 1}`);
                     } else {
                         $(this).hide();
                         $(this).removeClass('filtered');

@@ -1159,7 +1159,9 @@ body {
 }
 
 
-.delete-head {
+.delete-head,
+.start-head,
+.end-head {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1169,6 +1171,21 @@ body {
 .delete-head .icon {
     font-size: 3rem;
     color: red;
+    margin-bottom: 15px;
+}
+
+.start-head .icon {
+    font-size: 3rem;
+    color: green;
+    margin-bottom: 15px;
+    border: 3px solid green;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.end-head i {
+    font-size: 3rem;
+    color: green;
     margin-bottom: 15px;
 }
 
@@ -1187,6 +1204,19 @@ body {
     font-size: 1rem;
     border-radius: 10px;
     background-color: red;
+    color: white;
+    font-weight: bold;
+    width: max-content;
+    height: 35px;
+    text-align: center;
+    padding: 5px 20px;
+}
+
+.button-green {
+    padding: 5px;
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: green;
     color: white;
     font-weight: bold;
     width: max-content;
