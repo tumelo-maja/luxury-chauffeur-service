@@ -82,3 +82,13 @@ class Trip(models.Model):
     @property
     def location_end_short(self):
         return self.location_end.split(',')[0]
+    
+    def start_trip(self):
+        self.driver.update_status('engaged')
+        self.status = 'in_progress'
+        self.save()
+
+    def end_trip(self):
+        self.driver.update_status('available')
+        self.status = 'completed'
+        self.save()

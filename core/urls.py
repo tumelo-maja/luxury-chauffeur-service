@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from home.views import home_view
 from users.views import *
+from trips.views import allocated_trips
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,7 @@ urlpatterns = [
     path('chauffeurs/', include('chauffeurs.urls')),
     path('trips/', include('trips.urls')),
     path('', home_view, name="home"),
+    path('allocated_trips/', allocated_trips, name='allocated_trips'),
 ]
 
 # to Be removed fir production

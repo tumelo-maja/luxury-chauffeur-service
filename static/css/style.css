@@ -775,11 +775,13 @@ body {
 }
 
 .status-pending,
-.status-modified {
+.status-modified,
+.engaged {
     background-color: #fd7e14;
 }
 
-.status-confirmed {
+.status-confirmed,
+.available {
     background-color: #28a745;
 }
 
@@ -791,7 +793,8 @@ body {
     background-color: #dc3545;
 }
 
-.status-completed {
+.status-completed,
+.unavailable {
     background-color: #828181;
 }
 
@@ -1474,6 +1477,12 @@ th {
 }
 
 
+.empty-col p {
+    text-align: center;
+    /* width: 100%; */
+}
+
+
 .dash-tab-btn {
     padding: 5px;
     font-size: 14px;
@@ -1559,4 +1568,98 @@ th {
 
 .rated-stars {
     display: flex;
+}
+
+
+/* driver views */
+/* .dash-driver-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+} */
+
+.dash-driver-status p {
+    font-size: 1.1rem;
+    margin: 15px 10px;
+    height: 40px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.dash-driver-status .driver-status {
+    border: 1px dashed black;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin-left: 20px;
+}
+
+.dash-driver-status .dash-avail-btn {
+    background-color: purple;
+    border: 2px solid purple;
+    color: white;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin: 15px 10px;
+}
+
+.dash-avail-btn:hover {
+    background-color: white;
+    color: purple;
+    border: 2px solid purple;
+}
+
+.avail-container {
+    border-radius: 8px;
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.avail-summary {
+    background-color: #fff;
+    padding-bottom: 10px;
+    border-radius: 12px;
+}
+
+.avail-head h3 {
+    text-align: center;
+    font-weight: bold;
+    margin: 12px;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+.avail-wrapper {
+    /* width: 350px; */
+    /* height: 560px; */
+    padding: 0 20px 10px;
+}
+
+#driver-calendar {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 75%;
+}
+
+.day-content {
+    padding: 0 5px 0 8px;
+    width: 100%;
+    /* display: flex;
+    justify-content: space-evenly;
+    align-items: center; */
+}
+
+.day-content .time {
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.day-content .title {
+    font-size: 110%;
+    font-weight: 700;
 }

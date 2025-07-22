@@ -26,6 +26,16 @@
                         hx-trigger="click"
                         >All Trips</button>
                     </li>
+                    {% if user.profile.user_type == 'driver' %}
+                    <li>
+                        <button type="button" class="dash-item"
+                        id="driver-availability-button"
+                        hx-get="{% url 'driver-availability' %}"
+                        hx-target="#display-container"
+                        hx-trigger="click"
+                        >My Availability</button>
+                    </li>
+                    {% endif %}                 
 
                 </ul>
                 <div class="row-sep"></div>
@@ -43,6 +53,10 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" integrity="sha512-iusSCweltSRVrjOz+4nxOL9OXh2UA0m8KdjsX8/KUUiJz+TCNzalwE0WE6dYTfHDkXuGuHq3W9YIhDLN7UNB0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 <script src="{% static 'js/dashboard.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

@@ -1,3 +1,8 @@
+{% if user.profile.user_type == 'driver' %}
+<div class="dash-availability" >
+    {% include 'users/partials/driver-availability_p.html' %}
+</div>
+{% endif %}
 <section class="dash-stats" hx-get="{% url 'trips-dashboard-stats' %}" hx-trigger="load, tripListChanged from:body">
     {% include 'trips/partials/dash-trips-summary.html' %}
 </section>

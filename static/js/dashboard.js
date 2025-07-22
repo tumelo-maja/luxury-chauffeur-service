@@ -72,7 +72,7 @@ $(document).ready(function () {
                     filterTrips();
                     sortTrips();
                     addTripItemListener();
-                    detailID= $('#tripDetail').data('id')
+                    detailID = $('#tripDetail').data('id')
                     // $('.current-detail').click();
                     $(`#trip_list #${detailID}`).click();
                     console.log(`Lets click this trip: ${detailID}`);
@@ -148,8 +148,6 @@ $(document).ready(function () {
 
     }, 200);
 
-    console.log("Were working on ratings");
-
 
     function addTripItemListener() {
         $('.trip-item').on('click', function () {
@@ -157,4 +155,50 @@ $(document).ready(function () {
             $(this).addClass('current-detail');
         });
     }
+
+    // load driver availability
+    $('#driver-availability-button').click(() => {
+        setTimeout(() => {
+
+            const calendar = new FullCalendar.Calendar(document.getElementById('driver-calendar'), {
+                // initialView: 'dayGridMonth',  // Default view is month
+                // headerToolbar: {
+                //     left: 'prev,next today',  // Previous, Next, Today buttons
+                //     center: 'title',
+                //     right: 'dayGridMonth,timeGridWeek,timeGridDay'  // Month, Week, Day view buttons
+                // },
+                // events: [
+                //     {
+                //         title: 'Available',
+                //         start: '2023-06-01',
+                //         className: 'available'
+                //     },
+                //     {
+                //         title: 'Unavailable',
+                //         start: '2023-06-02',
+                //         className: 'unavailable'
+                //     },
+                //                     ],
+                // validRange: {
+                //     start: '2023-06-01',
+                //     end: '2023-12-31'
+                // },
+                initialView: 'dayGridMonth',    
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                },
+                events: '/allocated_trips',
+                contentHeight: 'auto',
+                // height: 500,
+                eventContent: function(arg) {
+                    const time = arg.event.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                return { html: `<div class="day-content"><span class="time">${time}</span><span class="title">${arg.event.title}</span></div>` };
+            },
+            });
+
+            calendar.render();
+        }, 100);
+    });
 });

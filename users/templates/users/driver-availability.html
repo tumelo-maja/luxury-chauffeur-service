@@ -1,0 +1,25 @@
+{% if user.profile.user_type == 'driver' %}
+<div class="avail-container">
+    <!-- <div class="col-sep"></div> -->
+    <div class="avail-wrapper">
+        <div class="trip-head">
+            <h3>View By Date</h3>
+        </div>
+
+
+        <div id="driver-calendar"></div>
+
+    </div>
+    <!-- <div class="avail-summary">
+        <div class="avail-head">
+            <h3>Details</h3>
+        </div>
+        <div class="sub-items flex flex-col items-center">
+            <p class="no-trip">
+                Select a day to view from the calendar on the left panel
+            </p>
+
+        </div>
+    </div> -->
+</div>
+{% endif %}

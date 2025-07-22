@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden,JsonResponse
 from datetime import datetime, timedelta
 from .models import Trip
 from .forms import *
@@ -16,7 +16,11 @@ def trip_view(request):
 
 @login_required
 def trips_dashboard_view(request):
-    return render(request, 'trips/trips-dashboard.html')
+
+    context = {
+        'is_driver': True if request.user.profile.user_type == "driver" else False,
+    }
+    return render(request, 'trips/trips-dashboard.html',context)
 
 
 @login_required
@@ -27,12 +31,21 @@ def dash_details_view(request, partial):
 @login_required
 def trips_dashboard_stats_view(request):
 
+    if request.user.profile.user_type == "passenger":
+        trips = Trip.objects.filter(
+                passenger=request.user.profile.passenger_profile,
+            )
+    elif request.user.profile.user_type == "driver":
+        trips = Trip.objects.filter(
+                driver=request.user.profile.driver_profile,
+            )        
+
     context = {
         'stats': {
-            'cancelled': Trip.objects.filter(status='cancelled').count(),
-            'completed': Trip.objects.filter(status='completed').count(),
-            'pending': Trip.objects.filter(status='pending').count(),
-            'modified': Trip.objects.filter(status='modified').count(),
+            'cancelled': trips.filter(status='cancelled').count(),
+            'completed': trips.filter(status='completed').count(),
+            'pending': trips.filter(status='pending').count(),
+            'modified': trips.filter(status='modified').count(),
         },
     }
 
@@ -43,9 +56,14 @@ def trips_dashboard_stats_view(request):
 def trips_list_view(request, filter_trips='all'):
 
     if filter_trips == "recent":
-        trips = Trip.objects.filter(
-            passenger__profile__user=request.user,
-        ).order_by('-updated_on')[:4]
+        if request.user.profile.user_type == "passenger":
+            trips = Trip.objects.filter(
+                    passenger=request.user.profile.passenger_profile,
+                ).order_by('-updated_on')[:4]
+        elif request.user.profile.user_type == "driver":
+            trips = Trip.objects.filter(
+                    driver=request.user.profile.driver_profile,
+                ).order_by('-updated_on')[:4]         
 
         context = {
             'trips': trips,
@@ -56,9 +74,14 @@ def trips_list_view(request, filter_trips='all'):
 
     else:
 
-        trips = Trip.objects.filter(
-            passenger__profile__user=request.user,
-        ).order_by('travel_datetime')
+        if request.user.profile.user_type == "passenger":
+            trips = Trip.objects.filter(
+                    passenger=request.user.profile.passenger_profile,
+                ).order_by('travel_datetime')
+        elif request.user.profile.user_type == "driver":
+            trips = Trip.objects.filter(
+                    driver=request.user.profile.driver_profile,
+                ).order_by('travel_datetime')        
 
         context = {
             'trips': trips,
@@ -123,11 +146,8 @@ def trip_request_view(request):
 @login_required
 def trip_edit_view(request, trip_name):
 
-    # queryset = Trip.objects.filter(trip_name=trip_name)
-    # trip = get_object_or_404(queryset)
-    trip = get_object_or_404(Trip, trip_name=trip_name)
-    # form = TripRequestForm(instance=trip)
 
+    trip = get_object_or_404(Trip, trip_name=trip_name)
     # chek if trip allows edits
     check_action_allowed(trip)
 
@@ -210,21 +230,7 @@ def rate_trip_view(request, trip_name):
             form.save()
 
             # trigger new event - ratingsUpdated
-            return HttpResponse(status=204, headers={'HX-trigger': 'ratingsUpdated'})
-            # return render('trip-detail', trip_name=trip_name)
-            #return render(request, 'trips/partials/trip-detail.html', context)
-            # return redirect('trip-detail', trip_name)
-            # return HttpResponse(
-            #     status=204,
-            #     headers={
-            #         'HX-Trigger': json.dumps({
-            #             "redirectToTripDetail": {
-            #                 "url": reverse('trip-detail', args=[trip_name]),
-            #                 "trip_name": trip_name
-            #             }
-            #         })
-            #     }
-            # )
+            return HttpResponse(status=204)
 
     if request.user == trip.passenger.profile.user:
         form = PassengerRatingForm(instance=trip)
@@ -246,3 +252,46 @@ def rate_trip_view(request, trip_name):
     }
 
     return render(request, 'trips/trip-ratings.html', context)
+
+# Drriver availability wrt trips:
+def driver_availability_view(request):
+
+    if request.user.profile.user_type == "driver":
+        trips = Trip.objects.filter(
+                driver=request.user.profile.driver_profile,
+            )
+    else:
+        print("Error: You are not a driver! Dont try trick us!!")
+    
+    context = {
+        'events': trips,
+    }
+    
+    return render(request, 'users/driver-availability.html',context)
+
+def allocated_trips(request):
+    if request.user.profile.user_type == "driver":
+        trips = Trip.objects.filter(
+                driver=request.user.profile.driver_profile,
+            )
+    else:
+        print("Error: You are not a driver! Dont try trick us!!")
+    
+    trips_list =[]
+
+    for trip in trips:
+
+        trips_list.append({
+            'id':trip.id,
+            'start':trip.travel_datetime.isoformat(),
+            # 'location_end': trip.location_end,
+            # 'title': trip.trip_type,
+            'title': ''.join([word[0] for word in trip.trip_type.split()]),
+            # 'type': trip.trip_type,
+            # 'status': trip.status,
+            'className': f'status-{trip.status_class}',
+
+        })
+
+    return JsonResponse(trips_list, safe=False)
+  
