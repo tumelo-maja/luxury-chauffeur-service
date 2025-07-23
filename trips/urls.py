@@ -16,4 +16,5 @@ urlpatterns = [
     path('availability/', driver_availability_view, name='driver-availability'),
     path('admin/', admin_all_view, name='admin-all'),
     path('admin/trips/', admin_trips_view, name='admin-trips'),
+    path('admin/passengers/', admin_passengers_view, name='admin-passengers'),
 ]

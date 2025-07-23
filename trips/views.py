@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from datetime import datetime, timedelta
 from .models import Trip
+from users.models import PassengerProfile
 from .forms import *
 
 # Create your views here.
@@ -339,11 +340,17 @@ def admin_all_view(request):
 
 @login_required
 def admin_trips_view(request):
-
     trips =Trip.objects.all()
-
     context = {
         'trips': trips,
     }
-
     return render(request, 'trips/partials/admin-trips.html',context)
+
+
+@login_required
+def admin_passengers_view(request):
+    passengers =PassengerProfile.objects.all()
+    context = {
+        'passengers': passengers,
+    }
+    return render(request, 'trips/partials/admin-passengers.html',context)

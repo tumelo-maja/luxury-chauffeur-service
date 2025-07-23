@@ -11,7 +11,11 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Passengers</a>
+    <a class="nav-link"
+     hx-get="{% url 'admin-passengers' %}"
+        hx-target="#adminTable" 
+        hx-swap="innerHTML" 
+        data-tab="passengers">Passengers</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">Drivers</a>

@@ -1,0 +1,29 @@
+<table id="adminTable" class="admin-table">
+    <thead>
+        <tr>
+            <th class="text-left">Title</th>
+            <th class="text-left">Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Phone</th>
+            <th class="text-center">Home Address</th>
+        </tr>
+    </thead>
+    <div class="col-sep"></div>
+    <tbody>
+        {% if passengers %}
+        {% for passenger in passengers %}
+        <tr>
+            <td>{{ passenger.profile.title }}</td>
+            <td>{{ passenger.profile.name }}</td>
+            <td>{{ passenger.profile.email }}</td>
+            <td>{{ passenger.profile.phone }}</td>
+            <td>{{ passenger.profile.home_address }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr class="empty-row">
+            <td colspan="6" class="empty-col"><p>You do not have any passengers.</p></th>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
