@@ -17,4 +17,5 @@ urlpatterns = [
     path('admin/', admin_all_view, name='admin-all'),
     path('admin/trips/', admin_trips_view, name='admin-trips'),
     path('admin/passengers/', admin_passengers_view, name='admin-passengers'),
+    path('admin/drivers/', admin_drivers_view, name='admin-drivers'),
 ]

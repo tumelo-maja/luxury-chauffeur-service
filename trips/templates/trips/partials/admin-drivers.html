@@ -1,0 +1,29 @@
+<table id="adminTable" class="admin-table">
+    <thead>
+        <tr>
+            <th class="text-left">Title</th>
+            <th class="text-left">Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Phone</th>
+            <th class="text-center">Home Address</th>
+        </tr>
+    </thead>
+    <div class="col-sep"></div>
+    <tbody>
+        {% if drivers %}
+        {% for driver in drivers %}
+        <tr>
+            <td>{{ driver.profile.title }}</td>
+            <td>{{ driver.profile.name }}</td>
+            <td>{{ driver.profile.email }}</td>
+            <td>{{ driver.profile.phone }}</td>
+            <td>{{ driver.profile.home_address }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr class="empty-row">
+            <td colspan="6" class="empty-col"><p>You do not have any drivers.</p></th>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>

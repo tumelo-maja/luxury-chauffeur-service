@@ -18,7 +18,11 @@
         data-tab="passengers">Passengers</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Drivers</a>
+    <a class="nav-link" 
+    hx-get="{% url 'admin-drivers' %}"
+        hx-target="#adminTable" 
+        hx-swap="innerHTML" 
+        data-tab="drivers">Drivers</a>
   </li>
 </ul>
 <div id="adminTable" class="table-wrapper">
