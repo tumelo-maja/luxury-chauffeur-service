@@ -1496,7 +1496,7 @@ td {
     border-top: 1px solid #ddd;
 }
 
-th {
+.activity-table th {
     background-color: rgba(128, 0, 128, 0.54);
     color: white;
 }
@@ -1692,4 +1692,69 @@ th {
 .day-content .title {
     font-size: 110%;
     font-weight: 700;
+}
+
+/* Admin tables */
+.table-wrapper {
+    margin-top: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    min-width: 90px;
+}
+
+.admin-table tbody tr:nth-child(odd) {
+    background-color: #eae9e9;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.status-tab {
+    padding: 5px 4px;
+    display: inline-block;
+    width: 80px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.admin-table th {
+    background-color: purple;
+    color: white;
+}
+
+.admin-table td {
+    font-size: 0.9rem;
+}
+
+.admin-table .name-col {
+    text-transform: capitalize;
+}
+
+.action-link {
+    color: blue;
+    text-decoration: underline;
 }

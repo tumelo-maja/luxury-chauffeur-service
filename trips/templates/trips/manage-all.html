@@ -1,0 +1,51 @@
+<section class="admin-all">
+<h2 class="dash-header">Manage Passengers, Driver and Trips</h2>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Trips</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Passengers</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Drivers</a>
+  </li>
+</ul>
+<div class="table-wrapper">
+<table id="adminTable" class="admin-table">
+    <thead>
+        <tr>
+            <th class="text-left">Destination</th>
+            <th class="text-center">Trip Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Action</th>
+            <th class="text-center">Passenger</th>
+            <th class="text-center">Driver</th>
+        </tr>
+    </thead>
+    <div class="col-sep"></div>
+    <tbody>
+        {% if trips %}
+        {% for trip in trips %}
+        <tr>
+            <td>{{ trip.location_end_short }}</td>
+            <td>{{ trip.travel_datetime | date:"d/m/Y - H:i" }}</td>
+            <td><span class="status-tab status-{{ trip.status_class }}">{{ trip.status_str }}</span></td>
+            <td>
+                <button type="button" class="action-link" hx-get="{% url 'trip-detail' trip.trip_name %}"
+                    hx-target="#baseDialog">View Details
+                </button>
+            </td>
+            <td class="name-col">{{ trip.passenger.profile.user }}</td>
+            <td class="name-col">{{ trip.driver.profile.user }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr class="empty-row">
+            <td colspan="5" class="empty-col"><p>You do not have any trips.</p></th>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+</div>
+</section>

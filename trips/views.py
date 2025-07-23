@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseForbidden,JsonResponse
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from datetime import datetime, timedelta
 from .models import Trip
 from .forms import *
@@ -20,7 +20,7 @@ def trips_dashboard_view(request):
     context = {
         'is_driver': True if request.user.profile.user_type == "driver" else False,
     }
-    return render(request, 'trips/trips-dashboard.html',context)
+    return render(request, 'trips/trips-dashboard.html', context)
 
 
 @login_required
@@ -38,7 +38,7 @@ def trips_dashboard_stats_view(request):
     elif request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
                 driver=request.user.profile.driver_profile,
-            )        
+            )
 
     context = {
         'stats': {
@@ -63,7 +63,7 @@ def trips_list_view(request, filter_trips='all'):
         elif request.user.profile.user_type == "driver":
             trips = Trip.objects.filter(
                     driver=request.user.profile.driver_profile,
-                ).order_by('-updated_on')[:4]         
+                ).order_by('-updated_on')[:4]
 
         context = {
             'trips': trips,
@@ -81,7 +81,7 @@ def trips_list_view(request, filter_trips='all'):
         elif request.user.profile.user_type == "driver":
             trips = Trip.objects.filter(
                     driver=request.user.profile.driver_profile,
-                ).order_by('travel_datetime')        
+                ).order_by('travel_datetime')
 
         context = {
             'trips': trips,
@@ -146,7 +146,6 @@ def trip_request_view(request):
 @login_required
 def trip_edit_view(request, trip_name):
 
-
     trip = get_object_or_404(Trip, trip_name=trip_name)
     # chek if trip allows edits
     check_action_allowed(trip)
@@ -209,6 +208,7 @@ def check_action_allowed(trip):
 
 # DriverRatingForm PassengerRatingForm
 
+
 @login_required
 def rate_trip_view(request, trip_name):
 
@@ -252,6 +252,8 @@ def rate_trip_view(request, trip_name):
     return render(request, 'trips/trip-ratings.html', context)
 
 # Drriver availability wrt trips:
+
+
 @login_required
 def driver_availability_view(request):
 
@@ -261,12 +263,13 @@ def driver_availability_view(request):
             )
     else:
         print("Error: You are not a driver! Dont try trick us!!")
-    
+
     context = {
         'events': trips,
     }
-    
-    return render(request, 'users/driver-availability.html',context)
+
+    return render(request, 'users/driver-availability.html', context)
+
 
 @login_required
 def allocated_trips(request):
@@ -276,14 +279,14 @@ def allocated_trips(request):
             )
     else:
         print("Error: You are not a driver! Dont try trick us!!")
-    
-    trips_list =[]
+
+    trips_list = []
 
     for trip in trips:
 
         trips_list.append({
-            'id':trip.id,
-            'start':trip.travel_datetime.isoformat(),
+            'id': trip.id,
+            'start': trip.travel_datetime.isoformat(),
             # 'location_end': trip.location_end,
             # 'title': trip.trip_type,
             'title': ''.join([word[0] for word in trip.trip_type.split()]),
@@ -311,9 +314,8 @@ def driver_action_view(request, trip_name):
             else:
                 return HttpResponseForbidden("Action not authorized for this trip.")
 
-
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
-               
+
         context = {
         'trip': trip,
         'user': request.user
@@ -326,7 +328,17 @@ def driver_action_view(request, trip_name):
         else:
             return HttpResponseForbidden("Action not authorized for this trip.")
 
-
     else:
         return HttpResponseForbidden("Action not authorized for this trip.")
-          
+
+
+@login_required
+def manage_all_view(request):
+
+    trips =Trip.objects.all()
+
+    context = {
+        'trips': trips,
+    }
+
+    return render(request, 'trips/manage-all.html',context)

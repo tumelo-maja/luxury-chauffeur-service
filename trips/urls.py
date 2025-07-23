@@ -14,4 +14,5 @@ urlpatterns = [
     path('feedback/<trip_name>', rate_trip_view, name="trip-feedback"),
     path('driver/<trip_name>/', driver_action_view, name="trip-action"),
     path('availability/', driver_availability_view, name='driver-availability'),
+    path('manage/', manage_all_view, name='manage-all'),
 ]

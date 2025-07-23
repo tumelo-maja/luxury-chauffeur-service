@@ -35,7 +35,17 @@
                         hx-trigger="click"
                         >My Availability</button>
                     </li>
-                    {% endif %}                 
+                    {% endif %}
+                    {% if user.profile.user_type == 'driver' %}
+                    <li>
+                        <button type="button" class="dash-item"
+                        id="manage-all-button"
+                        hx-get="{% url 'manage-all' %}"
+                        hx-target="#display-container"
+                        hx-trigger="click"
+                        >Admin</button>
+                    </li>
+                    {% endif %}                           
 
                 </ul>
                 <div class="row-sep"></div>

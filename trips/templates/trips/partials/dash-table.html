@@ -14,7 +14,7 @@
         {% if trips %}
         {% for trip in trips %}
         <tr>
-            <td class="trip-no">1.</td>
+            <td class="trip-no">{{ forloop.counter }}.</td>
             <td>{{ trip.location_end_short }}</td>
             <td>{{ trip.updated_on | date:"Y M d - H:i" }}</td>
             <td>{{ trip.status_str }}</td>
