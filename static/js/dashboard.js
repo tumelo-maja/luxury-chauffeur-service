@@ -182,4 +182,18 @@ $(document).ready(function () {
             calendar.render();
         }, 100);
     });
+
+    // admin panel interactive elements
+    $('#admin-all-button').click(() => {
+        console.log("admin button pushed");
+        setTimeout(() => {
+            $('.admin-all .nav-link').on('click', function () {
+                $('.admin-all .nav-link').removeClass('active');
+                $(this).addClass('active');
+                console.log("Nav item clicked");
+            });
+
+        }, 100);
+    });
+
 });
