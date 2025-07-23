@@ -1,17 +1,3 @@
-<section class="admin-all">
-<h2 class="dash-header">Manage Passengers, Driver and Trips</h2>
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Trips</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Passengers</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Drivers</a>
-  </li>
-</ul>
-<div class="table-wrapper">
 <table id="adminTable" class="admin-table">
     <thead>
         <tr>
@@ -42,10 +28,8 @@
         {% endfor %}
         {% else %}
         <tr class="empty-row">
-            <td colspan="5" class="empty-col"><p>You do not have any trips.</p></th>
+            <td colspan="6" class="empty-col"><p>You do not have any trips.</p></th>
         </tr>
         {% endif %}
     </tbody>
 </table>
-</div>
-</section>

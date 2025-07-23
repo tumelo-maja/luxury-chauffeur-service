@@ -333,7 +333,12 @@ def driver_action_view(request, trip_name):
 
 
 @login_required
-def manage_all_view(request):
+def admin_all_view(request):
+    return render(request, 'trips/admin-all.html')
+
+
+@login_required
+def admin_trips_view(request):
 
     trips =Trip.objects.all()
 
@@ -341,4 +346,4 @@ def manage_all_view(request):
         'trips': trips,
     }
 
-    return render(request, 'trips/manage-all.html',context)
+    return render(request, 'trips/partials/admin-trips.html',context)

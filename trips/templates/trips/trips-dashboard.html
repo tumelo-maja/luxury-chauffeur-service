@@ -39,8 +39,8 @@
                     {% if user.profile.user_type == 'driver' %}
                     <li>
                         <button type="button" class="dash-item"
-                        id="manage-all-button"
-                        hx-get="{% url 'manage-all' %}"
+                        id="admin-all-button"
+                        hx-get="{% url 'admin-all' %}"
                         hx-target="#display-container"
                         hx-trigger="click"
                         >Admin</button>
