@@ -352,6 +352,8 @@ def admin_passengers_view(request):
     passengers =PassengerProfile.objects.all()
     for passenger in passengers:
         passenger.update_rating()
+        print(f"Passenger rating: {passenger.average_rating}")
+        print(f"Count rating: {passenger.count_rating}")
 
     context = {
         'passengers': passengers,

@@ -57,6 +57,7 @@ class PassengerProfile(models.Model):
     emergency_name = models.CharField(max_length=100)
     emergency_phone = models.CharField(max_length=15)
     average_rating = models.FloatField(null=True, blank=True)
+    count_rating = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"Passenger: {self.profile.user.username}"
@@ -66,6 +67,7 @@ class PassengerProfile(models.Model):
         trips = self.trips_passenger.filter(status='completed')
         if trips.exists():
             rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+            self.count_rating = len(rating_items)
             self.average_rating = sum(rating_items) / len(rating_items)
             self.save()
 

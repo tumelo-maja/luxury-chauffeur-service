@@ -19,7 +19,13 @@
             <td>{{ passenger.profile.user.email }}</td>
             <td>{{ passenger.profile.phone }}</td>
             <td>{{ passenger.profile.home_address }}</td>
-            <td class="text-center">{{ passenger.average_rating | floatformat:1 }}</td>
+            <td class="text-center">
+                {% if passenger.average_rating == None %}
+                No rating
+                {% else %}
+                {{ passenger.average_rating | floatformat:1 }} ({{ passenger.count_rating }})
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
         {% else %}
