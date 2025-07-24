@@ -20,6 +20,13 @@ class MainSignupForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        # Check if email is already taken by any User // rais error
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already in use by another user.")
+
 
 
 class ProfileEditForm(ModelForm):

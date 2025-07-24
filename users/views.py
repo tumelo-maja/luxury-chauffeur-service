@@ -68,7 +68,6 @@ def profile_edit_view(request):
 
 @login_required
 def profile_settings_view(request):
-
     return render(request, 'users/profile_settings.html')
 
 @login_required
