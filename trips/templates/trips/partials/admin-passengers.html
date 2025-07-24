@@ -6,6 +6,7 @@
             <th class="text-center">Email</th>
             <th class="text-center">Phone</th>
             <th class="text-center">Home Address</th>
+            <th class="text-center">Rating</th>
         </tr>
     </thead>
     <div class="col-sep"></div>
@@ -18,6 +19,7 @@
             <td>{{ passenger.profile.user.email }}</td>
             <td>{{ passenger.profile.phone }}</td>
             <td>{{ passenger.profile.home_address }}</td>
+            <td class="text-center">{{ passenger.average_rating | floatformat:1 }}</td>
         </tr>
         {% endfor %}
         {% else %}

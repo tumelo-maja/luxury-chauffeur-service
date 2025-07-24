@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.templatetags.static import static
+from django.db.models import Count, Avg, Case, When, IntegerField
 
 TITLE_OPTIONS = [
     ('Mr', 'Mr'),
@@ -55,9 +56,18 @@ class PassengerProfile(models.Model):
         Profile, on_delete=models.CASCADE, related_name='passenger_profile')
     emergency_name = models.CharField(max_length=100)
     emergency_phone = models.CharField(max_length=15)
+    average_rating = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"Passenger: {self.profile.user.username}"
+
+
+    def update_rating(self):
+        trips = self.trips_passenger.filter(status='completed')
+        if trips.exists():
+            rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+            self.average_rating = sum(rating_items) / len(rating_items)
+            self.save()
 
 
 class DriverProfile(models.Model):
@@ -80,3 +90,10 @@ class DriverProfile(models.Model):
     def update_status(self, status):
         self.status = status
         self.save()
+    
+    
+    def avg_rating(self):
+        """Average rating for this driver"""
+        print("This is the Average rating ")
+        result = self.trips_passenger.passenger_rating
+        print(result)

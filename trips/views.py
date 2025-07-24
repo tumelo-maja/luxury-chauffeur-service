@@ -350,6 +350,9 @@ def admin_trips_view(request):
 @login_required
 def admin_passengers_view(request):
     passengers =PassengerProfile.objects.all()
+    for passenger in passengers:
+        passenger.update_rating()
+
     context = {
         'passengers': passengers,
     }
