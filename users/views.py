@@ -18,17 +18,21 @@ def profile_view(request):
 
 @login_required
 def profile_edit_view(request):
-    try:
-        profile = request.user.profile
-    except Profile.DoesNotExist:
-        profile = Profile.objects.create(user=request.user)
+
+    profile_user = request.user.profile
+    profile_form = ProfileEditForm(instance=profile_user)
+
+    # try:
+    #     profile = request.user.profile
+    # except Profile.DoesNotExist:
+    #     profile = Profile.objects.create(user=request.user)
     
-    if profile.user_type == 'driver':
-        driver_profile, created = DriverProfile.objects.get_or_create(profile=profile)
+    if profile_user.user_type == 'driver':
+        driver_profile = DriverProfile.objects.filter(profile=profile_user).first()
         form = DriverEditForm
         role = driver_profile
-    else:
-        passenger_profile, created = PassengerProfile.objects.get_or_create(profile=profile)
+    elif profile_user.user_type == 'passenger':
+        passenger_profile = PassengerProfile.objects.filter(profile=profile_user).first()
         form = PassengerEditForm
         role = passenger_profile
 
@@ -36,7 +40,7 @@ def profile_edit_view(request):
         profile_form = ProfileEditForm(
             request.POST, 
             request.FILES, 
-            instance=profile
+            instance=profile_user
         )
         role_form = form(
             request.POST, 
@@ -46,22 +50,19 @@ def profile_edit_view(request):
         if profile_form.is_valid() and role_form.is_valid():
             profile_form.save()
             role_form.save()
-            
-            return redirect('home')
-    else:
-        profile_form = ProfileEditForm(instance=profile)
-        role_form = form(instance=role)
-    
+            return redirect('profile')
+
+    role_form = form(instance=role)
     if request.path == reverse('profile-onboarding'):
         is_new_user = True
     else:
-        is_new_user = False  
-    
+        is_new_user = False
+
     context ={
         'profile_form': profile_form,
         'role_form': role_form,
         'is_new_user': is_new_user,
-        'user_type': 'driver' if profile.user_type == 'driver' else 'passenger'
+        'user_type': profile_user.user_type
     }
     return render(request, 'users/profile_edit.html', context)
 
