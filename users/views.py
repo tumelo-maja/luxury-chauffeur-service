@@ -151,10 +151,10 @@ def passenger_signup(request):
     if request.method == 'POST':
         form = MainSignupForm(request.POST, request.FILES)
         if form.is_valid():
-            with transaction.atomic():
-                user = form.save(commit=False)
-                user.user_type = 'passenger'
-                user.save()
+            # with transaction.atomic():
+            user = form.save(commit=False)
+            user.user_type = 'passenger'
+            user.save()
 
             messages.success(request, "Passenger's account created successfully.")
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')

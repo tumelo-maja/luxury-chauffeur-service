@@ -27,7 +27,8 @@ class Profile(models.Model):
     displayname = models.CharField(max_length=20, null=True, blank=True)
     title = models.CharField(
         max_length=20, choices=TITLE_OPTIONS, blank=True, null=True)
-    email = models.EmailField()
+    # email = models.EmailField()
+    # email = user.email
     phone = models.CharField(max_length=15, null=True, blank=True)
     home_address = models.TextField(blank=True, null=True)
 
