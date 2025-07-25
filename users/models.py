@@ -15,6 +15,7 @@ TITLE_OPTIONS = [
 USER_TYPE_CHOICES = [
     ('driver', 'Driver'),
     ('passenger', 'Passenger'),
+    ('manager', 'Manager'),
 ]
 
 
@@ -62,7 +63,7 @@ class PassengerProfile(models.Model):
     def __str__(self):
         return f"Passenger: {self.profile.user.username}"
 
-    
+
     def update_rating(self,trips):
         if trips.exists():
             rating_items = [trip.driver_rating for trip in trips if trip.driver_rating is not None]
@@ -121,3 +122,10 @@ class DriverProfile(models.Model):
                 rating_counts[f'star_{rating}'] += 1
 
         return rating_counts
+
+class ManagerProfile(models.Model):
+    profile = models.OneToOneField(
+        Profile, on_delete=models.CASCADE, related_name='manager_profile')
+
+    def __str__(self):
+        return f"Manager: {self.profile.user.username}"
