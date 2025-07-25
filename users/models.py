@@ -96,6 +96,8 @@ class DriverProfile(models.Model):
 
     status = models.CharField(
         max_length=50, choices=DRIVER_STATUS_OPTIONS, default="available")
+    average_rating = models.FloatField(null=True, blank=True)
+    count_rating = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"Driver: {self.profile.user.username}"
@@ -126,6 +128,33 @@ class DriverProfile(models.Model):
 class ManagerProfile(models.Model):
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='manager_profile')
-
+    passenger_average_rating = models.FloatField(null=True, blank=True)
+    passenger_count_rating = models.IntegerField(null=True, blank=True)
+    driver_average_rating = models.FloatField(null=True, blank=True)
+    driver_count_rating = models.IntegerField(null=True, blank=True)
+    
     def __str__(self):
         return f"Manager: {self.profile.user.username}"
+
+    def update_rating(self,trips):
+        if trips.exists():
+            passenger_rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+            self.passenger_count_rating = len(passenger_rating_items)
+            self.passenger_average_rating = sum(passenger_rating_items) / len(passenger_rating_items)
+
+            driver_rating_items = [trip.driver_rating for trip in trips if trip.driver_rating is not None]
+            self.driver_count_rating = len(driver_rating_items)
+            self.driver_average_rating = sum(driver_rating_items) / len(driver_rating_items)
+
+            self.save()
+
+    def get_rating_levels(self,trips):
+        
+        rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
+        for trip in trips:
+            rating = trip.passenger_rating
+
+            if f'star_{rating}' in rating_counts:
+                rating_counts[f'star_{rating}'] += 1
+
+        return rating_counts

@@ -40,6 +40,8 @@ def trips_dashboard_stats_view(request):
         trips = Trip.objects.filter(
                 driver=request.user.profile.driver_profile,
             )
+    elif  request.user.profile.user_type == "manager":
+        trips = Trip.objects.all()      
 
     context = {
         'stats': {
@@ -63,6 +65,9 @@ def trips_dashboard_ratings_view(request):
     elif request.user.profile.user_type == "driver":
         user_profile=request.user.profile.driver_profile
         trips = user_profile.trips_driver.filter(status='completed')
+    elif  request.user.profile.user_type == "manager":
+        user_profile=request.user.profile.manager_profile
+        trips = Trip.objects.all()
 
     
     user_profile.update_rating(trips)
@@ -87,6 +92,8 @@ def trips_list_view(request, filter_trips='all'):
             trips = Trip.objects.filter(
                     driver=request.user.profile.driver_profile,
                 ).order_by('-updated_on')[:4]
+        elif  request.user.profile.user_type == "manager":
+            trips = Trip.objects.all().order_by('-updated_on')[:4]    
 
         context = {
             'trips': trips,
@@ -126,6 +133,9 @@ def trip_detail_view(request, trip_name):
         user_trip_rating = trip.passenger_rating
     elif request.user.profile.user_type == "driver":
         user_trip_rating = trip.driver_rating
+    elif  request.user.profile.user_type == "manager":
+        user_trip_rating = 100
+        trips = Trip.objects.all().order_by('-updated_on')[:4]          
 
     context = {
         'trip': trip,
