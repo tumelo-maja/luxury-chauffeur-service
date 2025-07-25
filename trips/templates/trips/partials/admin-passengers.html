@@ -10,22 +10,27 @@
         </tr>
     </thead>
     <div class="col-sep"></div>
-     <ul>
-        <li>1-Star: {{ passenger.rating_levels.star_1 }}</li>
-        <li>2-Star: {{ passenger.rating_levels.star_2 }}</li>
-        <li>3-Star: {{ passenger.rating_levels.star_3 }}</li>
-        <li>4-Star: {{ passenger.rating_levels.star_4 }}</li>
-        <li>5-Star: {{ passenger.rating_levels.star_5 }}</li>
-    </ul>
     <tbody>
         {% if passengers %}
         {% for passenger in passengers %}
         <tr>
-            <td>{{ passenger.profile.title }}</td>
+            <td>
+                {% if not passenger.profile.title == None %}
+                {{ passenger.profile.title }}
+                {% endif %}
+            </td>
             <td>{{ passenger.profile.name }}</td>
             <td>{{ passenger.profile.user.email }}</td>
-            <td>{{ passenger.profile.phone }}</td>
-            <td>{{ passenger.profile.home_address }}</td>
+            <td>
+                {% if not passenger.profile.phone == None %}
+                {{ passenger.profile.phone }}
+                {% endif %}
+            </td>
+            <td>
+                {% if not passenger.profile.home_address == None %}
+                {{ passenger.profile.home_address }}
+                {% endif %}                
+            </td>
             <td class="text-center">
                 {% if passenger.average_rating == None %}
                 No rating

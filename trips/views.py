@@ -71,9 +71,6 @@ def trips_dashboard_ratings_view(request):
         'user_profile': user_profile,
         'rating_levels': user_profile.get_rating_levels(trips)
     }
-
-    print("Conteeeeeeeeeeeeeeeeeeeeeeetx below")
-    print(context['rating_levels'])
     return render(request, 'trips/partials/dash-ratings.html',context)
 
 

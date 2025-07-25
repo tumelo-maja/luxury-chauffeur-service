@@ -6,6 +6,7 @@
             <th class="text-center">Email</th>
             <th class="text-center">Phone</th>
             <th class="text-center">Home Address</th>
+            <th class="text-center">Rating</th>
         </tr>
     </thead>
     <div class="col-sep"></div>
@@ -13,11 +14,30 @@
         {% if drivers %}
         {% for driver in drivers %}
         <tr>
-            <td>{{ driver.profile.title }}</td>
+            <td>
+                {% if not driver.profile.title == None %}
+                {{ driver.profile.title }}
+                {% endif %}                
+            </td>
             <td>{{ driver.profile.name }}</td>
             <td>{{ driver.profile.email }}</td>
-            <td>{{ driver.profile.phone }}</td>
-            <td>{{ driver.profile.home_address }}</td>
+            <td>
+                {% if not driver.profile.phone == None %}
+                {{ driver.profile.phone }}
+                {% endif %}                
+            </td>
+            <td>
+                {% if not driver.profile.home_address == None %}
+                {{ driver.profile.home_address }}
+                {% endif %}                       
+            </td>
+            <td class="text-center">
+                {% if passenger.average_rating == None %}
+                No rating
+                {% else %}
+                {{ passenger.average_rating | floatformat:1 }} ({{ passenger.count_rating }})
+                {% endif %}
+            </td>            
         </tr>
         {% endfor %}
         {% else %}

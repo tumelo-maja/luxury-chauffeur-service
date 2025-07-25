@@ -62,7 +62,7 @@ class PassengerProfile(models.Model):
     def __str__(self):
         return f"Passenger: {self.profile.user.username}"
 
-
+    
     def update_rating(self,trips):
         if trips.exists():
             rating_items = [trip.driver_rating for trip in trips if trip.driver_rating is not None]
