@@ -10,6 +10,13 @@
         </tr>
     </thead>
     <div class="col-sep"></div>
+     <ul>
+        <li>1-Star: {{ passenger.rating_levels.star_1 }}</li>
+        <li>2-Star: {{ passenger.rating_levels.star_2 }}</li>
+        <li>3-Star: {{ passenger.rating_levels.star_3 }}</li>
+        <li>4-Star: {{ passenger.rating_levels.star_4 }}</li>
+        <li>5-Star: {{ passenger.rating_levels.star_5 }}</li>
+    </ul>
     <tbody>
         {% if passengers %}
         {% for passenger in passengers %}

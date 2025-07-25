@@ -1,39 +1,40 @@
 <h2 class="dash-header">Ratings</h2>
-<p class="ratings-total">Total: <span class="ratings-total-value">0</span> reviews</p>
+<p class="ratings-total">Average: <span class="ratings-total-value">{{ user_profile.average_rating | floatformat:1 }} 
+</span><span class="ratings-total-count">({{ user_profile.count_rating }}) reviews</span></p>
 <ol>
     <li class="rating-item stars-5">
         <span class="icon-number">5 <i class="fa-solid fa-star"></i></span>
         <div class="rating-bar">
             <div class="rating-fill"></div>
-            <span id="rating-value-5" class="rating-value">138</span>
+            <span id="rating-value-5" class="rating-value">{{ rating_levels.star_5 }}</span>
         </div>
     </li>        
     <li class="rating-item stars-4">
         <span class="icon-number">4 <i class="fa-solid fa-star"></i></span>
         <div class="rating-bar">
             <div class="rating-fill"></div>
-            <span id="rating-value-4" class="rating-value">120</span>
+            <span id="rating-value-4" class="rating-value">{{ rating_levels.star_4 }}</span>
         </div>
     </li>        
     <li class="rating-item stars-3">
         <span class="icon-number">3 <i class="fa-solid fa-star"></i></span>
         <div class="rating-bar">
             <div class="rating-fill"></div>
-            <span id="rating-value-3" class="rating-value">100</span>
+            <span id="rating-value-3" class="rating-value">{{ rating_levels.star_3 }}</span>
         </div>
     </li>        
     <li class="rating-item stars-2">
         <span class="icon-number">2 <i class="fa-solid fa-star"></i></span>
         <div class="rating-bar">
             <div class="rating-fill"></div>
-            <span id="rating-value-2" class="rating-value">80</span>
+            <span id="rating-value-2" class="rating-value">{{ rating_levels.star_2 }}</span>
         </div>
     </li>        
     <li class="rating-item stars-1">
         <span class="icon-number">1 <i class="fa-solid fa-star"></i></span>
         <div class="rating-bar">
             <div class="rating-fill"></div>
-            <span id="rating-value-1" class="rating-value">60</span>
+            <span id="rating-value-1" class="rating-value">{{ rating_levels.star_2 }}</span>
         </div>
     </li>        
 </ol>

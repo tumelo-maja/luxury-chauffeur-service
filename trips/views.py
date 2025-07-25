@@ -53,6 +53,32 @@ def trips_dashboard_stats_view(request):
     return render(request, 'trips/partials/dash-trips-summary.html', context)
 
 
+
+@login_required
+def trips_dashboard_ratings_view(request):
+
+    if request.user.profile.user_type == "passenger":
+        user_profile=request.user.profile.passenger_profile
+    elif request.user.profile.user_type == "driver":
+        user_profile=request.user.profile.driver_profile
+
+    trips = user_profile.trips_passenger.filter(status='completed')
+    user_profile.update_rating(trips)
+
+    print("user_profile")
+    print(request.user.profile.passenger_profile.count_rating)
+
+    context = {
+        'user_profile': user_profile,
+        'rating_levels': user_profile.get_rating_levels(trips)
+    }
+
+    print("Conteeeeeeeeeeeeeeeeeeeeeeetx below")
+    print(context['rating_levels'])
+    return render(request, 'trips/partials/dash-ratings.html',context)
+
+
+
 @login_required
 def trips_list_view(request, filter_trips='all'):
 
@@ -350,10 +376,9 @@ def admin_trips_view(request):
 @login_required
 def admin_passengers_view(request):
     passengers =PassengerProfile.objects.all()
+
     for passenger in passengers:
-        passenger.update_rating()
-        print(f"Passenger rating: {passenger.average_rating}")
-        print(f"Count rating: {passenger.count_rating}")
+        passenger.update_rating(passenger.trips_passenger.filter(status='completed'))
 
     context = {
         'passengers': passengers,
