@@ -16,7 +16,5 @@ urlpatterns = [
     path('driver/<trip_name>/', driver_action_view, name="trip-action"),
     path('availability/', driver_availability_view, name='driver-availability'),
     path('admin/', admin_all_view, name='admin-all'),
-    path('admin/trips/', admin_trips_view, name='admin-trips'),
-    path('admin/passengers/', admin_passengers_view, name='admin-passengers'),
-    path('admin/drivers/', admin_drivers_view, name='admin-drivers'),
+    path('admin/<tab_name>/', admin_tabs_view, name='admin-tabs'),
 ]

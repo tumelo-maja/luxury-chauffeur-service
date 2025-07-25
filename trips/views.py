@@ -361,31 +361,29 @@ def admin_all_view(request):
 
 
 @login_required
-def admin_trips_view(request):
-    trips =Trip.objects.all()
-    context = {
-        'trips': trips,
-    }
-    return render(request, 'trips/partials/admin-trips.html',context)
+def admin_tabs_view(request,tab_name):
 
+    if tab_name == "trips":
+        trips =Trip.objects.all()
+        context = {
+            'trips': trips,
+        }
+        return render(request, 'trips/partials/admin-trips.html',context)
 
-@login_required
-def admin_passengers_view(request):
-    passengers =PassengerProfile.objects.all()
+    elif tab_name == "passengers":
+        passengers =PassengerProfile.objects.all()
 
-    for passenger in passengers:
-        passenger.update_rating(passenger.trips_passenger.filter(status='completed'))
+        for passenger in passengers:
+            passenger.update_rating(passenger.trips_passenger.filter(status='completed'))
 
-    context = {
-        'passengers': passengers,
-    }
-    return render(request, 'trips/partials/admin-passengers.html',context)
-
-
-@login_required
-def admin_drivers_view(request):
-    drivers =DriverProfile.objects.all()
-    context = {
-        'drivers': drivers,
-    }
-    return render(request, 'trips/partials/admin-drivers.html',context)
+        context = {
+            'passengers': passengers,
+        }
+        return render(request, 'trips/partials/admin-passengers.html',context)
+    
+    elif tab_name == "drivers":
+        drivers =DriverProfile.objects.all()
+        context = {
+            'drivers': drivers,
+        }
+        return render(request, 'trips/partials/admin-drivers.html',context)
