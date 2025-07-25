@@ -7,6 +7,7 @@
             <th class="text-center">Phone</th>
             <th class="text-center">Home Address</th>
             <th class="text-center">Rating</th>
+            <th class="text-center">Status</th>
         </tr>
     </thead>
     <div class="col-sep"></div>
@@ -38,6 +39,7 @@
                 {{ passenger.average_rating | floatformat:1 }} ({{ passenger.count_rating }})
                 {% endif %}
             </td>            
+            <td>{{ driver.status }}</td>
         </tr>
         {% endfor %}
         {% else %}
