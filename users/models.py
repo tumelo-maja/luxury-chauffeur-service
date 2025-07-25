@@ -65,7 +65,7 @@ class PassengerProfile(models.Model):
 
     def update_rating(self,trips):
         if trips.exists():
-            rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+            rating_items = [trip.driver_rating for trip in trips if trip.driver_rating is not None]
             self.count_rating = len(rating_items)
             self.average_rating = sum(rating_items) / len(rating_items)
             self.save()
@@ -74,7 +74,7 @@ class PassengerProfile(models.Model):
         
         rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
         for trip in trips:
-            rating = trip.passenger_rating
+            rating = trip.driver_rating
 
             if f'star_{rating}' in rating_counts:
                 rating_counts[f'star_{rating}'] += 1
@@ -104,8 +104,20 @@ class DriverProfile(models.Model):
         self.save()
     
     
-    def avg_rating(self):
-        """Average rating for this driver"""
-        print("This is the Average rating ")
-        result = self.trips_passenger.passenger_rating
-        print(result)
+    def update_rating(self,trips):
+        if trips.exists():
+            rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+            self.count_rating = len(rating_items)
+            self.average_rating = sum(rating_items) / len(rating_items)
+            self.save()
+
+    def get_rating_levels(self,trips):
+        
+        rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
+        for trip in trips:
+            rating = trip.passenger_rating
+
+            if f'star_{rating}' in rating_counts:
+                rating_counts[f'star_{rating}'] += 1
+
+        return rating_counts

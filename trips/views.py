@@ -59,14 +59,13 @@ def trips_dashboard_ratings_view(request):
 
     if request.user.profile.user_type == "passenger":
         user_profile=request.user.profile.passenger_profile
+        trips = user_profile.trips_passenger.filter(status='completed')
     elif request.user.profile.user_type == "driver":
         user_profile=request.user.profile.driver_profile
+        trips = user_profile.trips_driver.filter(status='completed')
 
-    trips = user_profile.trips_passenger.filter(status='completed')
+    
     user_profile.update_rating(trips)
-
-    print("user_profile")
-    print(request.user.profile.passenger_profile.count_rating)
 
     context = {
         'user_profile': user_profile,

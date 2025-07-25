@@ -113,14 +113,6 @@ $(document).ready(function () {
 
     setTimeout(() => {
 
-        let ratingsTotal = 0;
-        $('.rating-item').each(function (rateIndex) {
-            const ratingValue = parseFloat($(this).find('.rating-value').text());
-            // totalRatings = totalRatings
-            ratingsTotal += ratingValue;
-        });
-
-        $('.ratings-total-value').text(ratingsTotal);
         $('.rating-item').each(function (rateIndex) {
             const ratingValue = parseFloat($(this).find('.rating-value').text());
             let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100, 2);
