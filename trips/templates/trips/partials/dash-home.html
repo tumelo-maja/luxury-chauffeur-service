@@ -1,4 +1,4 @@
-{% if user.profile.user_type == 'driver' %}
+{% if user.profile.user_type == 'driver'  or user.profile.user_type == 'manager' %}
 <div class="dash-availability" >
     {% include 'users/partials/driver-availability_p.html' %}
 </div>

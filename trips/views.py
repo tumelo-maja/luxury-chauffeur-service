@@ -34,14 +34,14 @@ def trips_dashboard_stats_view(request):
 
     if request.user.profile.user_type == "passenger":
         trips = Trip.objects.filter(
-                passenger=request.user.profile.passenger_profile,
-            )
+            passenger=request.user.profile.passenger_profile,
+        )
     elif request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
-                driver=request.user.profile.driver_profile,
-            )
-    elif  request.user.profile.user_type == "manager":
-        trips = Trip.objects.all()      
+            driver=request.user.profile.driver_profile,
+        )
+    elif request.user.profile.user_type == "manager":
+        trips = Trip.objects.all()
 
     context = {
         'stats': {
@@ -55,29 +55,26 @@ def trips_dashboard_stats_view(request):
     return render(request, 'trips/partials/dash-trips-summary.html', context)
 
 
-
 @login_required
 def trips_dashboard_ratings_view(request):
 
     if request.user.profile.user_type == "passenger":
-        user_profile=request.user.profile.passenger_profile
+        user_profile = request.user.profile.passenger_profile
         trips = user_profile.trips_passenger.filter(status='completed')
     elif request.user.profile.user_type == "driver":
-        user_profile=request.user.profile.driver_profile
+        user_profile = request.user.profile.driver_profile
         trips = user_profile.trips_driver.filter(status='completed')
-    elif  request.user.profile.user_type == "manager":
-        user_profile=request.user.profile.manager_profile
+    elif request.user.profile.user_type == "manager":
+        user_profile = request.user.profile.manager_profile
         trips = Trip.objects.all()
 
-    
     user_profile.update_rating(trips)
 
     context = {
         'user_profile': user_profile,
         'rating_levels': user_profile.get_rating_levels(trips)
     }
-    return render(request, 'trips/partials/dash-ratings.html',context)
-
+    return render(request, 'trips/partials/dash-ratings.html', context)
 
 
 @login_required
@@ -86,14 +83,14 @@ def trips_list_view(request, filter_trips='all'):
     if filter_trips == "recent":
         if request.user.profile.user_type == "passenger":
             trips = Trip.objects.filter(
-                    passenger=request.user.profile.passenger_profile,
-                ).order_by('-updated_on')[:4]
+                passenger=request.user.profile.passenger_profile,
+            ).order_by('-updated_on')[:4]
         elif request.user.profile.user_type == "driver":
             trips = Trip.objects.filter(
-                    driver=request.user.profile.driver_profile,
-                ).order_by('-updated_on')[:4]
-        elif  request.user.profile.user_type == "manager":
-            trips = Trip.objects.all().order_by('-updated_on')[:4]    
+                driver=request.user.profile.driver_profile,
+            ).order_by('-updated_on')[:4]
+        elif request.user.profile.user_type == "manager":
+            trips = Trip.objects.all().order_by('-updated_on')[:4]
 
         context = {
             'trips': trips,
@@ -106,12 +103,14 @@ def trips_list_view(request, filter_trips='all'):
 
         if request.user.profile.user_type == "passenger":
             trips = Trip.objects.filter(
-                    passenger=request.user.profile.passenger_profile,
-                ).order_by('travel_datetime')
+                passenger=request.user.profile.passenger_profile,
+            ).order_by('travel_datetime')
         elif request.user.profile.user_type == "driver":
             trips = Trip.objects.filter(
-                    driver=request.user.profile.driver_profile,
-                ).order_by('travel_datetime')
+                driver=request.user.profile.driver_profile,
+            ).order_by('travel_datetime')
+        elif request.user.profile.user_type == "manager":
+            trips = Trip.objects.all().order_by('travel_datetime')
 
         context = {
             'trips': trips,
@@ -133,9 +132,9 @@ def trip_detail_view(request, trip_name):
         user_trip_rating = trip.passenger_rating
     elif request.user.profile.user_type == "driver":
         user_trip_rating = trip.driver_rating
-    elif  request.user.profile.user_type == "manager":
+    elif request.user.profile.user_type == "manager":
         user_trip_rating = 100
-        trips = Trip.objects.all().order_by('-updated_on')[:4]          
+        trips = Trip.objects.all().order_by('-updated_on')[:4]
 
     context = {
         'trip': trip,
@@ -292,10 +291,12 @@ def driver_availability_view(request):
 
     if request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
-                driver=request.user.profile.driver_profile,
-            )
+            driver=request.user.profile.driver_profile,
+        )
+    elif request.user.profile.user_type == "manager":
+        trips = Trip.objects.all()
     else:
-        print("Error: You are not a driver! Dont try trick us!!")
+        print("Error: You are not a driver! nor a Manager Dont try trick us!!")
 
     context = {
         'events': trips,
@@ -306,30 +307,54 @@ def driver_availability_view(request):
 
 @login_required
 def allocated_trips(request):
+    
+    trips_list = []
     if request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
-                driver=request.user.profile.driver_profile,
-            )
-    else:
-        print("Error: You are not a driver! Dont try trick us!!")
+            driver=request.user.profile.driver_profile,
+        )
 
-    trips_list = []
+        for trip in trips:
 
-    for trip in trips:
+            trip_type = ''.join([word[0] for word in trip.trip_type.split()])
+            trip_time = trip.travel_datetime.strftime("%H:%M") 
 
-        trips_list.append({
+            trips_list.append({
             'id': trip.id,
             'start': trip.travel_datetime.isoformat(),
-            # 'location_end': trip.location_end,
-            # 'title': trip.trip_type,
-            'title': ''.join([word[0] for word in trip.trip_type.split()]),
-            # 'type': trip.trip_type,
-            # 'status': trip.status,
-            'className': f'status-{trip.status_class}',
+            'title': f'<span class="time">{trip_time}</span><span class="title">{trip_type}</span>',
+            'className': f'status-{trip.status_class} clickable',
 
-        })
+            })
 
-    return JsonResponse(trips_list, safe=False)
+        return JsonResponse(trips_list, safe=False)
+
+
+    elif request.user.profile.user_type == "manager":
+        trips = Trip.objects.all()
+
+        daily_trips_count = {}
+        for trip in trips:
+            date = trip.travel_datetime.date() 
+            status = trip.status
+
+            # intialise date key if it doesnt exit yet
+            if date not in daily_trips_count:
+                daily_trips_count[date] = 0
+            daily_trips_count[date] += 1
+
+        for date, trip_counts in daily_trips_count.items():
+            trips_list.append({
+                    'start': date.isoformat(),
+                    'title': f"{trip_counts} x {'trip' if trip_counts == 1 else 'trips'}",
+                    'className': f"{status} clickable",
+                })
+
+        return JsonResponse(trips_list, safe=False)
+
+    else:
+        print("Error: You are not a driver! nor a Manager! Dont try trick us!!")
+        return JsonResponse(trips_list, safe=False)
 
 
 @login_required
@@ -350,8 +375,8 @@ def driver_action_view(request, trip_name):
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
         context = {
-        'trip': trip,
-        'user': request.user
+            'trip': trip,
+            'user': request.user
         }
 
         if trip.status == 'confirmed':
@@ -371,29 +396,30 @@ def admin_all_view(request):
 
 
 @login_required
-def admin_tabs_view(request,tab_name):
+def admin_tabs_view(request, tab_name):
 
     if tab_name == "trips":
-        trips =Trip.objects.all()
+        trips = Trip.objects.all()
         context = {
             'trips': trips,
         }
-        return render(request, 'trips/partials/admin-trips.html',context)
+        return render(request, 'trips/partials/admin-trips.html', context)
 
     elif tab_name == "passengers":
-        passengers =PassengerProfile.objects.all()
+        passengers = PassengerProfile.objects.all()
 
         for passenger in passengers:
-            passenger.update_rating(passenger.trips_passenger.filter(status='completed'))
+            passenger.update_rating(
+                passenger.trips_passenger.filter(status='completed'))
 
         context = {
             'passengers': passengers,
         }
-        return render(request, 'trips/partials/admin-passengers.html',context)
-    
+        return render(request, 'trips/partials/admin-passengers.html', context)
+
     elif tab_name == "drivers":
-        drivers =DriverProfile.objects.all()
+        drivers = DriverProfile.objects.all()
         context = {
             'drivers': drivers,
         }
-        return render(request, 'trips/partials/admin-drivers.html',context)
+        return render(request, 'trips/partials/admin-drivers.html', context)

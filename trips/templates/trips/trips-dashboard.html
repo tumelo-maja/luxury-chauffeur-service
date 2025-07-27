@@ -26,14 +26,20 @@
                         hx-trigger="click"
                         >All Trips</button>
                     </li>
-                    {% if user.profile.user_type == 'driver' %}
+                    {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                     <li>
                         <button type="button" class="dash-item"
                         id="driver-availability-button"
                         hx-get="{% url 'driver-availability' %}"
                         hx-target="#display-container"
                         hx-trigger="click"
-                        >My Availability</button>
+                        >
+                        {% if user.profile.user_type == 'driver' %}
+                        My Availability
+                        {% else %}
+                        All Availability
+                        {% endif %}
+                    </button>
                     </li>
                     {% endif %}
                     {% if user.profile.user_type == 'manager' %}
