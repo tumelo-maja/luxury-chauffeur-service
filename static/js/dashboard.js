@@ -115,7 +115,7 @@ $(document).ready(function () {
 
         $('.rating-item').each(function (rateIndex) {
             const ratingValue = parseFloat($(this).find('.rating-value').text());
-            const ratingsTotal =parseInt($('.ratings-total-count').text());
+            const ratingsTotal = parseInt($('.ratings-total-count').text());
             let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100, 2);
             $(this).find('.rating-fill').css('width', newRatingFill + '%');
         });
@@ -130,29 +130,6 @@ $(document).ready(function () {
         });
     }
 
-    // load driver availability
-    $('#driver-availability-button').click(() => {
-        setTimeout(() => {
-
-            const calendar = new FullCalendar.Calendar(document.getElementById('driver-calendar'), {
-
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
-                },
-                events: '/allocated_trips',
-                contentHeight: 'auto',
-                // height: 500,
-                eventContent: function (arg) {                   
-                    return { html: `<div class="day-content">${arg.event.title}</div>` };
-                },
-            });
-
-            calendar.render();
-        }, 100);
-    });
 
     // admin panel interactive elements
     $('#admin-all-button').click(() => {

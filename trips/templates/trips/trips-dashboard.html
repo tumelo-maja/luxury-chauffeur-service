@@ -24,21 +24,17 @@
                         hx-get="{% url 'dash-details' 'trips' %}"
                         hx-target="#display-container"
                         hx-trigger="click"
-                        >All Trips</button>
+                        >Trips - List</button>
                     </li>
                     {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                     <li>
                         <button type="button" class="dash-item"
                         id="driver-availability-button"
-                        hx-get="{% url 'driver-availability' %}"
+                        hx-get="{% url 'trips-calendar' %}"
                         hx-target="#display-container"
                         hx-trigger="click"
                         >
-                        {% if user.profile.user_type == 'driver' %}
-                        My Availability
-                        {% else %}
-                        All Availability
-                        {% endif %}
+                        Trips - Calendar
                     </button>
                     </li>
                     {% endif %}
@@ -71,10 +67,6 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" integrity="sha512-iusSCweltSRVrjOz+4nxOL9OXh2UA0m8KdjsX8/KUUiJz+TCNzalwE0WE6dYTfHDkXuGuHq3W9YIhDLN7UNB0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 <script src="{% static 'js/dashboard.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

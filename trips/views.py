@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from datetime import datetime, timedelta
+import calendar
+from calendar import HTMLCalendar
 from .models import Trip
 from users.models import PassengerProfile, DriverProfile
 from .forms import *
@@ -18,10 +20,7 @@ def trip_view(request):
 @login_required
 def trips_dashboard_view(request):
 
-    context = {
-        'is_driver': True if request.user.profile.user_type == "driver" else False,
-    }
-    return render(request, 'trips/trips-dashboard.html', context)
+   return render(request, 'trips/trips-dashboard.html')
 
 
 @login_required
@@ -287,22 +286,42 @@ def rate_trip_view(request, trip_name):
 
 
 @login_required
-def driver_availability_view(request):
+def trips_calendar_view(request):
 
-    if request.user.profile.user_type == "driver":
-        trips = Trip.objects.filter(
-            driver=request.user.profile.driver_profile,
-        )
-    elif request.user.profile.user_type == "manager":
-        trips = Trip.objects.all()
-    else:
-        print("Error: You are not a driver! nor a Manager Dont try trick us!!")
+    # get today date
+    today = datetime.now()
+    current_year = today.year
+    current_month = today.month
+    current_time = today.strftime('%I:%M %p')
 
-    context = {
-        'events': trips,
+    year = int(request.GET.get('year', current_year))
+    month = int(request.GET.get('month', current_month))
+    
+    direction  = request.GET.get('direction')
+    if direction == 'prev':
+        month -= 1
+        if month < 1:
+            month = 12
+            year -= 1
+    elif direction == 'next':
+        month += 1
+        if month > 12:
+            month = 1
+            year += 1
+    
+    month_str = list(calendar.month_name)[month]
+    trip_calendar = HTMLCalendar().formatmonth(year, month)
+
+    context={
+        'year':year,
+        'month':month,
+        'month_str':month_str,
+        'trip_calendar':trip_calendar,
+        'current_year':current_year,
+        'current_time':current_time,
     }
 
-    return render(request, 'users/driver-availability.html', context)
+    return render(request, 'trips/partials/dash-calendar.html', context)
 
 
 @login_required
@@ -320,7 +339,7 @@ def allocated_trips(request):
             trip_time = trip.travel_datetime.strftime("%H:%M") 
 
             trips_list.append({
-            'id': trip.id,
+            'id': trip.trip_name,
             'start': trip.travel_datetime.isoformat(),
             'title': f'<span class="time">{trip_time}</span><span class="title">{trip_type}</span>',
             'className': f'status-{trip.status_class} clickable',
