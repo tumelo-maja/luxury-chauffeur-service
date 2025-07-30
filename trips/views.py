@@ -2,14 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
-from datetime import datetime, timedelta
-import calendar
-from calendar import HTMLCalendar
+from datetime import datetime, timedelta, date
+from django.utils import timezone
+
 from .models import Trip
 from users.models import PassengerProfile, DriverProfile
 from .forms import *
 
-# Create your views here.
 
 
 @login_required
@@ -286,43 +285,39 @@ def rate_trip_view(request, trip_name):
 
 
 @login_required
-def trips_calendar_view(request):
+def trips_calendar_view(request):   
+    return render(request, 'trips/partials/dash-calendar.html')
+
+@login_required
+def trips_calendar_subsets_view(request):
 
     # get today date
-    today = datetime.now()
+    today = timezone.now()
+    print(f"Time now: {today}")
+
     current_year = today.year
     current_month = today.month
-    current_time = today.strftime('%I:%M %p')
 
     year = int(request.GET.get('year', current_year))
     month = int(request.GET.get('month', current_month))
-    
-    direction  = request.GET.get('direction')
-    if direction == 'prev':
-        month -= 1
-        if month < 1:
-            month = 12
-            year -= 1
-    elif direction == 'next':
-        month += 1
-        if month > 12:
-            month = 1
-            year += 1
-    
-    month_str = list(calendar.month_name)[month]
-    trip_calendar = HTMLCalendar().formatmonth(year, month)
-    # trip_calendar = HTMLCalendar().formatyear(year)
 
-    context={
-        'year':year,
-        'month':month,
-        'month_str':month_str,
-        'trip_calendar':trip_calendar,
-        'current_year':current_year,
-        'current_time':current_time,
-    }
+    start_datetime = timezone.make_aware(datetime(year, month, 1, 0, 0, 0))
+    if month == 12:
+        end_datetime = timezone.make_aware(datetime(year + 1, 1, 1, 0, 0, 0))
+    else:
+        end_datetime = timezone.make_aware(datetime(year, month + 1, 1, 0, 0, 0))
 
-    return render(request, 'trips/partials/dash-calendar.html', context)
+    print("About to fiiiiiiiiiiiiiiiilter by date")
+    trips = Trip.objects.filter(
+        travel_datetime__gte=start_datetime,
+        travel_datetime__lt=end_datetime
+    )
+
+    monthly_trips = [{'travel_datetime': trip.travel_datetime.date().isoformat(),
+                      'travel_date': trip.travel_datetime.strftime("%d/%m/%Y"),}
+               for trip in trips ]
+    
+    return JsonResponse({'trips': monthly_trips})
 
 
 @login_required

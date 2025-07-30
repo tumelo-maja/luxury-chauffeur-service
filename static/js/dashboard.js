@@ -17,11 +17,11 @@ $(document).ready(function () {
             });
 
 
-            $(document).on('click', function (event) {
-                if (!$(event.target).closest('#sort-button, #sort-options').length) {
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('#sort-button, #sort-options').length) {
                     $('#sort-options').removeClass('show');
                 }
-                if (!$(event.target).closest('#filter-button, #filter-options').length) {
+                if (!$(e.target).closest('#filter-button, #filter-options').length) {
                     $('#filter-options').removeClass('show');
                 }
             });
@@ -139,11 +139,23 @@ $(document).ready(function () {
             const nextBtn = $('#nextBtn');
 
             let currentDate = new Date();
-            const events = [
-                { date: '2025-07-10', title: 'Airpot Tranfer' },
-                { date: '2025-07-15', title: 'Special Events' },
-                { date: '2025-07-20', title: 'Team Building Event' },
-            ];
+            // const events = [
+            //     { date: '2025-07-10', title: 'Airpot Tranfer' },
+            //     { date: '2025-07-15', title: 'Special Events' },
+            //     { date: '2025-07-20', title: 'Wedding Chaufuer' },
+            // ];
+
+            function getMonthlyTrips(year, month) {
+
+                return fetch(`/trips/calendar/subsets/?year=${year}&month=${month}`)
+                    .then(response => response.json())
+                    .then(data => data.trips || [])
+
+                    .catch(error => {
+                        console.error("Something wring with your trips:", error);
+                        return [];
+                    });
+            };
 
             const updateCalendar = () => {
                 const currentYear = currentDate.getFullYear();
@@ -161,37 +173,50 @@ $(document).ready(function () {
 
                 monthYear.text(monthYearString);
 
-                let datesHTML = '';
-                for (let i = firstDayIndex; i > 0; i--) {
-                    const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
-                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
-                }
+                // let trips = getMonthlyTrips(currentYear, currentMonth);
+                getMonthlyTrips(currentYear, currentMonth + 1)
+                    .then(trips => {
 
-                for (let i = 1; i <= totalDays; i++) {
-                    const date = new Date(currentYear, currentMonth, i);
-                    const activeClass = date.toDateString() === new Date().toDateString() ? 'active' : '';
+                        // console.log(trips);
+                        let datesHTML = '';
+                        for (let i = firstDayIndex; i > 0; i--) {
+                            const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
+                            datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
+                        }
 
-                    const formattedDate = date.toISOString().split('T')[0];
+                        for (let i = 1; i <= totalDays; i++) {
+                            const date = new Date(currentYear, currentMonth, i);
+                            const activeClass = date.toDateString() === new Date().toDateString() ? 'active' : '';
 
-                    const eventCount = events.filter(event => event.date === formattedDate).length;
-                    const eventElement = `<div class="day-trips">${eventCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
+                            const dateString = date.toLocaleDateString();
+                            // const formattedDate = date.toISOString().split('T')[0];
+                            // const formattedDate = currentDate.toLocaleString(
+                            //         'default', { month: 'long', year: 'numeric' });
+                            // console.log(`trips Date: ${trips[i].travel_date}`);
+                            // console.log(`toLocaleDateString: ${date.toLocaleDateString()}`);
 
-                    datesHTML += `<div class="date-wrapper">
+                            // const tripCount = trips.filter(trip => trip.travel_datetime === formattedDate).length;
+                            const tripCount = trips.filter(trip => trip.travel_date === dateString).length;
+                            const tripElement = `<div class="day-trips">${tripCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
+
+                            // console.log("Trip below");
+                            // console.log(tripCount);
+
+                            datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass}">${i}</div>
-                                    ${eventCount > 0 ? eventElement : ''}
+                                    ${tripCount > 0 ? tripElement : ''}
                                   </div>`
+                        }
 
-                }
+                        for (let i = 1; i <= 7 - lastDayIndex; i++) {
+                            const nextDate = new Date(currentYear, currentMonth + 1, i);
+                            datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
 
-                for (let i = 1; i <= 7 - lastDayIndex; i++) {
-                    const nextDate = new Date(currentYear, currentMonth + 1, i);
-                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
+                        }
 
-                }
+                        datesElement.html(datesHTML);
 
-                datesElement.html(datesHTML);
-
-
+                    });
             }
 
             $(prevBtn).click(() => {

@@ -15,6 +15,7 @@ urlpatterns = [
     path('feedback/<trip_name>', rate_trip_view, name="trip-feedback"),
     path('driver/<trip_name>/', driver_action_view, name="trip-action"),
     path('calendar/', trips_calendar_view, name='trips-calendar'),
+    path('calendar/subsets/', trips_calendar_subsets_view, name='trips-calendar-subsets'),
     path('admin/', admin_all_view, name='admin-all'),
     path('admin/<tab_name>/', admin_tabs_view, name='admin-tabs'),
 ]

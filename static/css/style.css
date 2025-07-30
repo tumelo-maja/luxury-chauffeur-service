@@ -1846,17 +1846,17 @@ td {
     transition: 0.2s;
 }
 
-.date:hover,
-.date.active {
+.cal-date:hover,
+.cal-date.active {
     background-color: purple;
     color: #fff;
 }
 
-.date.inactive {
+.cal-date.inactive {
     color: #f4f1f1;
 }
 
-.date.inactive:hover {
+.cal-date.inactive:hover {
     color: #fff;
 }
 
