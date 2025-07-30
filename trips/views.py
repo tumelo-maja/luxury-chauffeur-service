@@ -292,8 +292,7 @@ def trips_calendar_view(request):
 def trips_calendar_subsets_view(request):
 
     # get today date
-    today = timezone.now()
-    print(f"Time now: {today}")
+    today = datetime.today()
 
     current_year = today.year
     current_month = today.month
@@ -307,7 +306,6 @@ def trips_calendar_subsets_view(request):
     else:
         end_datetime = timezone.make_aware(datetime(year, month + 1, 1, 0, 0, 0))
 
-    print("About to fiiiiiiiiiiiiiiiilter by date")
     trips = Trip.objects.filter(
         travel_datetime__gte=start_datetime,
         travel_datetime__lt=end_datetime

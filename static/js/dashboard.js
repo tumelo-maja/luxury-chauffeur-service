@@ -137,13 +137,7 @@ $(document).ready(function () {
             const datesElement = $('#dates');
             const prevBtn = $('#prevBtn');
             const nextBtn = $('#nextBtn');
-
             let currentDate = new Date();
-            // const events = [
-            //     { date: '2025-07-10', title: 'Airpot Tranfer' },
-            //     { date: '2025-07-15', title: 'Special Events' },
-            //     { date: '2025-07-20', title: 'Wedding Chaufuer' },
-            // ];
 
             function getMonthlyTrips(year, month) {
 
@@ -177,7 +171,6 @@ $(document).ready(function () {
                 getMonthlyTrips(currentYear, currentMonth + 1)
                     .then(trips => {
 
-                        // console.log(trips);
                         let datesHTML = '';
                         for (let i = firstDayIndex; i > 0; i--) {
                             const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
@@ -189,18 +182,9 @@ $(document).ready(function () {
                             const activeClass = date.toDateString() === new Date().toDateString() ? 'active' : '';
 
                             const dateString = date.toLocaleDateString();
-                            // const formattedDate = date.toISOString().split('T')[0];
-                            // const formattedDate = currentDate.toLocaleString(
-                            //         'default', { month: 'long', year: 'numeric' });
-                            // console.log(`trips Date: ${trips[i].travel_date}`);
-                            // console.log(`toLocaleDateString: ${date.toLocaleDateString()}`);
 
-                            // const tripCount = trips.filter(trip => trip.travel_datetime === formattedDate).length;
                             const tripCount = trips.filter(trip => trip.travel_date === dateString).length;
                             const tripElement = `<div class="day-trips">${tripCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
-
-                            // console.log("Trip below");
-                            // console.log(tripCount);
 
                             datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass}">${i}</div>

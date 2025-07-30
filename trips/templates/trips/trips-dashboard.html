@@ -15,7 +15,7 @@
                         <button type="button" class="dash-item selected"
                         hx-get="{% url 'dash-details' 'home' %}"
                         hx-target="#display-container"
-                        hx-trigger="click"
+                        hx-trigger="load, click"
                         >Dashboard</button>
                     </li>
                     <li>
@@ -32,7 +32,7 @@
                         id="driver-availability-button"
                         hx-get="{% url 'trips-calendar' %}"
                         hx-target="#display-container"
-                        hx-trigger="load, click"
+                        hx-trigger="click"
                         >
                         Trips - Calendar
                     </button>
