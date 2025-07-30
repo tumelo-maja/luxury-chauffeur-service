@@ -179,15 +179,22 @@ $(document).ready(function () {
 
                         for (let i = 1; i <= totalDays; i++) {
                             const date = new Date(currentYear, currentMonth, i);
-                            const activeClass = date.toDateString() === new Date().toDateString() ? 'active' : '';
+                            let todayDate = new Date();
+                            todayDate.setHours(0, 0, 0, 0);
+                            const activeClass = date.toDateString() === todayDate.toDateString() ? 'active' : '';
 
                             const dateString = date.toLocaleDateString();
 
                             const tripCount = trips.filter(trip => trip.travel_date === dateString).length;
                             const tripElement = `<div class="day-trips">${tripCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
 
+                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/" hx-target="#baseDialog"` : '';
+                            // const htmxCreateTrip = `hx-get="/trips/request/" hx-target="#baseDialog" hx-trigger="click"`;
+                            console.log(`date input: ${date.toLocaleDateString()}`);
+                            console.log(`todayDate input: ${todayDate.toLocaleDateString()}`);
+
                             datesHTML += `<div class="date-wrapper">
-                                    <div class="cal-date ${activeClass}">${i}</div>
+                                    <div class="cal-date ${activeClass}"${htmxCreateTrip}>${i}</div>
                                     ${tripCount > 0 ? tripElement : ''}
                                   </div>`
                         }
@@ -199,6 +206,14 @@ $(document).ready(function () {
                         }
 
                         datesElement.html(datesHTML);
+
+                        $('.cal-date').each(function () {
+                            htmx.process(this);
+                        })
+
+                        // $('.date-wrapper').click(() => {
+                        //     console.log("Date Warpper clicked");
+                        // })
 
                     });
             }

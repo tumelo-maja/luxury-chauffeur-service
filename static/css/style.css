@@ -1837,11 +1837,13 @@ td {
     margin: 3px;
     padding: 5px;
     cursor: pointer;
+    user-select: none;
     font-weight: 700;
     border-radius: 50%;
     width: 35px;
     height: 35px;
     transition: 0.2s;
+    z-index: 1;
 }
 
 .cal-date:hover,
