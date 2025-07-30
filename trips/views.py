@@ -311,6 +311,7 @@ def trips_calendar_view(request):
     
     month_str = list(calendar.month_name)[month]
     trip_calendar = HTMLCalendar().formatmonth(year, month)
+    # trip_calendar = HTMLCalendar().formatyear(year)
 
     context={
         'year':year,
