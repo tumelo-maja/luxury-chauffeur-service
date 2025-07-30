@@ -139,41 +139,52 @@ $(document).ready(function () {
             const nextBtn = $('#nextBtn');
 
             let currentDate = new Date();
+            const events = [
+                { date: '2025-07-10', title: 'Airpot Tranfer' },
+                { date: '2025-07-15', title: 'Special Events' },
+                { date: '2025-07-20', title: 'Team Building Event' },
+            ];
 
             const updateCalendar = () => {
                 const currentYear = currentDate.getFullYear();
                 const currentMonth = currentDate.getMonth();
 
                 const firstDay = new Date(currentYear, currentMonth, 0);
-                const lastDay = new Date(currentYear, currentMonth+1, 0);
+                const lastDay = new Date(currentYear, currentMonth + 1, 0);
 
                 const totalDays = lastDay.getDate();
-                const firstDayIndex =firstDay.getDay();
-                const lastDayIndex =lastDay.getDay();
+                const firstDayIndex = firstDay.getDay();
+                const lastDayIndex = lastDay.getDay();
 
-                const monthYearString =currentDate.toLocaleString(
-                    'default', {month: 'long', year: 'numeric'});
-                
+                const monthYearString = currentDate.toLocaleString(
+                    'default', { month: 'long', year: 'numeric' });
+
                 monthYear.text(monthYearString);
 
-                let datesHTML ='';
-                for (let i = firstDayIndex; i >0; i--) {
-                    const prevDate = new Date(currentYear, currentMonth, 0 -i+1);
+                let datesHTML = '';
+                for (let i = firstDayIndex; i > 0; i--) {
+                    const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
                     datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
                 }
 
                 for (let i = 1; i <= totalDays; i++) {
                     const date = new Date(currentYear, currentMonth, i);
                     const activeClass = date.toDateString() === new Date().toDateString() ? 'active' : '';
+
+                    const formattedDate = date.toISOString().split('T')[0];
+
+                    const eventCount = events.filter(event => event.date === formattedDate).length;
+                    const eventElement = `<div class="day-trips">${eventCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
+
                     datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass}">${i}</div>
-                                    <div class="day-trips">99  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>
+                                    ${eventCount > 0 ? eventElement : ''}
                                   </div>`
 
                 }
-                
-                for (let i = 1; i <= 7 -lastDayIndex; i++) {
-                    const nextDate = new Date(currentYear, currentMonth+1, i);
+
+                for (let i = 1; i <= 7 - lastDayIndex; i++) {
+                    const nextDate = new Date(currentYear, currentMonth + 1, i);
                     datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
 
                 }
@@ -184,15 +195,15 @@ $(document).ready(function () {
             }
 
             $(prevBtn).click(() => {
-                currentDate.setMonth(currentDate.getMonth() -1);
+                currentDate.setMonth(currentDate.getMonth() - 1);
                 updateCalendar();
             })
 
             $(nextBtn).click(() => {
-                currentDate.setMonth(currentDate.getMonth() +1);
+                currentDate.setMonth(currentDate.getMonth() + 1);
                 updateCalendar();
             })
-            
+
             updateCalendar();
 
 
