@@ -1,0 +1,63 @@
+{% load crispy_forms_tags %}
+
+<form hx-post="{{ request.path }}" class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Review Trip Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        {% csrf_token %}
+        <div class="sum-item status-container mb-3">
+            <p class="title">Status: </p>
+            <p class="status status-{{ trip.status_class }} max-w-max">{{ trip.status_str }}</p>
+        </div>
+        {{ form | crispy }}
+
+        {% if warning_texts %}
+        <div class="warning-text-container">
+            <h4>Warning Messages:</h4>
+            <ul>
+                {% for warning_text in warning_texts %}
+                <li class="warning-text-item">{{ warning_text }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if driver_window_trips %}
+        <div class="user-trips-container">
+            <h4>Driver's other trips on this day:</h4>
+            <ul>
+                {% for trip_driver in driver_window_trips %}
+                <li class="user-trip-item">
+                    <span class="trip-datetime">{{ trip_driver.travel_datetime }}</span>
+                    <span class="status status-{{ trip_driver.status }}">{{ trip_driver.status }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if passenger_window_trips %}
+        <div class="user-trips-container">
+            <h4>Passenger's other trips on this day:</h4>
+            <ul>
+                {% for trip_passenger in passenger_window_trips %}
+                <li class="user-trip-item">
+                    <span class="trip-datetime">{{ trip_passenger.travel_datetime }}</span>
+                    <span class="status status-{{ trip_passenger.status }}">{{ trip_passenger.status }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <input type="checkbox" name="verify" value="Bike" required>
+        <label for="verify">All details have been checked and verified</label><br>
+    </div>
+
+    <div class="modal-footer flex justify-around w-full">
+        <button type="submit">Save and Confirm</button>
+        <button type="button" class="button-style button-gray ml-4" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>

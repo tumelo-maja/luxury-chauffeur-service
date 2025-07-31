@@ -18,4 +18,5 @@ urlpatterns = [
     path('calendar/subsets/', trips_calendar_subsets_view, name='trips-calendar-subsets'),
     path('admin/', admin_all_view, name='admin-all'),
     path('admin/<tab_name>/', admin_tabs_view, name='admin-tabs'),
+    path('review/<trip_name>/', trip_review_view, name="trip-review"),
 ]

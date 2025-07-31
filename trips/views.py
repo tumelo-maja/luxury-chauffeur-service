@@ -230,6 +230,69 @@ def trip_delete_view(request, trip_name):
     return render(request, 'trips/trip-delete.html', context)
 
 
+@login_required
+def trip_review_view(request, trip_name):
+
+    trip = get_object_or_404(Trip, trip_name=trip_name)
+
+    if request.method == "POST":
+        form = TripRequestForm(instance=trip)
+        trip = form.save(commit=False)
+        trip.status = "confirmed"
+        trip.save()
+
+        return HttpResponse(status=204)
+    
+    else:
+        form = TripRequestForm(instance=trip)
+    
+    # only driver fieldcan be changed 
+    for field_name, field in form.fields.items():
+        if field_name != 'driver': 
+            field.widget.attrs['readonly'] = True
+            field.widget.attrs['disabled'] = True
+            field.required = False
+    
+    # check indicators to display
+    travel_datetime = trip.travel_datetime
+    check_window_hrs =6
+    start_time = travel_datetime - timedelta(hours=check_window_hrs)
+    end_time = travel_datetime + timedelta(hours=check_window_hrs)
+
+    
+    driver_window_trips = Trip.objects.filter(
+        driver=trip.driver,
+        travel_datetime__gte=start_time,
+        travel_datetime__lt=end_time
+    ).exclude(trip_name=trip.trip_name)    
+
+    passenger_window_trips = Trip.objects.filter(
+        passenger=trip.passenger,
+        travel_datetime__gte=start_time,
+        travel_datetime__lt=end_time
+    ).exclude(trip_name=trip.trip_name)   
+
+
+    # warning texts list
+    warning_texts = []
+    if driver_window_trips.count():
+        warning_texts.append(f"The driver has {driver_window_trips.count()} other trips within {check_window_hrs} hours of this time:")
+    
+    if passenger_window_trips.count():
+        warning_texts.append(f"The passenger has {passenger_window_trips.count()} other trip(s) within {check_window_hrs} hours of this time:") 
+
+    context = {
+        'trip': trip,
+        'form': form,
+        'user': request.user,
+        'warning_texts':warning_texts,
+        'driver_window_trips':driver_window_trips,
+        'passenger_window_trips':passenger_window_trips,
+    }
+
+    return render(request, 'trips/trip-review.html', context)
+
+
 def check_action_allowed(trip):
 
     if trip.status in ['completed', 'canceled']:

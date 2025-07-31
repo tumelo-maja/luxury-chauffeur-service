@@ -893,7 +893,7 @@ body {
     padding: 10px;
 }
 
-.sub-items .status {
+.status-container .status {
     border: 1px solid gray;
     border-radius: 10px;
     height: 30px;
@@ -1879,4 +1879,81 @@ td {
 
 .day-trips .fa-circle {
     font-size: 6px;
+}
+
+.warning-text-container {
+    background-color: #fff3cd;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #fcbe04;
+    margin-bottom: 20px;
+}
+
+.warning-text-container h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.warning-text-container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.warning-text-item {
+    font-size: 16px;
+    color: #856404;
+    margin-bottom: 5px;
+}
+
+
+.user-trips-container {
+    background-color: rgba(226, 227, 229, 0.684);
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #d6d8db;
+    margin: 20px 0;
+}
+
+.user-trips-container h4 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5a5a5a;
+    margin-bottom: 10px;
+}
+
+.user-trips-container ul {
+    list-style-type: none; 
+    padding-left: 0;
+    margin: 0;
+}
+
+.user-trip-item {
+    font-size: 16px;
+    color: #333;
+    padding: 5px 0;
+    border-bottom: 1px solid #d6d8db;
+    margin-bottom: 5px;
+}
+
+.user-trip-item:last-child {
+    border-bottom: none;
+}
+
+.user-trip-item .status {
+    border: 1px solid gray;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 12px;
+    text-transform: capitalize;
+    padding: 4px 10px;
+    margin-bottom: 5px;    
+}
+
+.user-trip-item .trip-datetime {
+    margin-right: 20px;
 }

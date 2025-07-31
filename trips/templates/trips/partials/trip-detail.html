@@ -85,7 +85,8 @@
                 {% else %}
                 <p class="no-more-changes">No more changes/actions for this trip.</p>
                 {% endif %}
-            {% else %}
+
+            {% elif user.profile.user_type == 'driver' %}
                 {% if trip.status_class == 'confirmed' %}
                 <button type="button" class="trip-rate trip-btn" id="startTripButton"
                     hx-get="{% url 'trip-action' trip.trip_name %}" hx-target="#baseDialog">Start Trip
@@ -118,6 +119,16 @@
                 {% else %}
                 <p class="no-more-changes">No actions can be taken for this trip.</p>
                 {% endif %}
+
+            {% else %}
+                {% if trip.status_class == 'modified' or trip.status_class == 'pending' %}            
+                    <button type="button" class="trip-rate trip-btn" id="startTripButton"
+                        hx-get="{% url 'trip-review' trip.trip_name %}" hx-target="#baseDialog">Review Trip
+                        <i class="fa-solid fa-car-side"></i>
+                    </button>
+                {% else %}
+                    <p class="no-more-changes">No actions can be taken for this trip.</p>
+                {% endif %}            
 
             {% endif %}
 
