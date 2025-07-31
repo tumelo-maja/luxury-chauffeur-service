@@ -259,7 +259,6 @@ def trip_review_view(request, trip_name):
     start_time = travel_datetime - timedelta(hours=check_window_hrs)
     end_time = travel_datetime + timedelta(hours=check_window_hrs)
 
-    
     driver_window_trips = Trip.objects.filter(
         driver=trip.driver,
         travel_datetime__gte=start_time,
