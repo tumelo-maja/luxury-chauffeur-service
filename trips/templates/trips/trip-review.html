@@ -52,12 +52,40 @@
         </div>
         {% endif %}
 
-        <input type="checkbox" name="verify" value="Bike" required>
+        <div class="outcome-container">
+            <p>Request Outcome</p>
+            <input type="radio" id="approve" name="request_outcome" value="approve">
+            <label for="approve">Approve</label><br>
+            <input type="radio" id="reject" name="request_outcome" value="reject" checked>
+            <label for="reject">Reject</label>
+        </div>
+
+        <input id="verify" type="checkbox" name="verify" value="verify" required>
         <label for="verify">All details have been checked and verified</label><br>
+        <p id="outcome-text"><span class="reject-text">This trip will be Rejected.</span></p>
     </div>
 
     <div class="modal-footer flex justify-around w-full">
-        <button type="submit">Save and Confirm</button>
+        <button type="submit" class="button-style button-green">Submit</button>
         <button type="button" class="button-style button-gray ml-4" data-bs-dismiss="modal">Cancel</button>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function updateSubmitButtonText() {
+            if ($('#approve').is(':checked')) {
+                $('#outcome-text').html('<span class="approve-text">This trip will be Approved.</span>');
+            } else {
+                $('#outcome-text').html('<span class="reject-text">This trip will be Rejected.</span>');
+            } 
+        }
+
+        $('input[name="request_outcome"]').on('change', function() {
+            updateSubmitButtonText();
+        });
+
+        updateSubmitButtonText();
+    });
+</script>

@@ -27,6 +27,7 @@ STATUS_OPTIONS = [
     ("cancelled", "Cancelled"),
     ("modified", "Modified"),
     ("completed", "Completed"),
+    ("rejected", "Rejected"),
 ]
 
 RATING_OPTIONS = [

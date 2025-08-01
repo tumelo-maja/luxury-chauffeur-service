@@ -789,7 +789,8 @@ body {
     background-color: #4a99b1;
 }
 
-.status-cancelled {
+.status-cancelled,
+.status-rejected {
     background-color: #dc3545;
 }
 
@@ -1956,4 +1957,21 @@ td {
 
 .user-trip-item .trip-datetime {
     margin-right: 20px;
+}
+
+.outcome-container {
+    margin: 20px 0;
+}
+
+#outcome-text {
+text-align: center;
+margin: 10px;
+}
+
+.approve-text {
+        color: green;
+}
+
+.reject-text {
+    color: red;
 }

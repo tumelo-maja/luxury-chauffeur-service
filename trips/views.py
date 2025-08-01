@@ -237,8 +237,14 @@ def trip_review_view(request, trip_name):
 
     if request.method == "POST":
         form = TripRequestForm(instance=trip)
+        request_outcome = request.POST.get('request_outcome')
         trip = form.save(commit=False)
-        trip.status = "confirmed"
+
+        if request_outcome == 'reject':
+            trip.status = "rejected"
+        elif request_outcome == 'approve':
+            trip.status = "confirmed"
+
         trip.save()
 
         return HttpResponse(status=204)
