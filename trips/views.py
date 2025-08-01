@@ -247,7 +247,7 @@ def trip_review_view(request, trip_name):
 
         trip.save()
 
-        return HttpResponse(status=204)
+        return HttpResponse(status=204, headers={'HX-trigger': 'tripStatusChanged'})
     
     else:
         form = TripRequestForm(instance=trip)

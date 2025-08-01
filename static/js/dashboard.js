@@ -60,7 +60,7 @@ $(document).ready(function () {
                 $('#filter-button .set-value').text($('.current-filter').text());
             }
 
-            ///
+            //
             htmx.on('htmx:beforeSwap', (e) => {
                 if ($(e.target).id === $('#trip_list').id && !e.detail.xhr.response) {
                     detailID = $('#tripDetail').data('id')
@@ -146,7 +146,6 @@ $(document).ready(function () {
                     .then(data => data.trips || [])
 
                     .catch(error => {
-                        console.error("Something wring with your trips:", error);
                         return [];
                     });
             };
@@ -188,10 +187,7 @@ $(document).ready(function () {
                             const tripCount = trips.filter(trip => trip.travel_date === dateString).length;
                             const tripElement = `<div class="day-trips">${tripCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
 
-                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/" hx-target="#baseDialog"` : '';
-                            // const htmxCreateTrip = `hx-get="/trips/request/" hx-target="#baseDialog" hx-trigger="click"`;
-                            console.log(`date input: ${date.toLocaleDateString()}`);
-                            console.log(`todayDate input: ${todayDate.toLocaleDateString()}`);
+                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/" hx-target="#baseDialog"` : '';                      
 
                             datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass}"${htmxCreateTrip}>${i}</div>
@@ -211,10 +207,6 @@ $(document).ready(function () {
                             htmx.process(this);
                         })
 
-                        // $('.date-wrapper').click(() => {
-                        //     console.log("Date Warpper clicked");
-                        // })
-
                     });
             }
 
@@ -229,21 +221,15 @@ $(document).ready(function () {
             })
 
             updateCalendar();
-
-
-            console.log("avail button");
-
         }, 100);
     });
 
     // admin panel interactive elements
     $('#admin-all-button').click(() => {
-        console.log("admin button pushed");
         setTimeout(() => {
             $('.admin-all .nav-link').on('click', function () {
                 $('.admin-all .nav-link').removeClass('active');
                 $(this).addClass('active');
-                console.log("Nav item clicked");
             });
 
         }, 100);

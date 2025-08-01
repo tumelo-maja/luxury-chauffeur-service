@@ -3,15 +3,17 @@
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" 
+    id="tab-trips"
         hx-get="{% url 'admin-tabs' 'trips' %}"
         hx-target="#adminTable" 
         hx-swap="innerHTML" 
-        hx-trigger="load, click"
+        hx-trigger="load, click, tripStatusChanged from:body"
         data-tab="trips">Trips
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link"
+    id="tab-passengers"
      hx-get="{% url 'admin-tabs' 'passengers' %}"
         hx-target="#adminTable" 
         hx-swap="innerHTML" 
@@ -19,6 +21,7 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" 
+    id="tab-drivers"
     hx-get="{% url 'admin-tabs' 'drivers' %}"
         hx-target="#adminTable" 
         hx-swap="innerHTML" 
