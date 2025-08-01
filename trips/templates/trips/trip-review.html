@@ -30,7 +30,7 @@
             <ul>
                 {% for trip_driver in driver_window_trips %}
                 <li class="user-trip-item">
-                    <span class="trip-datetime">{{ trip_driver.travel_datetime }}</span>
+                    <span class="trip-datetime">{{ trip_driver.travel_datetime | date:"Y M d - H:i" }}</span>
                     <span class="status status-{{ trip_driver.status_class }}">{{ trip_driver.status_str }}</span>
                 </li>
                 {% endfor %}
@@ -44,7 +44,7 @@
             <ul>
                 {% for trip_passenger in passenger_window_trips %}
                 <li class="user-trip-item">
-                    <span class="trip-datetime">{{ trip_passenger.travel_datetime }}</span>
+                    <span class="trip-datetime">{{ trip_passenger.travel_datetime | date:"Y M d - H:i" }}</span>
                     <span class="status status-{{ trip_passenger.status_class }}">{{ trip_passenger.status_str }}</span>
                 </li>
                 {% endfor %}
