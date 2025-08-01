@@ -42,11 +42,12 @@
 </form>
 
 <script>
-    // This updates the name
-    $(document).ready(function () {
-        $('#id_displayname').on('input', function () {
-            $('#displayname').text($(this).val());
-        });
+
+    const display_nameInput = document.getElementById('id_displayname');
+    const display_nameOutput = document.getElementById('displayname');;
+
+    display_nameInput.addEventListener('input', (e) => {
+        display_nameOutput.innerText = e.target.value;
     });
 </script>
 

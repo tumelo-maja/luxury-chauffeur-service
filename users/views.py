@@ -6,6 +6,7 @@ from django.contrib.auth import logout, login
 from django.urls import reverse
 from django.db import transaction
 from .forms import *
+from .models import *
 
 # Create your views here.
 
@@ -24,13 +25,15 @@ def profile_edit_view(request):
 
     
     if profile_user.user_type == 'driver':
-        driver_profile = DriverProfile.objects.filter(profile=profile_user).first()
+        role = DriverProfile.objects.filter(profile=profile_user).first()
         form = DriverEditForm
-        role = driver_profile
     elif profile_user.user_type == 'passenger':
-        passenger_profile = PassengerProfile.objects.filter(profile=profile_user).first()
+        role = PassengerProfile.objects.filter(profile=profile_user).first()
         form = PassengerEditForm
-        role = passenger_profile
+    else:
+        role = ManagerProfile.objects.filter(profile=profile_user).first()
+        form = ManagerEditForm
+
 
     if request.method == 'POST':
         profile_form = ProfileEditForm(

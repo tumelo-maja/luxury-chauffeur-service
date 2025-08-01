@@ -7,6 +7,7 @@
         <img class="w-36 h-36 rounded-full object-cover mb-4" src="{{ profile.avatar }}" />
         <div class="text-center">
             <h1>{{ profile.name }}</h1>
+            <p class="my-2">@{{ user.username }}</p>
         </div>
         <a class="button-purple my-5 " href="{% url 'profile-edit' %}">Edit Profile</a>
 

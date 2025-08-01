@@ -41,6 +41,11 @@ class DriverEditForm(ModelForm):
         fields = ['experience']
         labels = {'experience': 'Years of driving experience'}
 
+class ManagerEditForm(ModelForm):
+    class Meta:
+        model = ManagerProfile
+        fields = ['experience']
+        labels = {'experience': 'Years of customer service'}
 
 class PassengerEditForm(ModelForm):
     class Meta:

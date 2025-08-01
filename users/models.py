@@ -132,6 +132,7 @@ class ManagerProfile(models.Model):
     passenger_count_rating = models.IntegerField(null=True, blank=True)
     driver_average_rating = models.FloatField(null=True, blank=True)
     driver_count_rating = models.IntegerField(null=True, blank=True)
+    experience = models.IntegerField(null=True, blank=True)
     
     def __str__(self):
         return f"Manager: {self.profile.user.username}"
