@@ -1226,6 +1226,19 @@ body {
     padding: 5px 20px;
 }
 
+.button-purple {
+    padding: 5px;
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: purple;
+    color: white;
+    font-weight: bold;
+    width: max-content;
+    height: 35px;
+    text-align: center;
+    padding: 5px 20px;
+}
+
 /* Dashboard styles */
 .main-dash {
     display: flex;
