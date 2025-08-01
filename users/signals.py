@@ -9,15 +9,11 @@ from .models import Profile, DriverProfile, PassengerProfile
 @receiver(post_save, sender=User)
 def user_postsave(sender, instance, created, **kwargs):
     user = instance
-    print("uuuuuuuuuuuuuuuuuuuser below")
-    print(user)
 
     # add profile when user is created
     if created:
 
         profile = Profile.objects.create(user=user)
-        print("prooooooooooooofile below")
-        print(profile)
             
         if user.user_type == 'driver':
             profile.user_type = 'driver'
@@ -27,12 +23,10 @@ def user_postsave(sender, instance, created, **kwargs):
             profile.user_type = 'passenger'
             profile.save()
             PassengerProfile.objects.create(profile=profile)
-            print("signaaaaaaaaaaaaaaaaaaaaaaal - passenger")
             
     else:
         #update allauth emailaddresse if exist else create one
         try:
-            print("try emaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaail - passenger")
             email_address = EmailAddress.objects.get_primary(user)
 
             if email_address.email !=user.email:
@@ -47,7 +41,6 @@ def user_postsave(sender, instance, created, **kwargs):
                 primary = True,
                 verified = False
             )        
-            print("create emaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaail - passenger")
 
 @receiver(pre_save,sender=User)
 def user_presave(sender, instance, **kwargs):

@@ -22,10 +22,6 @@ def profile_edit_view(request):
     profile_user = request.user.profile
     profile_form = ProfileEditForm(instance=profile_user)
 
-    # try:
-    #     profile = request.user.profile
-    # except Profile.DoesNotExist:
-    #     profile = Profile.objects.create(user=request.user)
     
     if profile_user.user_type == 'driver':
         driver_profile = DriverProfile.objects.filter(profile=profile_user).first()
@@ -64,18 +60,18 @@ def profile_edit_view(request):
         'is_new_user': is_new_user,
         'user_type': profile_user.user_type
     }
-    return render(request, 'users/profile_edit.html', context)
+    return render(request, 'users/profile-edit.html', context)
 
 @login_required
 def profile_settings_view(request):
-    return render(request, 'users/profile_settings.html')
+    return render(request, 'users/profile-settings.html')
 
 @login_required
 def profile_settings_partial_view(request):
 
     if request.htmx:
         form = ProfileSettingsForm(instance=request.user)
-        return render(request, 'partials/settings_form.html', {'form':form})
+        return render(request, 'partials/settings-form.html', {'form':form})
 
     if request.method == "POST":
         form = ProfileSettingsForm(request.POST, instance=request.user)
@@ -118,11 +114,11 @@ def profile_delete_view(request):
         messages.success(request, 'Account deleted! See you next time')
         return redirect('home')
         
-    return render(request, 'users/profile_delete.html')
+    return render(request, 'users/profile-delete.html')
 
 def signup_type(request):
 
-    return render(request, 'account/signup_type.html')
+    return render(request, 'account/signup-type.html')
 
 def driver_signup(request):
 
@@ -144,7 +140,7 @@ def driver_signup(request):
         'form': form,
         'user_type': 'driver',
     }
-    return render(request, 'account/signup_form.html',context )
+    return render(request, 'account/signup-form.html',context )
 
 def passenger_signup(request):
 
@@ -166,5 +162,5 @@ def passenger_signup(request):
         'form': form,
         'user_type': 'passenger',
     }
-    return render(request, 'account/signup_form.html', context)
+    return render(request, 'account/signup-form.html', context)
 

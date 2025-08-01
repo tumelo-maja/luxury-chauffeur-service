@@ -74,7 +74,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        function updateSubmitButtonText() {
+        function updateOutcomeText() {
             if ($('#approve').is(':checked')) {
                 $('#outcome-text').html('<span class="approve-text">This trip will be Approved.</span>');
             } else {
@@ -83,9 +83,9 @@
         }
 
         $('input[name="request_outcome"]').on('change', function() {
-            updateSubmitButtonText();
+            updateOutcomeText();
         });
 
-        updateSubmitButtonText();
+        updateOutcomeText();
     });
 </script>
