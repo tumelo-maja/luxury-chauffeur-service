@@ -12,11 +12,6 @@ from .forms import *
 
 
 @login_required
-def trip_view(request):
-    return render(request, 'trips/trip.html')
-
-
-@login_required
 def trips_dashboard_view(request):
 
    return render(request, 'trips/trips-dashboard.html')
