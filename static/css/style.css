@@ -1,50 +1,142 @@
 * {
     margin: 0;
     padding: 0;
-    /* box-sizing: border-box; */
 }
 
 body {
     min-height: 100vh;
     max-width: 100vw;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .main {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly; */
     width: 100%;
     align-items: center;
-    /* border: 3px solid black;
-    margin: 20px; */
 }
 
 .push-footer {
     flex: 1 0 auto;
 }
 
-.header {
-    width: 100%;
-    /* background-color: aqua; */
-    /* border:2px solid red; */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    margin-bottom: 10px;
+/* new navbar below */
+
+.header-main {
+    width: 0;
+    height: 100vh;
+    background-color: #360136;
+    overflow: hidden;
+    transition: 0.2s ease-in-out;
+    opacity: 0;
 }
 
-.header .container {
+.header-main.active {
+    width: 25%;
+    opacity: 1;
+}
+
+.main-nav {
+    width: 100%;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.navbar-logo {
+    padding: 15px 10px;
+    border-bottom: 1px solid #c49ac4;
+}
+
+.navbar-logo img {
+    width: 100%;
+}
+
+.navbar .nav-list {
+    margin: 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.navbar-item {
+    padding: 15px 10px;
+    list-style: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.navbar-item:hover {
+    background-color: #2f3e46;
+}
+
+.navbar-item .nav-link {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: white;
+    position: relative;
+}
+
+.nav-link i {
+    font-size: 20px;
+}
+
+.nav-link .link-text {
+    position: absolute;
+    top: 3px;
+    left: 35px;
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+}
+
+.header-main.active .link-text {
+    opacity: 1;
+}
+
+.section-wrapper {
+    width: 97%;
+    height: 100vh;
+    position: relative;
+    transition: 0.3s ease-in-out;
+}
+
+
+/* togleeeeeeeeeer */
+
+
+.cross-head {
+    padding: 18px 15px 18px 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 90px;
 }
 
-.navbar-nav {
+.cross-head .navbar-toggler {
+    display: inline-block;
+    background-color: rgba(143, 56, 143, 0.5);
+    border: 2px solid purple;
+    color: purple;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2 ease;
+}
+
+.cross-head .navbar-toggler:hover {
+    background-color: #2f3e46;
+}
+
+.navbar-toggler i {
+    font-size: 20px;
+}
+
+
+/* old nav below*/
+
+/* .navbar-nav {
     display: flex;
     flex-direction: row;
     list-style: none;
@@ -52,7 +144,7 @@ body {
 
 .navbar-item {
     margin: 0 10px;
-}
+} */
 
 #hero p {
     margin: 20px 5px;
@@ -1611,15 +1703,6 @@ td {
     display: flex;
 }
 
-
-/* driver views */
-/* .dash-driver-status {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-} */
-
 .dash-driver-status p {
     font-size: 1.1rem;
     margin: 15px 10px;
@@ -1655,7 +1738,6 @@ td {
 .avail-container {
     border-radius: 8px;
     display: flex;
-    /* flex-direction: column; */
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 25px;
@@ -1676,8 +1758,6 @@ td {
 }
 
 .avail-wrapper {
-    /* width: 350px; */
-    /* height: 560px; */
     padding: 0 20px 10px;
 }
 
@@ -1690,9 +1770,6 @@ td {
 .day-content {
     padding: 0 5px 0 8px;
     width: 100%;
-    /* display: flex;
-    justify-content: space-evenly;
-    align-items: center; */
 }
 
 .day-content .time {
@@ -1939,7 +2016,7 @@ td {
 }
 
 .user-trips-container ul {
-    list-style-type: none; 
+    list-style-type: none;
     padding-left: 0;
     margin: 0;
 }
@@ -1965,7 +2042,7 @@ td {
     font-size: 12px;
     text-transform: capitalize;
     padding: 4px 10px;
-    margin-bottom: 5px;    
+    margin-bottom: 5px;
 }
 
 .user-trip-item .trip-datetime {
@@ -1977,14 +2054,33 @@ td {
 }
 
 #outcome-text {
-text-align: center;
-margin: 10px;
+    text-align: center;
+    margin: 10px;
 }
 
 .approve-text {
-        color: green;
+    color: green;
 }
 
 .reject-text {
     color: red;
+}
+
+
+/*--------------------------- Media queries --*/
+@media screen and (min-width: 768px) {
+
+    .header-main {
+        width: 70px;
+        opacity: 1;
+        /* height: 100%; */
+        flex-grow: 1;
+
+    }
+
+    .header-main.active {
+        width: 25%;
+        padding: 15px 12px;
+    }
+
 }

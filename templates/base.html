@@ -33,20 +33,48 @@
 
     {% include 'includes/messages.html' %}
 
-    {% include 'includes/header.html' %}
+    {% include 'includes/header-side.html' %}
+    <div class="section-wrapper">
+        <div class="cross-head">
+            <button class="navbar-toggler">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <div class="account relative">
+                {% if request.user.is_authenticated %}
+                <div class="dropdown-head flex items-center justify-center cursor-pointer">
+                    <a href=""></a>
+                    <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.avatar }}" />
+                    <span id="user-name" class="ml-2 mr-1">{{ user.profile.name }}</span>
+                    <img src="{% static 'icons/bi-chevron-down.svg' %}" class="arrow-icon w-5" alt="arrow">
 
-    {% block layout %}
-    {% endblock %}
-    <!-- Modal Container -->
-<div class="modal fade" id="baseModal" tabindex="-1" aria-labelledby="baseModalLabel" aria-hidden="true">
-    <div id="baseDialog" class="modal-dialog" hx-target="this">
-        
+                </div>
+                <div class="dropdown-body hidden-item absolute right-2 shadow rounded-lg w-40">
+                    <ul class="flex flex-col items-end">
+                        <li class="menu-item"><a href="{% url 'profile' %}">My Profile</a></li>
+                        <li class="menu-item dashboard-link"><a href="{% url 'trips-dashboard' %}">Dashboard</a></li>
+                        <li class="menu-item"><a href="{% url 'profile-settings' %}">Settings</a></li>
+                        <li class="menu-item"><a href="{% url 'account_logout' %}">Log Out</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <a href="{% url 'account_login' %}">Login</a>
+                <a href="{% url 'signup_type' %}">Signup</a>
+                {% endif %}
+
+            </div>
+        </div>
+        {% block layout %}
+        {% endblock %}
+        <!-- Modal Container -->
+        <div class="modal fade" id="baseModal" tabindex="-1" aria-labelledby="baseModalLabel" aria-hidden="true">
+            <div id="baseDialog" class="modal-dialog" hx-target="this"></div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 Luxury Chauffeur Service - Website for educational purposes only</p>
+        </footer>
     </div>
-</div>
 
-    <footer class="footer">
-        <p>&copy; 2025 Luxury Chauffeur Service - Website for educational purposes only</p>
-    </footer>
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/759c893288.js" crossorigin="anonymous"></script>
     <!-- jquery JS -->
@@ -59,7 +87,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.min.js"
         integrity="sha512-zKeerWHHuP3ar7kX2WKBSENzb+GJytFSBL6HrR2nPSR1kOX1qjm+oHooQtbDpDBSITgyl7QXZApvDfDWvKjkUw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        
+
     {% block javascript %}
     <script src="{% static 'js/script.js' %}"></script>
     {% endblock %}

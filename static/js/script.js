@@ -122,5 +122,15 @@ $(document).ready(function () {
         $(this).addClass('selected');
     });
 
+    // handle navbar toggle
+    const $mainHead = $('.header-main');
+    const $sectionWrapper = $('.section-wrapper');
+    
+     $('.navbar-toggler').click( function () {
+        $mainHead.toggleClass('active');
+        $sectionWrapper.toggleClass('active');
+        console.log("navbar toggled");
+    });
+
 
 });
