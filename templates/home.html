@@ -9,9 +9,6 @@
         <p class="col-md-7 text-center">Begin your journey of elegance with our world-class chauffeur service, designed
             to offer you a
             seamless, luxurious travel experience from start to end.</p>
-        <!-- <div class="hero-image">
-            <img src="{% static 'images/rolls-royce-car.jpg' %}" alt="">
-        </div> -->
         {% include 'includes/hero-carousel.html' %}
     </section>
     <!-- Services section -->
@@ -135,7 +132,7 @@
                     <p class="step-label">Step 1</p>
                     <div class="step">
                         <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
-                        <p><a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}"><span
+                        <p class="step-text"><a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}"><span
                                     class="link">Register</span></a> an account or
                             <a href="{% url 'account_login' %}"><span class="link">Login</span></a> if you already have
                             an
@@ -147,7 +144,7 @@
                     <p class="step-label">Step 2</p>
                     <div class="step">
                         <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
-                        <p>Enter your pick-up, drop-off locations and other trip details.</p>
+                        <p class="step-text">Enter your pick-up, drop-off locations and other trip details.</p>
                     </div>
                 </div>
             </div>
@@ -156,14 +153,14 @@
                     <p class="step-label">Step 3</p>
                     <div class="step">
                         <span class="icon"><i class="fa-solid fa-circle-check"></i></span>
-                        <p>Confirm your details and submit a booking request.</p>
+                        <p class="step-text">Confirm your details and submit a booking request.</p>
                     </div>
                 </div>
                 <div class="wrapper">
                     <p class="step-label">Step 4</p>
                     <div class="step">
                         <span class="icon"><i class="fa-solid fa-car-side"></i></span>
-                        <p>Vehicle arrives and your luxury experience begins.</p>
+                        <p class="step-text">Vehicle arrives and your luxury experience begins.</p>
                     </div>
                 </div>
             </div>

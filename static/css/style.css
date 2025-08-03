@@ -166,21 +166,6 @@ body {
     width: 90px;
 }
 
-/* .hero-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-.hero-image img {
-    width: 100%;
-    max-width: 48rem;
-    height: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-} */
 
 /* hero section */
 #hero-home {
@@ -191,9 +176,7 @@ body {
 .hero-slider {
     position: relative;
     width: 100%;
-    max-width: 48rem;
     height: auto;
-    margin: 10px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.15);
 }
@@ -211,10 +194,8 @@ body {
 }
 
 .hero-image {
-    /* z-index: 1; */
-    width: 100%;
-    max-width: 48rem;
-    height: 100%;
+    width: 300px;
+    height: auto;
     border-radius: 10px 10px 0 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
@@ -226,7 +207,7 @@ body {
 
 .hero-text h3 {
     color: purple;
-    font-size: 40px;
+    font-size: 1.8rem;
     text-transform: uppercase;
     font-weight: 800;
     letter-spacing: 2px;
@@ -238,22 +219,21 @@ body {
     z-index: 2;
     position: absolute;
     display: flex;
-    bottom: 60px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .slide-control .btn-item {
-    background: rgb(255, 255, 255);
-    width: 40px;
+    background-color: rgb(202, 156, 202);
+    width: 35px;
     height: 6px;
     margin: 10px;
-    /* border-radius: 50%; */
     cursor: pointer;
 }
 
 .slide-control .btn-item.active {
-    background: rgb(153, 153, 239);
+    background: purple;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.059);
 }
 
@@ -278,7 +258,7 @@ body {
 }
 
 .section-container {
-    margin: 30px;
+    margin: 30px 6px;
 }
 
 .footer {
@@ -288,6 +268,12 @@ body {
     align-items: center;
     padding: 30px 20px;
     width: 100%;
+}
+
+.footer p {
+    text-align: center;
+    color: purple;
+    font-weight: 450;
 }
 
 /* rotate arrow */
@@ -571,28 +557,20 @@ body {
     align-items: center;
 }
 
-/* .vehicle-container .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
 .vehicle {
-    margin: 20px;
-    background-color: #ffd70063;
+    margin: 20px 10px;
+    background-color: rgba(149, 100, 149, 0.452);
     border-radius: 15px;
 }
 
 .vehicle img {
-    max-width: 35rem;
-    width: 400px;
-    /* border-radius: 15px; */
+    width: 280px;
+    height: auto;
     border-radius: 15px 15px 0 0;
-
 }
 
 .vehicle h3 {
-    background-color: #a99005;
+    background-color: purple;
     color: white;
     font-size: 1.5rem;
     text-transform: uppercase;
@@ -620,28 +598,16 @@ body {
 }
 
 /* our services */
-#services {
-    margin: 20px 30px;
-}
 
 .services-container {
     display: flex;
-    /* flex-direction: column; */
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    /* gap: 20px; */
-    padding: 10px 20px;
 }
 
-/* .services-container .wrapper {
-    color: red;
-} */
-
 .service-item {
-    margin: 10px 20px;
-    max-width: 35rem;
-    width: 400px;
+    width: 300px;
     height: 500px;
     display: flex;
     flex-direction: column;
@@ -650,10 +616,9 @@ body {
 }
 
 .service-item img {
-    max-width: 35rem;
-    width: 100%;
+    width: 280px;
     border-radius: 15px;
-    height: 270px;
+    height: auto;
     margin: 15px 5px 5px;
 }
 
@@ -699,7 +664,7 @@ body {
 /* get started section  */
 
 .steps-container {
-    background-color: rgba(128, 0, 128, 0.548);
+    background-color: purple;
     width: 100%;
     height: auto;
     padding: 20px;
@@ -711,30 +676,31 @@ body {
 
 .steps-container .step-label {
     font-size: 1.3rem;
-    margin: 20px 20px 10px;
+    text-align: center;
+    color: gold;
+    font-weight: 700;
+    margin-top: 16px;
 }
 
 .steps-container .step {
-    border: 1px solid gold;
-    margin: 10px 20px;
-    width: 250px;
+    margin: 10px;
+    width: 230px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    border-bottom: 3px solid white;
 }
 
 .step .icon {
-    background-color: #f6d206;
-    height: 50px;
-    width: 50px;
+    color: gold;
+    font-size: 3rem;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    margin: 20px 0 10px;
+    margin: 10px 0;
 }
 
 .step .link {
@@ -745,6 +711,15 @@ body {
     text-align: center;
 }
 
+.step .step-text {
+    color: white;
+    font-weight: 500;
+}
+
+.step .step-text a {
+    color: gold;
+}
+
 .started-text {
     text-align: center;
     padding: 15px;
@@ -752,8 +727,6 @@ body {
 
 /* trips style */
 .greeting {
-    /* border: 2px solid red; */
-    /* width: 100%; */
     padding: 10px 30px 30px;
     display: flex;
     flex-direction: column;
