@@ -99,7 +99,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid black;
-    padding: 3spx;
+    padding: 3px;
 }
 
 .header-main.active .link-text {
