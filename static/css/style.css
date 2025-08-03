@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -111,8 +112,28 @@ body {
     height: 100vh;
     position: relative;
     transition: 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+.profile-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 1rem 0;
+}
+
+.profile-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+    border: 1px solid black;
+    padding: 8px;
+}
 
 /* togleeeeeeeeeer */
 
@@ -2062,9 +2083,9 @@ td {
 
 @media screen and (min-width: 768px) {
 
-    .main {
+    /* .main {
         width: calc(100% - 70px);
-    }
+    } */
 
     .hero-slider {
         width: 80%;
