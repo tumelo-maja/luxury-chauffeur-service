@@ -1,5 +1,8 @@
 {% load static %}
 
+{% url 'home' as home_url %}
+{% url 'chauffeurs' as chauffeurs_url %}
+
 <header class="header-main">
     <div class="main-nav">
         <nav class="navbar">
@@ -9,7 +12,7 @@
                 </div>
                 <ul class="nav-list">
                     <li class="navbar-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ home_url }}" class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-house"></i>
                             <span class="link-text">Home</span>
                         </a>
@@ -27,7 +30,7 @@
                         </a>
                     </li>
                     <li class="navbar-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ chauffeurs_url }}" class="nav-link {% if request.path == chauffeurs_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-car-side"></i>
                             <span class="link-text">Drivers</span>
                         </a>

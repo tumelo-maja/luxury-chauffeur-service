@@ -3,89 +3,41 @@
 
 {% block content %}
 
-<section id="hero">
+<section id="hero" class="hero-chauffeurs">
     <h2 class="h2-style text-center">Meet our Professional Chauffeurs</h2>
     <p class="text-center">Discover the elite chauffeurs dedicated to providing an exceptional blend of comfort, luxury
-        and safety with
-        every ride. We ensure that each journey with us is not only seamless and secure but also provides an
-        unforgettable and pleasant experience.</p>
-    <img src="" alt="">
+        and safety with every ride.</p>
 </section>
 
 <!-- Chauffeurs section -->
 <section class="chauffeurs-container">
+    {% if chauffeurs %}
+    {% for chauffuer in chauffeurs %}
+    
     <div class="chauffeur">
         <div class="chauffeur-head">
             <div class="chauffeur-image rounded-full">
-                <img src="{% static 'images/avatar.png' %}" alt="">
+                <img src="{{ chauffuer.profile.avatar }}" alt="">
             </div>
-            <p class="chauffeur-name details">King Vegeta</p>
-            <p class="chauffeur-rating details">4.7</p>
-        </div>
-        <div class="chauffeur-body">
-            <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
-            <p class="chauffeur-speciality">
-                <span class="speciality">Airport Transfers</span>
-                <span class="speciality">VIP Events</span>
-                <span class="speciality">City Tours</span>
+            <p class="chauffeur-name details">{{ chauffuer.profile.user.username }}</p>
+            <p class="chauffeur-rating details">
+                {% if chauffuer.average_rating == None %}
+                No rating
+                {% else %}
+                <i class="fa-solid fa-star"></i> <span>{{ chauffuer.average_rating | floatformat:1 }} ({{ chauffuer.count_rating }})</span>
+                {% endif %}
             </p>
         </div>
-        <a class="chauffeur-cta" href="">Book Chauffeur</a>
+        <p class="chauffeur-body">Experience: <span id="experience">
+                {{ chauffuer.experience }} Years</span>
+        </p>
+        <button type="button" hx-get="{% url 'trip-request' %}?driver={{ chauffuer.id }}" hx-target="#baseDialog" class="chauffeur-cta"
+            aria-label="create a new trip">Book Chauffeur</button>
     </div>
-    <div class="chauffeur">
-        <div class="chauffeur-head">
-            <div class="chauffeur-image rounded-full">
-                <img src="{% static 'images/avatar.png' %}" alt="">
-            </div>
-            <p class="chauffeur-name details">King Vegeta</p>
-            <p class="chauffeur-rating details">4.7</p>
-        </div>
-        <div class="chauffeur-body">
-            <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
-            <p class="chauffeur-speciality">
-                <span class="speciality">Airport Transfers</span>
-                <span class="speciality">VIP Events</span>
-                <span class="speciality">City Tours</span>
-            </p>
-        </div>
-        <a class="chauffeur-cta" href="">Book Chauffeur</a>
-    </div>
-    <div class="chauffeur">
-        <div class="chauffeur-head">
-            <div class="chauffeur-image rounded-full">
-                <img src="{% static 'images/avatar.png' %}" alt="">
-            </div>
-            <p class="chauffeur-name details">King Vegeta</p>
-            <p class="chauffeur-rating details">4.7</p>
-        </div>
-        <div class="chauffeur-body">
-            <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
-            <p class="chauffeur-speciality">
-                <span class="speciality">Airport Transfers</span>
-                <span class="speciality">VIP Events</span>
-                <span class="speciality">City Tours</span>
-            </p>
-        </div>
-        <a class="chauffeur-cta" href="">Book Chauffeur</a>
-    </div>
-    <div class="chauffeur">
-        <div class="chauffeur-head">
-            <div class="chauffeur-image rounded-full">
-                <img src="{% static 'images/avatar.png' %}" alt="">
-            </div>
-            <p class="chauffeur-name details">King Vegeta</p>
-            <p class="chauffeur-rating details">4.7</p>
-        </div>
-        <div class="chauffeur-body">
-            <p class="chauffeur-experience">Experience: <span id="experience">6 </span>Years</p>
-            <p class="chauffeur-speciality">
-                <span class="speciality">Airport Transfers</span>
-                <span class="speciality">VIP Events</span>
-                <span class="speciality">City Tours</span>
-            </p>
-        </div>
-        <a class="chauffeur-cta" href="">Book Chauffeur</a>
-    </div>
+    {% endfor %}
+    {% else %}
+    <p>There are no drivers</p>
+    {% endif %}
 </section>
 
 {% endblock %}

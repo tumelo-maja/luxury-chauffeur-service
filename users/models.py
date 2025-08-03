@@ -92,7 +92,7 @@ class DriverProfile(models.Model):
     ]
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='driver_profile')
-    experience = models.IntegerField(null=True, blank=True)
+    experience = models.IntegerField(default=2)
 
     status = models.CharField(
         max_length=50, choices=DRIVER_STATUS_OPTIONS, default="available")

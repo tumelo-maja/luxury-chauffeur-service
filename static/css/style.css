@@ -147,8 +147,15 @@ body {
     width: 80%;
 }
 
+.hero-chauffeurs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .h2-style {
-    font-size: 38px;
+    font-size: 2rem;
     font-weight: bold;
     color: purple;
     text-transform: capitalize;
@@ -261,8 +268,9 @@ body {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    padding: 30px 20px;
+    padding: 20px;
     width: 100%;
+    border-top: 1px solid purple;
 }
 
 .footer p {
@@ -463,14 +471,17 @@ body {
     height: auto;
     width: 250px;
     border: 2px solid purple;
-    /* background-color: gold; */
+    background-color: rgba(181, 4, 181, 0.2);
     border-radius: 15px;
     overflow: hidden;
     margin: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .chauffeur-head {
-    /* background-color: rgb(182, 137, 182); */
     height: auto;
     padding: 8px;
     display: flex;
@@ -480,15 +491,14 @@ body {
 }
 
 .chauffeur-body {
-    /* border: 2px solid purple; */
-    background-color: #a99005;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    padding: 15px;
+    background-color: rgb(117, 86, 117);
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    color: white;
 }
+
 
 .chauffeur-image {
     border: 2px solid black;
@@ -507,41 +517,32 @@ body {
 }
 
 .chauffeur-cta {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
     background-color: purple;
+    width: 60%;
     color: white;
     padding: 6px;
-}
-
-.chauffeur-speciality {
-    margin: 15px 2px;
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-    justify-content: center;
-    align-items: center;
-}
-
-.chauffeur-speciality .speciality {
-    margin: 3px 5px;
-    background-color: #f3f4f6;
-    border-radius: 10px;
-    padding: 1px 6px;
-    border: 1px solid darkgrey;
-    width: fit-content;
+    margin: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 500;
 }
 
 .chauffeur .details {
     font-size: 1.5rem;
     color: purple;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: 2px;
 }
 
+.chauffeur-name {
+    text-transform: capitalize;
+}
+
+.chauffeur-rating i {
+    color: gold;
+    text-shadow: 1px 1px 1px purple, 0px 0px 1px purple;
+}
 /* Our fleet */
 
 .vehicle-container {
@@ -1490,11 +1491,6 @@ body {
     width: 200px;
     border-radius: 12px;
     margin-right: 10px;
-    /* padding: 15px; */
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center; */
 }
 
 .ratings-total {

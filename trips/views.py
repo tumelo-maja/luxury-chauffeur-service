@@ -4,17 +4,15 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from datetime import datetime, timedelta, date
 from django.utils import timezone
-
 from .models import Trip
 from users.models import PassengerProfile, DriverProfile
 from .forms import *
 
 
-
 @login_required
 def trips_dashboard_view(request):
 
-   return render(request, 'trips/trips-dashboard.html')
+    return render(request, 'trips/trips-dashboard.html')
 
 
 @login_required
@@ -150,13 +148,15 @@ def trip_request_view(request):
             trip.passenger = request.user.profile.passenger_profile
             trip.save()
 
-            # messages.success(request, "Trip created successfully.")
-            # return redirect('trips')
-
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
     else:
         form = TripRequestForm()
+
+        driver_id = request.GET.get('driver')
+
+        if driver_id:
+            form.fields['driver'].initial = driver_id
 
     min_valid_time = datetime.now() + timedelta(hours=1)
     min_valid_time_str = min_valid_time.strftime('%Y-%m-%dT%H:%M')
@@ -243,20 +243,20 @@ def trip_review_view(request, trip_name):
         trip.save()
 
         return HttpResponse(status=204, headers={'HX-trigger': 'tripStatusChanged'})
-    
+
     else:
         form = TripRequestForm(instance=trip)
-    
-    # only driver fieldcan be changed 
+
+    # only driver fieldcan be changed
     for field_name, field in form.fields.items():
-        if field_name != 'driver': 
+        if field_name != 'driver':
             field.widget.attrs['readonly'] = True
             field.widget.attrs['disabled'] = True
             field.required = False
-    
+
     # check indicators to display
     travel_datetime = trip.travel_datetime
-    check_window_hrs =6
+    check_window_hrs = 6
     start_time = travel_datetime - timedelta(hours=check_window_hrs)
     end_time = travel_datetime + timedelta(hours=check_window_hrs)
 
@@ -264,30 +264,31 @@ def trip_review_view(request, trip_name):
         driver=trip.driver,
         travel_datetime__gte=start_time,
         travel_datetime__lt=end_time
-    ).exclude(trip_name=trip.trip_name)    
+    ).exclude(trip_name=trip.trip_name)
 
     passenger_window_trips = Trip.objects.filter(
         passenger=trip.passenger,
         travel_datetime__gte=start_time,
         travel_datetime__lt=end_time
-    ).exclude(trip_name=trip.trip_name)   
-
+    ).exclude(trip_name=trip.trip_name)
 
     # warning texts list
     warning_texts = []
     if driver_window_trips.count():
-        warning_texts.append(f"The driver has {driver_window_trips.count()} other trips within {check_window_hrs} hours of this time:")
-    
+        warning_texts.append(
+            f"The driver has {driver_window_trips.count()} other trips within {check_window_hrs} hours of this time:")
+
     if passenger_window_trips.count():
-        warning_texts.append(f"The passenger has {passenger_window_trips.count()} other trip(s) within {check_window_hrs} hours of this time:") 
+        warning_texts.append(
+            f"The passenger has {passenger_window_trips.count()} other trip(s) within {check_window_hrs} hours of this time:")
 
     context = {
         'trip': trip,
         'form': form,
         'user': request.user,
-        'warning_texts':warning_texts,
-        'driver_window_trips':driver_window_trips,
-        'passenger_window_trips':passenger_window_trips,
+        'warning_texts': warning_texts,
+        'driver_window_trips': driver_window_trips,
+        'passenger_window_trips': passenger_window_trips,
     }
 
     return render(request, 'trips/trip-review.html', context)
@@ -348,8 +349,9 @@ def rate_trip_view(request, trip_name):
 
 
 @login_required
-def trips_calendar_view(request):   
+def trips_calendar_view(request):
     return render(request, 'trips/partials/dash-calendar.html')
+
 
 @login_required
 def trips_calendar_subsets_view(request):
@@ -367,7 +369,8 @@ def trips_calendar_subsets_view(request):
     if month == 12:
         end_datetime = timezone.make_aware(datetime(year + 1, 1, 1, 0, 0, 0))
     else:
-        end_datetime = timezone.make_aware(datetime(year, month + 1, 1, 0, 0, 0))
+        end_datetime = timezone.make_aware(
+            datetime(year, month + 1, 1, 0, 0, 0))
 
     trips = Trip.objects.filter(
         travel_datetime__gte=start_datetime,
@@ -375,15 +378,15 @@ def trips_calendar_subsets_view(request):
     )
 
     monthly_trips = [{'travel_datetime': trip.travel_datetime.date().isoformat(),
-                      'travel_date': trip.travel_datetime.strftime("%d/%m/%Y"),}
-               for trip in trips ]
-    
+                      'travel_date': trip.travel_datetime.strftime("%d/%m/%Y"), }
+                     for trip in trips]
+
     return JsonResponse({'trips': monthly_trips})
 
 
 @login_required
 def allocated_trips(request):
-    
+
     trips_list = []
     if request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
@@ -393,25 +396,24 @@ def allocated_trips(request):
         for trip in trips:
 
             trip_type = ''.join([word[0] for word in trip.trip_type.split()])
-            trip_time = trip.travel_datetime.strftime("%H:%M") 
+            trip_time = trip.travel_datetime.strftime("%H:%M")
 
             trips_list.append({
-            'id': trip.trip_name,
-            'start': trip.travel_datetime.isoformat(),
-            'title': f'<span class="time">{trip_time}</span><span class="title">{trip_type}</span>',
-            'className': f'status-{trip.status_class} clickable',
+                'id': trip.trip_name,
+                'start': trip.travel_datetime.isoformat(),
+                'title': f'<span class="time">{trip_time}</span><span class="title">{trip_type}</span>',
+                'className': f'status-{trip.status_class} clickable',
 
             })
 
         return JsonResponse(trips_list, safe=False)
-
 
     elif request.user.profile.user_type == "manager":
         trips = Trip.objects.all()
 
         daily_trips_count = {}
         for trip in trips:
-            date = trip.travel_datetime.date() 
+            date = trip.travel_datetime.date()
             status = trip.status
 
             # intialise date key if it doesnt exit yet
@@ -421,10 +423,10 @@ def allocated_trips(request):
 
         for date, trip_counts in daily_trips_count.items():
             trips_list.append({
-                    'start': date.isoformat(),
-                    'title': f"{trip_counts} x {'trip' if trip_counts == 1 else 'trips'}",
-                    'className': f"{status} clickable",
-                })
+                'start': date.isoformat(),
+                'title': f"{trip_counts} x {'trip' if trip_counts == 1 else 'trips'}",
+                'className': f"{status} clickable",
+            })
 
         return JsonResponse(trips_list, safe=False)
 
