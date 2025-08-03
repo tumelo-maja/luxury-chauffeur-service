@@ -6,17 +6,20 @@
     <!-- Hero section -->
     <section id="hero" class="section-container flex flex-col justify-center items-center">
         <h2 class="h2-style text-center">Experience Unrivaled Luxury</h2>
-        <p class="col-md-7 text-center">Begin your journey of elegance with our world-class chauffeur service, designed
+        <p class="text-center">Begin your journey of elegance with our world-class chauffeur service, designed
             to offer you a
             seamless, luxurious travel experience from start to end.</p>
         {% include 'includes/hero-carousel.html' %}
     </section>
     <!-- Services section -->
     <section id="services" class="section-container">
-        <h2 class="h2-style text-center">Our Services</h2>
-        <p class="text-center">Experience the epitome of luxury and convenience with our exclusive chauffeur services,
-            tailored to meet your
-            every need.</p>
+        <div class="flex flex-col justify-center items-center">
+            <h2 class="h2-style text-center">Our Services</h2>
+            <p class="services-intro">Experience the epitome of luxury and convenience with our exclusive chauffeur
+                services,
+                tailored to meet your
+                every need.</p>
+        </div>
         <div class="services-container">
             <div class="wrapper">
                 <div class="service-item">
@@ -125,16 +128,18 @@
     </section>
     <section id="get-started" class="section-container">
         <h2 class="h2-style text-center">How to Get Started</h2>
-        <p class="started-text">Ready for a first-class experience? Follow these simple steps to book your next luxurious ride.</p>
+        <p class="started-text">Ready for a first-class experience? Follow these simple steps to book your next
+            luxurious ride.</p>
         <div class="steps-container">
             <div>
                 <div class="wrapper">
                     <p class="step-label">Step 1</p>
                     <div class="step">
                         <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
-                        <p class="step-text"><a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}"><span
+                        <p class="step-text"><a
+                                href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}"><span
                                     class="link">Register</span></a> an account or
-                            <a href="{% url 'account_login' %}"><span class="link">Login</span></a> if you already have
+                            <a href="{% url 'account_login' %}"><span class="link">Login</span></a> if you have
                             an
                             account.
                         </p>
@@ -144,7 +149,7 @@
                     <p class="step-label">Step 2</p>
                     <div class="step">
                         <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
-                        <p class="step-text">Enter your pick-up, drop-off locations and other trip details.</p>
+                        <p class="step-text">Enter your destination and other trip details.</p>
                     </div>
                 </div>
             </div>

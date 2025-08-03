@@ -93,6 +93,15 @@ body {
     transition: 0.2s ease-in-out;
 }
 
+.avatar-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid black;
+    padding: 3spx;
+}
+
 .header-main.active .link-text {
     opacity: 1;
 }
@@ -133,27 +142,16 @@ body {
     font-size: 20px;
 }
 
-
-/* old nav below*/
-
-/* .navbar-nav {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-}
-
-.navbar-item {
-    margin: 0 10px;
-} */
-
 #hero p {
     margin: 20px 5px;
+    width: 80%;
 }
 
 .h2-style {
     font-size: 38px;
     font-weight: bold;
-    color: black
+    color: purple;
+    text-transform: capitalize;
 }
 
 .logo {
@@ -168,10 +166,6 @@ body {
 
 
 /* hero section */
-#hero-home {
-    width: 100%;
-    max-width: 48rem;
-}
 
 .hero-slider {
     position: relative;
@@ -194,7 +188,8 @@ body {
 }
 
 .hero-image {
-    width: 300px;
+    /* width: 300px; */
+    width: 100%;
     height: auto;
     border-radius: 10px 10px 0 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -273,7 +268,7 @@ body {
 .footer p {
     text-align: center;
     color: purple;
-    font-weight: 450;
+    font-weight: 500;
 }
 
 /* rotate arrow */
@@ -557,6 +552,13 @@ body {
     align-items: center;
 }
 
+.vehicle-container .wrapper {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
 .vehicle {
     margin: 20px 10px;
     background-color: rgba(149, 100, 149, 0.452);
@@ -564,7 +566,8 @@ body {
 }
 
 .vehicle img {
-    width: 280px;
+    /* width: 280px; */
+    width: 100%;
     height: auto;
     border-radius: 15px 15px 0 0;
 }
@@ -572,7 +575,7 @@ body {
 .vehicle h3 {
     background-color: purple;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-transform: uppercase;
     font-weight: 800;
     letter-spacing: 2px;
@@ -592,7 +595,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     width: 100%;
     margin-bottom: 10px;
 }
@@ -606,9 +609,19 @@ body {
     align-items: center;
 }
 
+.services-container .wrapper {
+    padding: 15px 5px 5px;
+}
+
+
+.services-intro {
+    text-align: center;
+    width: 90%;
+}
+
 .service-item {
     width: 300px;
-    height: 500px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -641,11 +654,11 @@ body {
 .button-book {
     margin: 20px 0 5px;
     border-radius: 10px;
-    width: 150px;
-    height: 50px;
+    width: 100px;
+    height: 40px;
     color: white;
     background-color: purple;
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 500;
     display: flex;
     text-align: center;
@@ -695,7 +708,7 @@ body {
 
 .step .icon {
     color: gold;
-    font-size: 3rem;
+    font-size: 2.5rem;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -2041,14 +2054,30 @@ td {
 
 
 /*--------------------------- Media queries --*/
+@media screen and (min-width: 375px) {
+    .hero-slider {
+        width: 90%;
+    }
+
+    .vehicle {
+        width: 90%;
+    }
+}
+
 @media screen and (min-width: 768px) {
+
+    .main {
+        width: calc(100% - 70px);
+    }
+
+    .hero-slider {
+        width: 80%;
+    }
 
     .header-main {
         width: 70px;
         opacity: 1;
-        /* height: 100%; */
         flex-grow: 1;
-
     }
 
     .header-main.active {
@@ -2056,4 +2085,45 @@ td {
         padding: 15px 12px;
     }
 
+    .service-item img {
+        margin: 25px 5px 5px;
+    }
+
+    .vehicle {
+        width: 270px;
+        margin: 20px;
+    }
+
+    .steps-container {
+        justify-content: space-between;
+    }
+
+    .steps-container .step {
+        width: 240px;
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .hero-slider {
+        width: 550px;
+    }
+
+
+    .services-intro {
+        width: 80%;
+    }
+
+    .service-item img {
+        width: 300px;
+    }
+
+    .services-container {
+        gap: 40px;
+    }
+
+    .steps-container .step {
+        width: 260px;
+    }
 }

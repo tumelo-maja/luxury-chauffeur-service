@@ -43,7 +43,7 @@
                 {% if request.user.is_authenticated %}
                 <div class="dropdown-head flex items-center justify-center cursor-pointer">
                     <a href=""></a>
-                    <img class="h-8 w-8 rounded-full object-cover" src="{{ user.profile.avatar }}" />
+                    <img class="avatar-image" src="{{ user.profile.avatar }}" />
                     <span id="user-name" class="ml-2 mr-1">{{ user.profile.name }}</span>
                     <img src="{% static 'icons/bi-chevron-down.svg' %}" class="arrow-icon w-5" alt="arrow">
 
