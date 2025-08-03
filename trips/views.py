@@ -153,10 +153,18 @@ def trip_request_view(request):
     else:
         form = TripRequestForm()
 
-        driver_id = request.GET.get('driver')
 
+        driver_id = request.GET.get('driver')
         if driver_id:
             form.fields['driver'].initial = driver_id
+
+        trip_type = request.GET.get('trip-type')
+        if trip_type:
+            form.fields['trip_type'].initial = trip_type
+
+        vehicle = request.GET.get('vehicle')
+        if vehicle:
+            form.fields['vehicle'].initial = vehicle
 
     min_valid_time = datetime.now() + timedelta(hours=1)
     min_valid_time_str = min_valid_time.strftime('%Y-%m-%dT%H:%M')
