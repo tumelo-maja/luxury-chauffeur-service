@@ -2,52 +2,60 @@
 {% load static %}
 
 {% block content %}
-<main class="push-footer main-dash max-w-6xl">
+<main class="push-footer main-dash">
     <div class="greeting">
-        <h1>Hello {{ user.username }}, welcome back</h1>
+        <h1>Hello {{ user.username | capfirst }}, welcome back</h1>
         <p>Manage your trips with ease.</p>
+
+        <div class="mobile-dash-menu mobile">
+            <label for="mobileDashMenu">Go to:</label>
+            <select name="mobileDashMenu" id="mobileDashMenu">
+
+                <option value="summary" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
+                        hx-target="#display-container" hx-trigger="load, click">Summary</option>
+
+                <option value="listview" class="dash-item" id="all-trips-button" hx-get="{% url 'dash-details' 'trips' %}" 
+                        hx-target="#display-container" hx-trigger="click">Trips - List</option>
+
+                {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
+                <option value="calendaview" class="dash-item" id="driver-availability-button" hx-get="{% url 'trips-calendar' %}" 
+                        hx-target="#display-container" hx-trigger="click"> Trips - Calendar</option>
+                
+                {% endif %}
+                {% if user.profile.user_type == 'manager' %}
+                <option value="admin" class="dash-item" id="admin-all-button" hx-get="{% url 'admin-all' %}"
+                        hx-target="#display-container" hx-trigger="click">Admin</option>
+                {% endif %}
+            </select>
+        </div>
     </div>
     <div class="flex">
         <div class="dashboard-menu">
             <div class="dash-body">
-                <ul>
+                <ul class="menu-large">
                     <li>
-                        <button type="button" class="dash-item selected"
-                        hx-get="{% url 'dash-details' 'home' %}"
-                        hx-target="#display-container"
-                        hx-trigger="load, click"
-                        >Dashboard</button>
+                        <button type="button" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
+                            hx-target="#display-container" hx-trigger="load, click">Summary</button>
                     </li>
                     <li>
-                        <button type="button" class="dash-item"
-                        id="all-trips-button"
-                        hx-get="{% url 'dash-details' 'trips' %}"
-                        hx-target="#display-container"
-                        hx-trigger="click"
-                        >Trips - List</button>
+                        <button type="button" class="dash-item" id="all-trips-button"
+                            hx-get="{% url 'dash-details' 'trips' %}" hx-target="#display-container"
+                            hx-trigger="click">Trips - List</button>
                     </li>
                     {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                     <li>
-                        <button type="button" class="dash-item"
-                        id="driver-availability-button"
-                        hx-get="{% url 'trips-calendar' %}"
-                        hx-target="#display-container"
-                        hx-trigger="click"
-                        >
-                        Trips - Calendar
-                    </button>
+                        <button type="button" class="dash-item" id="driver-availability-button"
+                            hx-get="{% url 'trips-calendar' %}" hx-target="#display-container" hx-trigger="click">
+                            Trips - Calendar
+                        </button>
                     </li>
                     {% endif %}
                     {% if user.profile.user_type == 'manager' %}
                     <li>
-                        <button type="button" class="dash-item"
-                        id="admin-all-button"
-                        hx-get="{% url 'admin-all' %}"
-                        hx-target="#display-container"
-                        hx-trigger="click"
-                        >Admin</button>
+                        <button type="button" class="dash-item" id="admin-all-button" hx-get="{% url 'admin-all' %}"
+                            hx-target="#display-container" hx-trigger="click">Admin</button>
                     </li>
-                    {% endif %}                           
+                    {% endif %}
 
                 </ul>
                 <div class="row-sep"></div>

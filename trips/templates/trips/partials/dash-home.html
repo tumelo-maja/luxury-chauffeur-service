@@ -1,17 +1,15 @@
-{% if user.profile.user_type == 'driver'  or user.profile.user_type == 'manager' %}
-<div class="dash-availability" >
+{% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
+<div class="dash-availability">
     {% include 'users/partials/driver-availability_p.html' %}
 </div>
 {% endif %}
 <section class="dash-stats" hx-get="{% url 'trips-dashboard-stats' %}" hx-trigger="load, tripListChanged from:body">
     {% include 'trips/partials/dash-trips-summary.html' %}
 </section>
+<section class="dash-ratings" hx-get="{% url 'trips-ratings' %}" hx-trigger="load, tripListChanged from:body">
+    {% include 'trips/partials/dash-ratings.html' %}
+</section>
 <div class="dash-details">
-    <section class="dash-ratings" hx-get="{% url 'trips-ratings' %}"
-        hx-trigger="load, tripListChanged from:body">
-        {% include 'trips/partials/dash-ratings.html' %}
-    </section>
-    <div class="col-sep"></div>
     <section class="dash-activities" id="dashTable" hx-get="{% url 'trips-list' 'recent' %}"
         hx-trigger="load, tripListChanged from:body">
         {% include 'trips/partials/dash-table.html' %}
