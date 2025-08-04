@@ -84,13 +84,6 @@ MIDDLEWARE = [
     'django_htmx.middleware.HtmxMiddleware',
 ]
 
-# Auto reloads - Dev env only
-if DEBUG:
-    INSTALLED_APPS += ['django_browser_reload']
-    MIDDLEWARE += [
-        "django_browser_reload.middleware.BrowserReloadMiddleware",
-    ]
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
