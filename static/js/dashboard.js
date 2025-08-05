@@ -1,9 +1,32 @@
 $(document).ready(function () {
 
 
-    // Filter trips by button cliks
-    $('#all-trips-button').click(() => {
+    // $('#dashboardLink').on('click', function () {
+    //     setTimeout(() => {
+    //         console.log("dashboardLink clicked");
+
+    //         $('#ListViewButton').on('click', setupTripsList);
+    //         $('#calendarViewButton').on('click', setupTripsCalendar);
+    //         $('#managerViewButton').on('click', setupTripsManager);
+    //         $('.dash-item').on('click', setupDashButtons);
+    //     }, 100);
+    // });
+    setTimeout(() => {
+        console.log("dashboardLink clicked");
+
+        $('#ListViewButton').on('click', setupTripsList);
+        $('#calendarViewButton').on('click', setupTripsCalendar);
+        $('#managerViewButton').on('click', setupTripsManager);
+        $('.dash-item').on('click', setupDashButtons);
+    }, 100);
+
+
+    // Setup List Trips view - Dashsetup
+
+    function setupTripsList() {
         setTimeout(() => {
+
+            console.log("setupTripsList --- clicked");
 
             $('#filter-button').on('click', function () {
                 $('#filter-options').toggleClass('show');
@@ -67,7 +90,6 @@ $(document).ready(function () {
                     $(`#trip_list #${detailID}`).click();
                     filterTrips();
                     sortTrips();
-                    addTripItemListener();
                 }
             })
 
@@ -109,7 +131,7 @@ $(document).ready(function () {
             }
 
         }, 100);
-    });
+    }
 
     setTimeout(() => {
 
@@ -122,22 +144,17 @@ $(document).ready(function () {
 
     }, 200);
 
-
-    function addTripItemListener() {
-        $('.trip-item').on('click', function () {
-            $('.trip-item').removeClass('current-detail');
-            $(this).addClass('current-detail');
-        });
-    }
-
-    // load driver availability
-    $('#driver-availability-button').click(() => {
+    // Setup trips Calendar view  - Dashsetup
+    function setupTripsCalendar() {
         setTimeout(() => {
+            console.log("setupTripsCalendar --- clicked");
+
             const monthYear = $('#monthYear');
             const datesElement = $('#dates');
             const prevBtn = $('#prevBtn');
             const nextBtn = $('#nextBtn');
             let currentDate = new Date();
+            console.log("Calendar clicked");
 
             function getMonthlyTrips(year, month) {
 
@@ -166,7 +183,7 @@ $(document).ready(function () {
 
                 monthYear.text(monthYearString);
 
-                // let trips = getMonthlyTrips(currentYear, currentMonth);
+                console.log("Calendar stuff happening below")
                 getMonthlyTrips(currentYear, currentMonth + 1)
                     .then(trips => {
 
@@ -187,7 +204,7 @@ $(document).ready(function () {
                             const tripCount = trips.filter(trip => trip.travel_date === dateString).length;
                             const tripElement = `<div class="day-trips">${tripCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
 
-                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/" hx-target="#baseDialog"` : '';                      
+                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/" hx-target="#baseDialog"` : '';
 
                             datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass}"${htmxCreateTrip}>${i}</div>
@@ -222,17 +239,28 @@ $(document).ready(function () {
 
             updateCalendar();
         }, 100);
-    });
+    }
 
-    // admin panel interactive elements
-    $('#admin-all-button').click(() => {
+
+    // Setup trips manager view  - Dashsetup
+
+    function setupTripsManager() {
         setTimeout(() => {
-            $('.admin-all .nav-link').on('click', function () {
-                $('.admin-all .nav-link').removeClass('active');
+            console.log("setupTripsManager --- clicked");
+
+            $('.manager-all .nav-link').on('click', function () {
+                console.log("Time to toggle");
+                $('.manager-all .nav-link').removeClass('active');
                 $(this).addClass('active');
             });
 
         }, 100);
-    });
+    }
+
+    // handle dashboard button clicks - dashsetup
+    function setupDashButtons() {
+        $('.dash-item').removeClass('selected');
+        $(this).addClass('selected');
+    }
 
 });

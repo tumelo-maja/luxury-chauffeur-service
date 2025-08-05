@@ -116,12 +116,6 @@ $(document).ready(function () {
         document.getElementById('baseDialog').innerHTML = '';
     })
 
-    // handle dashboard button clicks
-    $('.dash-item').click(function () {
-        $('.dash-item').removeClass('selected');
-        $(this).addClass('selected');
-    });
-
     // handle navbar toggle
     const $mainHead = $('.header-main');
     const $sectionWrapper = $('.section-wrapper');

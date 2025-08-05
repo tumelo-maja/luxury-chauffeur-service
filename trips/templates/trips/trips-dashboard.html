@@ -12,19 +12,19 @@
             <select name="mobileDashMenu" id="mobileDashMenu">
 
                 <option value="summary" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
-                        hx-target="#display-container" hx-trigger="load, click">Summary</option>
+                        hx-target="#display-container" hx-trigger="load, click" id="summaryViewOption">Summary</option>
 
-                <option value="listview" class="dash-item" id="all-trips-button" hx-get="{% url 'dash-details' 'trips' %}" 
+                <option value="listview" class="dash-item" id="listViewOption" hx-get="{% url 'dash-details' 'trips' %}" 
                         hx-target="#display-container" hx-trigger="click">Trips - List</option>
 
                 {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
-                <option value="calendaview" class="dash-item" id="driver-availability-button" hx-get="{% url 'trips-calendar' %}" 
+                <option value="calendaview" class="dash-item" id="calendarViewOption" hx-get="{% url 'trips-calendar' %}" 
                         hx-target="#display-container" hx-trigger="click"> Trips - Calendar</option>
                 
                 {% endif %}
                 {% if user.profile.user_type == 'manager' %}
-                <option value="admin" class="dash-item" id="admin-all-button" hx-get="{% url 'admin-all' %}"
-                        hx-target="#display-container" hx-trigger="click">Admin</option>
+                <option value="manager" class="dash-item" id="managerViewOption" hx-get="{% url 'manager-all' %}"
+                        hx-target="#display-container" hx-trigger="click">Manager</option>
                 {% endif %}
             </select>
         </div>
@@ -38,13 +38,13 @@
                             hx-target="#display-container" hx-trigger="load, click">Summary</button>
                     </li>
                     <li>
-                        <button type="button" class="dash-item" id="all-trips-button"
+                        <button type="button" class="dash-item" id="listViewButton"
                             hx-get="{% url 'dash-details' 'trips' %}" hx-target="#display-container"
                             hx-trigger="click">Trips - List</button>
                     </li>
                     {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                     <li>
-                        <button type="button" class="dash-item" id="driver-availability-button"
+                        <button type="button" class="dash-item" id="calendarViewButton"
                             hx-get="{% url 'trips-calendar' %}" hx-target="#display-container" hx-trigger="click">
                             Trips - Calendar
                         </button>
@@ -52,8 +52,8 @@
                     {% endif %}
                     {% if user.profile.user_type == 'manager' %}
                     <li>
-                        <button type="button" class="dash-item" id="admin-all-button" hx-get="{% url 'admin-all' %}"
-                            hx-target="#display-container" hx-trigger="click">Admin</button>
+                        <button type="button" class="dash-item" id="managerViewButton" hx-get="{% url 'manager-all' %}"
+                            hx-target="#display-container" hx-trigger="click">Manager</button>
                     </li>
                     {% endif %}
 

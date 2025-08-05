@@ -128,10 +128,7 @@ class DriverProfile(models.Model):
 class ManagerProfile(models.Model):
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='manager_profile')
-    passenger_average_rating = models.FloatField(null=True, blank=True)
-    passenger_count_rating = models.IntegerField(null=True, blank=True)
-    driver_average_rating = models.FloatField(null=True, blank=True)
-    driver_count_rating = models.IntegerField(null=True, blank=True)
+
     experience = models.IntegerField(null=True, blank=True)
     
     def __str__(self):

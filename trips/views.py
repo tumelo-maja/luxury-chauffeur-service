@@ -477,19 +477,19 @@ def driver_action_view(request, trip_name):
 
 
 @login_required
-def admin_all_view(request):
-    return render(request, 'trips/admin-all.html')
+def manager_all_view(request):
+    return render(request, 'trips/manager-all.html')
 
 
 @login_required
-def admin_tabs_view(request, tab_name):
+def manager_tabs_view(request, tab_name):
 
     if tab_name == "trips":
         trips = Trip.objects.all()
         context = {
             'trips': trips,
         }
-        return render(request, 'trips/partials/admin-trips.html', context)
+        return render(request, 'trips/partials/manager-trips.html', context)
 
     elif tab_name == "passengers":
         passengers = PassengerProfile.objects.all()
@@ -501,11 +501,11 @@ def admin_tabs_view(request, tab_name):
         context = {
             'passengers': passengers,
         }
-        return render(request, 'trips/partials/admin-passengers.html', context)
+        return render(request, 'trips/partials/manager-passengers.html', context)
 
     elif tab_name == "drivers":
         drivers = DriverProfile.objects.all()
         context = {
             'drivers': drivers,
         }
-        return render(request, 'trips/partials/admin-drivers.html', context)
+        return render(request, 'trips/partials/manager-drivers.html', context)

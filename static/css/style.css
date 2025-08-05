@@ -1393,7 +1393,7 @@ body {
     align-items: center;
     background-color: #c8c8c8;
     position: absolute;
-    left: 50px;
+    left: 20px;
     top: 0;
 }
 
@@ -1451,6 +1451,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 600px;
+    width: 100%;
 }
 
 
@@ -1805,38 +1806,44 @@ body {
 }
 
 /* Admin tables */
+.manager-all {
+    width: 100%;
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
 .table-wrapper {
     margin-top: 15px;
     max-height: 500px;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     display: block;
 }
 
-.admin-table {
+.manager-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.admin-table thead {
+.manager-table thead {
     position: sticky;
     top: 0;
     background-color: #fff;
     z-index: 2;
 }
 
-.admin-table th,
-.admin-table td {
-    padding: 8px;
+.manager-table th,
+.manager-table td {
+    padding: 6px;
     border: 1px solid #ddd;
-    min-width: 90px;
+    /* min-width: 90px; */
 }
 
-.admin-table tbody tr:nth-child(odd) {
+.manager-table tbody tr:nth-child(odd) {
     background-color: #eae9e9;
 }
 
-.admin-table tbody tr:nth-child(even) {
+.manager-table tbody tr:nth-child(even) {
     background-color: #fff;
 }
 
@@ -1848,19 +1855,19 @@ body {
     text-align: center;
     font-weight: 600;
     color: white;
-    font-size: 0.8rem;
+    font-size: 11px;
 }
 
-.admin-table th {
+.manager-table th {
     background-color: purple;
     color: white;
 }
 
-.admin-table td {
+.manager-table td {
     font-size: 0.9rem;
 }
 
-.admin-table .name-col {
+.manager-table .name-col {
     text-transform: capitalize;
 }
 

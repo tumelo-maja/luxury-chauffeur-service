@@ -1,11 +1,11 @@
-<section class="admin-all">
+<section class="manager-all">
 <h2 class="dash-header">Manage Passengers, Driver and Trips</h2>
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" 
     id="tab-trips"
-        hx-get="{% url 'admin-tabs' 'trips' %}"
-        hx-target="#adminTable" 
+        hx-get="{% url 'manager-tabs' 'trips' %}"
+        hx-target="#managerTable" 
         hx-swap="innerHTML" 
         hx-trigger="load, click, tripStatusChanged from:body"
         data-tab="trips">Trips
@@ -14,21 +14,21 @@
   <li class="nav-item">
     <a class="nav-link"
     id="tab-passengers"
-     hx-get="{% url 'admin-tabs' 'passengers' %}"
-        hx-target="#adminTable" 
+     hx-get="{% url 'manager-tabs' 'passengers' %}"
+        hx-target="#managerTable" 
         hx-swap="innerHTML" 
         data-tab="passengers">Passengers</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" 
     id="tab-drivers"
-    hx-get="{% url 'admin-tabs' 'drivers' %}"
-        hx-target="#adminTable" 
+    hx-get="{% url 'manager-tabs' 'drivers' %}"
+        hx-target="#managerTable" 
         hx-swap="innerHTML" 
         data-tab="drivers">Drivers</a>
   </li>
 </ul>
-<div id="adminTable" class="table-wrapper">
- {% include 'trips/partials/admin-trips.html' %}
+<div id="managerTable" class="table-wrapper">
+ {% include 'trips/partials/manager-trips.html' %}
 </div>
 </section>

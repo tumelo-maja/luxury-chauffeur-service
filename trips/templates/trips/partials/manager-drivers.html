@@ -1,7 +1,6 @@
-<table id="adminTable" class="admin-table">
+<table id="managerTable" class="manager-table">
     <thead>
         <tr>
-            <th class="text-left">Title</th>
             <th class="text-left">Name</th>
             <th class="text-center">Email</th>
             <th class="text-center">Phone</th>
@@ -15,11 +14,6 @@
         {% if drivers %}
         {% for driver in drivers %}
         <tr>
-            <td>
-                {% if not driver.profile.title == None %}
-                {{ driver.profile.title }}
-                {% endif %}                
-            </td>
             <td>{{ driver.profile.name }}</td>
             <td>{{ driver.profile.email }}</td>
             <td>
