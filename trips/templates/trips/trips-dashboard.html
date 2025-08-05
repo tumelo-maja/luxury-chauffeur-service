@@ -35,25 +35,25 @@
                 <ul class="menu-large">
                     <li>
                         <button type="button" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
-                            hx-target="#display-container" hx-trigger="load, click">Summary</button>
+                            hx-target="#display-container" hx-trigger="load, click"><i class="fa-solid fa-table-cells"></i><span>Summary</span></button>
                     </li>
                     <li>
                         <button type="button" class="dash-item" id="listViewButton"
                             hx-get="{% url 'dash-details' 'trips' %}" hx-target="#display-container"
-                            hx-trigger="click">Trips - List</button>
+                            hx-trigger="click"><i class="fa-solid fa-list"></i><span>List</span></button>
                     </li>
                     {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                     <li>
                         <button type="button" class="dash-item" id="calendarViewButton"
                             hx-get="{% url 'trips-calendar' %}" hx-target="#display-container" hx-trigger="click">
-                            Trips - Calendar
+                            <i class="fa-solid fa-calendar-days"></i><span>Calendar</span>
                         </button>
                     </li>
                     {% endif %}
                     {% if user.profile.user_type == 'manager' %}
                     <li>
                         <button type="button" class="dash-item" id="managerViewButton" hx-get="{% url 'manager-all' %}"
-                            hx-target="#display-container" hx-trigger="click">Manager</button>
+                            hx-target="#display-container" hx-trigger="click"><i class="fa-solid fa-user-tie"></i><span>Manager</span></button>
                     </li>
                     {% endif %}
 
