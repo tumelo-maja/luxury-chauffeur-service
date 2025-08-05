@@ -165,6 +165,11 @@ def trip_request_view(request):
         vehicle = request.GET.get('vehicle')
         if vehicle:
             form.fields['vehicle'].initial = vehicle
+        
+        trip_datetime = request.GET.get('datetime')
+        if trip_datetime:
+            form.fields['travel_datetime'].initial = datetime.strptime(trip_datetime, '%Y-%m-%dT%H:%M')
+
 
     min_valid_time = datetime.now() + timedelta(hours=1)
     min_valid_time_str = min_valid_time.strftime('%Y-%m-%dT%H:%M')

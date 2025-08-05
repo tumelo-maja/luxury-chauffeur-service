@@ -196,18 +196,24 @@ $(document).ready(function () {
                         for (let i = 1; i <= totalDays; i++) {
                             const date = new Date(currentYear, currentMonth, i);
                             let todayDate = new Date();
+
+                            let clickedDate = new Date(date);
+                            clickedDate.setHours(todayDate.getHours()+ 1, todayDate.getMinutes());
+                            const datetimeNow = clickedDate.toISOString().slice(0, 16);     
+
                             todayDate.setHours(0, 0, 0, 0);
                             const activeClass = date.toDateString() === todayDate.toDateString() ? 'active' : '';
+                            const pastDays = date < todayDate ? 'past-days' : '';
+                            const dateString = date.toLocaleDateString();                     
 
-                            const dateString = date.toLocaleDateString();
+                            let tripCount = trips.filter(trip => trip.travel_date === dateString).length;
+                            let tripCountStr = tripCount > 9 ? '9+': `${tripCount}`;
 
-                            const tripCount = trips.filter(trip => trip.travel_date === dateString).length;
-                            const tripElement = `<div class="day-trips">${tripCount}  <i class="fa-solid fa-circle"></i> <i class="fa-solid fa-car-rear"></i></div>`;
-
-                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/" hx-target="#baseDialog"` : '';
+                            const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
+                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"` : '';
 
                             datesHTML += `<div class="date-wrapper">
-                                    <div class="cal-date ${activeClass}"${htmxCreateTrip}>${i}</div>
+                                    <div class="cal-date ${activeClass} ${pastDays}"${htmxCreateTrip}>${i}</div>
                                     ${tripCount > 0 ? tripElement : ''}
                                   </div>`
                         }
