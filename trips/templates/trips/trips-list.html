@@ -1,11 +1,11 @@
 {% if trips %}
-<ol>
+<ul>
     {% for trip in trips reversed %}
     <li class="trip-item" data-status="{{ trip.status }}" data-created="{{ trip.created_on | date:'YmdHi' }}"
         data-updated="{{ trip.updated_on | date:'YmdHi' }}" data-travel="{{ trip.travel_datetime | date:'YmdHi' }}"
-        data-id="{{ trip.trip_name }}" hx-get="{% url 'trip-detail' trip.trip_name %}?modal=false"
-        hx-target="#trip-detail-container" {% if forloop.first %} hx-trigger="click, load, tripListChanged from:body" {%
-        else %} hx-trigger="click" {% endif %}>
+        data-id="{{ trip.trip_name }}" hx-get="{% url 'trip-detail' trip.trip_name %}"
+        hx-target="#baseDialog" hx-trigger="click">
+                        
         <div class="trip-top">
             <div class="trip-details">
                 <p class="driver">{{ trip.driver }}</p>
@@ -20,7 +20,7 @@
     {% endfor %}
     <li class="empty-filter-list"></li>
 
-</ol>
+</ul>
 {% else %}
 <ul class="empty-container">
     <li class="empty-list">You do not have any trips.</li>

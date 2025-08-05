@@ -2,15 +2,12 @@
 {% load crispy_forms_tags %}
 
 
-<div id="trip-detail-container" {% if not is_modal %} hx-swap-oob="outerHTML" {% endif %}
-    class="trip-summary {% if is_modal %} modal-content {% endif %}">
-    <div class="trip-head {% if is_modal %} modal-header {% endif %}">
+<div id="trip-detail-container" class="trip-summary modal-content">
+    <div class="trip-head modal-header">
         <h3>Trip Details</h3>
-        {% if is_modal %}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        {% endif %}
     </div>
-    <div class="sub-items {% if is_modal %} modal-body {% endif %}" id="tripDetail" data-id="{{ trip.trip_name }}">
+    <div class="sub-items modal-body" id="tripDetail" data-id="{{ trip.trip_name }}">
         <div class="sum-item status-container">
             <p class="title">Status: </p>
             <p class="status status-{{ trip.status_class }} max-w-max">{{ trip.status_str }}</p>
@@ -52,7 +49,7 @@
         </div>
 
         <div
-            class="trip-controls {% if trip.status_class == 'completed' or trip.status_class == 'confirmed' or trip.status_class == 'in-progress' %}justify-center{% endif %}">
+            class="trip-controls {% if trip.status_class == 'completed' or trip.status_class == 'in-progress' %}justify-center{% endif %}">
             {% if user.profile.user_type == 'passenger' %}
             {% if trip.status_class != 'cancelled' and trip.status_class != 'completed' %}
             <button type="button" class="trip-cancel trip-btn" hx-get="{% url 'trip-delete' trip.trip_name %}"
@@ -64,7 +61,7 @@
             {% if user_trip_rating %}
 
             <div class="rated-wrapper">
-                <p>You gave a {{ user_trip_rating }} star rating for this trip</p>
+                <p>You gave a {{ user_trip_rating }}-star rating for this trip</p>
                 <ol class="rated-stars">
                     {% for num in ratings_num %}
                     <li
