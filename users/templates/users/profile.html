@@ -3,15 +3,24 @@
 {% block content %}
 
 <div class="profile-container">
-        <div class="profile-type {{ user.profile.user_type }}">{{ user.profile.user_type }}</div>
-    <img src="{{ profile.avatar }}" class="{{ user.profile.user_type }}">
+        <div class="profile-type {{ profile.user_type }}">{{ profile.user_type }}</div>
+    <img src="{{ profile.avatar }}" class="{{ profile.user_type }}">
     <div class="text-center">
         <h1>{{ profile.name }}</h1>
-        <p class="profile-field"><span class="item-title">username:</span><span class="item-value">@{{ user.username }}</span></p>
-        <p class="profile-field"><span class="item-title">address:</span><span class="item-value">{{ user.profile.home_address }}</span></p>
-        <p class="profile-field"><span class="item-title">phone:</span><span class="item-value">{{ user.profile.phone }}</span></p>
+        <p class="profile-field"><span class="item-title">username:</span>
+            <span class="item-value">@{{ profile.user.username }}</span></p>
+        {% if not profile.home_address == None %}
+        <p class="profile-field"><span class="item-title">address:</span>
+            <span class="item-value">{{ profile.home_address }}</span></p>
+        {% endif %}
+        {% if not profile.phone == None %}
+        <p class="profile-field"><span class="item-title">phone:</span>
+            <span class="item-value">{{ profile.phone }}</span></p>
+        {% endif %}            
     </div>
+    {% if profile.user == user %}
     <a class="button-purple my-5 " href="{% url 'profile-edit' %}">Edit Profile</a>
+    {% endif %}
 
 </div>
 {% endblock %}

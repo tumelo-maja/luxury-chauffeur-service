@@ -14,7 +14,9 @@
         {% if drivers %}
         {% for driver in drivers %}
         <tr>
-            <td>{{ driver.profile.name }}</td>
+            <td>
+                <a href="{% url 'profile'  driver.profile.user.username %}" class="profile-link">{{ driver.profile.name }}</a>
+            </td>
             <td>{{ driver.profile.email }}</td>
             <td>
                 {% if not driver.profile.phone == None %}
@@ -27,10 +29,10 @@
                 {% endif %}                       
             </td>
             <td class="text-center">
-                {% if passenger.average_rating == None %}
+                {% if driver.average_rating == None %}
                 No rating
                 {% else %}
-                {{ passenger.average_rating | floatformat:1 }} ({{ passenger.count_rating }})
+                {{ driver.average_rating | floatformat:1 }} ({{ driver.count_rating }})
                 {% endif %}
             </td>            
             <td>{{ driver.status }}</td>

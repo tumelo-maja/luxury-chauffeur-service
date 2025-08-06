@@ -30,7 +30,6 @@ urlpatterns = [
     path('chauffeurs/', include('chauffeurs.urls')),
     path('trips/', include('trips.urls')),
     path('', home_view, name="home"),
-    path('allocated_trips/', allocated_trips, name='allocated_trips'),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

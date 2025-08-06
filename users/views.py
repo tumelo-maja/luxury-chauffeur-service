@@ -1,5 +1,5 @@
 from allauth.account.utils import send_email_confirmation
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout, login
@@ -12,8 +12,12 @@ from .models import *
 
 
 @login_required
-def profile_view(request):
-    profile = request.user.profile
+def profile_view(request, username=None):
+    if username != '9999':
+        profile = get_object_or_404(User, username=username).profile
+    else:
+        profile = request.user.profile
+                
     return render(request, 'users/profile.html', {'profile': profile})
 
 

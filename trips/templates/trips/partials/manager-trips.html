@@ -22,8 +22,12 @@
                     hx-target="#baseDialog">View Details
                 </button>
             </td>
-            <td class="name-col">{{ trip.passenger.profile.user }}</td>
-            <td class="name-col">{{ trip.driver.profile.user }}</td>
+            <td class="name-col">
+                <a href="{% url 'profile'  trip.passenger.profile.user.username %}" class="profile-link">{{ trip.passenger.profile.name }}</a>
+            </td>
+            <td class="name-col">
+                <a href="{% url 'profile'  trip.driver.profile.user.username %}" class="profile-link">{{ trip.driver.profile.name }}</a>
+            </td>
         </tr>
         {% endfor %}
         {% else %}

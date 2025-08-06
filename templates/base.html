@@ -51,7 +51,7 @@
                         </div>
                         <div class="dropdown-body hidden-item absolute right-2 shadow rounded-lg w-40">
                             <ul class="flex flex-col items-end">
-                                <li class="menu-item"><a href="{% url 'profile' %}">My Profile</a></li>
+                                <li class="menu-item"><a href="{% url 'profile' user.username %}">My Profile</a></li>
                                 <li class="menu-item dashboard-link"><a href="{% url 'trips-dashboard' %}">Dashboard</a>
                                 </li>
                                 <li class="menu-item"><a href="{% url 'profile-settings' %}">Settings</a></li>

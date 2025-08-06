@@ -1,6 +1,6 @@
 {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
 <div class="dash-availability">
-    {% include 'users/partials/driver-availability_p.html' %}
+    {% include 'users/partials/user-availability.html' %}
 </div>
 {% endif %}
 <section class="dash-stats" hx-get="{% url 'trips-dashboard-stats' %}" hx-trigger="load, tripListChanged from:body">

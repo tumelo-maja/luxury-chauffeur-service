@@ -1,6 +1,10 @@
 <h2 class="dash-header">Ratings</h2>
+{% if user_profile.average_rating == None %}
+<p class="ratings-total">No ratings</p>
+{% else %}
 <p class="ratings-total">Average: <span class="ratings-total-value">{{ user_profile.average_rating | floatformat:1 }} 
 </span><span class="ratings-total-count">({{ user_profile.count_rating }}) reviews</span></p>
+{% endif %}
 <ol>
     <li class="rating-item stars-5">
         <span class="icon-number">5 <i class="fa-solid fa-star"></i></span>

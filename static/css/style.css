@@ -7,6 +7,7 @@
 .site {
     min-height: 100dvh;
     display: grid;
+    justify-items: center;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto 1fr auto;
     width: 100%;
@@ -240,7 +241,7 @@ body {
 }
 
 .profile-container img.passenger {
-    border: 5px solid greenyellow;
+    border: 5px solid rgb(155, 227, 48);
 }
 
 .profile-container img.driver {
@@ -297,6 +298,14 @@ body {
     color: #360136;
 }
 
+.profile-link {
+    color: blue;
+    text-decoration: underline;
+}
+
+.profile-link:hover {
+    text-decoration: none;
+}
 /* togleeeeeeeeeer */
 
 
@@ -1764,6 +1773,7 @@ body {
 .activity-table th {
     background-color: rgba(128, 0, 128, 0.54);
     color: white;
+    text-align: center;
 }
 
 .trip-no {

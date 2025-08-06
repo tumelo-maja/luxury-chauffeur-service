@@ -19,7 +19,9 @@
                 {{ passenger.profile.title }}
                 {% endif %}
             </td>
-            <td>{{ passenger.profile.name }}</td>
+            <td>
+                <a href="{% url 'profile'  passenger.profile.user.username %}" class="profile-link">{{ passenger.profile.name }}</a>
+            </td>
             <td>{{ passenger.profile.user.email }}</td>
             <td>
                 {% if not passenger.profile.phone == None %}
