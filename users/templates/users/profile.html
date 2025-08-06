@@ -1,12 +1,15 @@
-{% extends 'layouts/modal.html' %}
+{% extends 'layouts/box.html' %}
 
 {% block content %}
 
 <div class="profile-container">
-    <img src="{{ profile.avatar }}" />
+        <div class="profile-type {{ user.profile.user_type }}">{{ user.profile.user_type }}</div>
+    <img src="{{ profile.avatar }}" class="{{ user.profile.user_type }}">
     <div class="text-center">
         <h1>{{ profile.name }}</h1>
-        <p class="my-2">@{{ user.username }}</p>
+        <p class="profile-field"><span class="item-title">username:</span><span class="item-value">@{{ user.username }}</span></p>
+        <p class="profile-field"><span class="item-title">address:</span><span class="item-value">{{ user.profile.home_address }}</span></p>
+        <p class="profile-field"><span class="item-title">phone:</span><span class="item-value">{{ user.profile.phone }}</span></p>
     </div>
     <a class="button-purple my-5 " href="{% url 'profile-edit' %}">Edit Profile</a>
 

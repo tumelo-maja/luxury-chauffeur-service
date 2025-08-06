@@ -2,6 +2,8 @@
 
 {% url 'home' as home_url %}
 {% url 'chauffeurs' as chauffeurs_url %}
+{% url 'profile-settings' as settings_url %}
+{% url 'profile' as profile_url %}
 
 <header class="header-main">
     <div class="main-nav">
@@ -24,7 +26,7 @@
                         </a>
                     </li>
                     <li class="navbar-item">
-                        <a href="{% url 'profile' %}"  class="nav-link">
+                        <a href="{{ profile_url }}" class="nav-link {% if request.path == profile_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-user"></i>
                             <span class="link-text">Profile</span>
                         </a>
@@ -37,7 +39,7 @@
                     </li>
                     </li>
                     <li class="navbar-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ settings_url }}" class="nav-link {% if request.path == settings_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-gears"></i>
                             <span class="link-text">Settings</span>
                         </a>

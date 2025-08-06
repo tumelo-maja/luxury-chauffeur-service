@@ -32,7 +32,7 @@ def profile_edit_view(request):
         form = PassengerEditForm
     else:
         role = ManagerProfile.objects.filter(profile=profile_user).first()
-        form = []
+        form = ManagerEditForm
 
 
     if request.method == 'POST':
