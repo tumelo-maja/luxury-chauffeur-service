@@ -4,6 +4,7 @@
 {% url 'chauffeurs' as chauffeurs_url %}
 {% url 'profile-settings' as settings_url %}
 {% url 'profile' as profile_url %}
+{% url 'contact' as contact_url %}
 
 <header class="header-main">
     <div class="main-nav">
@@ -45,7 +46,7 @@
                         </a>
                     </li>
                     <li class="navbar-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ contact_url }}" class="nav-link {% if request.path == contact_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-envelope-circle-check"></i>
                             <span class="link-text">Contact</span>
                         </a>

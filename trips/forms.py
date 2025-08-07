@@ -1,6 +1,5 @@
 from django.forms import ModelForm
 from django import forms
-from django.utils import timezone
 from .models import *
 
 RATING_LABELS = [('', '<-Select a rating->')]+RATING_OPTIONS

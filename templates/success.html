@@ -1,0 +1,19 @@
+{% extends 'layouts/box.html' %}
+
+{% url 'home' as home_url %}
+{% block content %}
+
+<div class="success-container">
+    <h1>Success!</h1>
+    <p>
+        Your inquiry was submitted successfully. A member of our team will
+        reach out to you as soon as possible.
+    </p>
+
+    <a href="{{ home_url }}" class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}">
+        <i class="fa-solid fa-house"></i>
+        <span class="link-text">Home</span>
+    </a>
+</div>
+
+{% endblock %}

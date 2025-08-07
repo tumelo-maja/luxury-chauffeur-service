@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 from home.views import home_view
 from users.views import *
-from trips.views import allocated_trips
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +28,7 @@ urlpatterns = [
     path('profile/', include('users.urls')),
     path('chauffeurs/', include('chauffeurs.urls')),
     path('trips/', include('trips.urls')),
-    path('', home_view, name="home"),
+    path('', include('home.urls')),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

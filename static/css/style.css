@@ -55,6 +55,9 @@ body {
 .box-wrapper h1 {
     text-align: center;
     margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: purple;
 }
 
 .settings-table {
@@ -2266,6 +2269,9 @@ body {
     color: red;
 }
 
+.contact-form {
+    padding: 10px 20px;
+}
 
 /*--------------------------- Media queries --*/
 @media screen and (min-width: 375px) {

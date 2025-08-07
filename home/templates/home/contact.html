@@ -1,0 +1,24 @@
+{% extends 'layouts/box.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div id="contact-form">
+
+    <form hx-post="{% url 'contact' %}" hx-target="#contact-form" hx-swap="outerHTML" class="contact-form">
+        <div class="mo-header">
+            <h1>Send Us Your Enquiry</h1>
+        </div>
+        <div class="mo-body">
+            {% csrf_token %}
+            {{ form | crispy }}
+        </div>
+        <div class="flex justify-around w-full">
+            <button type="submit" class="button-purple">Send Enquiry</button>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}

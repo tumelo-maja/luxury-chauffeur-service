@@ -53,7 +53,7 @@ def profile_edit_view(request):
         if profile_form.is_valid() and role_form.is_valid():
             profile_form.save()
             role_form.save()
-            return redirect('profile')
+            return redirect('profile', username=request.user)
 
     role_form = form(instance=role)
     if request.path == reverse('profile-onboarding'):
