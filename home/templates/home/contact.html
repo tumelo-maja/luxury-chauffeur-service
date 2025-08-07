@@ -12,13 +12,12 @@
         <div class="mo-body">
             {% csrf_token %}
             {{ form | crispy }}
+
         </div>
         <div class="flex justify-around w-full">
             <button type="submit" class="button-purple">Send Enquiry</button>
         </div>
     </form>
 </div>
-
-
 
 {% endblock %}

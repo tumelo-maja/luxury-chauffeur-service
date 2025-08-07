@@ -21,7 +21,7 @@ def contact_form_view(request):
 
             subject = f"Enquiry from {name}"
             body = f"Name: {name}\nEmail: {email}\nContact Number: {phone}\nMessage: {message}"
-            recipient_email = settings.DEFAULT_FROM_EMAIL
+            recipient_email = [settings.DEFAULT_FROM_EMAIL]
             # send_mail(subject, body, email, [recipient_email])
             email_thread = threading.Thread(target=send_email_async, args=(subject, body, email, recipient_email))
             email_thread.start()
@@ -40,6 +40,4 @@ def contact_form_view(request):
 
 def send_email_async(subject, body, from_email, to_email):
     send_mail(subject, body, from_email, to_email)
-    
-def success_view(request):
-    return render(request, 'success.html')
+

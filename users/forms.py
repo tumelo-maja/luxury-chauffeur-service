@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 
 
 class ProfileEditForm(ModelForm):
+    phone = forms.IntegerField(label='Contact Number',
+                            widget=forms.TextInput(attrs={'placeholder': 'E.g. 07512345679',
+                                                          'pattern': "^[0-9]{10,15}$",
+                                                          'title': 'Phone number must be between 10 and 15 digits.',
+                                                          }),)
+
     class Meta:
         model = Profile
         fields = ['title', 'displayname', 'image', 'phone', 'home_address']

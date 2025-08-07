@@ -2273,6 +2273,13 @@ body {
     padding: 10px 20px;
 }
 
+.return-wapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
 /*--------------------------- Media queries --*/
 @media screen and (min-width: 375px) {
     .hero-slider {

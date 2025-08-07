@@ -12,8 +12,8 @@ from .models import *
 
 
 @login_required
-def profile_view(request, username=None):
-    if username != '9999':
+def profile_view(request, username):
+    if username != request.user:
         profile = get_object_or_404(User, username=username).profile
     else:
         profile = request.user.profile
