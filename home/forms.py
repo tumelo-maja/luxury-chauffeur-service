@@ -1,6 +1,5 @@
 from django.forms import Form
 from django import forms
-from phonenumber_field.formfields import PhoneNumberField
 
 
 class UserContactForm(Form):
