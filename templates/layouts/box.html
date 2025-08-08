@@ -2,7 +2,7 @@
 
 {% block layout %}
 <div class="box-parent">
-    <div class="box-wrapper">
+    <div class="box-wrapper {% block wrapper_class %}{% endblock %}">
         {% block content %}
         {% endblock %}
     </div>

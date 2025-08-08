@@ -4,12 +4,12 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="form-head">{{ user_type }} Registration</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
         {{ form | crispy }}
 
-        <div class="flex justify-around w-full">
-            <button type="submit">Register as {{ user_type }}</button>
+        <div class="form-buttons">
+            <button type="submit" class="button-purple">Register as {{ user_type }}</button>
         </div>
     </form>
 </div>

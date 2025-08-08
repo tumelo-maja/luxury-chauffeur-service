@@ -4,24 +4,21 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% url 'account_login' as login_url %}
+{% url 'account_logout' as logout_url %}
 {% block wrapper_class %}auth-window{% endblock %}
 
 {% block content %}
 <div class="signup-head">
     <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
 </div>
-<h1>Login</h1>
+<h1>Log Out</h1>
 <p class="auth-text">
-    If you have not created an account yet, then please
-    <a href="{% url 'signup_type' %}" class="auth-link">sign up</a> first.
+    Are you sure you want to logout?
 </p>
-<form method="post" action="{{ login_url }}" class="box-form">
+<form method="post" action="{{ logout_url }}" class="box-form">
     {% csrf_token %}
-    {{ form |crispy }}
-    <!-- element button type="submit" tags="prominent,login"  -->
     <div class="form-buttons">
-        <button type="submit" class="button-purple">Sign In</button>
+        <button type="submit" class="button-purple">Log Out</button>
     </div>
 </form>
 {% endblock content %}
