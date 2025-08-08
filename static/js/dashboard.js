@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
-    setTimeout(() => {
+    htmx.on('htmx:afterSwap', (e) => {
         $('#ListViewButton').on('click', setupTripsList);
         $('#calendarViewButton').on('click', setupTripsCalendar);
         $('#managerViewButton').on('click', setupTripsManager);
         $('.dash-item').on('click', setupDashButtons);
-    }, 100);
+    });
 
     $('#mobileDashMenu').change(function () {
         const selectedOption = $(this).find('option:selected')[0];
@@ -18,9 +18,7 @@ $(document).ready(function () {
 
     // Setup List Trips view - Dashsetup
     function setupTripsList() {
-        setTimeout(() => {
-
-            console.log("setupTripsList --- clicked");
+        htmx.on('htmx:afterSwap', (e) => {
 
             $('#filter-button').on('click', function () {
                 $('#filter-options').toggleClass('show');
@@ -32,7 +30,6 @@ $(document).ready(function () {
 
                 filterTrips();
             });
-
 
             $(document).on('click', function (e) {
                 if (!$(e.target).closest('#sort-button, #sort-options').length) {
@@ -123,8 +120,7 @@ $(document).ready(function () {
                 $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
 
             }
-
-        }, 100);
+        });
     }
 
     setTimeout(() => {
@@ -149,7 +145,6 @@ $(document).ready(function () {
             const prevBtn = $('#prevBtn');
             const nextBtn = $('#nextBtn');
             let currentDate = new Date();
-            console.log("Calendar clicked");
 
             function getMonthlyTrips(year, month) {
 
@@ -178,7 +173,6 @@ $(document).ready(function () {
 
                 monthYear.text(monthYearString);
 
-                console.log("Calendar stuff happening below")
                 getMonthlyTrips(currentYear, currentMonth + 1)
                     .then(trips => {
 
@@ -205,11 +199,11 @@ $(document).ready(function () {
                             let tripCountStr = tripCount > 9 ? '9+' : `${tripCount}`;
 
                             const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
-                            
+
                             let htmxCreateTrip = '';
                             if (date >= todayDate && userType === 'passenger') {
-                                htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"` ;
-                            } 
+                                htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"`;
+                            }
 
                             datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass} ${pastDays}"${htmxCreateTrip}>${i}</div>
@@ -250,16 +244,13 @@ $(document).ready(function () {
     // Setup trips manager view  - Dashsetup
 
     function setupTripsManager() {
-        setTimeout(() => {
-            console.log("setupTripsManager --- clicked");
-
+        htmx.on('htmx:afterSwap', (e) => {
             $('.manager-all .nav-link').on('click', function () {
-                console.log("Time to toggle");
                 $('.manager-all .nav-link').removeClass('active');
                 $(this).addClass('active');
             });
 
-        }, 100);
+        });
     }
 
     // handle dashboard button clicks - dashsetup
