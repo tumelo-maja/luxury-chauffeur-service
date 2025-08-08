@@ -118,6 +118,29 @@ body {
     display: table-cell;
 }
 
+.mobile-dash-menu {
+    margin: 20px 10px;
+    border: 2px solid purple;
+    border-radius: 8px;
+    padding: 10px;
+    width: 85%;
+    background-color: rgba(128, 0, 128, 0.2);
+}
+
+.mobile-dash-menu label {
+    font-weight: bold;
+}
+
+.mobile-dash-menu select {
+    border: 2px solid purple;
+    border-radius: 8px;
+    margin: 0 3px;
+    text-align: center;
+    background-color: rgba(128, 0, 128, 0.2);
+    font-weight: 500;
+
+}
+
 /* new navbar below */
 
 .header-main {
@@ -218,7 +241,7 @@ body {
 }
 
 .section-wrapper {
-    width: 97%;
+    width: 100%;
     height: 100%;
     position: relative;
     transition: 0.3s ease-in-out;
@@ -226,6 +249,10 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.section-wrapper .site {
+    width: 97%;
 }
 
 .profile-container {
@@ -263,7 +290,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-} 
+}
 
 .profile-field .item-title {
     font-weight: 600;
@@ -312,6 +339,7 @@ body {
 .profile-link:hover {
     text-decoration: none;
 }
+
 /* togleeeeeeeeeer */
 
 
@@ -942,7 +970,7 @@ body {
 
 /* trips style */
 .greeting {
-    padding: 10px 30px 30px;
+    padding: 10px 10px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -953,6 +981,7 @@ body {
 .greeting h1 {
     font-size: 1.7rem;
     font-weight: bold;
+    text-align: center;
 }
 
 .greeting p {
@@ -1681,7 +1710,7 @@ body {
 
 .dash-details {
     margin: 20px 0 0;
-    padding: 15px 5px;
+    padding: 15px 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -1773,7 +1802,7 @@ body {
 
 .activity-table th,
 .activity-table td {
-    padding: 6px;
+    padding: 6px 4px;
     text-align: left;
     border-top: 1px solid #ddd;
 }
@@ -2331,6 +2360,18 @@ body {
 }
 
 @media screen and (min-width: 768px) {
+
+    .section-wrapper {
+        width: 97%;
+    }
+
+    .section-wrapper .site {
+        width: 100%;
+    }
+
+    .dash-details {
+        padding: 15px 5px;
+    }
 
     .greeting {
         padding: 10px;
