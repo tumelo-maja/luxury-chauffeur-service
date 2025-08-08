@@ -141,10 +141,8 @@ $(document).ready(function () {
     // Setup trips Calendar view  - Dashsetup
     function setupTripsCalendar() {
 
-        // setTimeout(() => {
+        const userType = $('.profile-type').data('profile-type')
         htmx.on('htmx:afterSwap', (e) => {
-
-            console.log("setupTripsCalendar --- clicked");
 
             const monthYear = $('#monthYear');
             const datesElement = $('#dates');
@@ -207,7 +205,11 @@ $(document).ready(function () {
                             let tripCountStr = tripCount > 9 ? '9+' : `${tripCount}`;
 
                             const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
-                            const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"` : '';
+                            
+                            let htmxCreateTrip = '';
+                            if (date >= todayDate && userType === 'passenger') {
+                                htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"` ;
+                            } 
 
                             datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass} ${pastDays}"${htmxCreateTrip}>${i}</div>
