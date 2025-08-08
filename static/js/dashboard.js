@@ -1,28 +1,22 @@
 $(document).ready(function () {
 
-
-    // $('#dashboardLink').on('click', function () {
-    //     setTimeout(() => {
-    //         console.log("dashboardLink clicked");
-
-    //         $('#ListViewButton').on('click', setupTripsList);
-    //         $('#calendarViewButton').on('click', setupTripsCalendar);
-    //         $('#managerViewButton').on('click', setupTripsManager);
-    //         $('.dash-item').on('click', setupDashButtons);
-    //     }, 100);
-    // });
     setTimeout(() => {
-        console.log("dashboardLink clicked");
-
         $('#ListViewButton').on('click', setupTripsList);
         $('#calendarViewButton').on('click', setupTripsCalendar);
         $('#managerViewButton').on('click', setupTripsManager);
         $('.dash-item').on('click', setupDashButtons);
     }, 100);
 
+    $('#mobileDashMenu').change(function () {
+        const selectedOption = $(this).find('option:selected')[0];
+        htmx.trigger(selectedOption, 'click');
+
+        if (selectedOption.id === 'calendarViewOption') {
+            setupTripsCalendar();
+        }
+    });
 
     // Setup List Trips view - Dashsetup
-
     function setupTripsList() {
         setTimeout(() => {
 
@@ -146,7 +140,10 @@ $(document).ready(function () {
 
     // Setup trips Calendar view  - Dashsetup
     function setupTripsCalendar() {
-        setTimeout(() => {
+
+        // setTimeout(() => {
+        htmx.on('htmx:afterSwap', (e) => {
+
             console.log("setupTripsCalendar --- clicked");
 
             const monthYear = $('#monthYear');
@@ -198,16 +195,16 @@ $(document).ready(function () {
                             let todayDate = new Date();
 
                             let clickedDate = new Date(date);
-                            clickedDate.setHours(todayDate.getHours()+ 1, todayDate.getMinutes());
-                            const datetimeNow = clickedDate.toISOString().slice(0, 16);     
+                            clickedDate.setHours(todayDate.getHours() + 1, todayDate.getMinutes());
+                            const datetimeNow = clickedDate.toISOString().slice(0, 16);
 
                             todayDate.setHours(0, 0, 0, 0);
                             const activeClass = date.toDateString() === todayDate.toDateString() ? 'active' : '';
                             const pastDays = date < todayDate ? 'past-days' : '';
-                            const dateString = date.toLocaleDateString();                     
+                            const dateString = date.toLocaleDateString();
 
                             let tripCount = trips.filter(trip => trip.travel_date === dateString).length;
-                            let tripCountStr = tripCount > 9 ? '9+': `${tripCount}`;
+                            let tripCountStr = tripCount > 9 ? '9+' : `${tripCount}`;
 
                             const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
                             const htmxCreateTrip = date >= todayDate ? `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"` : '';
@@ -244,7 +241,7 @@ $(document).ready(function () {
             })
 
             updateCalendar();
-        }, 100);
+        });
     }
 
 
