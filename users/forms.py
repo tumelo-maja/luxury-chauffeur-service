@@ -32,6 +32,8 @@ class MainSignupForm(UserCreationForm):
         # Check if email is already taken by any User // rais error
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already in use by another user.")
+        
+        return email
 
 
 

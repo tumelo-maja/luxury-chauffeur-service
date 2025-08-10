@@ -138,8 +138,9 @@ def driver_signup(request):
                 user.save()
 
             messages.success(request, "Driver's account created successfully.")
-            login(request, user,backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('profile-onboarding')
+            send_email_confirmation(request, user)
+
+            return redirect('account-success')
     else:
         form = MainSignupForm()
 
@@ -154,14 +155,15 @@ def passenger_signup(request):
     if request.method == 'POST':
         form = MainSignupForm(request.POST, request.FILES)
         if form.is_valid():
-            # with transaction.atomic():
+
             user = form.save(commit=False)
             user.user_type = 'passenger'
             user.save()
 
             messages.success(request, "Passenger's account created successfully.")
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('profile-onboarding')
+            send_email_confirmation(request, user)
+
+            return redirect('account-success')
     else:
         form = MainSignupForm()
     
@@ -171,3 +173,6 @@ def passenger_signup(request):
     }
     return render(request, 'account/signup-form.html', context)
 
+
+def account_success(request):
+    return render(request, 'users/account-created.html')

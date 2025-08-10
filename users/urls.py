@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('@<username>/', profile_view, name='profile'),
+    path('account/success/', account_success, name='account-success'),
     path('signup/', signup_type, name='signup_type'),
     path('signup/driver/', driver_signup, name='driver_signup'),
     path('signup/passenger/', passenger_signup, name='passenger_signup'),

@@ -55,12 +55,22 @@ body {
     max-width: 350px;
 }
 
+.box-wrapper.account-window p {
+    margin: 20px;
+    text-align: center;
+}
+
+.box-wrapper.account-window .check {
+    font-style: italic;
+}
+
 .box-wrapper h1 {
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.3rem;
     font-weight: 700;
     color: purple;
+    text-transform: capitalize;
 }
 
 .settings-table {

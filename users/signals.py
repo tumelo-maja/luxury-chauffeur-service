@@ -29,10 +29,11 @@ def user_postsave(sender, instance, created, **kwargs):
         try:
             email_address = EmailAddress.objects.get_primary(user)
 
-            if email_address.email !=user.email:
-                email_address.email= user.email
-                email_address.verified= False
-                email_address.save()
+            if email_address:
+                if email_address.email !=user.email:
+                    email_address.email= user.email
+                    email_address.verified= False
+                    email_address.save()
             
         except :
             EmailAddress.objects.create(
