@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo-wrapper {
+            width: 100%;
+        }
+
+
+        .email-container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgb(63, 16, 63);
+            border-radius: 8px;
+        }
+
+        .email-header {
+            background-color: purple;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .email-header img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .email-header h1 {
+            color: gold;
+            font-size: 2.1rem;
+        }
+
+        .email-subtext{
+            font-size: 1.4rem;
+            color: gold;
+        }
+
+        .email-body {
+            margin-top: 20px;
+        }
+
+        .email-body p {
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.6;            
+        }
+
+        .email-footer p {
+            margin: 6px 0 0;
+            font-size: 1.2rem;
+            color: gold;
+        }
+
+        .button-confirm {
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        .button-purple-light {
+            padding: 5px;
+            font-size: 1.3rem;
+            border-radius: 10px;
+            background-color: #d6d5d5;
+            color: #fff;
+            width: max-content;
+            height: 35px;
+            text-align: center;
+            padding: 5px 20px;
+            text-transform: capitalize;
+            text-decoration: none;
+            border: 2px solid white;
+        }
+
+        .button-purple-light:hover {
+            background-color: #d6d5d5;
+            color: #af06af;
+            border: 2px solid #af06af;
+            font-weight: bold;
+        }
+    </style>
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/759c893288.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <table class="email-container">
+        <tr>
+            <td class="email-header">
+                <div class="logo-wrapper">
+                    <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
+                    <h1>Lux Chauffeurs</h1>
+                </div>
+                <p class="email-subtext">Verify your account</i></p>
+            </td>
+        </tr>
+        <tr>
+            <td class="email-body">
+                <p>Hi there,</p>
+                <p>Thank you for registering your account. To continue using Lux Chauffeurs, please confirm your email
+                    address by clicking the button below.</p>
+                <table class="button-confirm">
+                    <tr>
+                        <td>
+                            <a href="{{ activate_url }}" class="button-purple-light">Confirm email</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="email-footer">
+                <p>Best regards,</p>
+                <p>Lux Chauffeurs Team</p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

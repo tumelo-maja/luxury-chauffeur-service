@@ -43,11 +43,9 @@
                     <div class="account relative">
                         {% if request.user.is_authenticated %}
                         <div class="dropdown-head flex items-center justify-center cursor-pointer">
-                            <a href=""></a>
                             <img class="avatar-image" src="{{ user.profile.avatar }}" />
                             <span id="user-name" class="ml-2 mr-1">{{ user.profile.name }}</span>
                             <img src="{% static 'icons/bi-chevron-down.svg' %}" class="arrow-icon w-5" alt="arrow">
-
                         </div>
                         <div class="dropdown-body hidden-item absolute right-2 shadow rounded-lg w-40">
                             <ul class="flex flex-col items-end">
