@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo-wrapper {
+            width: 100%;
+        }
+
+        .email-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgb(63, 16, 63);
+            border-radius: 8px;
+        }
+
+        .email-header {
+            background-color: purple;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .email-header img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .email-header h1 {
+            color: gold;
+            font-size: 2.1rem;
+        }
+
+        .email-subtext {
+            font-size: 1.4rem;
+            color: gold;
+        }
+
+        .email-body {
+            margin-top: 20px;
+        }
+
+        .email-body p {
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .email-footer p {
+            margin: 6px 0 0;
+            font-size: 1.2rem;
+            color: gold;
+        }
+
+        @media screen and (min-width: 768px) {
+
+            .email-container {
+                width: 70%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table class="email-container">
+        <tr>
+            <td class="email-header">
+                <div class="logo-wrapper">
+                    <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
+                    <h1>Lux Chauffeurs</h1>
+                </div>
+                <p class="email-subtext">{{ enquiry.subtitle}}</i></p>
+            </td>
+        </tr>
+        <tr>
+            <td class="email-body">
+                <p>Hi {{ recipient }},</p>
+                <p>{{ subtitle }}</p>
+                <div class="enquiry-details">
+                    <p><strong>Name:</strong> {{ enquiry.name }}</p>
+                    <p><strong>Email:</strong> {{ enquiry.email }}</p>
+                    <p><strong>Contact Number:</strong> {{ enquiry.phone }}</p>
+                    <p><strong>Message:</strong><br> {{ enquiry.message }}</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="email-footer">
+                <p>Lux Chauffeurs</p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

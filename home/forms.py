@@ -15,4 +15,6 @@ class UserContactForm(Form):
                             )
     message = forms.CharField(widget=forms.Textarea(
         attrs={'placeholder': 'Enter Your Message', 'rows': 3}), label='Message')    
+    
+    receive_copy = forms.BooleanField(required=False, label="Receive a copy of this enquiry")
 
