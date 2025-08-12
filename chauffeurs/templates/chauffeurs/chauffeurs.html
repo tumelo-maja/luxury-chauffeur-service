@@ -17,9 +17,9 @@
     <div class="chauffeur">
         <div class="chauffeur-head">
             <div class="chauffeur-image rounded-full">
-                <img src="{{ chauffuer.profile.avatar }}" alt="">
+                <img src="{{ chauffuer.profile.avatar }}" alt="{{ chauffuer.profile.user.first_name }} avatar">
             </div>
-            <p class="chauffeur-name details">{{ chauffuer.profile.user.username }}</p>
+            <p class="chauffeur-name details">{{ chauffuer.profile.user.first_name }}</p>
             <p class="chauffeur-rating details">
                 {% if chauffuer.average_rating == None %}
                 No rating
