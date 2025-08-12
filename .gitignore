@@ -2,5 +2,6 @@
 env.py
 __pycache__/
 *.py[cod]
-users/fixtures/
+*/fixtures/
+*.json
 db.sqlite3

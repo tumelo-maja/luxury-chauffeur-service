@@ -97,6 +97,7 @@ class DriverProfile(models.Model):
         max_length=50, choices=DRIVER_STATUS_OPTIONS, default="available")
     average_rating = models.FloatField(null=True, blank=True)
     count_rating = models.IntegerField(null=True, blank=True)
+    count_rating2 = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"Driver: {self.profile.user.username}"

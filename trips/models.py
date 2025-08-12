@@ -46,7 +46,7 @@ class Trip(models.Model):
         PassengerProfile, on_delete=models.CASCADE, related_name='trips_passenger')
     location_start = models.CharField(max_length=200)
     location_end = models.CharField(max_length=200)
-    travel_datetime = models.DateTimeField()
+    travel_datetime = models.DateTimeField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
