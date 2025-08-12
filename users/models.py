@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.templatetags.static import static
+from cloudinary.models import CloudinaryField
 
 TITLE_OPTIONS = [
     ('Mr', 'Mr'),
@@ -24,7 +25,8 @@ class Profile(models.Model):
     user_type = models.CharField(
         max_length=20, choices=USER_TYPE_CHOICES, default='passenger')
 
-    image = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    # image = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    image = CloudinaryField('image', default='placeholder')
     displayname = models.CharField(max_length=20, null=True, blank=True)
     title = models.CharField(
         max_length=20, choices=TITLE_OPTIONS, blank=True, null=True)
@@ -46,6 +48,8 @@ class Profile(models.Model):
     def avatar(self):
         try:
             avatar = self.image.url
+            if avatar is None:
+                raise TypeError
         except:
             avatar = static('images/avatar.png')
         return avatar

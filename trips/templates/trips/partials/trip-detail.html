@@ -32,7 +32,7 @@
             <p class="sub-head">Chauffeur</p>
             <div>
                 <div class="trip-image">
-                    <img src="{% static 'images/driver-a-8.jpg' %}" alt="member of staff">
+                    <img src="{{ trip.driver.profile.avatar }}" alt="member of staff">
                 </div>
                 <div class="driver">
                     <a href="{% url 'profile'  trip.driver.profile.user.username %}" class="profile-link">
@@ -47,7 +47,7 @@
             <p class="sub-head">Passenger</p>
             <div>
                 <div class="trip-image">
-                    <img src="{% static 'images/driver-a-8.jpg' %}" alt="member of staff">
+                    <img src="{{ trip.passenger.profile.avatar }}" alt="member of staff">
                 </div>
                 <div class="driver">
                     <a href="{% url 'profile'  trip.passenger.profile.user.username %}" class="profile-link">
