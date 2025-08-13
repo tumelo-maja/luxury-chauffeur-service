@@ -127,64 +127,36 @@ def signup_type(request):
 
     return render(request, 'account/signup-type.html')
 
-def driver_signup(request):
+def user_signup(request, role):
 
     if request.method == 'POST':
         form = MainSignupForm(request.POST)
         if form.is_valid():
 
-            request.session['role'] = request.POST.get('role')
-
             user = form.save(commit=False)
             user.save()
 
             profile = user.profile
-            profile.user_type = 'driver'
+            profile.user_type = role
             profile.save()
-            DriverProfile.objects.create(profile=profile)   
 
-            messages.success(request, "Driver's account created successfully.")
+            if role == 'driver':
+                DriverProfile.objects.create(profile=profile)   
+            else:
+                PassengerProfile.objects.create(profile=profile)          
+
+            messages.success(request, f"{role.capitalize()}'s account created successfully.")
             send_email_confirmation(request, user)
 
             return redirect('account-success')
     else:
+
         form = MainSignupForm()
-
-    context = {
-        'form': form,
-        'user_type': 'driver',
-    }
-    return render(request, 'account/signup-form.html',context )
-
-def passenger_signup(request):
-
-    if request.method == 'POST':
-        form = MainSignupForm(request.POST)
-        if form.is_valid():
-            role_type = request.POST.get('role')
-
-            print(f"role_typeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-            print(role_type)
-            print("role_type end")
-
-            user = form.save(commit=False)
-            user.save()
-
-            profile = user.profile
-            profile.user_type = 'passenger'
-            profile.save()
-            PassengerProfile.objects.create(profile=profile)          
-
-            messages.success(request, "Passenger's account created successfully.")
-            send_email_confirmation(request, user)
-
-            return redirect('account-success')
-    else:
-        form = MainSignupForm()
+        form.fields['role'].initial = role
     
     context = {
         'form': form,
-        'user_type': 'passenger',
+        'user_type': role,
     }
     return render(request, 'account/signup-form.html', context)
 

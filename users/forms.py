@@ -21,6 +21,7 @@ class MainSignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
+    role = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = User

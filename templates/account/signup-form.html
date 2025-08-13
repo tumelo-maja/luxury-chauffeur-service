@@ -5,7 +5,7 @@
 <div class="container mt-5">
     <h1 class="form-head">{{ user_type }} Registration</h1>
     {% include 'users/social_logins.html' %}
-    <form hx-post="{{ request.path }}?role={{ user_type }}">
+    <form hx-post="{{ request.path }}">
         {% csrf_token %}
         {{ form | crispy }}
 
