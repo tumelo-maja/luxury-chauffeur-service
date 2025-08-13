@@ -30,7 +30,9 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         if not email_address.verified:
             email_address.verified = True
             email_address.save()
-        
+
+        role = request.GET.get('role')
+        print("Weeeeeeeeeeee found it")
         return user
         
 
