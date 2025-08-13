@@ -132,10 +132,16 @@ def driver_signup(request):
     if request.method == 'POST':
         form = MainSignupForm(request.POST)
         if form.is_valid():
-            with transaction.atomic():
-                user = form.save(commit=False)
-                user.user_type = 'driver'
-                user.save()
+
+            request.session['role'] = request.POST.get('role')
+
+            user = form.save(commit=False)
+            user.save()
+
+            profile = user.profile
+            profile.user_type = 'driver'
+            profile.save()
+            DriverProfile.objects.create(profile=profile)   
 
             messages.success(request, "Driver's account created successfully.")
             send_email_confirmation(request, user)
@@ -153,12 +159,21 @@ def driver_signup(request):
 def passenger_signup(request):
 
     if request.method == 'POST':
-        form = MainSignupForm(request.POST, request.FILES)
+        form = MainSignupForm(request.POST)
         if form.is_valid():
+            role_type = request.POST.get('role')
+
+            print(f"role_typeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            print(role_type)
+            print("role_type end")
 
             user = form.save(commit=False)
-            user.user_type = 'passenger'
             user.save()
+
+            profile = user.profile
+            profile.user_type = 'passenger'
+            profile.save()
+            PassengerProfile.objects.create(profile=profile)          
 
             messages.success(request, "Passenger's account created successfully.")
             send_email_confirmation(request, user)

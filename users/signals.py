@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
 from django.contrib.auth.models import User
-from .models import Profile, DriverProfile, PassengerProfile
+from .models import Profile
 
 
 @receiver(post_save, sender=User)
@@ -12,18 +12,7 @@ def user_postsave(sender, instance, created, **kwargs):
 
     # add profile when user is created
     if created:
-
-        profile = Profile.objects.create(user=user)
-            
-        if user.user_type == 'driver':
-            profile.user_type = 'driver'
-            profile.save()
-            DriverProfile.objects.create(profile=profile)
-        elif user.user_type ==  'passenger':
-            profile.user_type = 'passenger'
-            profile.save()
-            PassengerProfile.objects.create(profile=profile)
-            
+        Profile.objects.create(user=user)     
     else:
         #update allauth emailaddresse if exist else create one
         try:
