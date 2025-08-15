@@ -16,7 +16,7 @@
             <p class="type-text">Experience the comfort and elegance of personalized chauffeur services, tailored for
                 your needs.
             </p>
-            <a href="{% url 'user_signup' 'passenger' %}" class="signup-btn">
+            <a href="{% url 'user_signup' %}?role=passenger" class="signup-btn">
                 Sign Up as Passenger
             </a>
         </div>
@@ -27,7 +27,7 @@
                 experience.
             </p>
 
-            <a href="{% url 'user_signup' 'driver' %}" class="signup-btn">
+            <a href="{% url 'user_signup' %}?role=driver" class="signup-btn">
                 Sign Up as Driver
             </a>
         </div>

@@ -42,6 +42,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1',
                  '.herokuapp.com',]
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000/",
+    "https://*.herokuapp.com"
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,6 +60,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_htmx',
@@ -82,6 +87,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'prompt': 'consent',
         }
     },
+    'github': {
+        'APP': {
+            'client_id': os.environ.get("OAUTH_GITHUB_CLIENT_ID"),
+            'secret': os.environ.get("OAUTH_GITHUB_SECRET"),
+        },
+        'AUTH_PARAMS': {
+            'prompt': 'consent',
+        }
+    },
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -98,6 +112,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
+    'users.middleware.StoreUserRoleMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [

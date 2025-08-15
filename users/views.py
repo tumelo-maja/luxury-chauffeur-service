@@ -127,7 +127,8 @@ def signup_type(request):
 
     return render(request, 'account/signup-type.html')
 
-def user_signup(request, role):
+def user_signup(request):
+    role = request.session.get('role')
 
     if request.method == 'POST':
         form = MainSignupForm(request.POST)
