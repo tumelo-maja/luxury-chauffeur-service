@@ -16,7 +16,7 @@
     If you have not created an account yet, then please
     <a href="{% url 'signup_type' %}" class="auth-link">sign up</a> first.
 </p>
-{% include 'users/social_logins.html' %}
+{% include 'users/social-logins.html' %}
 
 <form method="post" action="{{ login_url }}" class="box-form">
     {% csrf_token %}
