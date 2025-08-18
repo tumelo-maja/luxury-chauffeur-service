@@ -46,11 +46,6 @@ def profile_edit_view(request):
 
     Rendered fields are user-role specific ie. according the associated user_type Profile
 
-    Parameters
-    ----------
-    request : HttpRequest
-        The current HTTP request object.
-
     Returns
     -------
     Rendered profile edit page for the logged-in user.
@@ -117,10 +112,6 @@ def profile_settings_view(request):
     """
     Displays the profile settings page containing logged-in user's email address.
 
-    Parameters
-    ----------
-    request : HttpRequest
-
     Returns
     -------
     Rendered profile settings page for the logged-in user.
@@ -131,10 +122,6 @@ def profile_settings_view(request):
 def profile_settings_partial_view(request):
     """
     Swaps the email address display element with an editable, pre-filled email field from a partial template.
-
-    Parameters
-    ----------
-    request : HttpRequest
 
     Returns
     -------
@@ -186,6 +173,16 @@ def profile_emailverify(request):
 
 @login_required
 def profile_delete_view(request):
+    """
+    Displays a 'delete account' confirmation for the logged-in user and warns users about the next steps.
+
+    If confirmed, user is logged-out and the account is removed from the database.
+
+    Returns
+    -------
+    Rendered profile delete confirmation page.
+    Logs user out and redirects to home page after account deletion.
+    """    
     user =request.user
     if request.method == "POST":
         logout(request)
