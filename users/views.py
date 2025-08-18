@@ -8,11 +8,29 @@ from django.db import transaction
 from .forms import *
 from .models import *
 
-# Create your views here.
+"""
+User app views.
 
+This module contains views related to user profiles, settings, signup, and
+account management.
+"""
 
 @login_required
 def profile_view(request, username):
+    """
+    Display a user's profile page.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        The current HTTP request object.
+    username : str
+        The username of the profile to view.
+
+    Returns
+    -------
+    Rendered profile page for the user specified by `username`.
+    """    
     if username != request.user:
         profile = get_object_or_404(User, username=username).profile
     else:
