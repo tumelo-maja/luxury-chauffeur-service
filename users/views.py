@@ -114,11 +114,34 @@ def profile_edit_view(request):
 
 @login_required
 def profile_settings_view(request):
+    """
+    Displays the profile settings page containing logged-in user's email address.
+
+    Parameters
+    ----------
+    request : HttpRequest
+
+    Returns
+    -------
+    Rendered profile settings page for the logged-in user.
+    """    
     return render(request, 'users/profile-settings.html')
 
 @login_required
 def profile_settings_partial_view(request):
+    """
+    Swaps the email address display element with an editable, pre-filled email field from a partial template.
 
+    Parameters
+    ----------
+    request : HttpRequest
+
+    Returns
+    -------
+    Rendered partial form if an HTMX request is used.
+    Changes are saved if email address does not already exist for another user.
+
+    """   
     if request.htmx:
         form = ProfileSettingsForm(instance=request.user)
         return render(request, 'partials/settings-form.html', {'form':form})
@@ -136,7 +159,6 @@ def profile_settings_partial_view(request):
             
             form.save()
             messages.success(request, "Success! Changes saved.")
-            # Then signal.py updates emailaddresses and set verified to False
 
             #send verification email
             send_email_confirmation(request, request.user)
