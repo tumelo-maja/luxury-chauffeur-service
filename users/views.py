@@ -174,6 +174,13 @@ def profile_settings_partial_view(request):
 
 @login_required
 def profile_emailverify(request):
+    """
+    Manually trigger sending of an email verification message for the logged-in user.
+    
+    Returns
+    -------
+    Redirects user to the profile settings page.
+    """    
     send_email_confirmation(request, request.user)
     return redirect('profile-settings')
 
