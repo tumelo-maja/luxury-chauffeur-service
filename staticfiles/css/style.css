@@ -609,7 +609,7 @@ body {
 
 /* modal buttons */
 .button-style {
-    margin: 15px 0 5px;
+    margin: 15px 10px 5px;
     border-radius: 10px;
     width: max-content;
     padding: 10px 15px;
@@ -703,12 +703,12 @@ body {
     margin-left: 20px;
 }
 
-#delete-btn {
+/* #delete-btn {
     width: auto;
     height: 35px;
     padding: 5px 10px;
     background-color: rgb(205, 17, 17);
-}
+} */
 
 /* Chauffeur page */
 .chauffeurs-container {
@@ -1536,7 +1536,7 @@ body {
     padding: 5px;
     font-size: 1rem;
     border-radius: 10px;
-    background-color: red;
+    background-color: rgb(212, 4, 4);
     color: white;
     font-weight: bold;
     width: max-content;
