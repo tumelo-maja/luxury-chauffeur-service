@@ -18,7 +18,7 @@ account management.
 @login_required
 def profile_view(request, username):
     """
-    Display a user's profile page.
+    Display a user's profile page. Accessible to logged-in users only
 
     Parameters
     ----------
@@ -41,7 +41,22 @@ def profile_view(request, username):
 
 @login_required
 def profile_edit_view(request):
+    """
+    Display a user's profile page with editable fields. Logged-in users can only edit their own profiles.
 
+    Rendered fields are user-role specific ie. according the associated user_type Profile
+
+    Parameters
+    ----------
+    request : HttpRequest
+        The current HTTP request object.
+
+    Returns
+    -------
+    Rendered profile edit page for the logged-in user.
+    Form validation and feedback are displayed as needed.
+    User shown confirmation if profile update was successful. 
+    """    
     profile_user = request.user.profile
     profile_form = ProfileEditForm(instance=profile_user)
 
@@ -56,6 +71,10 @@ def profile_edit_view(request):
         role = ManagerProfile.objects.filter(profile=profile_user).first()
         form = ManagerEditForm
 
+    if request.path == reverse('profile-onboarding'):
+        is_new_user = True
+    else:
+        is_new_user = False
 
     if request.method == 'POST':
         profile_form = ProfileEditForm(
@@ -72,12 +91,18 @@ def profile_edit_view(request):
             profile_form.save()
             role_form.save()
             return redirect('profile', username=request.user)
+        else:
+            context ={
+                'profile_form': profile_form,
+                'role_form': role_form,
+                'is_new_user': is_new_user,
+                'user_type': profile_user.user_type
+                }
+            
+            return render(request, 'users/profile-edit.html', context)
+
 
     role_form = form(instance=role)
-    if request.path == reverse('profile-onboarding'):
-        is_new_user = True
-    else:
-        is_new_user = False
 
     context ={
         'profile_form': profile_form,
