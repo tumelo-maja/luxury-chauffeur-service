@@ -133,12 +133,10 @@ class DriverProfile(models.Model):
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='driver_profile')
     experience = models.IntegerField(default=2)
-
     status = models.CharField(
         max_length=50, choices=DRIVER_STATUS_OPTIONS, default="available")
     average_rating = models.FloatField(null=True, blank=True)
     count_rating = models.IntegerField(null=True, blank=True)
-    count_rating2 = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"Driver: {self.profile.user.username}"
@@ -181,15 +179,26 @@ class DriverProfile(models.Model):
         return rating_counts
 
 class ManagerProfile(models.Model):
+    """
+    Manager role-specific profile.
+    Related to `Profile` model by one-to-one relationship.
+
+    Stores experience and ratings received from user's completed trips.
+    """     
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='manager_profile')
 
     experience = models.IntegerField(null=True, blank=True)
-    
+   
     def __str__(self):
         return f"Manager: {self.profile.user.username}"
 
     def update_rating(self,trips):
+        """
+        Updates the passengers and drivers rating statistics.
+
+        `count_rating` and `average_rating` fields are calculated and saved with 'driver_'/'passenger_' prefix
+        """         
         if trips.exists():
             passenger_rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
             self.passenger_count_rating = len(passenger_rating_items)
@@ -202,12 +211,20 @@ class ManagerProfile(models.Model):
             self.save()
 
     def get_rating_levels(self,trips):
-        
-        rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
-        for trip in trips:
-            rating = trip.passenger_rating
+        """
+        Get all passenger's ratings by levels from all completed and rated trip.
+        only passenger rating is used to reflect overall performance of the service.
 
-            if f'star_{rating}' in rating_counts:
-                rating_counts[f'star_{rating}'] += 1
+        Returns
+        -------
+        dict object with counts for each star rating (1-5).
+        """         
+        if trips.exists():
+            rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
+            for trip in trips:
+                rating = trip.passenger_rating
 
-        return rating_counts
+                if f'star_{rating}' in rating_counts:
+                    rating_counts[f'star_{rating}'] += 1
+
+            return rating_counts
