@@ -1,19 +1,19 @@
-from allauth.account.utils import send_email_confirmation
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.contrib.auth import logout, login
-from django.urls import reverse
-from django.db import transaction
-from .forms import *
-from .models import *
-
 """
 User app views.
 
 This module contains views related to user profiles, settings, signup, and
 account management.
+
 """
+from allauth.account.utils import send_email_confirmation
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth import logout
+from django.urls import reverse
+from .forms import *
+from .models import *
+
 
 @login_required
 def profile_view(request, username):

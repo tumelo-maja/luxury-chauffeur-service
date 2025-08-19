@@ -1,13 +1,13 @@
+"""
+User app models.
+
+Handles data models definitions related to user accounts and profiles.
+
+"""
 from django.db import models
 from django.contrib.auth.models import User
 from django.templatetags.static import static
 from cloudinary.models import CloudinaryField
-
-"""
-User app models.
-
-This module contains data models definitions related to user accounts and profiles.
-"""
 
 
 class Profile(models.Model):
