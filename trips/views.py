@@ -172,7 +172,18 @@ def trip_detail_view(request, trip_name):
 
 @login_required
 def trip_request_view(request):
+    """
+    Displays a modal containing a trip request view.
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+
+    Returns
+    -------
+    Rendered trip request form in a modal or 204 response if successfully submitted.
+    """
     if request.method == "POST":
         form = TripRequestForm(request.POST)
         if form.is_valid():
