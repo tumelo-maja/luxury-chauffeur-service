@@ -193,10 +193,30 @@ def profile_delete_view(request):
     return render(request, 'users/profile-delete.html')
 
 def signup_type(request):
+    """
+    Displays the user-role selection signup page.
 
+    Allows user to signup as a Chauffeur or as Passenger
+
+    Returns
+    -------
+    Rendered signup type page.
+    """
     return render(request, 'account/signup-type.html')
 
 def user_signup(request):
+    """
+    Handles role Profile creation based on selected sign up role.
+
+    Creates a new user and associates them with the chosen role
+    (driver or passenger) profile.
+    Sends email confirmation for verification after signup.
+
+    Returns
+    -------
+    Rendered signup form page.
+    Redirects user to account success page on valid signup.
+    """    
     role = request.session.get('role')
 
     if request.method == 'POST':
@@ -232,4 +252,12 @@ def user_signup(request):
 
 
 def account_success(request):
+    """
+    Displays the account creation success page.
+    Message to confirm account is shown to user
+
+    Returns
+    -------
+    Rendered account success page.
+    """    
     return render(request, 'users/account-created.html')
