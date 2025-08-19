@@ -3,7 +3,21 @@ from django.contrib.auth.models import User
 from django.templatetags.static import static
 from cloudinary.models import CloudinaryField
 
-TITLE_OPTIONS = [
+"""
+User app models.
+
+This module contains data models definitions related to user accounts and profiles.
+"""
+
+
+class Profile(models.Model):
+    """
+    Extends the Django User model.
+
+    Stores generic user details used across different role specific profiles.
+    """
+
+    TITLE_OPTIONS = [
     ('Mr', 'Mr'),
     ('Mrs', 'Mrs'),
     ('Ms', 'Ms'),
@@ -11,15 +25,12 @@ TITLE_OPTIONS = [
     ('Prof', 'Prof'),
     ('Lord', 'Lord'),
     ('Sir', 'Sir'),
-]
-USER_TYPE_CHOICES = [
-    ('driver', 'Driver'),
-    ('passenger', 'Passenger'),
-    ('manager', 'Manager'),
-]
-
-
-class Profile(models.Model):
+    ]
+    USER_TYPE_CHOICES = [
+        ('driver', 'Driver'),
+        ('passenger', 'Passenger'),
+        ('manager', 'Manager'),
+    ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(
