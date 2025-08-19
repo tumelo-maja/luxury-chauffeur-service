@@ -490,13 +490,30 @@ def rate_trip_view(request, trip_name):
 
 @login_required
 def trips_calendar_view(request):
+    """
+    Render calendar view for trips.
+
+    Returns
+    -------
+    Rendered calendar template.
+    """    
     return render(request, 'trips/partials/dash-calendar.html')
 
 
 @login_required
 def trips_calendar_subsets_view(request):
+    """
+    Displays monthly trips in a calendar view.
+    Filter user trips (role-specific) for the requested month.
+    The request is used by JavaScript when creating a calendar object
 
-    # get today date
+    Returns
+    -------
+    JsonResponse
+        List of trips accessible to the logged-in user in JSON format.
+    """
+
+    # today's date
     today = datetime.today()
 
     current_year = today.year
