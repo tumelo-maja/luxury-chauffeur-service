@@ -184,7 +184,7 @@ def trip_request_view(request):
 
     Returns
     -------
-    Rendered trip request form in a modal or 204 response if successfully submitted.
+    Rendered trip request form in a modal or 204 HttpResponse if successfully submitted.
     """
     if request.method == "POST":
         form = TripRequestForm(request.POST)
@@ -280,7 +280,7 @@ def trip_edit_view(request, trip_name):
 
     Returns
     -------
-    Rendered pre-filled trip edit form in a modal or 204 response if successfully submitted.
+    Rendered pre-filled trip edit form in a modal or 204 HttpResponse if successfully submitted.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
@@ -324,7 +324,7 @@ def trip_delete_view(request, trip_name):
 
     Returns
     -------
-    Rendered trip cancel confirmation form in a modal or 204 response if successfully submitted.
+    Rendered trip cancel confirmation form in a modal or 204 HttpResponse if successfully submitted.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
@@ -347,7 +347,25 @@ def trip_delete_view(request, trip_name):
 
 @login_required
 def trip_review_view(request, trip_name):
+    """
+    Displays a review confirmation modal for manager
+    Handles passenger review of a completed trip.
+    Manager user can allocated different 'driver' to the trip if needed.
+    Warning texts are displayed to cause Manager about driver and passenger's other trips within 6-hour window
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    trip_name : str
+        Unique identifier of the trip.
+
+    Returns
+    -------
+    Rendered review form in a modal.
+    204 HttpResponse if form submitted successfully.
+    Trip status is changed accordingly
+    """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
     if request.method == "POST":
@@ -367,7 +385,7 @@ def trip_review_view(request, trip_name):
     else:
         form = TripRequestForm(instance=trip)
 
-    # only driver fieldcan be changed
+    # disable other fields except driver field
     for field_name, field in form.fields.items():
         if field_name != 'driver':
             field.widget.attrs['readonly'] = True
