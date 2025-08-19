@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from datetime import datetime, timedelta, date
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
+from django.http import Http404
 from .models import Trip
 from users.models import PassengerProfile, DriverProfile
 from .forms import *
@@ -358,7 +359,7 @@ def trip_review_view(request, trip_name):
     request : HttpRequest
         The HTTP request object.
     trip_name : str
-        Unique identifier of the trip.
+        Unique identifier of the trip to be reviewed.
 
     Returns
     -------
@@ -434,7 +435,21 @@ def trip_review_view(request, trip_name):
 
 @login_required
 def rate_trip_view(request, trip_name):
+    """
+    Handles trip rating by either passenger or driver users.
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    trip_name : str
+        Unique identifier of the trip to be reviewed.
+
+    Returns
+    -------
+    204 HttpResponse if form submitted successfully.
+    Else Http404 error is raised.
+    """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
     # Handle form submission
@@ -444,13 +459,11 @@ def rate_trip_view(request, trip_name):
         elif request.user.profile.user_type == "driver":
             form = DriverRatingForm(request.POST, instance=trip)
         else:
-            print("Error - page not found")  # change to 404 error page
+            raise Http404()
 
         if form.is_valid():
-            # mioght revise if any fields is missing
             form.save()
 
-            # trigger new event - ratingsUpdated
             return HttpResponse(status=204)
 
     if request.user.profile.user_type == "passenger":
@@ -462,7 +475,7 @@ def rate_trip_view(request, trip_name):
         rating_user = trip.driver.profile.user
         rated_user = trip.passenger.profile.user
     else:
-        print("Error - page not found")  # change to 404 error page
+        raise Http404()
 
     context = {
         'form': form,
@@ -473,8 +486,6 @@ def rate_trip_view(request, trip_name):
     }
 
     return render(request, 'trips/trip-ratings.html', context)
-
-# Drriver availability wrt trips:
 
 
 @login_required
@@ -560,7 +571,6 @@ def allocated_trips(request):
         return JsonResponse(trips_list, safe=False)
 
     else:
-        print("Error: You are not a driver! nor a Manager! Dont try trick us!!")
         return JsonResponse(trips_list, safe=False)
 
 
