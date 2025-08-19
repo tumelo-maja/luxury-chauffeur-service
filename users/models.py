@@ -183,13 +183,17 @@ class ManagerProfile(models.Model):
     Manager role-specific profile.
     Related to `Profile` model by one-to-one relationship.
 
-    Stores experience and ratings received from user's completed trips.
+    Stores experience and ratings received from passenger and drivers's completed and rated trips.
     """     
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='manager_profile')
 
     experience = models.IntegerField(null=True, blank=True)
-   
+    passenger_count_rating = models.IntegerField(null=True, blank=True)
+    passenger_average_rating = models.DecimalField(null=True, blank=True,max_digits=2,decimal_places=1)
+    driver_count_rating = models.IntegerField(null=True, blank=True)
+    driver_average_rating = models.DecimalField(null=True, blank=True,max_digits=2,decimal_places=1)
+    
     def __str__(self):
         return f"Manager: {self.profile.user.username}"
 
@@ -197,7 +201,7 @@ class ManagerProfile(models.Model):
         """
         Updates the passengers and drivers rating statistics.
 
-        `count_rating` and `average_rating` fields are calculated and saved with 'driver_'/'passenger_' prefix
+        Driver and passenger's `*_count_rating` and `*_average_rating` fields are calculated and saved
         """         
         if trips.exists():
             passenger_rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
