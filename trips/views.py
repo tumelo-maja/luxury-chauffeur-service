@@ -622,9 +622,24 @@ def manager_overview_view(request):
 
 @login_required
 def manager_tabs_view(request, tab_name):
+    """
+    Handles switching manager dashboard tabs for trips, passengers, or drivers.
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    tab_name : str
+        - "Trips": table of all trips.
+        - "Passengers": table of all passengers.
+        - "Drivers": table of all drivers.
+
+    Returns
+    -------
+    Rendered partial template for the requested tab:
+    """
     if tab_name == "trips":
-        trips = Trip.objects.all()
+        trips = Trip.objects.all()[:20]
         context = {
             'trips': trips,
         }
@@ -644,6 +659,10 @@ def manager_tabs_view(request, tab_name):
 
     elif tab_name == "drivers":
         drivers = DriverProfile.objects.all()
+        for driver in drivers:
+            driver.update_rating(
+                driver.trips_driver.filter(status='completed'))
+                    
         context = {
             'drivers': drivers,
         }
