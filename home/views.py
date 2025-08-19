@@ -9,10 +9,29 @@ from .forms import UserContactForm
 
 
 def home_view(request):
+    """
+    Displays the static homepage of the website.
+
+    Returns
+    -------
+    The rendered homepage - no database queries used.
+    """    
     return render(request, 'home/home.html')
 
 
 def contact_form_view(request):
+    """
+    Displays site visitor contact-us form.
+    handles website inquiry form submissions
+
+    Returns
+    -------
+    Renders the contact form page.
+    Renders a success message partial if form submitted successfully.
+    Re-renders the form with validation errors.
+    An email with inquiry details is sent to the site `admin`,
+    Visitors can request a copy of their submitted inquiry. 
+    """    
     if request.method == 'POST':
         form = UserContactForm(request.POST)
         if form.is_valid():
@@ -36,7 +55,6 @@ def contact_form_view(request):
             
             html_message = render_to_string('home/enquiry-email.html', context)
             text_message = strip_tags(html_message)
-
 
             # email for site admin
             send_mail(
