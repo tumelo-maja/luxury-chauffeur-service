@@ -1,3 +1,10 @@
+"""
+Custom adapters for the `users` app.
+
+Handles social account adapters for social logins
+and role-specific profile creations
+"""
+
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.models import EmailAddress
@@ -6,17 +13,35 @@ from .models import PassengerProfile, DriverProfile
 
 
 class CustomAccountAdapter(DefaultAccountAdapter):
+    """
+    Custom adapter for general account flow.
+    """    
     def get_signup_redirect_url(self, request):
+        """
+        Defines the redirect URL path after successful signup.
+
+        Returns
+        -------
+        str
+            URL for the `profile-onboarding` view.
+        """        
         return resolve_url("profile-onboarding")
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
+    """
+    Social Custom adapter for handling social account authentication.
+    """
+
     def pre_social_login(self, request, sociallogin):
+        """
+        Triggered before completing a social login.
+
+        Updates/creates the email address from the social provider and marked it as verified.
+        user with existing email address is linked to the social login 
+        """
+
         email = sociallogin.account.extra_data.get("email")
-
-        role = request.GET.get('role')
-        print("Weeeeeeeeeeee found it - SocialAccountAdapter")
-
         if not email:
             return
 
@@ -29,6 +54,14 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
                 email_address.save()
 
     def save_user(self, request, sociallogin, form=None):
+        """
+        Save a new user authenticated via social login.
+
+        Associates an email address, verifies it,
+        and creates a role-specific profile if one does not exist.
+        Uses the `role` query parameter stored in the session to determine user's role
+        """   
+
         user = super().save_user(request, sociallogin, form)
         email = user.email
         email_address, created = EmailAddress.objects.get_or_create(
@@ -37,12 +70,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             email_address.verified = True
             email_address.save()
 
-        # role = request.GET.get('role')
-        print("Weeeeeeeeeeee found it - save_user")
-        print(request)
-        # Profile.objects.create(user=user)
-        print("profile below")
-        print(user.profile)
         role = request.session.get('role')
         profile = user.profile
         profile.user_type = role
@@ -52,6 +79,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         elif role == 'passenger':
             PassengerProfile.objects.get_or_create( profile=profile)
 
-        request.session.pop('role', None)  #clear session
+        # Remove `role` from request.session
+        request.session.pop('role', None)
 
         return user
