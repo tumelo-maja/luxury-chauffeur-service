@@ -15,13 +15,25 @@ class TripRequestForm(ModelForm):
     driver assignment, vehicle selection, trip type, and optional comments. 
     Includes validation to prevent scheduling trips in the past or too soon.
 
-    Meta
-    ----
-    model : Trip
-    fields : list of strings
-        ['location_start', 'location_end', 'travel_datetime', 
-         'driver', 'vehicle', 'trip_type', 'comments']
+    Fields
+    ------
+    location_start : str
+        Pickup location for the trip.
+    location_end : str
+        Destination location for the trip.
+    travel_datetime : datetime
+        Date and time when the trip is scheduled to start.
+    driver : DriverProfile
+        Assigned driver for the trip.
+    vehicle : str
+        Selected vehicle for the trip.
+    trip_type : str
+        Type of trip.
+    comments : str, optional
+        Any additional instructions or notes for the trip.
     """
+
+
     class Meta:
         model = Trip
         fields = [
@@ -55,7 +67,6 @@ class TripRequestForm(ModelForm):
     def clean_travel_datetime(self):
         """
         Validate that the travel_datetime is not from the past or within 30 minutes from current time.
-        - does not clash with passenger's other trips 
 
         An error is raised if the condition is not met.
 
@@ -75,7 +86,16 @@ class TripRequestForm(ModelForm):
         return travel_datetime
 
 class PassengerRatingForm(forms.ModelForm):
+    """
+    Form for passengers to rate a completed trip.
 
+    Fields
+    ------
+    passenger_rating : int
+        Rating for the driver/trip experience (1-5 stars).
+    passenger_rating_comments : str, optional
+        Optional comments about the trip.
+    """
     passenger_rating = forms.ChoiceField(
         choices=RATING_LABELS,
         required=True,
@@ -97,7 +117,16 @@ class PassengerRatingForm(forms.ModelForm):
 
 
 class DriverRatingForm(forms.ModelForm):
+    """
+    Form for driver to rate a completed trip.
 
+    Fields
+    ------
+    driver_rating : int
+        Rating for the passenger (1-5 stars).
+    driver_rating_comments : str, optional
+        Optional comments about the trip.
+    """
     driver_rating = forms.ChoiceField(
         choices=RATING_LABELS,
         required=True,
