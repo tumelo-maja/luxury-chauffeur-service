@@ -174,7 +174,7 @@ def trip_detail_view(request, trip_name):
 @login_required
 def trip_request_view(request):
     """
-    Displays a modal containing a trip request view.
+    Displays a modal containing a trip request view. Handles trip creating trip requests
 
     Parameters
     ----------
@@ -268,8 +268,6 @@ def check_trip_overlap(passenger, form):
 def trip_edit_view(request, trip_name):
 
     trip = get_object_or_404(Trip, trip_name=trip_name)
-    # chek if trip allows edits
-    check_action_allowed(trip)
 
     if request.method == "POST":
         form = TripRequestForm(request.POST, instance=trip)
@@ -300,9 +298,6 @@ def trip_edit_view(request, trip_name):
 def trip_delete_view(request, trip_name):
 
     trip = get_object_or_404(Trip, trip_name=trip_name)
-
-    # chek if trip allows delete
-    check_action_allowed(trip)
 
     if request.method == "POST":
         form = TripRequestForm(instance=trip)
@@ -388,15 +383,6 @@ def trip_review_view(request, trip_name):
     }
 
     return render(request, 'trips/trip-review.html', context)
-
-
-def check_action_allowed(trip):
-
-    if trip.status in ['completed', 'canceled']:
-        # chek if trip allows edits
-        return HttpResponseForbidden("You cannot edit or cancel a trip that is completed or canceled.")
-
-# DriverRatingForm PassengerRatingForm
 
 
 @login_required
