@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from datetime import datetime, timedelta, date
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from .models import Trip
 from users.models import PassengerProfile, DriverProfile
 from .forms import *
@@ -186,6 +187,8 @@ def trip_request_view(request):
     """
     if request.method == "POST":
         form = TripRequestForm(request.POST)
+        form = check_trip_overlap(request.user.profile.passenger_profile, form)
+
         if form.is_valid():
 
             trip = form.save(commit=False)
@@ -193,6 +196,12 @@ def trip_request_view(request):
             trip.save()
 
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+
+        else:
+            context = {
+                'form': form,
+            }
+            return render(request, 'trips/trip-request.html', context)            
 
     else:
         form = TripRequestForm()
@@ -224,6 +233,36 @@ def trip_request_view(request):
     }
     return render(request, 'trips/trip-request.html', context)
 
+def check_trip_overlap(passenger, form):
+    """
+    Validate the passenger has another trip scheduled within one hour of the current request.
+    1-hour window is defined locally, a window is created -1hr and +1hr of `travel_datetime`
+
+    Parameters
+    ----------
+    passenger : int or UUID
+        The primary key (ID) of the passenger making the trip request.
+    form : TripRequestForm
+        The submitted form instance containing the `travel_datetime` field.
+
+    Returns
+    -------
+    forms
+        The same form instance, with an error added to `travel_datetime` if a conflicting trip exists.
+    """  
+    raw_datetime = form.data.get("travel_datetime")
+    travel_datetime = timezone.make_aware(parse_datetime(raw_datetime))
+
+    timedelta_window = timedelta(minutes=60)
+    window_start = travel_datetime - timedelta_window
+    window_end = travel_datetime + timedelta_window
+
+    trips_in_window = Trip.objects.filter(passenger_id= passenger,travel_datetime__range=(window_start, window_end)).exists()
+
+    if trips_in_window:
+        form.add_error("travel_datetime","You already have another trip scheduled within 1 hour of this time.")
+
+    return form   
 
 @login_required
 def trip_edit_view(request, trip_name):
