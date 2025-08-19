@@ -35,8 +35,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(
         max_length=20, choices=USER_TYPE_CHOICES, default='passenger')
-
-    # image = models.ImageField(upload_to='avatars/', null=True, blank=True)
     image = CloudinaryField('image', default='placeholder')
     displayname = models.CharField(max_length=20, null=True, blank=True)
     title = models.CharField(
@@ -49,6 +47,9 @@ class Profile(models.Model):
 
     @property
     def name(self):
+        """
+        Set Display name if specified by user else the username is returned.
+        """        
         if self.displayname:
             name = self.displayname
         else:
@@ -57,6 +58,9 @@ class Profile(models.Model):
 
     @property
     def avatar(self):
+        """
+        Set user avatar to the cloudinary url if user added an image else the default user avatar in static folder is used .
+        """           
         try:
             avatar = self.image.url
             if avatar is None:
