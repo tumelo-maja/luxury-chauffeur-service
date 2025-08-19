@@ -18,7 +18,7 @@
                 <option value="calendaview" class="dash-item" id="calendarViewOption" hx-get="{% url 'trips-calendar' %}" 
                         hx-target="#display-container" hx-trigger="click"> Trips - Calendar</option>
                 {% if user.profile.user_type == 'manager' %}
-                <option value="manager" class="dash-item" id="managerViewOption" hx-get="{% url 'manager-all' %}"
+                <option value="manager" class="dash-item" id="managerViewOption" hx-get="{% url 'manager-overview' %}"
                         hx-target="#display-container" hx-trigger="click">Manager</option>
                 {% endif %}
             </select>
@@ -45,7 +45,7 @@
                     </li>
                     {% if user.profile.user_type == 'manager' %}
                     <li>
-                        <button type="button" class="dash-item" id="managerViewButton" hx-get="{% url 'manager-all' %}"
+                        <button type="button" class="dash-item" id="managerViewButton" hx-get="{% url 'manager-overview' %}"
                             hx-target="#display-container" hx-trigger="click"><i class="fa-solid fa-user-tie"></i><span>Manager</span></button>
                     </li>
                     {% endif %}

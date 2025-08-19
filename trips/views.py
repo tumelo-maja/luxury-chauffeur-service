@@ -557,57 +557,6 @@ def trips_calendar_subsets_view(request):
 
     return JsonResponse({'trips': monthly_trips})
 
-
-@login_required
-def allocated_trips(request):
-
-    trips_list = []
-    if request.user.profile.user_type == "driver":
-        trips = Trip.objects.filter(
-            driver=request.user.profile.driver_profile,
-        )
-
-        for trip in trips:
-
-            trip_type = ''.join([word[0] for word in trip.trip_type.split()])
-            trip_time = trip.travel_datetime.strftime("%H:%M")
-
-            trips_list.append({
-                'id': trip.trip_name,
-                'start': trip.travel_datetime.isoformat(),
-                'title': f'<span class="time">{trip_time}</span><span class="title">{trip_type}</span>',
-                'className': f'status-{trip.status_class} clickable',
-
-            })
-
-        return JsonResponse(trips_list, safe=False)
-
-    elif request.user.profile.user_type == "manager":
-        trips = Trip.objects.all()
-
-        daily_trips_count = {}
-        for trip in trips:
-            date = trip.travel_datetime.date()
-            status = trip.status
-
-            # intialise date key if it doesnt exit yet
-            if date not in daily_trips_count:
-                daily_trips_count[date] = 0
-            daily_trips_count[date] += 1
-
-        for date, trip_counts in daily_trips_count.items():
-            trips_list.append({
-                'start': date.isoformat(),
-                'title': f"{trip_counts} x {'trip' if trip_counts == 1 else 'trips'}",
-                'className': f"{status} clickable",
-            })
-
-        return JsonResponse(trips_list, safe=False)
-
-    else:
-        return JsonResponse(trips_list, safe=False)
-
-
 @login_required
 def driver_action_view(request, trip_name):
     """
@@ -659,8 +608,16 @@ def driver_action_view(request, trip_name):
 
 
 @login_required
-def manager_all_view(request):
-    return render(request, 'trips/manager-all.html')
+def manager_overview_view(request):
+    """
+    Display a table with 3 tabs 'Trips', 'Passengers' and 'Drivers'
+    Handles manager access to all trips, passenger and drivers.
+
+    Returns
+    -------
+    Rendered manager overview template with trips tab as a default view.
+    """    
+    return render(request, 'trips/manager-overview.html')
 
 
 @login_required
