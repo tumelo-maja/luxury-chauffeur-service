@@ -174,7 +174,8 @@ def trip_detail_view(request, trip_name):
 @login_required
 def trip_request_view(request):
     """
-    Displays a modal containing a trip request view. Handles trip creating trip requests
+    Displays a modal containing a trip request view. 
+    Handles trip creating trip requests
 
     Parameters
     ----------
@@ -266,7 +267,21 @@ def check_trip_overlap(passenger, form):
 
 @login_required
 def trip_edit_view(request, trip_name):
+    """
+    Displays a modal containing a trip edit view. 
+    Handles trip editing trip existing requests
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    trip_name : str
+        Unique identifier of the trip to be modified.
+
+    Returns
+    -------
+    Rendered pre-filled trip edit form in a modal or 204 response if successfully submitted.
+    """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
     if request.method == "POST":
@@ -296,7 +311,21 @@ def trip_edit_view(request, trip_name):
 
 @login_required
 def trip_delete_view(request, trip_name):
+    """
+    Displays a confirmation modal for canceling an existing trip. 
+    Handles trip editing trip existing requests
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    trip_name : str
+        Unique identifier of the trip to be cancelled.
+
+    Returns
+    -------
+    Rendered trip cancel confirmation form in a modal or 204 response if successfully submitted.
+    """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
     if request.method == "POST":
