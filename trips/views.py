@@ -134,7 +134,20 @@ def trips_list_view(request, filter_trips='all'):
 
 @login_required
 def trip_detail_view(request, trip_name):
+    """
+    Displays a modal containing detailed information for a specific trip.
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    trip_name : str
+        Unique identifier of the trip.
+
+    Returns
+    -------
+    Rendered trip details modal.
+    """
     queryset = Trip.objects.filter(trip_name=trip_name)
     trip = get_object_or_404(queryset)
 
@@ -145,8 +158,7 @@ def trip_detail_view(request, trip_name):
     elif request.user.profile.user_type == "driver":
         user_trip_rating = trip.driver_rating
     elif request.user.profile.user_type == "manager":
-        user_trip_rating = 100
-        trips = Trip.objects.all().order_by('-updated_on')[:4]
+        user_trip_rating = None
 
     context = {
         'trip': trip,
