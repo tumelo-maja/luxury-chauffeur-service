@@ -3,10 +3,10 @@
     {% include 'users/partials/user-availability.html' %}
 </div>
 {% endif %}
-<section class="dash-stats" hx-get="{% url 'trips-dashboard-stats' %}" hx-trigger="load, tripListChanged from:body">
+<section class="dash-stats" >
     {% include 'trips/partials/dash-trips-summary.html' %}
 </section>
-<section class="dash-ratings" hx-get="{% url 'trips-ratings' %}" hx-trigger="load, tripListChanged from:body">
+<section class="dash-ratings" >
     {% include 'trips/partials/dash-ratings.html' %}
 </section>
 <div class="dash-details">

@@ -17,55 +17,40 @@ def trips_dashboard_view(request):
 
 @login_required
 def dash_details_view(request, partial):
-    return render(request, f'trips/partials/dash-{partial}.html')
 
+    context={}
 
-@login_required
-def trips_dashboard_stats_view(request):
+    if partial == 'home':
+        status_completed='completed'
+        if request.user.profile.user_type == "passenger":
+            user_profile = request.user.profile.passenger_profile
+            trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
+            trips_completed = trips.filter(status=status_completed)
+            
+        elif request.user.profile.user_type == "driver":
+            user_profile = request.user.profile.driver_profile
+            trips = Trip.objects.filter(driver=request.user.profile.driver_profile)
+            trips_completed = trips.filter(status=status_completed)
 
-    if request.user.profile.user_type == "passenger":
-        trips = Trip.objects.filter(
-            passenger=request.user.profile.passenger_profile,
-        )
-    elif request.user.profile.user_type == "driver":
-        trips = Trip.objects.filter(
-            driver=request.user.profile.driver_profile,
-        )
-    elif request.user.profile.user_type == "manager":
-        trips = Trip.objects.all()
+        elif request.user.profile.user_type == "manager":
+            user_profile = request.user.profile.manager_profile
+            trips = Trip.objects.all()
+            trips_completed = trips.filter(status=status_completed)
 
-    context = {
-        'stats': {
-            'cancelled': trips.filter(status='cancelled').count(),
-            'completed': trips.filter(status='completed').count(),
-            'pending': trips.filter(status='pending').count(),
-            'modified': trips.filter(status='modified').count(),
-        },
-    }
+        user_profile.update_rating(trips_completed)
 
-    return render(request, 'trips/partials/dash-trips-summary.html', context)
-
-
-@login_required
-def trips_dashboard_ratings_view(request):
-
-    if request.user.profile.user_type == "passenger":
-        user_profile = request.user.profile.passenger_profile
-        trips = user_profile.trips_passenger.filter(status='completed')
-    elif request.user.profile.user_type == "driver":
-        user_profile = request.user.profile.driver_profile
-        trips = user_profile.trips_driver.filter(status='completed')
-    elif request.user.profile.user_type == "manager":
-        user_profile = request.user.profile.manager_profile
-        trips = Trip.objects.all()
-
-    user_profile.update_rating(trips)
-
-    context = {
-        'user_profile': user_profile,
-        'rating_levels': user_profile.get_rating_levels(trips)
-    }
-    return render(request, 'trips/partials/dash-ratings.html', context)
+        context = {
+            'user_profile': user_profile,
+            'rating_levels': user_profile.get_rating_levels(trips_completed),
+            'stats': {
+                'cancelled': trips.filter(status='cancelled').count(),
+                'completed': trips_completed.count(),
+                'pending': trips.filter(status='pending').count(),
+                'modified': trips.filter(status='modified').count(),
+            },            
+        }
+        
+    return render(request, f'trips/partials/dash-{partial}.html',context)
 
 
 @login_required
