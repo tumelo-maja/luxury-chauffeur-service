@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import *
 
-RATING_LABELS = [('', '<-Select a rating->')]+RATING_OPTIONS
+RATING_LABELS = [('', '<-Select a rating->')]+Trip.RATING_OPTIONS
 
 
 class TripRequestForm(ModelForm):
