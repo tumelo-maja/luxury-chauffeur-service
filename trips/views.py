@@ -259,7 +259,11 @@ def check_trip_overlap(passenger, form):
     window_start = travel_datetime - timedelta_window
     window_end = travel_datetime + timedelta_window
 
-    trips_in_window = Trip.objects.filter(passenger_id= passenger,travel_datetime__range=(window_start, window_end)).exists()
+    trips_in_window = Trip.objects.filter(
+        passenger_id= passenger,
+        travel_datetime__gte=window_start,
+        travel_datetime__lt=window_end
+        ).exists()
 
     if trips_in_window:
         form.add_error("travel_datetime","You already have another trip scheduled within 1 hour of this time.")
@@ -529,10 +533,23 @@ def trips_calendar_subsets_view(request):
         end_datetime = timezone.make_aware(
             datetime(year, month + 1, 1, 0, 0, 0))
 
-    trips = Trip.objects.filter(
-        travel_datetime__gte=start_datetime,
-        travel_datetime__lt=end_datetime
-    )
+    if request.user.profile.user_type == "passenger":
+        trips = Trip.objects.filter(
+            passenger=request.user.profile.passenger_profile,
+            travel_datetime__gte=start_datetime,
+            travel_datetime__lt=end_datetime)
+        
+    elif request.user.profile.user_type == "driver":
+        trips = Trip.objects.filter(
+            driver=request.user.profile.driver_profile,
+            travel_datetime__gte=start_datetime,
+            travel_datetime__lt=end_datetime)
+
+    elif request.user.profile.user_type == "manager":
+        trips = Trip.objects.filter(
+            travel_datetime__gte=start_datetime,
+            travel_datetime__lt=end_datetime
+        ) 
 
     monthly_trips = [{'travel_datetime': trip.travel_datetime.date().isoformat(),
                       'travel_date': trip.travel_datetime.strftime("%d/%m/%Y"), }

@@ -13,15 +13,10 @@
 
                 <option value="summary" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
                         hx-target="#display-container" hx-trigger="load, click" id="summaryViewOption">Summary</option>
-
                 <option value="listview" class="dash-item" id="listViewOption" hx-get="{% url 'dash-details' 'trips' %}" 
                         hx-target="#display-container" hx-trigger="click">Trips - List</option>
-
-                {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                 <option value="calendaview" class="dash-item" id="calendarViewOption" hx-get="{% url 'trips-calendar' %}" 
                         hx-target="#display-container" hx-trigger="click"> Trips - Calendar</option>
-                
-                {% endif %}
                 {% if user.profile.user_type == 'manager' %}
                 <option value="manager" class="dash-item" id="managerViewOption" hx-get="{% url 'manager-all' %}"
                         hx-target="#display-container" hx-trigger="click">Manager</option>
@@ -42,14 +37,12 @@
                             hx-get="{% url 'dash-details' 'trips' %}" hx-target="#display-container"
                             hx-trigger="click"><i class="fa-solid fa-list"></i><span>List</span></button>
                     </li>
-                    {% if user.profile.user_type == 'driver' or user.profile.user_type == 'manager' %}
                     <li>
                         <button type="button" class="dash-item" id="calendarViewButton"
                             hx-get="{% url 'trips-calendar' %}" hx-target="#display-container" hx-trigger="click">
                             <i class="fa-solid fa-calendar-days"></i><span>Calendar</span>
                         </button>
                     </li>
-                    {% endif %}
                     {% if user.profile.user_type == 'manager' %}
                     <li>
                         <button type="button" class="dash-item" id="managerViewButton" hx-get="{% url 'manager-all' %}"
