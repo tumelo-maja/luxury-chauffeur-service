@@ -90,7 +90,7 @@ class PassengerProfile(models.Model):
 
     def update_rating(self,trips):
         """
-        Update passenger rating statistics.
+        Update passenger's rating statistics.
 
         `count_rating` and `average_rating` fields are calculated and saved
         """        
@@ -102,11 +102,11 @@ class PassengerProfile(models.Model):
 
     def get_rating_levels(self,trips):
         """
-        Get passenger ratings by levels (1-star, 2-star... etc.).
+        Get passenger's ratings by levels (1-star, 2-star... etc.).
 
         Returns
         -------
-        dict object with counts for each star rating (1–5).
+        dict object with counts for each star rating (1-5).
         """         
         rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
         for trip in trips:
@@ -119,7 +119,12 @@ class PassengerProfile(models.Model):
 
 
 class DriverProfile(models.Model):
+    """
+    Driver role-specific profile.
+    Related to `Profile` model by one-to-one relationship.
 
+    Stores driver status, experience and ratings received from user's completed trips.
+    """ 
     DRIVER_STATUS_OPTIONS = [
         ('available', 'Available'),
         ('engaged', 'Engaged'),
@@ -139,11 +144,19 @@ class DriverProfile(models.Model):
         return f"Driver: {self.profile.user.username}"
     
     def update_status(self, status):
+        """
+        Updates the status field with value specified by `status` argument  then saves.
+        """         
         self.status = status
         self.save()
     
     
     def update_rating(self,trips):
+        """
+        Update driver's rating statistics.
+
+        `count_rating` and `average_rating` fields are calculated and saved
+        """           
         if trips.exists():
             rating_items = [trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
             self.count_rating = len(rating_items)
@@ -151,7 +164,13 @@ class DriverProfile(models.Model):
             self.save()
 
     def get_rating_levels(self,trips):
-        
+        """
+        Get driver's ratings by levels (1-star, 2-star... etc.).
+
+        Returns
+        -------
+        dict object with counts for each star rating (1-5).
+        """         
         rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
         for trip in trips:
             rating = trip.passenger_rating
