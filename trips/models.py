@@ -26,7 +26,7 @@ class Trip(models.Model):
         ("Private & VIP Chauffeur", "Private & VIP Chauffeur"),
     ]
 
-    STATUS_OPTIONS = [
+    STATUS_CHOICES = [
         ("pending", "Pending"),
         ("confirmed", "Confirmed"),
         ("in_progress", "In progress"),
@@ -36,7 +36,7 @@ class Trip(models.Model):
         ("rejected", "Rejected"),
     ]
 
-    RATING_OPTIONS = [
+    RATING_CHOICES = [
         (1, "1 Star"),
         (2, "2 Stars"),
         (3, "3 Stars"),
@@ -59,11 +59,11 @@ class Trip(models.Model):
     driver = models.ForeignKey(
         DriverProfile, on_delete=models.CASCADE, related_name='trips_driver')
     status = models.CharField(
-        max_length=50, choices=STATUS_OPTIONS, default="pending")
+        max_length=50, choices=STATUS_CHOICES, default="pending")
     vehicle = models.CharField(max_length=100, choices=VEHICLE_CHOICES)
 
-    passenger_rating = models.IntegerField(choices=RATING_OPTIONS, null=True, blank=True)
-    driver_rating = models.IntegerField(choices=RATING_OPTIONS, null=True, blank=True)
+    passenger_rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True)
+    driver_rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True)
     passenger_rating_comments = models.TextField(blank=True, null=True)
     driver_rating_comments = models.TextField(blank=True, null=True)
 
