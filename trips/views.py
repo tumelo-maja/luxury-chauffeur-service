@@ -11,13 +11,33 @@ from .forms import *
 
 @login_required
 def trips_dashboard_view(request):
+    """
+    Display the main dashboard page.
 
+    Returns
+    -------
+    Rendered dashboard page (default - home display).
+    """
     return render(request, 'trips/trips-dashboard.html')
 
 
 @login_required
 def dash_details_view(request, partial):
+    """
+    Switches dashboard view using partials for a given section.
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    partial : str
+        The dashboard section to render; passed as query parameter in the template
+
+    Returns
+    -------
+    Rendered dashboard partial template.
+    For the 'home' partial, context is rendered for the summary display
+    """
     context={}
 
     if partial == 'home':
@@ -185,7 +205,7 @@ def trip_edit_view(request, trip_name):
             trip.passenger = request.user.profile.passenger_profile
             trip.save()
 
-            # messages.success(request, "Changes saved successfully.")
+            messages.success(request, "Changes saved successfully.")
 
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
