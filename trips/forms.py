@@ -8,7 +8,20 @@ RATING_LABELS = [('', '<-Select a rating->')]+Trip.RATING_CHOICES
 
 
 class TripRequestForm(ModelForm):
+    """
+    Form for passengers to make a trip request.
 
+    Provides fields for pickup and destination locations, travel date/time, 
+    driver assignment, vehicle selection, trip type, and optional comments. 
+    Includes validation to prevent scheduling trips in the past or too soon.
+
+    Meta
+    ----
+    model : Trip
+    fields : list of strings
+        ['location_start', 'location_end', 'travel_datetime', 
+         'driver', 'vehicle', 'trip_type', 'comments']
+    """
     class Meta:
         model = Trip
         fields = [
