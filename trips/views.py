@@ -22,6 +22,8 @@ def dash_details_view(request, partial):
 
     if partial == 'home':
         status_completed='completed'
+        user_status = request.user.profile.status
+
         if request.user.profile.user_type == "passenger":
             user_profile = request.user.profile.passenger_profile
             trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
@@ -42,6 +44,7 @@ def dash_details_view(request, partial):
         context = {
             'user_profile': user_profile,
             'rating_levels': user_profile.get_rating_levels(trips_completed),
+            'user_status': user_status,
             'stats': {
                 'cancelled': trips.filter(status='cancelled').count(),
                 'completed': trips_completed.count(),
@@ -443,8 +446,10 @@ def driver_action_view(request, trip_name):
         if request.method == "POST":
             if trip.status == 'confirmed':
                 trip.start_trip()
+                request.user.profile.update_status('engaged')
             elif trip.status == 'in_progress':
                 trip.end_trip()
+                request.user.profile.update_status('available')
             else:
                 return HttpResponseForbidden("Action not authorized for this trip.")
 

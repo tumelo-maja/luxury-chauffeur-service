@@ -7,6 +7,9 @@
     <img src="{{ profile.avatar }}" class="{{ profile.user_type }}">
     <div class="text-center">
         <h1>{{ profile.name }}</h1>
+        <div class="dash-availability">
+            {% include 'users/partials/user-availability.html' %}
+        </div>
         <p class="profile-field"><span class="item-title">username:</span>
             <span class="item-value">@{{ profile.user.username }}</span></p>
         {% if not profile.home_address == None %}

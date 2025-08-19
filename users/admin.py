@@ -5,13 +5,19 @@ from .models import Profile, DriverProfile, PassengerProfile, ManagerProfile
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'user_type', 'phone')
     list_filter = ('user_type',)
-admin.site.register(PassengerProfile)
+
+class PassengerAdmin(admin.ModelAdmin):
+    list_display = ('profile','status',)
+    search_fields = ('profile__user__username',)
+admin.site.register(PassengerProfile, PassengerAdmin)
 
 class DriverAdmin(admin.ModelAdmin):
-    list_display = ('profile', 'status')
-    list_filter = ('status',)
+    list_display = ('profile','status',)
     search_fields = ('profile__user__username',)
-
 admin.site.register(DriverProfile, DriverAdmin)
-admin.site.register(ManagerProfile)
+
+class ManagerAdmin(admin.ModelAdmin):
+    list_display = ('profile','status',)
+    search_fields = ('profile__user__username',)
+admin.site.register(ManagerProfile, ManagerAdmin)
 

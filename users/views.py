@@ -30,13 +30,19 @@ def profile_view(request, username):
     Returns
     -------
     Rendered profile page for the user specified by `username`.
-    """    
+    """
     if username != request.user:
         profile = get_object_or_404(User, username=username).profile
     else:
         profile = request.user.profile
-                
-    return render(request, 'users/profile.html', {'profile': profile})
+
+    user_status = profile.status
+    context = {
+        'profile': profile,
+        'user_status': user_status,
+    }
+
+    return render(request, 'users/profile.html', context)
 
 
 @login_required
@@ -51,11 +57,10 @@ def profile_edit_view(request):
     Rendered profile edit page for the logged-in user.
     Form validation and feedback are displayed as needed.
     User shown confirmation if profile update was successful. 
-    """    
+    """
     profile_user = request.user.profile
     profile_form = ProfileEditForm(instance=profile_user)
 
-    
     if profile_user.user_type == 'driver':
         role = DriverProfile.objects.filter(profile=profile_user).first()
         form = DriverEditForm
@@ -73,39 +78,39 @@ def profile_edit_view(request):
 
     if request.method == 'POST':
         profile_form = ProfileEditForm(
-            request.POST, 
-            request.FILES, 
+            request.POST,
+            request.FILES,
             instance=profile_user
         )
         role_form = form(
-            request.POST, 
+            request.POST,
             instance=role
         )
-        
+
         if profile_form.is_valid() and role_form.is_valid():
             profile_form.save()
             role_form.save()
             return redirect('profile', username=request.user)
         else:
-            context ={
+            context = {
                 'profile_form': profile_form,
                 'role_form': role_form,
                 'is_new_user': is_new_user,
                 'user_type': profile_user.user_type
-                }
-            
-            return render(request, 'users/profile-edit.html', context)
+            }
 
+            return render(request, 'users/profile-edit.html', context)
 
     role_form = form(instance=role)
 
-    context ={
+    context = {
         'profile_form': profile_form,
         'role_form': role_form,
         'is_new_user': is_new_user,
         'user_type': profile_user.user_type
     }
     return render(request, 'users/profile-edit.html', context)
+
 
 @login_required
 def profile_settings_view(request):
@@ -115,8 +120,9 @@ def profile_settings_view(request):
     Returns
     -------
     Rendered profile settings page for the logged-in user.
-    """    
+    """
     return render(request, 'users/profile-settings.html')
+
 
 @login_required
 def profile_settings_partial_view(request):
@@ -128,48 +134,49 @@ def profile_settings_partial_view(request):
     Rendered partial form if an HTMX request is used.
     Changes are saved if email address does not already exist for another user.
 
-    """   
+    """
     if request.htmx:
         form = ProfileSettingsForm(instance=request.user)
-        return render(request, 'partials/settings-form.html', {'form':form})
+        return render(request, 'partials/settings-form.html', {'form': form})
 
     if request.method == "POST":
         form = ProfileSettingsForm(request.POST, instance=request.user)
 
         if form.is_valid():
 
-            # Check if the email already exists 
-            email= form.cleaned_data['email']
+            # Check if the email already exists
+            email = form.cleaned_data['email']
             if User.objects.filter(email=email).exclude(id=request.user.id).exists():
                 messages.warning(request, f"{email} is already in use.")
                 return redirect('profile-settings')
-            
+
             form.save()
             messages.success(request, "Success! Changes saved.")
 
-            #send verification email
+            # send verification email
             send_email_confirmation(request, request.user)
 
             return redirect('profile-settings')
-        
+
         else:
             messages.warning(request, "Form not valid")
             return redirect('profile-settings')
-                
-    
+
     return redirect('home')
+
 
 @login_required
 def profile_emailverify(request):
     """
     Manually trigger sending of an email verification message for the logged-in user.
-    
+
     Returns
     -------
     Redirects user to the profile settings page.
-    """    
+    """
     send_email_confirmation(request, request.user)
     return redirect('profile-settings')
+
 
 @login_required
 def profile_delete_view(request):
@@ -182,15 +189,16 @@ def profile_delete_view(request):
     -------
     Rendered profile delete confirmation page.
     Logs user out and redirects to home page after account deletion.
-    """    
-    user =request.user
+    """
+    user = request.user
     if request.method == "POST":
         logout(request)
         user.delete()
         messages.success(request, 'Account deleted! See you next time')
         return redirect('home')
-        
+
     return render(request, 'users/profile-delete.html')
+
 
 def signup_type(request):
     """
@@ -204,6 +212,7 @@ def signup_type(request):
     """
     return render(request, 'account/signup-type.html')
 
+
 def user_signup(request):
     """
     Handles role Profile creation based on selected sign up role.
@@ -216,7 +225,7 @@ def user_signup(request):
     -------
     Rendered signup form page.
     Redirects user to account success page on valid signup.
-    """    
+    """
     role = request.session.get('role')
 
     if request.method == 'POST':
@@ -231,11 +240,12 @@ def user_signup(request):
             profile.save()
 
             if role == 'driver':
-                DriverProfile.objects.create(profile=profile)   
+                DriverProfile.objects.create(profile=profile)
             else:
-                PassengerProfile.objects.create(profile=profile)          
+                PassengerProfile.objects.create(profile=profile)
 
-            messages.success(request, f"{role.capitalize()}'s account created successfully.")
+            messages.success(
+                request, f"{role.capitalize()}'s account created successfully.")
             send_email_confirmation(request, user)
 
             return redirect('account-success')
@@ -243,7 +253,7 @@ def user_signup(request):
 
         form = MainSignupForm()
         form.fields['role'].initial = role
-    
+
     context = {
         'form': form,
         'user_type': role,
@@ -259,5 +269,5 @@ def account_success(request):
     Returns
     -------
     Rendered account success page.
-    """    
+    """
     return render(request, 'users/account-created.html')
