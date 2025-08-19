@@ -610,10 +610,25 @@ def allocated_trips(request):
 
 @login_required
 def driver_action_view(request, trip_name):
+    """
+    Handles Trip methods to start/end trips.
+    Only 'Driver' users can trigger these methods
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    trip_name : str
+        Unique identifier of the trip to start/end.
+
+    Returns
+    -------
+    204 HttpResponse if form submitted successfully.
+    HttpResponseForbidden  is raised if action is invalid/not allowed for a given trip.
+    """
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
-    # ensure user driver on this trip:
+    # ensure user has driver role and allocated to this trip:
     if request.user.profile.user_type == "driver" and trip.driver.profile.user == request.user:
         if request.method == "POST":
             if trip.status == 'confirmed':
