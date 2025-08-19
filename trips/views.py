@@ -78,7 +78,20 @@ def dash_details_view(request, partial):
 
 @login_required
 def trips_list_view(request, filter_trips='all'):
+    """
+    Display a list of role-specific trips for the current user.
 
+    Parameters
+    ----------
+    request : HttpRequest
+        The HTTP request object.
+    filter_trips : str
+        Filter option ('recent' or 'all'), by default 'all'.
+
+    Returns
+    -------
+    Rendered trips list template.
+    """
     if filter_trips == "recent":
         if request.user.profile.user_type == "passenger":
             trips = Trip.objects.filter(
