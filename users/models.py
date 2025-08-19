@@ -71,6 +71,12 @@ class Profile(models.Model):
 
 
 class PassengerProfile(models.Model):
+    """
+    Passenger role-specific profile.
+    Related to `Profile` model by one-to-one relationship.
+
+    Stores emergency contact information and ratings received from user's completed trips.
+    """    
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='passenger_profile')
     emergency_name = models.CharField(max_length=100)
@@ -83,6 +89,11 @@ class PassengerProfile(models.Model):
 
 
     def update_rating(self,trips):
+        """
+        Update passenger rating statistics.
+
+        `count_rating` and `average_rating` fields are calculated and saved
+        """        
         if trips.exists():
             rating_items = [trip.driver_rating for trip in trips if trip.driver_rating is not None]
             self.count_rating = len(rating_items)
@@ -90,7 +101,13 @@ class PassengerProfile(models.Model):
             self.save()
 
     def get_rating_levels(self,trips):
-        
+        """
+        Get passenger ratings by levels (1-star, 2-star... etc.).
+
+        Returns
+        -------
+        dict object with counts for each star rating (1–5).
+        """         
         rating_counts = {f'star_{i}': 0 for i in range(1, 6)}
         for trip in trips:
             rating = trip.driver_rating
