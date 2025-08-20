@@ -30,3 +30,20 @@ class TestUsersAuthentication(TestCase):
         self.assertRedirects(response, reverse("account-success")) # redirected to success page?
         self.assertContains(response, "Please check your inbox to activate your account.", status_code=200) # status=200? text content
 
+    def test_passenger_signup_missing_fields(self):
+        #test missing fields
+        missing_fields_data = self.signup_passenger_valid_data.copy()
+        missing_fields_data.pop("username")
+        missing_fields_data.pop("first_name")
+
+        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), missing_fields_data, follow=True)
+
+        self.assertEqual(response.status_code, 200) # did not redirect
+        self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
+        form_errors = response.context["form"].errors
+        self.assertIn("username", form_errors)
+        self.assertEqual(form_errors["username"], ["This field is required."]) # error for missing username
+        self.assertEqual(form_errors["first_name"], ["This field is required."]) # error for missing first_name
+
+
+
