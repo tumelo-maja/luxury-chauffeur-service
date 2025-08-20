@@ -22,6 +22,16 @@ class TestUsersAuthentication(TestCase):
             "role": "passenger",
         }
 
+        self.login_passenger_valid_data ={
+            "username": "passenger1",
+            "email": "passenger1@luxtest.com",
+            "password": "TheUltimateTester2025",            
+        }
+
+
+    def register_passenger(self):
+        self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data)
+
     def test_passenger_signup_valid_data(self):
         #test signup for passenger 
         response = self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data, follow=True)
@@ -83,3 +93,50 @@ class TestUsersAuthentication(TestCase):
         form_errors = response.context["form"].errors
         self.assertEqual(form_errors["email"], ["This email is already in use by another user."]) # error duplicate username
         self.assertEqual(form_errors["username"], ["A user with that username already exists."]) # error duplicate email
+
+    def test_passenger_email_login_valid_credentials(self):
+        #test email valid login
+        self.register_passenger()
+        self.client.login(
+            email=self.login_passenger_valid_data['email'], 
+            password=self.login_passenger_valid_data['password'])
+
+        #test 'My profile view'
+        response = self.client.get(reverse("profile",args=[self.login_passenger_valid_data['username']]))
+        self.assertContains(response, "Edit Profile", status_code=200) # status=200? text content
+
+    def test_passenger_username_login_valid_credentials(self):
+        #test username valid login
+        self.register_passenger()
+        self.client.login(
+            username=self.login_passenger_valid_data['username'], 
+            password=self.login_passenger_valid_data['password'])
+
+        #test 'My profile view'
+        response = self.client.get(reverse("profile",args=[self.login_passenger_valid_data['username']]))
+        self.assertContains(response, "Edit Profile", status_code=200) # status=200? text content 
+
+    def test_passenger_login_invalid_credentials(self):
+        #test username valid login
+        self.register_passenger()
+
+        #wrong password
+        response = self.client.post(self.login_url, {
+            "login":self.login_passenger_valid_data['email'], 
+            "password":self.login_passenger_valid_data['password']+"wrong"
+            })
+        self.assertContains(response, "The email address and/or password you specified are not correct.", status_code=200) # check wrong password
+
+        # wrong email
+        response = self.client.post(self.login_url, {
+            "login":'wrongemail@luxtest.com', 
+            "password":self.login_passenger_valid_data['password']
+            })
+        self.assertContains(response, "The email address and/or password you specified are not correct.", status_code=200) # check wrong email
+
+        # wrong username
+        response = self.client.post(self.login_url, {
+            "login": 'wrongusername', 
+            "password":self.login_passenger_valid_data['password']
+            })
+        self.assertContains(response, "The username and/or password you specified are not correct.", status_code=200) # check wrong username
