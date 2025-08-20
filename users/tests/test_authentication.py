@@ -28,10 +28,16 @@ class TestUsersAuthentication(TestCase):
             "password": "TheUltimateTester2025",            
         }
 
+        self.my_profile_url =reverse("profile",args=[self.login_passenger_valid_data['username']])
 
     def register_passenger(self):
         self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data)
 
+    def login_passenger(self):
+        self.client.login(
+            username=self.login_passenger_valid_data['username'], 
+            password=self.login_passenger_valid_data['password'])     
+        
     def test_passenger_signup_valid_data(self):
         #test signup for passenger 
         response = self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data, follow=True)
@@ -102,7 +108,7 @@ class TestUsersAuthentication(TestCase):
             password=self.login_passenger_valid_data['password'])
 
         #test 'My profile view'
-        response = self.client.get(reverse("profile",args=[self.login_passenger_valid_data['username']]))
+        response = self.client.get(self.my_profile_url)
         self.assertContains(response, "Edit Profile", status_code=200) # status=200? text content
 
     def test_passenger_username_login_valid_credentials(self):
@@ -113,7 +119,7 @@ class TestUsersAuthentication(TestCase):
             password=self.login_passenger_valid_data['password'])
 
         #test 'My profile view'
-        response = self.client.get(reverse("profile",args=[self.login_passenger_valid_data['username']]))
+        response = self.client.get(self.my_profile_url)
         self.assertContains(response, "Edit Profile", status_code=200) # status=200? text content 
 
     def test_passenger_login_invalid_credentials(self):
@@ -140,3 +146,20 @@ class TestUsersAuthentication(TestCase):
             "password":self.login_passenger_valid_data['password']
             })
         self.assertContains(response, "The username and/or password you specified are not correct.", status_code=200) # check wrong username
+
+    def test_passenger_logout(self):
+        #test logout
+        self.register_passenger()
+        self.login_passenger()
+
+        #check user is logged in 
+        response = self.client.get(self.my_profile_url)
+        self.assertContains(response, "Edit Profile", status_code=200) 
+
+        #logout user
+        self.client.logout()
+
+        #check if redirected to login page
+        response = self.client.get(self.my_profile_url)
+        self.assertIn(self.login_url, response['Location'])
+        
