@@ -68,3 +68,18 @@ class TestUsersAuthentication(TestCase):
         self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
         form_errors = response.context["form"].errors
         self.assertEqual(form_errors["email"], ["Enter a valid email address."]) # error for passwords not matching
+
+    def test_passenger_signup_duplicate_email_addresses_or_username(self):
+        #test duplicate emails
+        form_data = self.signup_passenger_valid_data.copy()
+        response = self.client.post(self.signup_passenger_url, form_data, follow=True) #first sub,
+        self.assertTrue(User.objects.filter(username="passenger1").exists()) # is user saved?
+        self.assertRedirects(response, reverse("account-success")) # redirected to success page?
+
+        #duplciate user
+        response = self.client.post(self.signup_passenger_url, form_data, follow=True) 
+
+        self.assertEqual(response.status_code, 200) # did not redirect
+        form_errors = response.context["form"].errors
+        self.assertEqual(form_errors["email"], ["This email is already in use by another user."]) # error duplicate username
+        self.assertEqual(form_errors["username"], ["A user with that username already exists."]) # error duplicate email
