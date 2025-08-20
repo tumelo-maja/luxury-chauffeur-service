@@ -4,12 +4,9 @@ from django.contrib.auth.models import User
 from users.models import Profile, DriverProfile, PassengerProfile
 
 
-class ProfileViewsTests(TestCase):
+class ProfileViewsPassengerTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="testuser", email="test@example.com", password="pass1234"
-        )
-        self.client.login(username="testuser", password="pass1234")
+
         signup_passenger_valid_data= {
             "username": "passenger1",
             "first_name": "Passenger1",
@@ -30,6 +27,34 @@ class ProfileViewsTests(TestCase):
 
 
     def test_profile_uses_correct_template(self):
+        #test template rendered
         response = self.client.get(self.my_profile_url)
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Edit Profile", status_code=200) 
         self.assertTemplateUsed(response, "users/profile.html")
+    
+    def test_profile_edit_passenger_view(self):
+        #test edit view 
+        response = self.client.get(reverse("profile-edit"))
+        self.assertContains(response, "Edit your Profile", status_code=200) 
+        self.assertContains(response, "Passenger Information") 
+
+    def test_update_passenger_profile_on_profile_edit_view(self):
+        #test edit view 
+        # response = self.client.get(reverse("profile-edit"))
+        form_data ={
+            "displayname": "The Highest",
+            "title": "Lord",
+            "phone": "07999112231",
+            "home_address": "20 Oxford Street, London",
+            "emergency_name": "Kim EC",
+            "emergency_phone": "071133445566",                     
+        }
+        response = self.client.post(reverse("profile-edit"), form_data, follow=True)        
+        self.assertContains(response, "The Highest", status_code=200) 
+        self.assertContains(response, "20 Oxford Street, London") 
+
+        response = self.client.get(reverse("profile-edit"))
+        self.assertContains(response, "071133445566") #role specific form
+
+
+
