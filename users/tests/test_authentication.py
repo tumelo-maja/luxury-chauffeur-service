@@ -161,5 +161,5 @@ class TestUsersAuthentication(TestCase):
 
         #check if redirected to login page
         response = self.client.get(self.my_profile_url)
-        self.assertIn(self.login_url, response['Location'])
+        self.assertRedirects(response, expected_url=f"{self.login_url}?next={self.my_profile_url}")
         
