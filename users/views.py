@@ -229,7 +229,7 @@ def user_signup(request):
     role = request.session.get('role')
 
     if request.method == 'POST':
-        form = MainSignupForm(request.POST)
+        form = MainSignupForm(data=request.POST)
         if form.is_valid():
 
             user = form.save(commit=False)
