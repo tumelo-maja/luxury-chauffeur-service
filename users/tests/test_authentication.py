@@ -24,7 +24,7 @@ class TestUsersAuthentication(TestCase):
 
     def test_passenger_signup_valid_data(self):
         #test signup for passenger 
-        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), self.signup_passenger_valid_data, follow=True)
+        response = self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data, follow=True)
 
         self.assertTrue(User.objects.filter(username="passenger1").exists()) # is user saved?
         self.assertRedirects(response, reverse("account-success")) # redirected to success page?
@@ -32,11 +32,11 @@ class TestUsersAuthentication(TestCase):
 
     def test_passenger_signup_missing_fields(self):
         #test missing fields
-        missing_fields_data = self.signup_passenger_valid_data.copy()
-        missing_fields_data.pop("username")
-        missing_fields_data.pop("first_name")
+        form_data = self.signup_passenger_valid_data.copy()
+        form_data.pop("username")
+        form_data.pop("first_name")
 
-        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), missing_fields_data, follow=True)
+        response = self.client.post(self.signup_passenger_url, form_data, follow=True)
 
         self.assertEqual(response.status_code, 200) # did not redirect
         self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
@@ -47,10 +47,10 @@ class TestUsersAuthentication(TestCase):
 
     def test_passenger_signup_passwords_not_matching(self):
         #test password don't match
-        mismatch_passwords_data = self.signup_passenger_valid_data.copy()
-        mismatch_passwords_data["password2"] = "NotSoGoodTester2025"
+        form_data = self.signup_passenger_valid_data.copy()
+        form_data["password2"] = "NotSoGoodTester2025"
 
-        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), mismatch_passwords_data, follow=True)
+        response = self.client.post(self.signup_passenger_url, form_data, follow=True)
 
         self.assertEqual(response.status_code, 200) # did not redirect
         self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
@@ -58,11 +58,11 @@ class TestUsersAuthentication(TestCase):
         self.assertEqual(form_errors["password2"], ["The two password fields didn’t match."]) # error for passwords not matching
 
     def test_passenger_signup_invalid_email_format(self):
-        #test password don't match
-        invalid_email_data = self.signup_passenger_valid_data.copy()
-        invalid_email_data["email"] = "passenger1-at-luxtest.com"
+        #test invalid email
+        form_data = self.signup_passenger_valid_data.copy()
+        form_data["email"] = "passenger1-at-luxtest.com"
 
-        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), invalid_email_data, follow=True)
+        response = self.client.post(self.signup_passenger_url, form_data, follow=True)
 
         self.assertEqual(response.status_code, 200) # did not redirect
         self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
