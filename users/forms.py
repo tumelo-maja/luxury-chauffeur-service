@@ -149,21 +149,3 @@ class ProfileSettingsForm(ModelForm):
     class Meta:
         model = User
         fields = ['email']
-
-    def clean_email(self):
-        """
-        Validate that the provided email is unique.
-
-        An error is raised if the email is already registered on another account.
-
-        Returns
-        -------
-        str
-            The cleaned email address.
-        """        
-        email = self.cleaned_data.get('email')
-
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already in use by another user.")
-        
-        return email

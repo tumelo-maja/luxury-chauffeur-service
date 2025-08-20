@@ -137,7 +137,7 @@ def profile_settings_partial_view(request):
     """
     if request.htmx:
         form = ProfileSettingsForm(instance=request.user)
-        return render(request, 'partials/settings-form.html', {'form': form})
+        return render(request, 'users/partials/settings-form.html', {'form': form})
 
     if request.method == "POST":
         form = ProfileSettingsForm(request.POST, instance=request.user)

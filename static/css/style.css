@@ -80,6 +80,14 @@ body {
     color: #6B7280;
 }
 
+.settings-table input {
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: rgba(128, 0, 128, 0.15);
+}
+
 .row-head {
     padding: 6px 18px;
     font-size: 1rem;
@@ -2393,6 +2401,31 @@ body {
 .social-title {
     text-align: center;
     font-weight: 600;
+}
+
+.save-btn {
+    display: block;
+    color: white;
+    background-color: purple;
+    border: 1px solid purple;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.save-btn:hover {
+    color: purple;
+    background-color: white;
+    border: 1px solid purple;
+}
+
+.account-btn {
+    font-weight: 500;
+    color: #2563eb;
+}
+
+.account-btn:hover {
+    text-decoration: underline;
 }
 
 /*--------------------------- Media queries --*/

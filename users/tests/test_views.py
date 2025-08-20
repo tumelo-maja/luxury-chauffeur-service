@@ -7,7 +7,7 @@ from users.models import Profile, DriverProfile, PassengerProfile
 class ProfileViewsPassengerTests(TestCase):
     def setUp(self):
 
-        signup_passenger_valid_data= {
+        self.signup_passenger_valid_data= {
             "username": "passenger1",
             "first_name": "Passenger1",
             "last_name": "Tester",
@@ -18,12 +18,12 @@ class ProfileViewsPassengerTests(TestCase):
         } 
         signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
               
-        self.client.post(signup_passenger_url, signup_passenger_valid_data)
+        self.client.post(signup_passenger_url, self.signup_passenger_valid_data)
         self.client.login(
-            username=signup_passenger_valid_data['username'], 
-            password=signup_passenger_valid_data['password1'])  
+            username=self.signup_passenger_valid_data['username'], 
+            password=self.signup_passenger_valid_data['password1'])  
                 
-        self.my_profile_url =reverse("profile",args=[signup_passenger_valid_data['username']])
+        self.my_profile_url =reverse("profile",args=[self.signup_passenger_valid_data['username']])
 
 
     def test_profile_uses_correct_template(self):
@@ -63,5 +63,24 @@ class ProfileViewsPassengerTests(TestCase):
 
     def test_change_email_address_valid_in_profile_settings_view(self):
         #test change email address
-        response = self.client.post(reverse("profile-settingschange"), {'email': 'updatedemail@luxtext.com'}, follow=True)  
-        self.assertContains(response, "updatedemail@luxtext.com")
+        response = self.client.post(reverse("profile-settingschange"), {'email': 'updatedemail@luxtest.com'}, follow=True)  
+        self.assertContains(response, "updatedemail@luxtest.com")
+
+    def test_change_email_address_to_other_users_email_invalid_profile_settings_view(self):
+        #test change email address to another user's email
+        other_user_creds ={
+            'username':"other", 
+            'email':"otheruseremail@luxtest.com",
+            'password':"veryStrongPassword"}
+        
+        User.objects.create_user(username=other_user_creds["username"],
+                                 email=other_user_creds["email"],
+                                 password=other_user_creds["password"])
+        self.client.logout()
+        self.client.login(
+            username=self.signup_passenger_valid_data['username'], 
+            password=self.signup_passenger_valid_data['password1'])  
+        response = self.client.post(reverse("profile-settingschange"), {'email': other_user_creds["email"]}, follow=True)
+
+        self.assertContains(response, f"{other_user_creds["email"]} is already in use.")
+        self.assertContains(response, self.signup_passenger_valid_data['username'])# old email still there
