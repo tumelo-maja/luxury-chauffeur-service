@@ -32,7 +32,7 @@ class ProfileViewsPassengerTests(TestCase):
         self.assertContains(response, "Edit Profile", status_code=200) 
         self.assertTemplateUsed(response, "users/profile.html")
     
-    def test_profile_edit_passenger_view(self):
+    def test_render_profile_edit_passenger_view(self):
         #test edit view 
         response = self.client.get(reverse("profile-edit"))
         self.assertContains(response, "Edit your Profile", status_code=200) 
@@ -56,5 +56,9 @@ class ProfileViewsPassengerTests(TestCase):
         response = self.client.get(reverse("profile-edit"))
         self.assertContains(response, "071133445566") #role specific form
 
-
+    def test_render_profile_settings_view(self):
+        #test edit view 
+        response = self.client.get(reverse("profile-settings"))
+        self.assertContains(response, "Account Settings", status_code=200) 
+        self.assertContains(response, "Delete Account") 
 
