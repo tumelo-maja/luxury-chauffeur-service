@@ -45,5 +45,16 @@ class TestUsersAuthentication(TestCase):
         self.assertEqual(form_errors["username"], ["This field is required."]) # error for missing username
         self.assertEqual(form_errors["first_name"], ["This field is required."]) # error for missing first_name
 
+    def test_passenger_signup_passwords_not_matching(self):
+        #test password don't match
+        mismatch_passwords_data = self.signup_passenger_valid_data.copy()
+        mismatch_passwords_data["password2"] = "NotSoGoodTester2025"
+
+        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), mismatch_passwords_data, follow=True)
+
+        self.assertEqual(response.status_code, 200) # did not redirect
+        self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
+        form_errors = response.context["form"].errors
+        self.assertEqual(form_errors["password2"], ["The two password fields didn’t match."]) # error for passwords not matching
 
 
