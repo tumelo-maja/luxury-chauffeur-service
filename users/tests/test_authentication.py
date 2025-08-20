@@ -57,4 +57,14 @@ class TestUsersAuthentication(TestCase):
         form_errors = response.context["form"].errors
         self.assertEqual(form_errors["password2"], ["The two password fields didn’t match."]) # error for passwords not matching
 
+    def test_passenger_signup_invalid_email_format(self):
+        #test password don't match
+        invalid_email_data = self.signup_passenger_valid_data.copy()
+        invalid_email_data["email"] = "passenger1-at-luxtest.com"
 
+        response = self.client.post(reverse("user_signup", query={'role':'passenger',}), invalid_email_data, follow=True)
+
+        self.assertEqual(response.status_code, 200) # did not redirect
+        self.assertFalse(User.objects.filter(username="passenger1").exists()) # user not registered
+        form_errors = response.context["form"].errors
+        self.assertEqual(form_errors["email"], ["Enter a valid email address."]) # error for passwords not matching
