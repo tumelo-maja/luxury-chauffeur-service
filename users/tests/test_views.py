@@ -40,7 +40,6 @@ class ProfileViewsPassengerTests(TestCase):
 
     def test_update_passenger_profile_on_profile_edit_view(self):
         #test edit view 
-        # response = self.client.get(reverse("profile-edit"))
         form_data ={
             "displayname": "The Highest",
             "title": "Lord",
@@ -53,12 +52,16 @@ class ProfileViewsPassengerTests(TestCase):
         self.assertContains(response, "The Highest", status_code=200) 
         self.assertContains(response, "20 Oxford Street, London") 
 
-        response = self.client.get(reverse("profile-edit"))
-        self.assertContains(response, "071133445566") #role specific form
+        response = self.client.get(reverse("profile-edit")) # navigate back to edit
+        self.assertContains(response, "071133445566") #role specific field
 
     def test_render_profile_settings_view(self):
-        #test edit view 
+        #test settings view 
         response = self.client.get(reverse("profile-settings"))
         self.assertContains(response, "Account Settings", status_code=200) 
         self.assertContains(response, "Delete Account") 
 
+    def test_change_email_address_valid_in_profile_settings_view(self):
+        #test change email address
+        response = self.client.post(reverse("profile-settingschange"), {'email': 'updatedemail@luxtext.com'}, follow=True)  
+        self.assertContains(response, "updatedemail@luxtext.com")
