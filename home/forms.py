@@ -7,7 +7,7 @@ class UserContactForm(Form):
         attrs={'placeholder': 'Your Name'}))
     email = forms.EmailField(label='Email Address', widget=forms.EmailInput(
         attrs={'placeholder': 'Your Email'}))
-    phone = forms.IntegerField(label='Contact Number',
+    phone = forms.CharField(label='Contact Number',
                             widget=forms.TextInput(attrs={'placeholder': 'E.g. 07512345679',
                                                           'pattern': "^[0-9]{10,15}$",
                                                           'title': 'Phone number must be between 10 and 15 digits.',
