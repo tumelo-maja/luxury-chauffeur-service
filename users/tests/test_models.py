@@ -39,7 +39,10 @@ class UsersProfileModelTests(TestCase):
         self.profile.displayname = "Nick Name"
         self.assertEqual(self.profile.name, "Nick Name")
 
-
+    def test_update_status_method_changes_the_status_attribute(self):
+        self.assertEqual(self.profile.status, "available")
+        self.profile.update_status("engaged")
+        self.assertEqual(self.profile.status, "engaged")
 
 
     
