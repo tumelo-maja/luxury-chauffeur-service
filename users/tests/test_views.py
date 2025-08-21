@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from unittest.mock import patch
+from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from users.models import Profile, DriverProfile, PassengerProfile
 
 
@@ -108,3 +109,19 @@ class ProfileViewsPassengerTests(TestCase):
         # check if send_email_confirmation was called once
         user = User.objects.get(username=self.signup_passenger_valid_data['username'])
         mock_send_email.assert_called_once_with(response.wsgi_request, user)
+
+    def test_email_address_confirmation_after_registration(self):
+        
+        user = User.objects.get(username=self.signup_passenger_valid_data['username'])
+        self.email_address = self.email_address = EmailAddress.objects.get(user=user)
+
+        confirmation_key = EmailConfirmationHMAC(self.email_address)
+        confirm_email_url = reverse("account_confirm_email", args=[confirmation_key.key])
+        print(confirm_email_url)
+
+        response = self.client.post(confirm_email_url)
+        self.assertEqual(response.status_code, 302) # should redirect
+
+        self.email_address.refresh_from_db()
+        print(self.email_address.verified)
+        self.assertTrue(self.email_address.verified)        
