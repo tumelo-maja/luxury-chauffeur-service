@@ -71,9 +71,12 @@ class Profile(models.Model):
         Set user avatar to the cloudinary url if user added an image else the default user avatar in static folder is used .
         """
         try:
-            avatar = self.image.url
-            if avatar is None:
-                raise TypeError
+            # avatar = self.image.url
+            # if avatar is None:
+            #     raise TypeError
+            if self.image and self.image.public_id != "placeholder":
+                return self.image.url
+            raise ValueError
         except:
             avatar = static('images/avatar.png')
         return avatar

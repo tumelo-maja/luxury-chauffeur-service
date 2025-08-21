@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
+from django.templatetags.static import static
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
 from users.models import Profile, DriverProfile, PassengerProfile
 
@@ -44,5 +45,17 @@ class UsersProfileModelTests(TestCase):
         self.profile.update_status("engaged")
         self.assertEqual(self.profile.status, "engaged")
 
+    def test_avatar_property_returns_static_image_if_no_cloudinary_url_image(self):
+  
+        self.assertIn('placeholder', self.profile.image.public_id)
+        self.assertIn('avatar.png', self.profile.avatar)
 
+    def test_avatar_property_returns_cloudinary_url_image_if_exists(self):
+        # creta dummy image object
+        test_image = MagicMock()
+        test_image.public_id = "real_image"
+        test_image.url = "https://lux.com/image-for-testing.jpg"
+        self.profile.image = test_image
+
+        self.assertEqual(self.profile.avatar, "https://lux.com/image-for-testing.jpg")
     
