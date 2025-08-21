@@ -19,6 +19,7 @@ class ProfileViewsPassengerTests(TestCase):
             "role": "passenger",
         } 
         signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
+        self.login_url = reverse("account_login")
               
         self.client.post(signup_passenger_url, self.signup_passenger_valid_data)
         self.client.login(
@@ -133,3 +134,13 @@ class ProfileViewsPassengerTests(TestCase):
         # check if modal rendered
         self.assertContains(response, "Are you sure you want to delete your account?", status_code=200) 
         self.assertContains(response, "Delete Account") 
+
+    def test_profile_is_deleted_after_confirming_account_delete(self):
+        # initiate account delete
+        response = self.client.post(reverse("profile-delete"), follow=True)
+
+        # check if goodbye message rendered
+        self.assertContains(response, "Account deleted! See you next time", status_code=200) 
+        
+        # check if has been deleted
+        self.assertFalse(User.objects.filter(username=self.signup_passenger_valid_data['username']).exists())
