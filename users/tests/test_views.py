@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
+from unittest.mock import patch
 from users.models import Profile, DriverProfile, PassengerProfile
 
 
@@ -84,3 +85,16 @@ class ProfileViewsPassengerTests(TestCase):
 
         self.assertContains(response, f"{other_user_creds["email"]} is already in use.")
         self.assertContains(response, self.signup_passenger_valid_data['username'])# old email still there
+
+    @patch('users.views.send_email_confirmation')
+    def test_send_email_confirmation_on_email_address_update(self, mock_send_email):
+        # change email
+        response = self.client.post(reverse("profile-settingschange"), {'email': 'updatedemail@luxtest.com'})  
+
+        # #check if send_email_confirmation was called once
+        user = User.objects.get(username=self.signup_passenger_valid_data['username'])
+        mock_send_email.assert_called_once_with(response.wsgi_request, user)
+
+        #check email did change:
+        response = self.client.get(reverse("profile-settings"))
+        self.assertContains(response, "updatedemail@luxtest.com", status_code=200) 
