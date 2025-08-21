@@ -28,6 +28,13 @@ class ProfileViewsPassengerTests(TestCase):
                 
         self.my_profile_url =reverse("profile",args=[self.signup_passenger_valid_data['username']])
 
+    def test_unauthenticated_users_are_redirected_to_login_when_authentication_is_required(self):
+        #logout user
+        self.client.logout()
+        
+        #check if redirected to login page
+        response = self.client.get(reverse("profile-settings"))
+        self.assertRedirects(response, expected_url=f"{self.login_url}?next={reverse("profile-settings")}")
 
     def test_profile_uses_correct_template(self):
         #test template rendered
