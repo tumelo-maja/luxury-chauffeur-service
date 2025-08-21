@@ -541,7 +541,7 @@ body {
     width: 100%;
 }
 
-.hero-carousel{
+.hero-carousel {
     width: 100%;
 }
 
@@ -910,7 +910,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
 }
 
 .services-container .wrapper {
@@ -1022,6 +1021,10 @@ body {
 
 .step .link {
     font-weight: 800;
+}
+
+.step .link:hover {
+    text-decoration: underline;
 }
 
 .step p {
@@ -2521,7 +2524,8 @@ body {
 
     .slide-control .btn-item {
         width: 40px;
-    }    
+    }
+
     .dashboard-container {
         padding: 25px;
         align-self: flex-end;
@@ -2604,7 +2608,8 @@ body {
     }
 
     .steps-container {
-        justify-content: space-between;
+        justify-content: center;
+        gap: 50px;
     }
 
     .steps-container .step {
@@ -2651,6 +2656,16 @@ body {
     .vehicle-container .wrapper {
         flex-direction: row;
     }
+
+    .service-item {
+        width: 270px;
+        margin: 20px;
+        min-height: 460px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+
 }
 
 @media screen and (min-width: 1024px) {
