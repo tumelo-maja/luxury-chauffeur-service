@@ -1,6 +1,6 @@
-from django.test import TestCase
+from django.test import TestCase 
 from django.urls import reverse
-import os
+from unittest.mock import patch
 from django.contrib.auth.models import User
 
 class TestUsersAuthentication(TestCase):
@@ -31,7 +31,7 @@ class TestUsersAuthentication(TestCase):
         self.my_profile_url =reverse("profile",args=[self.login_passenger_valid_data['username']])
 
     def register_passenger(self):
-        self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data)
+        return self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data)
 
     def login_passenger(self):
         self.client.login(
@@ -163,3 +163,13 @@ class TestUsersAuthentication(TestCase):
         response = self.client.get(self.my_profile_url)
         self.assertRedirects(response, expected_url=f"{self.login_url}?next={self.my_profile_url}")
         
+
+    @patch('users.views.send_email_confirmation')
+    def test_send_email_confirmation_on_user_registration(self, mock_send_email):
+        response =self.register_passenger()
+
+        # #check if send_email_confirmation was called once
+        user = User.objects.get(username=self.login_passenger_valid_data['username'])
+        mock_send_email.assert_called_once_with(response.wsgi_request, user)
+
+
