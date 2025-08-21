@@ -42,12 +42,12 @@
                     </button>
                     <div class="account relative">
                         {% if request.user.is_authenticated %}
-                        <div class="dropdown-head flex items-center justify-center cursor-pointer">
+                        <div class="dropdown-head">
                             <img class="avatar-image" src="{{ user.profile.avatar }}" />
                             <span id="user-name" class="ml-2 mr-1">{{ user.profile.name }}</span>
-                            <img src="{% static 'icons/bi-chevron-down.svg' %}" class="arrow-icon w-5" alt="arrow">
+                            <span class="arrow-icon"><i class="fa-solid fa-chevron-down"></i></span>
                         </div>
-                        <div class="dropdown-body hidden-item absolute right-2 shadow rounded-lg w-40">
+                        <div class="dropdown-body hidden-item">
                             <ul class="flex flex-col items-end">
                                 <li class="menu-item"><a href="{% url 'profile' user.username %}">My Profile</a></li>
                                 <li class="menu-item dashboard-link"><a href="{% url 'trips-dashboard' %}">Dashboard</a>
