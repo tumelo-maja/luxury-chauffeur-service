@@ -21,6 +21,7 @@
                             <span class="link-text">Home</span>
                         </a>
                     </li>
+                    {% if request.user.is_authenticated %}
                     <li class="navbar-item">
                         <a href="{{ dashboard_url }}" class="nav-link {% if request.path == dashboard_url %}active" aria-current="page{% endif %}" id="dashboardLink">
                             <i class="fa-solid fa-qrcode"></i>
@@ -46,6 +47,7 @@
                             <span class="link-text">Settings</span>
                         </a>
                     </li>
+                    {% endif %}
                     <li class="navbar-item">
                         <a href="{{ contact_url }}" class="nav-link {% if request.path == contact_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-envelope-circle-check"></i>

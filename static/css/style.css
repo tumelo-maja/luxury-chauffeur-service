@@ -194,6 +194,7 @@ body {
 
 .navbar-logo img {
     width: 100%;
+    max-width: 175px;
 }
 
 .navbar .nav-list {
@@ -2630,9 +2631,6 @@ body {
         width: 260px;
     }
 
-
-
-
     .stats-item {
         height: 80px;
         width: 140px;
@@ -2642,4 +2640,14 @@ body {
         margin: 10px 20px;
 
     }
+
+    .header-main.active {
+        width: 20%;
+    }    
+}
+
+@media screen and (min-width: 1440px) {
+    .header-main.active {
+        width: 15%;
+    }    
 }
