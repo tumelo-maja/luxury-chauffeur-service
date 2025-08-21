@@ -98,3 +98,13 @@ class ProfileViewsPassengerTests(TestCase):
         #check email did change:
         response = self.client.get(reverse("profile-settings"))
         self.assertContains(response, "updatedemail@luxtest.com", status_code=200) 
+
+
+    @patch('users.views.send_email_confirmation')
+    def test_send_email_confirmation_manual_trigger(self, mock_send_email):
+        # change email
+        response = self.client.get(reverse("profile-emailverify"))
+
+        # check if send_email_confirmation was called once
+        user = User.objects.get(username=self.signup_passenger_valid_data['username'])
+        mock_send_email.assert_called_once_with(response.wsgi_request, user)
