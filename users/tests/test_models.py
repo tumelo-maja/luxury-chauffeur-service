@@ -2,34 +2,12 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from unittest.mock import patch, MagicMock
-from django.templatetags.static import static
-from allauth.account.models import EmailAddress, EmailConfirmationHMAC
-from users.models import Profile, DriverProfile, PassengerProfile
+from users.models import Profile, DriverProfile, PassengerProfile, ManagerProfile
 
-class UsersProfileModelTests(TestCase):
+class UsersProfileModelTest(TestCase):
 
     def setUp(self):
-        self.signup_passenger_valid_data= {
-            "username": "passenger1",
-            "first_name": "Passenger1",
-            "last_name": "Tester",
-            "email": "passenger1@luxtest.com",
-            "password1": "TheUltimateTester2025",
-            "password2": "TheUltimateTester2025",
-            "role": "passenger",
-        } 
-
-        # define urls as properties/attr
-        signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
-        self.login_url = reverse("account_login")
-        self.profile_edit_url =reverse("profile-edit")
-             
-        self.client.post(signup_passenger_url, self.signup_passenger_valid_data)
-        self.client.login(
-            username=self.signup_passenger_valid_data['username'], 
-            password=self.signup_passenger_valid_data['password1'])
-        
-        self.user = User.objects.get(username=self.signup_passenger_valid_data['username'])
+        self.user = User.objects.create_user(username="passenger1", password="TheUltimateTester2025")
         self.profile = Profile.objects.get(user=self.user)
 
     def test_name_property_returns_username_if_no_displayname(self):
@@ -59,3 +37,46 @@ class UsersProfileModelTests(TestCase):
 
         self.assertEqual(self.profile.avatar, "https://lux.com/image-for-testing.jpg")
     
+
+class UsersPassengerProfileModelTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username="passenger1", password="TheUltimateTester2025")
+        self.profile = Profile.objects.get(user=self.user)
+        self.profile.user_type="passenger"
+        self.passenger_profile = PassengerProfile.objects.create(profile=self.profile)
+    
+    def test_str_returns_passenger_username(self):
+        self.assertEqual(str(self.passenger_profile),"Passenger: passenger1")
+    
+    def test_profile_status_matches_passenger_profile_status(self):
+        self.assertEqual(self.profile.status,self.passenger_profile.status)
+
+
+class UsersDriverProfileModelTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username="driver1", password="TheUltimateTester2025")
+        self.profile = Profile.objects.get(user=self.user)
+        self.profile.user_type="driver"
+        self.driver_profile = DriverProfile.objects.create(profile=self.profile)
+    
+    def test_str_returns_driver_username(self):
+        self.assertEqual(str(self.driver_profile),"Driver: driver1")
+    
+    def test_profile_status_matches_driver_profile_status(self):
+        self.assertEqual(self.profile.status,self.driver_profile.status)
+
+class UsersManagerProfileModelTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username="manager1", password="TheUltimateTester2025")
+        self.profile = Profile.objects.get(user=self.user)
+        self.profile.user_type="manager"
+        self.manager_profile = ManagerProfile.objects.create(profile=self.profile)
+    
+    def test_str_returns_manager_username(self):
+        self.assertEqual(str(self.manager_profile),"Manager: manager1")
+    
+    def test_profile_status_matches_manager_profile_status(self):
+        self.assertEqual(self.profile.status,self.manager_profile.status)
