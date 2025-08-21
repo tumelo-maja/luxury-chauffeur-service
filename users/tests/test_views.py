@@ -18,23 +18,30 @@ class ProfileViewsPassengerTests(TestCase):
             "password2": "TheUltimateTester2025",
             "role": "passenger",
         } 
+
+        # define urls as properties/attr
         signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
         self.login_url = reverse("account_login")
+        self.profile_settings_url= reverse("profile-settings")
+        self.profile_edit_url =reverse("profile-edit")
+        self.profile_settingschange_url =reverse("profile-settingschange")
+        self.profile_delete_url = reverse("profile-delete")
+        self.profile_emailverify_url= reverse("profile-emailverify")
+        self.my_profile_url =reverse("profile",args=[self.signup_passenger_valid_data['username']])
               
         self.client.post(signup_passenger_url, self.signup_passenger_valid_data)
         self.client.login(
             username=self.signup_passenger_valid_data['username'], 
             password=self.signup_passenger_valid_data['password1'])  
                 
-        self.my_profile_url =reverse("profile",args=[self.signup_passenger_valid_data['username']])
 
     def test_unauthenticated_users_are_redirected_to_login_when_authentication_is_required(self):
         #logout user
         self.client.logout()
-        
+
         #check if redirected to login page
-        response = self.client.get(reverse("profile-settings"))
-        self.assertRedirects(response, expected_url=f"{self.login_url}?next={reverse("profile-settings")}")
+        response = self.client.get(self.profile_settings_url)
+        self.assertRedirects(response, expected_url=f"{self.login_url}?next={self.profile_settings_url}")
 
     def test_profile_uses_correct_template(self):
         #test template rendered
@@ -44,7 +51,7 @@ class ProfileViewsPassengerTests(TestCase):
     
     def test_render_profile_edit_passenger_view(self):
         #test edit view 
-        response = self.client.get(reverse("profile-edit"))
+        response = self.client.get(self.profile_edit_url)
         self.assertContains(response, "Edit your Profile", status_code=200) 
         self.assertContains(response, "Passenger Information") 
 
@@ -58,22 +65,22 @@ class ProfileViewsPassengerTests(TestCase):
             "emergency_name": "Kim EC",
             "emergency_phone": "071133445566",                     
         }
-        response = self.client.post(reverse("profile-edit"), form_data, follow=True)        
+        response = self.client.post(self.profile_edit_url, form_data, follow=True)        
         self.assertContains(response, "The Highest", status_code=200) 
         self.assertContains(response, "20 Oxford Street, London") 
 
-        response = self.client.get(reverse("profile-edit")) # navigate back to edit
+        response = self.client.get(self.profile_edit_url) # navigate back to edit
         self.assertContains(response, "071133445566") #role specific field
 
     def test_render_profile_settings_view(self):
         #test settings view 
-        response = self.client.get(reverse("profile-settings"))
+        response = self.client.get(self.profile_settings_url)
         self.assertContains(response, "Account Settings", status_code=200) 
         self.assertContains(response, "Delete Account") 
 
     def test_change_email_address_valid_in_profile_settings_view(self):
         #test change email address
-        response = self.client.post(reverse("profile-settingschange"), {'email': 'updatedemail@luxtest.com'}, follow=True)  
+        response = self.client.post(self.profile_settingschange_url, {'email': 'updatedemail@luxtest.com'}, follow=True)  
         self.assertContains(response, "updatedemail@luxtest.com")
 
     def test_change_email_address_to_other_users_email_invalid_profile_settings_view(self):
@@ -90,7 +97,7 @@ class ProfileViewsPassengerTests(TestCase):
         self.client.login(
             username=self.signup_passenger_valid_data['username'], 
             password=self.signup_passenger_valid_data['password1'])  
-        response = self.client.post(reverse("profile-settingschange"), {'email': other_user_creds["email"]}, follow=True)
+        response = self.client.post(self.profile_settingschange_url, {'email': other_user_creds["email"]}, follow=True)
 
         self.assertContains(response, f"{other_user_creds["email"]} is already in use.")
         self.assertContains(response, self.signup_passenger_valid_data['username'])# old email still there
@@ -98,21 +105,21 @@ class ProfileViewsPassengerTests(TestCase):
     @patch('users.views.send_email_confirmation')
     def test_send_email_confirmation_on_email_address_update(self, mock_send_email):
         # change email
-        response = self.client.post(reverse("profile-settingschange"), {'email': 'updatedemail@luxtest.com'})  
+        response = self.client.post(self.profile_settingschange_url, {'email': 'updatedemail@luxtest.com'})  
 
         # #check if send_email_confirmation was called once
         user = User.objects.get(username=self.signup_passenger_valid_data['username'])
         mock_send_email.assert_called_once_with(response.wsgi_request, user)
 
         #check email did change:
-        response = self.client.get(reverse("profile-settings"))
+        response = self.client.get(self.profile_settings_url)
         self.assertContains(response, "updatedemail@luxtest.com", status_code=200) 
 
 
     @patch('users.views.send_email_confirmation')
     def test_send_email_confirmation_manual_trigger(self, mock_send_email):
         # change email
-        response = self.client.get(reverse("profile-emailverify"))
+        response = self.client.get(self.profile_emailverify_url)
 
         # check if send_email_confirmation was called once
         user = User.objects.get(username=self.signup_passenger_valid_data['username'])
@@ -125,18 +132,16 @@ class ProfileViewsPassengerTests(TestCase):
 
         confirmation_key = EmailConfirmationHMAC(self.email_address)
         confirm_email_url = reverse("account_confirm_email", args=[confirmation_key.key])
-        print(confirm_email_url)
 
         response = self.client.post(confirm_email_url)
         self.assertEqual(response.status_code, 302) # should redirect
 
         self.email_address.refresh_from_db()
-        print(self.email_address.verified)
         self.assertTrue(self.email_address.verified)        
 
     def test_render_account_delete_confirmation_modal(self):
         # initiate account delete
-        response = self.client.get(reverse("profile-delete"))
+        response = self.client.get(self.profile_delete_url)
 
         # check if modal rendered
         self.assertContains(response, "Are you sure you want to delete your account?", status_code=200) 
@@ -144,7 +149,7 @@ class ProfileViewsPassengerTests(TestCase):
 
     def test_profile_is_deleted_after_confirming_account_delete(self):
         # initiate account delete
-        response = self.client.post(reverse("profile-delete"), follow=True)
+        response = self.client.post(self.profile_delete_url, follow=True)
 
         # check if goodbye message rendered
         self.assertContains(response, "Account deleted! See you next time", status_code=200) 
