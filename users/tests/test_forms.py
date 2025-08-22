@@ -5,15 +5,17 @@ from django.contrib.auth.models import User
 from ..models import Profile, DriverProfile, PassengerProfile, ManagerProfile
 
 class UsersFormsTest(TestCase):
-    def setUp(self):
-        self.signup_type_url = reverse("signup_type")
-        self.signup_driver_url = reverse("user_signup", query={'role':'driver',})
-        self.signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
 
-        self.login_url = reverse("account_login")
-        self.logout_url = reverse("account_logout")
+    @classmethod
+    def setUpTestData(cls):
+        cls.signup_type_url = reverse("signup_type")
+        cls.signup_driver_url = reverse("user_signup", query={'role':'driver',})
+        cls.signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
 
-        self.user_form_data= {
+        cls.login_url = reverse("account_login")
+        cls.logout_url = reverse("account_logout")
+
+        cls.user_form_data= {
             "username": "testuser1",
             "first_name": "testuser1",
             "last_name": "Tester",
@@ -23,14 +25,14 @@ class UsersFormsTest(TestCase):
             "role": "passenger",
         }
 
-        self.login_user_valid_data ={
+        cls.login_user_valid_data ={
             "username": "testuser1",
             "email": "testuser1@luxtest.com",
             "password": "TheUltimateTester2025",            
         }
 
-        self.my_profile_url =reverse("profile",args=[self.login_user_valid_data['username']])
-        self.profile_delete_url = reverse("profile-delete")
+        cls.my_profile_url =reverse("profile",args=[cls.login_user_valid_data['username']])
+        cls.profile_delete_url = reverse("profile-delete")
 
     def register_user(self, user_type):
         if user_type == 'passenger':
