@@ -37,6 +37,7 @@ class TripsViewTest(TestCase):
         cls.trips_url = reverse("trips")
         cls.trip_request_url = reverse("trip-request")
         cls.login_url = reverse("account_login")
+        cls.dash_details_url ='dash-details'
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -63,3 +64,24 @@ class TripsViewTest(TestCase):
         self.login_user('passenger')
         response = self.client.get(self.trips_url)
         self.assertTemplateUsed(response, "trips/trips.html")
+
+    def test_correct_headings_are_rendered_in_trips_summary_view(self):
+        #test template rendered
+        self.login_user('passenger')
+        response = self.client.get(reverse(self.dash_details_url,args=['home']))
+        self.assertContains(response, "Trips Summary") 
+        self.assertContains(response, "Ratings") 
+        self.assertContains(response, "Recent Activities") 
+
+    def test_trips_list_view_rendered_correctly(self):
+        #test template rendered
+        self.login_user('passenger')
+        response = self.client.get(reverse(self.dash_details_url,args=['list-view']))
+        self.assertContains(response, "My trips") 
+
+    def test_trips_calendar_view_rendered_correctly(self):
+        #test template rendered
+        self.login_user('passenger')
+        response = self.client.get(reverse(self.dash_details_url,args=['calendar-view']))
+        self.assertContains(response, "userCalendar") 
+        self.assertContains(response, "Wed")         

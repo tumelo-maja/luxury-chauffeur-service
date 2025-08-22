@@ -505,7 +505,7 @@ def trips_calendar_view(request):
     -------
     Rendered calendar template.
     """    
-    return render(request, 'trips/partials/dash-calendar.html')
+    return render(request, 'trips/partials/dash-calendar-view.html')
 
 
 @login_required

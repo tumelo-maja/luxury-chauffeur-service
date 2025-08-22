@@ -13,9 +13,9 @@
 
                 <option value="summary" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
                         hx-target="#display-container" hx-trigger="load, click" id="summaryViewOption">Summary</option>
-                <option value="listview" class="dash-item" id="listViewOption" hx-get="{% url 'dash-details' 'trips' %}" 
+                <option value="listview" class="dash-item" id="listViewOption" hx-get="{% url 'dash-details' 'list-view' %}" 
                         hx-target="#display-container" hx-trigger="click">Trips - List</option>
-                <option value="calendaview" class="dash-item" id="calendarViewOption" hx-get="{% url 'trips-calendar' %}" 
+                <option value="calendaview" class="dash-item" id="calendarViewOption" hx-get="{% url 'calendar-view' %}" 
                         hx-target="#display-container" hx-trigger="click"> Trips - Calendar</option>
                 {% if user.profile.user_type == 'manager' %}
                 <option value="manager" class="dash-item" id="managerViewOption" hx-get="{% url 'manager-overview' %}"
@@ -34,12 +34,12 @@
                     </li>
                     <li>
                         <button type="button" class="dash-item" id="listViewButton"
-                            hx-get="{% url 'dash-details' 'trips' %}" hx-target="#display-container"
+                            hx-get="{% url 'dash-details' 'list-view' %}" hx-target="#display-container"
                             hx-trigger="click"><i class="fa-solid fa-list"></i><span>List</span></button>
                     </li>
                     <li>
                         <button type="button" class="dash-item" id="calendarViewButton"
-                            hx-get="{% url 'trips-calendar' %}" hx-target="#display-container" hx-trigger="click">
+                            hx-get="{% url 'calendar-view' %}" hx-target="#display-container" hx-trigger="click">
                             <i class="fa-solid fa-calendar-days"></i><span>Calendar</span>
                         </button>
                     </li>
