@@ -60,6 +60,11 @@ class TripsModelTest(TestCase):
             vehicle="Range Rover Vogue",
         )        
 
+    def create_test_trip_for_driver(self):
+        self.create_test_trip()
+        self.client.logout()
+        self.login_user('driver')
+
     def test_passenger_can_create_a_trip(self):
         self.login_user('passenger')
 
@@ -107,4 +112,38 @@ class TripsModelTest(TestCase):
         self.login_user('driver')
         self.assertTrue(Trip.objects.filter(driver=self.profile_driver).exists())  # 1 trip
 
+    def test_start_trip_method_changes_trip_status_to_in_progress(self):
+        self.create_test_trip_for_driver()
+        self.assertEqual(self.trip.status,'pending')
 
+        self.trip.start_trip()
+        self.assertEqual(self.trip.status,'in_progress')
+
+    def test_start_trip_method_changes_passenger_and_driver_status_to_engaged(self):
+        self.create_test_trip_for_driver()
+        self.assertEqual(self.trip.driver.profile.status,'available')
+        self.assertEqual(self.trip.passenger.profile.status,'available')
+
+        self.trip.start_trip()
+        self.assertEqual(self.trip.driver.profile.status,'engaged')
+        self.assertEqual(self.trip.passenger.profile.status,'engaged')
+
+    def test_end_trip_method_changes_trip_status_to_completed(self):
+        self.create_test_trip_for_driver()
+
+        self.trip.start_trip()
+        self.assertEqual(self.trip.status,'in_progress')
+
+        self.trip.end_trip()
+        self.assertEqual(self.trip.status,'completed')
+
+    def test_end_trip_method_changes_passenger_and_driver_status_to_available(self):
+        self.create_test_trip_for_driver()
+
+        self.trip.start_trip()
+        self.assertEqual(self.trip.driver.profile.status,'engaged')
+        self.assertEqual(self.trip.passenger.profile.status,'engaged')
+
+        self.trip.end_trip()
+        self.assertEqual(self.trip.driver.profile.status,'available')
+        self.assertEqual(self.trip.passenger.profile.status,'available')

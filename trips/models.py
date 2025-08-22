@@ -82,11 +82,13 @@ class Trip(models.Model):
         return self.status.replace('_', ' ').capitalize()
     
     def start_trip(self):
-        self.driver.update_status('engaged')
+        self.driver.profile.update_status('engaged')
+        self.passenger.profile.update_status('engaged')
         self.status = 'in_progress'
         self.save()
 
     def end_trip(self):
-        self.driver.update_status('available')
+        self.driver.profile.update_status('available')
+        self.passenger.profile.update_status('available')
         self.status = 'completed'
         self.save()
