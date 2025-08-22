@@ -33,14 +33,6 @@ class TripsModelTest(TestCase):
             profile=Profile.objects.get(user=cls.user_manager))
         cls.profile_manager.profile.user_type = "manager"
 
-        # trips urls
-        cls.trip_request_url = reverse("trip-request")
-
-        # choice variables
-        cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
-                               "Mercedes Benz V-Class", "Premium Limousine", "Classic Vintage Cars",]
-        cls.trip_types = ["Airport Transfers", "Special Events",
-                          "Corporate Chauffeur", "Private & VIP Chauffeur",]
 
     def login_user(self, user_type):
         self.client.login(
