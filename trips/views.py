@@ -12,15 +12,15 @@ from .forms import *
 
 
 @login_required
-def trips_dashboard_view(request):
+def trips_page_view(request):
     """
-    Display the main dashboard page.
+    Display the trips page.
 
     Returns
     -------
-    Rendered dashboard page (default - home display).
+    Rendered trips page (default - home display).
     """
-    return render(request, 'trips/trips-dashboard.html')
+    return render(request, 'trips/trips.html')
 
 
 @login_required

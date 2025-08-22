@@ -58,4 +58,8 @@ class TripsViewTest(TestCase):
         response = self.client.get(self.trips_url)
         self.assertContains(response, "Manage your trips with ease.", status_code=200) 
 
-
+    def test_trips_page_uses_correct_template(self):
+        #test template rendered
+        self.login_user('passenger')
+        response = self.client.get(self.trips_url)
+        self.assertTemplateUsed(response, "trips/trips.html")
