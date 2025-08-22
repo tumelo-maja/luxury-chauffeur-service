@@ -35,6 +35,7 @@ class TripsModelTest(TestCase):
 
         # trips urls
         cls.trip_request_url = reverse("trip-request")
+        cls.trip_request_url = reverse("trip-request")
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -47,3 +48,6 @@ class TripsModelTest(TestCase):
             username=f"{user_type}1",
             password=self.users_password)
     
+    def test_unauthenticated_user_are_redirected_to_login_when_accessing_trips_page(self):
+        pass
+

@@ -5,7 +5,7 @@
 {% url 'profile-settings' as settings_url %}
 {% url 'profile' user.username as profile_url %}
 {% url 'contact' as contact_url %}
-{% url 'trips-dashboard' as dashboard_url %}
+{% url 'trips' as trips_url %}
 
 <header class="header-main">
     <div class="main-nav">
@@ -23,9 +23,9 @@
                     </li>
                     {% if request.user.is_authenticated %}
                     <li class="navbar-item">
-                        <a href="{{ dashboard_url }}" class="nav-link {% if request.path == dashboard_url %}active" aria-current="page{% endif %}" id="dashboardLink">
+                        <a href="{{ trips_url }}" class="nav-link {% if request.path == trips_url %}active" aria-current="page{% endif %}">
                             <i class="fa-solid fa-qrcode"></i>
-                            <span class="link-text">Dashboard</span>
+                            <span class="link-text">Trips</span>
                         </a>
                     </li>
                     <li class="navbar-item">
