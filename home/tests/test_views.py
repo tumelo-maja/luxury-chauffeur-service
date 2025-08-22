@@ -29,9 +29,10 @@ class TestHomeView(SimpleTestCase):
 
 class TestContactFormView(SimpleTestCase):
 
-    def setUp(self):
-        self.contact_enquiry_url = reverse("contact")
-        self.form_data= {
+    @classmethod
+    def setUpTestData(cls):
+        cls.contact_enquiry_url = reverse("contact")
+        cls.form_data= {
             "name": "Shrek",
             "email": "shrek@ogre.com",
             "phone": "0111223344556",
@@ -39,12 +40,12 @@ class TestContactFormView(SimpleTestCase):
             "receive_copy": "",
         } 
         
-        self.context = {
+        cls.context = {
                     'enquiry': {
-                        'name': self.form_data['name'],
-                        'email': self.form_data['email'],
-                        'phone': self.form_data['phone'],
-                        'message': self.form_data['message'],},
+                        'name': cls.form_data['name'],
+                        'email': cls.form_data['email'],
+                        'phone': cls.form_data['phone'],
+                        'message': cls.form_data['message'],},
                     'subtitle': 'You have received a new enquiry from the website:',
                     'recipient': 'Admin',}
 

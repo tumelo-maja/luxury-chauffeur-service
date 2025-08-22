@@ -6,9 +6,10 @@ from users.models import Profile, DriverProfile, PassengerProfile, ManagerProfil
 
 class UsersProfileModelTest(TestCase):
 
-    def setUp(self):
-        self.user = User.objects.create_user(username="passenger1", password="TheUltimateTester2025")
-        self.profile = Profile.objects.get(user=self.user)
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(username="passenger1", password="TheUltimateTester2025")
+        cls.profile = Profile.objects.get(user=cls.user)
 
     def test_name_property_returns_username_if_no_displayname(self):
         self.profile.displayname = ""

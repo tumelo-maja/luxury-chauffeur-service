@@ -7,9 +7,10 @@ from users.models import Profile, DriverProfile, PassengerProfile
 
 
 class ProfileViewsPassengerTests(TestCase):
-    def setUp(self):
 
-        self.signup_passenger_valid_data= {
+    @classmethod
+    def setUpTestData(cls):
+        cls.signup_passenger_valid_data= {
             "username": "passenger1",
             "first_name": "Passenger1",
             "last_name": "Tester",
@@ -20,20 +21,21 @@ class ProfileViewsPassengerTests(TestCase):
         } 
 
         # define urls as properties/attr
-        signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
-        self.login_url = reverse("account_login")
-        self.profile_settings_url= reverse("profile-settings")
-        self.profile_edit_url =reverse("profile-edit")
-        self.profile_settingschange_url =reverse("profile-settingschange")
-        self.profile_delete_url = reverse("profile-delete")
-        self.profile_emailverify_url= reverse("profile-emailverify")
-        self.my_profile_url =reverse("profile",args=[self.signup_passenger_valid_data['username']])
-              
-        self.client.post(signup_passenger_url, self.signup_passenger_valid_data)
+        cls.signup_passenger_url = reverse("user_signup", query={'role':'passenger',})
+        cls.login_url = reverse("account_login")
+        cls.profile_settings_url= reverse("profile-settings")
+        cls.profile_edit_url =reverse("profile-edit")
+        cls.profile_settingschange_url =reverse("profile-settingschange")
+        cls.profile_delete_url = reverse("profile-delete")
+        cls.profile_emailverify_url= reverse("profile-emailverify")
+        cls.my_profile_url =reverse("profile",args=[cls.signup_passenger_valid_data['username']])             
+
+    
+    def setUp(self):
+        self.client.post(self.signup_passenger_url, self.signup_passenger_valid_data)
         self.client.login(
-            username=self.signup_passenger_valid_data['username'], 
-            password=self.signup_passenger_valid_data['password1'])  
-                
+        username=self.signup_passenger_valid_data['username'], 
+        password=self.signup_passenger_valid_data['password1'])  
 
     def test_unauthenticated_users_are_redirected_to_login_when_authentication_is_required(self):
         #logout user

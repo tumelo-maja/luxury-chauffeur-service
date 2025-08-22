@@ -240,7 +240,7 @@ class UsersFormsTest(TestCase):
         # initiate account delete
         self.authenticate_user('passenger')
         response = self.client.post(self.profile_delete_url, follow=True)
-        print(response)
+
         # check if goodbye message rendered
         self.assertContains(response, "Account deleted! See you next time", status_code=200) 
         # check if has been deleted
