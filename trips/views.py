@@ -187,6 +187,10 @@ def trip_request_view(request):
     -------
     Rendered trip request form in a modal or 204 HttpResponse if successfully submitted.
     """
+    if request.user.profile.user_type != "passenger":
+        messages.warning(request, "Only passenger users can create trips")
+        return HttpResponseForbidden(f"Trip requests from {request.user.profile.user_type}s not allowed.")
+    
     if request.method == "POST":
         form = TripRequestForm(request.POST)
         form = check_trip_overlap(request.user.profile.passenger_profile, form)

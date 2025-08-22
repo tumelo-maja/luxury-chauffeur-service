@@ -46,6 +46,17 @@ class TripsModelTest(TestCase):
         self.client.login(
             username=f"{user_type}1",
             password=self.users_password)
+    
+    def create_test_trip(self):
+        self.trip = Trip.objects.create(
+            passenger=self.profile_passenger,
+            driver=self.profile_driver,
+            location_start="Heathrow Airport",
+            location_end="Lux Hotel",
+            travel_datetime=parse_datetime("2025-09-21T15:30:00Z"),
+            trip_type="Airport Transfers",
+            vehicle="Range Rover Vogue",
+        )        
 
     def test_passenger_can_create_a_trip(self):
         self.login_user('passenger')
@@ -53,7 +64,7 @@ class TripsModelTest(TestCase):
         self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())  # no trips
 
         # create trip
-        self.trip = Trip.objects.create(
+        Trip.objects.create(
             passenger=self.profile_passenger,
             driver=self.profile_driver,
             location_start="Heathrow Airport",
@@ -64,4 +75,10 @@ class TripsModelTest(TestCase):
         )
 
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())  # 1 trip
+
+    def test_newly_created_trip_has_status_of_pending(self):
+        self.login_user('passenger')
+        self.create_test_trip()
+
+        self.assertEqual(self.trip.status,'pending')
 
