@@ -98,3 +98,13 @@ class TripsModelTest(TestCase):
 
         self.trip.status = "in_progress"
         self.assertEqual(self.trip.status_str, "In progress")
+
+    def test_driver_is_assigned_to_a_trip_on_trip_creation(self):
+        self.assertFalse(Trip.objects.filter(driver=self.profile_driver).exists())  # no trips
+        self.create_test_trip()
+        self.client.logout()
+
+        self.login_user('driver')
+        self.assertTrue(Trip.objects.filter(driver=self.profile_driver).exists())  # 1 trip
+
+
