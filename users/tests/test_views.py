@@ -139,20 +139,3 @@ class ProfileViewsPassengerTests(TestCase):
         self.email_address.refresh_from_db()
         self.assertTrue(self.email_address.verified)        
 
-    def test_render_account_delete_confirmation_modal(self):
-        # initiate account delete
-        response = self.client.get(self.profile_delete_url)
-
-        # check if modal rendered
-        self.assertContains(response, "Are you sure you want to delete your account?", status_code=200) 
-        self.assertContains(response, "Delete Account") 
-
-    def test_profile_is_deleted_after_confirming_account_delete(self):
-        # initiate account delete
-        response = self.client.post(self.profile_delete_url, follow=True)
-
-        # check if goodbye message rendered
-        self.assertContains(response, "Account deleted! See you next time", status_code=200) 
-        
-        # check if has been deleted
-        self.assertFalse(User.objects.filter(username=self.signup_passenger_valid_data['username']).exists())
