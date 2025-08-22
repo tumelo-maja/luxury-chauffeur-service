@@ -48,6 +48,8 @@ class TripsModelTest(TestCase):
             password=self.users_password)
     
     def create_test_trip(self):
+        self.login_user('passenger')
+
         self.trip = Trip.objects.create(
             passenger=self.profile_passenger,
             driver=self.profile_driver,
@@ -77,8 +79,22 @@ class TripsModelTest(TestCase):
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())  # 1 trip
 
     def test_newly_created_trip_has_status_of_pending(self):
+        #New trips should have a default status of 'pending'
         self.login_user('passenger')
         self.create_test_trip()
 
         self.assertEqual(self.trip.status,'pending')
 
+    def test_status_class_property_replaces_underscore_with_dashes(self):
+        # status_class replaces underscores with dashes
+        self.create_test_trip()
+
+        self.trip.status = "in_progress"
+        self.assertEqual(self.trip.status_class, "in-progress")
+
+    def test_status_str_property_replaces_underscore_with_spaces(self):
+        # status_class replaces underscores with spaces and capitalizes
+        self.create_test_trip()
+
+        self.trip.status = "in_progress"
+        self.assertEqual(self.trip.status_str, "In progress")
