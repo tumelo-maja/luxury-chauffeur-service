@@ -6,7 +6,7 @@ from users.models import Profile, DriverProfile, PassengerProfile, ManagerProfil
 from ..models import Trip
 
 
-class TripsModelTest(TestCase):
+class TripsViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -33,9 +33,10 @@ class TripsModelTest(TestCase):
             profile=Profile.objects.get(user=cls.user_manager))
         cls.profile_manager.profile.user_type = "manager"
 
-        # trips urls
+        # url paths
+        cls.trips_url = reverse("trips")
         cls.trip_request_url = reverse("trip-request")
-        cls.trip_request_url = reverse("trip-request")
+        cls.login_url = reverse("account_login")
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -48,6 +49,13 @@ class TripsModelTest(TestCase):
             username=f"{user_type}1",
             password=self.users_password)
     
-    def test_unauthenticated_user_are_redirected_to_login_when_accessing_trips_page(self):
-        pass
+    def test_unauthenticated_users_are_redirected_to_login_when_accessing_trips_page(self):
+        response = self.client.get(self.trips_url)
+        self.assertRedirects(response, expected_url=f"{self.login_url}?next={self.trips_url}")
+
+    def test_authenticated_users_can_access_trips_page(self):
+        self.login_user('passenger')
+        response = self.client.get(self.trips_url)
+        self.assertContains(response, "Manage your trips with ease.", status_code=200) 
+
 
