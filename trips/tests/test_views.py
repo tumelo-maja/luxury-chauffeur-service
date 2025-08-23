@@ -47,6 +47,7 @@ class TripsViewTest(TestCase):
         cls.trip_request_url = reverse("trip-request")
         cls.login_url = reverse("account_login")
         cls.dash_details_url ='dash-details'
+        cls.trip_detail_url = "trip-detail"
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -154,3 +155,13 @@ class TripsViewTest(TestCase):
         response = self.client.get(self.trip_request_url)
 
         self.assertContains(response, 'Action not allowed') 
+
+    def test_passenger_user_veiw_trip_details_of_own_trips(self):
+
+        self.login_user('passenger')
+        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        response = self.client.get(reverse(self.trip_detail_url,args=[self.trip.trip_name]))
+
+        self.assertContains(response, 'trip-detail-container')        
+        self.assertContains(response, 'Edit Trip')        
+        self.assertContains(response, 'Cancel Trip')              

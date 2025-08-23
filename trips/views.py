@@ -141,8 +141,6 @@ def trip_detail_view(request, trip_name):
     queryset = Trip.objects.filter(trip_name=trip_name)
     trip = get_object_or_404(queryset)
 
-    is_modal = request.GET.get('modal', 'true') == 'true'
-
     if request.user.profile.user_type == "passenger":
         user_trip_rating = trip.passenger_rating
     elif request.user.profile.user_type == "driver":
@@ -153,7 +151,6 @@ def trip_detail_view(request, trip_name):
     context = {
         'trip': trip,
         'user': request.user,
-        'is_modal': is_modal,
         'user_trip_rating': user_trip_rating,
         'ratings_num': range(1, 6),
     }
