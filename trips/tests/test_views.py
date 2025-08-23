@@ -49,6 +49,7 @@ class TripsViewTest(TestCase):
         cls.login_url = reverse("account_login")
         cls.dash_details_url ='dash-details'
         cls.trip_detail_url = "trip-detail"
+        cls.trip_edit_url = "trip-edit"
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -187,3 +188,12 @@ class TripsViewTest(TestCase):
         self.login_user('passenger_other')
         response = self.client.get(reverse(self.trip_detail_url,args=[self.trip.trip_name]))
         self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)        
+
+    def test_passenger_user_can_launch_trip_edit_modal_for_existing_tip(self):
+
+        self.login_user('passenger')
+        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        response = self.client.get(reverse(self.trip_edit_url,args=[self.trip.trip_name]))
+        print(response.content)
+        self.assertContains(response, 'Lux Aiport')        
+        self.assertContains(response, 'Save Changes')        
