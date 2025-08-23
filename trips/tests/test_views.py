@@ -84,4 +84,15 @@ class TripsViewTest(TestCase):
         self.login_user('passenger')
         response = self.client.get(reverse(self.dash_details_url,args=['calendar-view']))
         self.assertContains(response, "userCalendar") 
-        self.assertContains(response, "Wed")         
+        self.assertContains(response, "Wed")
+
+    def test_no_trips_rendered_if_no_trips_created(self):
+
+        self.login_user('passenger')
+        response = self.client.get(reverse(self.dash_details_url,args=['home']))
+        self.assertContains(response, '<p class="all-trips">All Trips: 0</p>') 
+
+        response = self.client.get(reverse(self.dash_details_url,args=['list-view']))
+        self.assertContains(response, 'You do not have any trips.') 
+
+
