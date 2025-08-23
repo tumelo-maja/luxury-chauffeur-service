@@ -1119,7 +1119,11 @@ body {
 
 .trip-list ul {
     width: 270px;
-    padding-right: 15px;
+    /* padding-right: 15px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .trip-item {
@@ -1783,6 +1787,12 @@ body {
 
 .stat-value.pending {
     color: orange
+}
+
+.all-trips {
+    font-size: 1rem;
+    text-align: center;
+    margin: 15px 0;
 }
 
 .dash-details {

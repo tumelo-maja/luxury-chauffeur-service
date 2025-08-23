@@ -72,9 +72,24 @@ def dash_details_view(request, partial):
                 'completed': trips_completed.count(),
                 'pending': trips.filter(status='pending').count(),
                 'modified': trips.filter(status='modified').count(),
+                'all': trips.count(),
             },            
         }
-        
+    
+    elif partial =="list-view":
+
+        if request.user.profile.user_type == "passenger":
+            trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
+        elif request.user.profile.user_type == "driver":
+            trips = Trip.objects.filter(driver=request.user.profile.driver_profile)
+        elif request.user.profile.user_type == "manager":
+            trips = Trip.objects.all()
+
+        context = {
+            'trips': trips.order_by('travel_datetime'),
+            'user': request.user
+        }
+
     return render(request, f'trips/partials/dash-{partial}.html',context)
 
 
@@ -87,51 +102,24 @@ def trips_list_view(request, filter_trips='all'):
     ----------
     request : HttpRequest
         The HTTP request object.
-    filter_trips : str
-        Filter option ('recent' or 'all'), by default 'all'.
 
     Returns
     -------
-    Rendered trips list template.
+    Rendered trips list template for recent trips.
     """
-    if filter_trips == "recent":
-        if request.user.profile.user_type == "passenger":
-            trips = Trip.objects.filter(
-                passenger=request.user.profile.passenger_profile,
-            ).order_by('-updated_on')[:4]
-        elif request.user.profile.user_type == "driver":
-            trips = Trip.objects.filter(
-                driver=request.user.profile.driver_profile,
-            ).order_by('-updated_on')[:4]
-        elif request.user.profile.user_type == "manager":
-            trips = Trip.objects.all().order_by('-updated_on')[:4]
+    if request.user.profile.user_type == "passenger":
+        trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
+    elif request.user.profile.user_type == "driver":
+        trips = Trip.objects.filter(driver=request.user.profile.driver_profile)
+    elif request.user.profile.user_type == "manager":
+        trips = Trip.objects.all()
 
-        context = {
-            'trips': trips,
-            'user': request.user,
-        }
+    context = {
+        'trips': trips.order_by('-updated_on')[:4],
+        'user': request.user,
+    }
 
-        return render(request, 'trips/partials/dash-table.html', context)
-
-    else:
-
-        if request.user.profile.user_type == "passenger":
-            trips = Trip.objects.filter(
-                passenger=request.user.profile.passenger_profile,
-            ).order_by('travel_datetime')
-        elif request.user.profile.user_type == "driver":
-            trips = Trip.objects.filter(
-                driver=request.user.profile.driver_profile,
-            ).order_by('travel_datetime')
-        elif request.user.profile.user_type == "manager":
-            trips = Trip.objects.all().order_by('travel_datetime')
-
-        context = {
-            'trips': trips,
-            'user': request.user
-        }
-
-        return render(request, 'trips/trips-list.html', context)
+    return render(request, 'trips/partials/dash-table.html', context)
 
 
 @login_required

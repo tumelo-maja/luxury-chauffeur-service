@@ -54,8 +54,29 @@
                 </ul>
             </div>
         </div>
-        <div id="trip_list" class="trip-list" hx-get="{% url 'trips-list' 'all'%}"
-            hx-trigger="load, tripListChanged from:body">
+        <div class="trip-list">
+            <ul>
+                {% for trip in trips reversed %}
+                <li class="trip-item" data-status="{{ trip.status }}" data-created="{{ trip.created_on | date:'YmdHi' }}"
+                    data-updated="{{ trip.updated_on | date:'YmdHi' }}" data-travel="{{ trip.travel_datetime | date:'YmdHi' }}"
+                    data-id="{{ trip.trip_name }}" hx-get="{% url 'trip-detail' trip.trip_name %}"
+                    hx-target="#baseDialog" hx-trigger="click">
+                                    
+                    <div class="trip-top">
+                        <div class="trip-details">
+                            <p class="driver">{{ trip.driver }}</p>
+                            <p class="date">{{ trip.travel_datetime | date:"Y M d - H:i" }}</p>
+                        </div>
+                        <div class="trip-status status-{{ trip.status_class }}">
+                            <p>{{ trip.status_str }}</p>
+                        </div>
+                    </div>
+                    <p class="destination">{{ trip.location_end }}</p>
+                </li>
+                {% empty %}
+                <li class="empty-list">You do not have any trips.</li>
+                {% endfor %}
+            </ul>
         </div>
         {% if user.profile.user_type == 'passenger' %}
         <button type="button" hx-get="{% url 'trip-request' %}" hx-target="#baseDialog" class="fixed-button"
