@@ -1064,6 +1064,7 @@ body {
 .greeting p {
     font-style: italic;
     padding: 5px 0;
+    margin-top: 15px;
 }
 
 .new-trip h2 {
@@ -1792,7 +1793,8 @@ body {
 .all-trips {
     font-size: 1rem;
     text-align: center;
-    margin: 15px 0;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
 
 .dash-details {
