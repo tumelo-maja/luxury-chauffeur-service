@@ -107,7 +107,7 @@ class TripsViewTest(TestCase):
         response = self.client.get(reverse(self.dash_details_url,args=['list-view']))
         self.assertContains(response, 'You do not have any trips.') 
 
-    def test_trips_rendered_when_available(self):
+    def test_trips_rendered_in_the_trips_page_when_available(self):
 
         self.login_user('passenger')
         self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())  # no trips
@@ -121,3 +121,13 @@ class TripsViewTest(TestCase):
 
         response = self.client.get(reverse(self.dash_details_url,args=['list-view']))
         self.assertContains(response, self.trip.trip_name)         
+
+
+    def test_passenger_user_can_launch_trip_request_modal(self):
+
+        self.login_user('passenger')
+        # response = self.client.get(reverse(self.trip_request_url))
+        response = self.client.get(self.trip_request_url)
+        self.assertContains(response, 'Enter pickup location...')        
+        self.assertContains(response, 'csrfmiddlewaretoken')        
+        self.assertContains(response, 'type="submit"')        
