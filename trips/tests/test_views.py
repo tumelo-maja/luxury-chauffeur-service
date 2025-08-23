@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.dateparse import parse_datetime
+from django.http import Http404
 from users.models import Profile, DriverProfile, PassengerProfile, ManagerProfile
 from ..models import Trip
 
@@ -60,6 +61,16 @@ class TripsViewTest(TestCase):
             username=f"{user_type}1",
             password=self.users_password)
         self.user = User.objects.get(username=f"{user_type}1")
+    
+    def create_other_passenger(self):
+        self.user_passenger_other = User.objects.create_user(
+        username="passenger_other1", password=self.users_password, email="passenger_other1@luxtest.com",)
+        pass_profile = Profile.objects.get(user=self.user_passenger_other)
+        pass_profile.user_type = "passenger"
+        pass_profile.save()
+        self.profile_passenger_other = PassengerProfile.objects.create(
+        profile=pass_profile)
+        self.profile_passenger_other.profile.user_type = "passenger"
     
     def create_test_trip(self,pick_up,drop_off,trip_date):
         self.trip = Trip.objects.create(
@@ -156,7 +167,7 @@ class TripsViewTest(TestCase):
 
         self.assertContains(response, 'Action not allowed') 
 
-    def test_passenger_user_veiw_trip_details_of_own_trips(self):
+    def test_passenger_user_can_veiw_trip_details_of_own_trips(self):
 
         self.login_user('passenger')
         self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
@@ -165,3 +176,14 @@ class TripsViewTest(TestCase):
         self.assertContains(response, 'trip-detail-container')        
         self.assertContains(response, 'Edit Trip')        
         self.assertContains(response, 'Cancel Trip')              
+
+    def test_passenger_user_cannot_veiw_trip_details_of_other_passengers(self):
+
+        self.login_user('passenger')
+        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        self.client.logout()
+
+        self.create_other_passenger()
+        self.login_user('passenger_other')
+        response = self.client.get(reverse(self.trip_detail_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)        

@@ -2492,6 +2492,21 @@ body {
     text-align: center;
 }
 
+.container-404 {
+    margin: 0 auto;
+    padding: auto 32px;
+    text-align: center;
+}
+
+.container-404 h1 {
+    font-size: 60px;
+}
+
+.container-404 p {
+    margin: 40px 0;
+    color: purple
+}
+
 /*--------------------------- Media queries --*/
 @media screen and (min-width: 375px) {
     .hero-slider {

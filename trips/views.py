@@ -140,8 +140,10 @@ def trip_detail_view(request, trip_name):
     """
     queryset = Trip.objects.filter(trip_name=trip_name)
     trip = get_object_or_404(queryset)
+    check_user_permission(request, trip)
 
     if request.user.profile.user_type == "passenger":
+
         user_trip_rating = trip.passenger_rating
     elif request.user.profile.user_type == "driver":
         user_trip_rating = trip.driver_rating
@@ -657,3 +659,15 @@ def manager_tabs_view(request, tab_name):
             'drivers': drivers,
         }
         return render(request, 'trips/partials/manager-drivers.html', context)
+
+def check_user_permission(request, trip):
+
+    if request.user.profile.user_type == "manager":
+        return
+    elif request.user.profile.user_type == "driver" and trip.driver.profile.user == request.user:
+        return
+    elif request.user.profile.user_type == "passenger" and trip.passenger.profile.user == request.user:
+        return
+    else:
+        raise Http404()
+
