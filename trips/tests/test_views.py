@@ -50,6 +50,18 @@ class TripsViewTest(TestCase):
             username=f"{user_type}1",
             password=self.users_password)
     
+    def create_test_trip(self,pick_up,drop_off,trip_date):
+        self.trip = Trip.objects.create(
+            passenger=self.profile_passenger,
+            driver=self.profile_driver,
+            location_start=pick_up,
+            location_end=drop_off,
+            travel_datetime=parse_datetime(trip_date),
+            trip_type="Airport Transfers",
+            vehicle="Range Rover Vogue",
+        )     
+   
+    
     def test_unauthenticated_users_are_redirected_to_login_when_accessing_trips_page(self):
         response = self.client.get(self.trips_url)
         self.assertRedirects(response, expected_url=f"{self.login_url}?next={self.trips_url}")
@@ -90,9 +102,22 @@ class TripsViewTest(TestCase):
 
         self.login_user('passenger')
         response = self.client.get(reverse(self.dash_details_url,args=['home']))
-        self.assertContains(response, '<p class="all-trips">All Trips: 0</p>') 
+        self.assertContains(response, '<span id="total-trips">0</span>') 
 
         response = self.client.get(reverse(self.dash_details_url,args=['list-view']))
         self.assertContains(response, 'You do not have any trips.') 
 
+    def test_trips_rendered_when_available(self):
 
+        self.login_user('passenger')
+        self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())  # no trips
+
+        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        self.trip.refresh_from_db()
+
+        self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())  # 1 trip
+        response = self.client.get(reverse(self.dash_details_url,args=['home']))
+        self.assertContains(response, '<span id="total-trips">1</span>') 
+
+        response = self.client.get(reverse(self.dash_details_url,args=['list-view']))
+        self.assertContains(response, self.trip.trip_name)         
