@@ -280,6 +280,7 @@ def trip_edit_view(request, trip_name):
     Rendered pre-filled trip edit form in a modal or 204 HttpResponse if successfully submitted.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
+    check_user_permission(request, trip)
 
     if request.method == "POST":
         form = TripRequestForm(request.POST, instance=trip)
@@ -324,6 +325,7 @@ def trip_delete_view(request, trip_name):
     Rendered trip cancel confirmation form in a modal or 204 HttpResponse if successfully submitted.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
+    check_user_permission(request, trip)
 
     if request.method == "POST":
         form = TripRequestForm(instance=trip)
@@ -364,7 +366,9 @@ def trip_review_view(request, trip_name):
     Trip status is changed accordingly
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
-
+    if request.user.profile.user_type != "manager":
+        raise Http404()
+    
     if request.method == "POST":
         form = TripRequestForm(instance=trip)
         request_outcome = request.POST.get('request_outcome')
@@ -447,6 +451,7 @@ def rate_trip_view(request, trip_name):
     Else Http404 error is raised.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
+    check_user_permission(request, trip)
 
     # Handle form submission
     if request.method == "POST":
@@ -570,33 +575,31 @@ def driver_action_view(request, trip_name):
     trip = get_object_or_404(Trip, trip_name=trip_name)
 
     # ensure user has driver role and allocated to this trip:
-    if request.user.profile.user_type == "driver" and trip.driver.profile.user == request.user:
-        if request.method == "POST":
-            if trip.status == 'confirmed':
-                trip.start_trip()
-                request.user.profile.update_status('engaged')
-            elif trip.status == 'in_progress':
-                trip.end_trip()
-                request.user.profile.update_status('available')
-            else:
-                return HttpResponseForbidden("Action not authorized for this trip.")
-
-            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
-
-        context = {
-            'trip': trip,
-            'user': request.user
-        }
-
+    check_user_permission(request, trip)
+    if request.method == "POST":
         if trip.status == 'confirmed':
-            return render(request, 'trips/trip-start.html', context)
+            trip.start_trip()
+            request.user.profile.update_status('engaged')
         elif trip.status == 'in_progress':
-            return render(request, 'trips/trip-end.html', context)
+            trip.end_trip()
+            request.user.profile.update_status('available')
         else:
             return HttpResponseForbidden("Action not authorized for this trip.")
 
+        return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+
+    context = {
+        'trip': trip,
+        'user': request.user
+    }
+
+    if trip.status == 'confirmed':
+        return render(request, 'trips/trip-start.html', context)
+    elif trip.status == 'in_progress':
+        return render(request, 'trips/trip-end.html', context)
     else:
         return HttpResponseForbidden("Action not authorized for this trip.")
+
 
 
 @login_required
