@@ -50,6 +50,7 @@ class TripsViewTest(TestCase):
         cls.dash_details_url ='dash-details'
         cls.trip_detail_url = "trip-detail"
         cls.trip_edit_url = "trip-edit"
+        cls.trip_cancel_url = "trip-cancel"
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -194,6 +195,15 @@ class TripsViewTest(TestCase):
         self.login_user('passenger')
         self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
         response = self.client.get(reverse(self.trip_edit_url,args=[self.trip.trip_name]))
-        print(response.content)
+
         self.assertContains(response, 'Lux Aiport')        
-        self.assertContains(response, 'Save Changes')        
+        self.assertContains(response, 'Save Changes')
+
+    def test_passenger_user_can_launch_trip_cancel_modal_for_existing_tip(self):
+
+        self.login_user('passenger')
+        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        response = self.client.get(reverse(self.trip_cancel_url,args=[self.trip.trip_name]))
+        print(response.content)
+        self.assertContains(response, 'Warning! You are about to cancel the Trip:')        
+        self.assertContains(response, 'Yes, Cancel Trip')       

@@ -308,7 +308,7 @@ def trip_edit_view(request, trip_name):
 
 
 @login_required
-def trip_delete_view(request, trip_name):
+def trip_cancel_view(request, trip_name):
     """
     Displays a confirmation modal for canceling an existing trip. 
     Handles trip editing trip existing requests
