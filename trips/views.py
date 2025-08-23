@@ -94,7 +94,7 @@ def dash_details_view(request, partial):
 
 
 @login_required
-def trips_list_view(request, filter_trips='all'):
+def trips_list_view(request):
     """
     Display a list of role-specific trips for the current user.
 
@@ -177,7 +177,8 @@ def trip_request_view(request):
     """
     if request.user.profile.user_type != "passenger":
         messages.warning(request, "Only passenger users can create trips")
-        return HttpResponseForbidden(f"Trip requests from {request.user.profile.user_type}s not allowed.")
+        context = {'error': f"Trip requests from {request.user.profile.user_type}s not allowed.",}
+        return render(request, 'partials/modal-error.html', context)
     
     if request.method == "POST":
         form = TripRequestForm(request.POST)

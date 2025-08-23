@@ -15,22 +15,31 @@ class TripsViewTest(TestCase):
         # create passenger
         cls.user_passenger = User.objects.create_user(
             username="passenger1", password=cls.users_password, email="passenger1@luxtest.com",)
+        pass_profile = Profile.objects.get(user=cls.user_passenger)
+        pass_profile.user_type = "passenger"
+        pass_profile.save()
         cls.profile_passenger = PassengerProfile.objects.create(
-            profile=Profile.objects.get(user=cls.user_passenger))
+            profile=pass_profile)
         cls.profile_passenger.profile.user_type = "passenger"
 
         # create driver
         cls.user_driver = User.objects.create_user(
             username="driver1", password=cls.users_password, email="driver1@luxtest.com",)
+        drive_profile = Profile.objects.get(user=cls.user_driver)
+        drive_profile.user_type = "driver"        
+        drive_profile.save()
         cls.profile_driver = DriverProfile.objects.create(
-            profile=Profile.objects.get(user=cls.user_driver))
+            profile=drive_profile)
         cls.profile_driver.profile.user_type = "driver"
 
         # create manager
         cls.user_manager = User.objects.create_user(
             username="manager1", password=cls.users_password, email="manager1@luxtest.com",)
+        man_profile = Profile.objects.get(user=cls.user_manager)
+        man_profile.user_type = "manager"        
+        man_profile.save()
         cls.profile_manager = ManagerProfile.objects.create(
-            profile=Profile.objects.get(user=cls.user_manager))
+            profile=man_profile)
         cls.profile_manager.profile.user_type = "manager"
 
         # url paths
@@ -49,6 +58,7 @@ class TripsViewTest(TestCase):
         self.client.login(
             username=f"{user_type}1",
             password=self.users_password)
+        self.user = User.objects.get(username=f"{user_type}1")
     
     def create_test_trip(self,pick_up,drop_off,trip_date):
         self.trip = Trip.objects.create(
@@ -126,8 +136,21 @@ class TripsViewTest(TestCase):
     def test_passenger_user_can_launch_trip_request_modal(self):
 
         self.login_user('passenger')
-        # response = self.client.get(reverse(self.trip_request_url))
         response = self.client.get(self.trip_request_url)
+
         self.assertContains(response, 'Enter pickup location...')        
         self.assertContains(response, 'csrfmiddlewaretoken')        
         self.assertContains(response, 'type="submit"')        
+
+    def test_non_passenger_users_cannot_launch_trip_request_modal(self):
+
+        self.login_user('driver')
+        response = self.client.get(self.trip_request_url)
+
+        self.assertContains(response, 'Action not allowed') 
+        self.client.logout()
+
+        self.login_user('manager')
+        response = self.client.get(self.trip_request_url)
+
+        self.assertContains(response, 'Action not allowed') 

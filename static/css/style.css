@@ -2486,6 +2486,12 @@ body {
     text-decoration: underline;
 }
 
+.modal-error {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
 /*--------------------------- Media queries --*/
 @media screen and (min-width: 375px) {
     .hero-slider {
