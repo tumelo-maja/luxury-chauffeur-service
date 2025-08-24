@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        {% else %}
+        {% elif user.profile.user_type == 'manager' %}
         <div class="sum-item">
             <p class="sub-head">Passenger</p>
             <div>
@@ -51,20 +51,30 @@
                 </div>
                 <div class="driver">
                     <a href="{% url 'profile'  trip.passenger.profile.user.username %}" class="profile-link">
-                    <span>Chauffeur: </span>
+                    <span>Passenger: </span>
                     <span>{{ trip.passenger.profile.name }}</span>
                     </a>
                 </div>
-                {% if user.profile.user_type == 'manager' %}
                 <div class="driver">
                     <a href="{% url 'profile'  trip.driver.profile.user.username %}" class="profile-link">
                     <span>Passenger: </span>
                     <span>{{ trip.driver.profile.name }}</span>
                     </a>                    
                 </div>                
-                {% endif %}                
             </div>
-        </div>        
+        </div>
+        {% else %}
+        <div class="sum-item">
+            <p class="sub-head">Passenger</p>
+            <div>
+                <div class="trip-image">
+                    <img src="{{ trip.passenger.profile.avatar }}" alt="member of staff">
+                </div>
+                <div class="driver">
+                    <p><span>Passenger: </span><span>{{ trip.passenger.profile.name }}</span></p>
+                </div>            
+            </div>
+        </div>
         {% endif %}
         <div class="sum-item">
             <div class="vehicle-summary">
