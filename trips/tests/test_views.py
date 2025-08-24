@@ -52,6 +52,7 @@ class TripsViewTest(TestCase):
         cls.trip_edit_url = "trip-edit"
         cls.trip_cancel_url = "trip-cancel"
         cls.trip_feedback_url = "trip-feedback"
+        cls.trip_action_url = "trip-action"
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -65,15 +66,22 @@ class TripsViewTest(TestCase):
             password=self.users_password)
         self.user = User.objects.get(username=f"{user_type}1")
     
-    def create_other_passenger(self):
+    def login_other_passenger(self, user_type):
         self.user_passenger_other = User.objects.create_user(
-        username="passenger_other1", password=self.users_password, email="passenger_other1@luxtest.com",)
-        pass_profile = Profile.objects.get(user=self.user_passenger_other)
-        pass_profile.user_type = "passenger"
-        pass_profile.save()
-        self.profile_passenger_other = PassengerProfile.objects.create(
-        profile=pass_profile)
-        self.profile_passenger_other.profile.user_type = "passenger"
+        username=f"{user_type}_other1", password=self.users_password, email=f"{user_type}_other1@luxtest.com",)
+        user_profile = Profile.objects.get(user=self.user_passenger_other)
+        user_profile.user_type = user_type
+        user_profile.save()
+        
+        if user_type == "passenger":
+            self.profile_passenger_other = PassengerProfile.objects.create(
+            profile=user_profile)
+            self.profile_passenger_other.profile.user_type = user_type
+        elif user_type == "driver":
+            self.profile_driver_other = DriverProfile.objects.create(
+            profile=user_profile)
+            self.profile_driver_other.profile.user_type = user_type            
+        self.login_user(f'{user_type}_other')
     
     def create_test_trip(self):
 
@@ -183,12 +191,9 @@ class TripsViewTest(TestCase):
 
     def test_passenger_user_cannot_veiw_trip_details_of_other_passengers(self):
 
-        self.login_user('passenger')
         self.create_test_trip()
-        self.client.logout()
 
-        self.create_other_passenger()
-        self.login_user('passenger_other')
+        self.login_other_passenger('passenger')
         response = self.client.get(reverse(self.trip_detail_url,args=[self.trip.trip_name]))
         self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)        
 
@@ -210,7 +215,6 @@ class TripsViewTest(TestCase):
         self.login_user('passenger')
         self.create_test_trip()
         response = self.client.get(reverse(self.trip_cancel_url,args=[self.trip.trip_name]))
-        print(response.content)
         self.assertContains(response, 'Warning! You are about to cancel the Trip:')        
         self.assertContains(response, 'Yes, Cancel Trip')       
 
@@ -220,13 +224,40 @@ class TripsViewTest(TestCase):
         self.create_test_trip()
         self.trip.status='completed'
         response = self.client.get(reverse(self.trip_feedback_url,args=[self.trip.trip_name]))
-        # print(response.content)
         self.assertContains(response, f'How was your experience with {self.profile_driver.profile.name} on this trip?')        
         self.assertContains(response, 'Rate your Chauffeur')
         self.client.logout()
 
         self.login_user('driver')
         response = self.client.get(reverse(self.trip_feedback_url,args=[self.trip.trip_name]))
-        # print(response.content)
         self.assertContains(response, f'How was your experience with {self.profile_passenger.profile.name} on this trip?')        
-        self.assertContains(response, 'Rate your Passenger')           
+        self.assertContains(response, 'Rate your Passenger')
+
+     
+                   
+    def test_only_driver_assigned_to_trip_can_access_trip_action_for_confirmed_or_inprogress_trips(self):
+
+        self.create_test_trip()
+
+        self.login_user('driver')
+        # trip status 'pending' after creation
+        response = self.client.get(reverse(self.trip_action_url,args=[self.trip.trip_name]))
+        self.assertContains(response, f"This action is not allowed for trip with status: {self.trip.status}")           
+
+        # change trip status to 'confirmed'
+        self.trip.status='confirmed'
+        self.trip.save()
+        response = self.client.get(reverse(self.trip_action_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "Start Trip")
+
+        # change trip status to 'in_progress'
+        self.trip.status='in_progress'
+        self.trip.save()
+        response = self.client.get(reverse(self.trip_action_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "End Trip")        
+
+        #check for other drivers
+        self.client.logout()
+        self.login_other_passenger('driver')
+        response = self.client.get(reverse(self.trip_action_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)    

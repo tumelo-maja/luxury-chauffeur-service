@@ -53,7 +53,7 @@
                 </ul>
                 <div class="row-sep"></div>
             </div>
-            {% if not user.profile.user_type == 'passenger' %}
+            {% if user.profile.user_type == 'passenger' %}
             <div class="dash-tail">
                 <button type="button" class="dash-button" aria-label="create a new trip"
                     hx-get="{% url 'trip-request' %}" hx-target="#baseDialog">+ Create Trip</button>

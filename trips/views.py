@@ -572,10 +572,13 @@ def driver_action_view(request, trip_name):
     204 HttpResponse if form submitted successfully.
     HttpResponseForbidden  is raised if action is invalid/not allowed for a given trip.
     """
-    trip = get_object_or_404(Trip, trip_name=trip_name)
-
+    trip = get_object_or_404(Trip, trip_name=trip_name)  
     # ensure user has driver role and allocated to this trip:
     check_user_permission(request, trip)
+    if trip.status not in ['confirmed', 'in_progress']:
+        context = {'error': f"This action is not allowed for trip with status: {trip.status}",}
+        return render(request, 'partials/modal-error.html', context)  
+        
     if request.method == "POST":
         if trip.status == 'confirmed':
             trip.start_trip()
