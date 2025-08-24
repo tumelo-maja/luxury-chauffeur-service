@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.urls import reverse
+from django.http import Http404
 from .forms import *
 from .models import *
 
@@ -31,10 +32,12 @@ def profile_view(request, username):
     -------
     Rendered profile page for the user specified by `username`.
     """
-    if username != request.user:
+    if username == request.user:
+        profile = request.user.profile
+    elif request.user.profile.user_type == "manager":
         profile = get_object_or_404(User, username=username).profile
     else:
-        profile = request.user.profile
+        raise Http404()        
 
     user_status = profile.status
     context = {
