@@ -47,6 +47,7 @@ class TripsViewTest(TestCase):
         cls.trips_url = reverse("trips")
         cls.trip_request_url = reverse("trip-request")
         cls.login_url = reverse("account_login")
+        cls.login_url = reverse("account_login")
         cls.dash_details_url ='dash-details'
         cls.trip_detail_url = "trip-detail"
         cls.trip_edit_url = "trip-edit"
@@ -54,6 +55,7 @@ class TripsViewTest(TestCase):
         cls.trip_feedback_url = "trip-feedback"
         cls.trip_action_url = "trip-action"
         cls.trip_review_url = "trip-review"
+        cls.trip_manager_overview_url = reverse("manager-overview")
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -94,7 +96,10 @@ class TripsViewTest(TestCase):
             travel_datetime=parse_datetime("2025-09-21T15:30:00Z"),
             trip_type="Airport Transfers",
             vehicle="Range Rover Vogue",
-        )     
+        )   
+
+        self.trip.refresh_from_db()
+  
    
     
     def test_unauthenticated_users_are_redirected_to_login_when_accessing_trips_page(self):
@@ -148,7 +153,6 @@ class TripsViewTest(TestCase):
         self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())  # no trips
 
         self.create_test_trip()
-        self.trip.refresh_from_db()
 
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())  # 1 trip
         response = self.client.get(reverse(self.dash_details_url,args=['home']))
@@ -281,4 +285,25 @@ class TripsViewTest(TestCase):
         self.client.logout()
         self.login_user('passenger')
         response = self.client.get(reverse(self.trip_review_url,args=[self.trip.trip_name]))
-        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)                  
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)
+
+    def test_only_manager_user_can_access_manager_summary_tab_in_trips_page(self):
+
+        self.create_test_trip()
+        self.login_user('manager')
+        response = self.client.get(self.trip_manager_overview_url)
+        # print(response.content)
+        self.assertContains(response, "Manage Passengers, Driver and Trips")    
+
+
+        # #check for drivers
+        self.client.logout()
+        self.login_user('driver')
+        response = self.client.get(self.trip_manager_overview_url)
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)
+
+        # #check for passenger
+        self.client.logout()
+        self.login_user('passenger')
+        response = self.client.get(self.trip_manager_overview_url)
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)     

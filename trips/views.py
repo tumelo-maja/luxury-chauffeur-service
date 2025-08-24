@@ -614,7 +614,10 @@ def manager_overview_view(request):
     Returns
     -------
     Rendered manager overview template with trips tab as a default view.
-    """    
+    """
+    if request.user.profile.user_type != "manager":
+        raise Http404()
+        
     return render(request, 'trips/manager-overview.html')
 
 
@@ -636,6 +639,10 @@ def manager_tabs_view(request, tab_name):
     -------
     Rendered partial template for the requested tab:
     """
+    if request.user.profile.user_type != "manager":
+        raise Http404()
+    
+
     if tab_name == "trips":
         trips = Trip.objects.all()[:20]
         context = {
