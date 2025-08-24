@@ -53,6 +53,7 @@ class TripsViewTest(TestCase):
         cls.trip_cancel_url = "trip-cancel"
         cls.trip_feedback_url = "trip-feedback"
         cls.trip_action_url = "trip-action"
+        cls.trip_review_url = "trip-review"
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -260,4 +261,24 @@ class TripsViewTest(TestCase):
         self.client.logout()
         self.login_other_passenger('driver')
         response = self.client.get(reverse(self.trip_action_url,args=[self.trip.trip_name]))
-        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)    
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)  
+
+    def test_only_manager_user_can_access_trip_review_to_approve_or_reject_trips(self):
+
+        self.create_test_trip()
+
+        self.login_user('manager')
+        response = self.client.get(reverse(self.trip_review_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "Review Trip")    
+
+        #check for drivers
+        self.client.logout()
+        self.login_user('driver')
+        response = self.client.get(reverse(self.trip_review_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)
+
+        #check for passenger
+        self.client.logout()
+        self.login_user('passenger')
+        response = self.client.get(reverse(self.trip_review_url,args=[self.trip.trip_name]))
+        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)                  
