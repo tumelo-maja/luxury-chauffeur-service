@@ -51,6 +51,7 @@ class TripsViewTest(TestCase):
         cls.trip_detail_url = "trip-detail"
         cls.trip_edit_url = "trip-edit"
         cls.trip_cancel_url = "trip-cancel"
+        cls.trip_feedback_url = "trip-feedback"
 
         # choice variables
         cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
@@ -74,13 +75,14 @@ class TripsViewTest(TestCase):
         profile=pass_profile)
         self.profile_passenger_other.profile.user_type = "passenger"
     
-    def create_test_trip(self,pick_up,drop_off,trip_date):
+    def create_test_trip(self):
+
         self.trip = Trip.objects.create(
             passenger=self.profile_passenger,
             driver=self.profile_driver,
-            location_start=pick_up,
-            location_end=drop_off,
-            travel_datetime=parse_datetime(trip_date),
+            location_start='Lux Hotel',
+            location_end='Lux Aiport',
+            travel_datetime=parse_datetime("2025-09-21T15:30:00Z"),
             trip_type="Airport Transfers",
             vehicle="Range Rover Vogue",
         )     
@@ -136,7 +138,7 @@ class TripsViewTest(TestCase):
         self.login_user('passenger')
         self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())  # no trips
 
-        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        self.create_test_trip()
         self.trip.refresh_from_db()
 
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())  # 1 trip
@@ -172,7 +174,7 @@ class TripsViewTest(TestCase):
     def test_passenger_user_can_veiw_trip_details_of_own_trips(self):
 
         self.login_user('passenger')
-        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        self.create_test_trip()
         response = self.client.get(reverse(self.trip_detail_url,args=[self.trip.trip_name]))
 
         self.assertContains(response, 'trip-detail-container')        
@@ -182,7 +184,7 @@ class TripsViewTest(TestCase):
     def test_passenger_user_cannot_veiw_trip_details_of_other_passengers(self):
 
         self.login_user('passenger')
-        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        self.create_test_trip()
         self.client.logout()
 
         self.create_other_passenger()
@@ -190,20 +192,41 @@ class TripsViewTest(TestCase):
         response = self.client.get(reverse(self.trip_detail_url,args=[self.trip.trip_name]))
         self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)        
 
-    def test_passenger_user_can_launch_trip_edit_modal_for_existing_tip(self):
+    def test_passenger_user_can_launch_edit_modal_for_trips_not_reject_cancelled_inprogress_or_completed(self):
 
         self.login_user('passenger')
-        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
-        response = self.client.get(reverse(self.trip_edit_url,args=[self.trip.trip_name]))
+        self.create_test_trip()
 
-        self.assertContains(response, 'Lux Aiport')        
-        self.assertContains(response, 'Save Changes')
+        editable_status = ["in_progress", "cancelled","completed","rejected"]
+        for status in editable_status:
+            self.trip.status=status
+            response = self.client.get(reverse(self.trip_edit_url,args=[self.trip.trip_name]))
 
-    def test_passenger_user_can_launch_trip_cancel_modal_for_existing_tip(self):
+            self.assertContains(response, 'Lux Aiport')        
+            self.assertContains(response, 'Save Changes')
+
+    def test_passenger_user_can_launch_cancel_modal_for_trips_not_reject_cancelled_inprogress_or_completed(self):
 
         self.login_user('passenger')
-        self.create_test_trip('Lux Hotel','Lux Aiport',"2025-09-21T15:30:00Z")
+        self.create_test_trip()
         response = self.client.get(reverse(self.trip_cancel_url,args=[self.trip.trip_name]))
         print(response.content)
         self.assertContains(response, 'Warning! You are about to cancel the Trip:')        
         self.assertContains(response, 'Yes, Cancel Trip')       
+
+    def test_passenger_and_driver_users_can_launch_feedback_modal_for_completed_trips(self):
+
+        self.login_user('passenger')
+        self.create_test_trip()
+        self.trip.status='completed'
+        response = self.client.get(reverse(self.trip_feedback_url,args=[self.trip.trip_name]))
+        # print(response.content)
+        self.assertContains(response, f'How was your experience with {self.profile_driver.profile.name} on this trip?')        
+        self.assertContains(response, 'Rate your Chauffeur')
+        self.client.logout()
+
+        self.login_user('driver')
+        response = self.client.get(reverse(self.trip_feedback_url,args=[self.trip.trip_name]))
+        # print(response.content)
+        self.assertContains(response, f'How was your experience with {self.profile_passenger.profile.name} on this trip?')        
+        self.assertContains(response, 'Rate your Passenger')           
