@@ -89,6 +89,21 @@ class TripsFormTest(TestCase):
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())
         self.assertEqual(response.status_code, 204)
 
+    def test_passenger_cannot_submit_a_trip_request_when_required_fields_missing(self):
+        
+        self.login_user('passenger')
+
+        self.form_data['location_start']=''
+        self.form_data['trip_type']=''
+
+        response = self.client.post(self.trip_request_url, self.form_data)
+
+        self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())
+
+        self.assertFormError(response.context["form"], field='location_start', errors=["This field is required."])
+        self.assertFormError(response.context["form"], field='trip_type', errors=["This field is required."])
+
+
 
 
 
