@@ -103,6 +103,23 @@ class TripsFormTest(TestCase):
         self.assertFormError(response.context["form"], field='location_start', errors=["This field is required."])
         self.assertFormError(response.context["form"], field='trip_type', errors=["This field is required."])
 
+    def test_passenger_cannot_submit_a_trip_request_for_past_date_or_within_30_minutes(self):
+        
+        self.login_user('passenger')
+        self.form_data['travel_datetime']=datetime.now() - timedelta(days=1, hours=2)
+
+        response = self.client.post(self.trip_request_url, self.form_data)
+
+        self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())
+        self.assertFormError(response.context["form"], field='travel_datetime', errors=["Travel time must be at least 30 minutes from now and not in the past."])
+
+        # check next 15 minutes
+        self.form_data['travel_datetime']=datetime.now() + timedelta(minutes=15)
+        response = self.client.post(self.trip_request_url, self.form_data)
+
+        self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())
+        self.assertFormError(response.context["form"], field='travel_datetime', errors=["Travel time must be at least 30 minutes from now and not in the past."])
+
 
 
 
