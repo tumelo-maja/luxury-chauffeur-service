@@ -201,7 +201,21 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.status,'in_progress')        
 
 
+    def test_driver_can_end_a_trip_in_progress_changing_trip_status_changes_to_completed(self):
+        
+        self.login_user('passenger')
+    
+        self.create_test_trip()
+        self.trip.status='in_progress'        
+        self.trip.save()
+        self.assertEqual(self.trip.status,'in_progress')
 
+        # post form
+        response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]), follow=True)
+        self.assertContains(response, "Success! Trip ended.",  status_code=200)
+        self.trip.refresh_from_db()
+
+        self.assertEqual(self.trip.status,'completed')    
 
 
     
