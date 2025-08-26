@@ -94,9 +94,9 @@ class TripsFormTest(TestCase):
         
         self.login_user('passenger')
 
-        response = self.client.post(self.trip_request_url, self.form_data)
+        response = self.client.post(self.trip_request_url, self.form_data, follow=True)
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())
-        self.assertEqual(response.status_code, 204)
+        self.assertContains(response, "Success! Trip created.",  status_code=200)
 
     def test_passenger_cannot_submit_a_trip_request_when_required_fields_missing(self):
         
@@ -162,8 +162,8 @@ class TripsFormTest(TestCase):
         self.form_data['trip_type'] = "Private & VIP Chauffeur"
 
         # post form
-        response = self.client.post(reverse(self.trip_edit_url, args=[self.trip.trip_name]),self.form_data)
-        self.assertEqual(response.status_code, 204)
+        response = self.client.post(reverse(self.trip_edit_url, args=[self.trip.trip_name]),self.form_data, follow=True)
+        self.assertContains(response, "Success! Trip modified.",  status_code=200)
         self.trip.refresh_from_db()
 
         self.assertEqual(self.trip.status,'modified')
@@ -178,8 +178,8 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.status,'pending')
 
         # post form
-        response = self.client.post(reverse(self.trip_cancel_url, args=[self.trip.trip_name]))
-        self.assertEqual(response.status_code, 204)
+        response = self.client.post(reverse(self.trip_cancel_url, args=[self.trip.trip_name]), follow=True)
+        self.assertContains(response, "Success! Trip cancelled.",  status_code=200)
         self.trip.refresh_from_db()
 
         self.assertEqual(self.trip.status,'cancelled')
@@ -191,12 +191,11 @@ class TripsFormTest(TestCase):
         self.create_test_trip()
         self.trip.status='confirmed'        
         self.trip.save()
-        # self.trip.refresh_from_db()
         self.assertEqual(self.trip.status,'confirmed')
 
         # post form
-        response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]))
-        self.assertEqual(response.status_code, 204)
+        response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]), follow=True)
+        self.assertContains(response, "Success! Trip started.",  status_code=200)
         self.trip.refresh_from_db()
 
         self.assertEqual(self.trip.status,'in_progress')        

@@ -1,6 +1,6 @@
 {% load crispy_forms_tags %}
 
-<form hx-post="{{ request.path }}" class="modal-content">
+<form action="{{ request.path }}" method="POST" class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title" >Create a Trip</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

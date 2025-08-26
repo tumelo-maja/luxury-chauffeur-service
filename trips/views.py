@@ -191,7 +191,7 @@ def trip_request_view(request):
 
             messages.success(request, "Success! Trip created.")
 
-            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+            return redirect('trips')            
 
         else:
             context = {
@@ -221,11 +221,9 @@ def trip_request_view(request):
 
 
     min_valid_time = datetime.now() + timedelta(hours=1)
-    min_valid_time_str = min_valid_time.strftime('%Y-%m-%dT%H:%M')
 
     context = {
         'form': form,
-        'min_valid_time_str': min_valid_time_str,
     }
     return render(request, 'trips/trip-request.html', context)
 
@@ -293,9 +291,10 @@ def trip_edit_view(request, trip_name):
             trip.passenger = request.user.profile.passenger_profile
             trip.save()
 
-            messages.success(request, "Trip changes saved successfully.")
+            messages.success(request, "Success! Trip modified.")
 
-            return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+            return redirect('trips') 
+                   
 
     else:
         form = TripRequestForm(instance=trip)
@@ -337,7 +336,7 @@ def trip_cancel_view(request, trip_name):
         trip.save()
 
         messages.success(request, "Success! Trip cancelled.")
-        return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+        return redirect('trips')            
 
     context = {
         'trip': trip,
@@ -385,7 +384,7 @@ def trip_review_view(request, trip_name):
         trip.save()
         messages.success(request, f"Success! Trip {trip.status}.")
 
-        return HttpResponse(status=204, headers={'HX-trigger': 'tripStatusChanged'})
+        return redirect('trips')            
 
     else:
         form = TripRequestForm(instance=trip)
@@ -470,7 +469,7 @@ def rate_trip_view(request, trip_name):
             form.save()
             messages.success(request, "Success! Trip feedback submitted.")
 
-            return HttpResponse(status=204)
+            return redirect('trips')            
 
     if request.user.profile.user_type == "passenger":
         form = PassengerRatingForm(instance=trip)
@@ -596,7 +595,7 @@ def driver_action_view(request, trip_name):
         else:
             return HttpResponseForbidden("Action not authorized for this trip.")
 
-        return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
+        return redirect('trips')            
 
     context = {
         'trip': trip,

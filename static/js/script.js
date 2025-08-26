@@ -114,50 +114,7 @@ $(document).ready(function () {
 
     htmx.on('htmx:beforeSwap', (e) => {
         if (e.detail.target.id === 'baseDialog' && !e.detail.xhr.response) {
-
             modal.hide();
-            console.log("Modal to close!");
-            console.log(e.detail)
-            const messages = e.detail.djangoMessages;  // <-- here’s your list
-            console.log(messages);
-            const rawHeader = e.detail.xhr.getResponseHeader("HX-Trigger");
-            console.log("HX-Trigger header:", rawHeader);
-
-
-            // Handle message displays
-            // const messages = $('.message');
-
-            // mesages
-            if (e.detail.djangoMessages) {
-                e.detail.djangoMessages.forEach((msg, index) => {
-                    const messageDiv = document.createElement("div");
-                    messageDiv.classList.add("message", `alert-${msg.tags}`);
-                    messageDiv.innerHTML = `
-                <div class="message-content">
-                    <div class="message-text">${msg.text}</div>
-                    <div class="close-btn">X</div>
-                </div>
-            `;
-
-                    container.appendChild(messageDiv);
-
-                    setTimeout(() => {
-                        messageDiv.classList.add("show");
-                    }, 200 + index * 300);
-
-                    setTimeout(() => {
-                        messageDiv.classList.remove("show");
-                    }, 6000 + index * 300);
-
-                    // Close button
-                    messageDiv.querySelector(".close-btn").addEventListener("click", () => {
-                        messageDiv.classList.remove("show");
-                    });
-                });
-            }
-
-
-            // end messages
         }
     })
 
