@@ -32,9 +32,7 @@ def profile_view(request, username):
     -------
     Rendered profile page for the user specified by `username`.
     """
-    if username == request.user:
-        profile = request.user.profile
-    elif request.user.profile.user_type == "manager":
+    if username == request.user or request.user.profile.user_type == "manager":
         profile = get_object_or_404(User, username=username).profile
     else:
         raise Http404()        

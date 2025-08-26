@@ -189,6 +189,8 @@ def trip_request_view(request):
             trip.passenger = request.user.profile.passenger_profile
             trip.save()
 
+            messages.success(request, "Success! Trip created.")
+
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
         else:
@@ -291,7 +293,7 @@ def trip_edit_view(request, trip_name):
             trip.passenger = request.user.profile.passenger_profile
             trip.save()
 
-            messages.success(request, "Changes saved successfully.")
+            messages.success(request, "Trip changes saved successfully.")
 
             return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
@@ -334,6 +336,7 @@ def trip_cancel_view(request, trip_name):
         trip.passenger = request.user.profile.passenger_profile
         trip.save()
 
+        messages.success(request, "Success! Trip cancelled.")
         return HttpResponse(status=204, headers={'HX-trigger': 'tripListChanged'})
 
     context = {
@@ -380,6 +383,7 @@ def trip_review_view(request, trip_name):
             trip.status = "confirmed"
 
         trip.save()
+        messages.success(request, f"Success! Trip {trip.status}.")
 
         return HttpResponse(status=204, headers={'HX-trigger': 'tripStatusChanged'})
 
@@ -464,6 +468,7 @@ def rate_trip_view(request, trip_name):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Success! Trip feedback submitted.")
 
             return HttpResponse(status=204)
 
@@ -583,9 +588,11 @@ def driver_action_view(request, trip_name):
         if trip.status == 'confirmed':
             trip.start_trip()
             request.user.profile.update_status('engaged')
+            messages.success(request, "Success! Trip started.")
         elif trip.status == 'in_progress':
             trip.end_trip()
             request.user.profile.update_status('available')
+            messages.success(request, "Success! Trip ended.")
         else:
             return HttpResponseForbidden("Action not authorized for this trip.")
 

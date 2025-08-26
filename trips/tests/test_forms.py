@@ -88,6 +88,7 @@ class TripsFormTest(TestCase):
         response = self.client.post(self.trip_request_url, self.form_data)
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())
         self.assertEqual(response.status_code, 204)
+        self.assertContains(response, "Success! Trip created.",status_code=204) 
 
     def test_passenger_cannot_submit_a_trip_request_when_required_fields_missing(self):
         
@@ -120,7 +121,24 @@ class TripsFormTest(TestCase):
         self.assertFalse(Trip.objects.filter(passenger=self.profile_passenger).exists())
         self.assertFormError(response.context["form"], field='travel_datetime', errors=["Travel time must be at least 30 minutes from now and not in the past."])
 
+    def test_passenger_cannot_submit_trip_request_within_1_hour_of_another_trip(self):
+        
+        self.login_user('passenger')
+        #trip 1
+        self.form_data['travel_datetime']=datetime.now() + timedelta(days=1, hours=2)
+        response = self.client.post(self.trip_request_url, self.form_data)
+        self.assertEqual(Trip.objects.filter(passenger=self.profile_passenger).count(),1)
 
+        #trip 2 -fail
+        self.form_data['travel_datetime']=datetime.now() + timedelta(days=1, hours=1)
+        response = self.client.post(self.trip_request_url, self.form_data)
+        self.assertFormError(response.context["form"], field='travel_datetime', errors=["You already have another trip scheduled within 1 hour of this time."])
+        self.assertEqual(Trip.objects.filter(passenger=self.profile_passenger).count(),1)
+
+        #trip 3 - success
+        self.form_data['travel_datetime']=datetime.now() + timedelta(days=1, hours=5)
+        response = self.client.post(self.trip_request_url, self.form_data)
+        self.assertEqual(Trip.objects.filter(passenger=self.profile_passenger).count(),2)
 
 
 
