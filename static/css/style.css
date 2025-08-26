@@ -703,6 +703,8 @@ body {
     z-index: 50;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .message {
@@ -724,7 +726,7 @@ body {
 
 .message-content {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
     color: white;
