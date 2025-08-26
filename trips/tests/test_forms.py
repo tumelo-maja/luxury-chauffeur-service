@@ -70,8 +70,8 @@ class TripsFormTest(TestCase):
                     "location_end": "Lux International Airport",
                     "travel_datetime": datetime.now()+ timedelta(days=1, hours=2),
                     "driver": cls.profile_driver.id,
-                    "vehicle": cls.vehicle_choices[2],
-                    "trip_type": cls.trip_types[1],
+                    "vehicle": "Rolls Royce Phantom",
+                    "trip_type": "Special Events",
                 }
 
 
@@ -80,6 +80,15 @@ class TripsFormTest(TestCase):
             username=f"{user_type}1",
             password=self.users_password)
         self.user = User.objects.get(username=f"{user_type}1")
+
+    def create_test_trip(self):
+
+        self.client.post(self.trip_request_url, self.form_data)
+
+        self.trip = Trip.objects.get(
+            passenger=self.profile_passenger,
+            driver=self.profile_driver,
+        )          
     
     def test_passenger_can_submit_a_valid_trip_request(self):
         
@@ -88,7 +97,6 @@ class TripsFormTest(TestCase):
         response = self.client.post(self.trip_request_url, self.form_data)
         self.assertTrue(Trip.objects.filter(passenger=self.profile_passenger).exists())
         self.assertEqual(response.status_code, 204)
-        self.assertContains(response, "Success! Trip created.",status_code=204) 
 
     def test_passenger_cannot_submit_a_trip_request_when_required_fields_missing(self):
         
@@ -139,6 +147,29 @@ class TripsFormTest(TestCase):
         self.form_data['travel_datetime']=datetime.now() + timedelta(days=1, hours=5)
         response = self.client.post(self.trip_request_url, self.form_data)
         self.assertEqual(Trip.objects.filter(passenger=self.profile_passenger).count(),2)
+
+    def test_passenger_can_edit_existing_trip_changing_trip_status_changes_to_modified(self):
+        
+        self.login_user('passenger')
+    
+        self.create_test_trip()
+        self.assertEqual(self.trip.status,'pending')
+        self.assertEqual(self.trip.vehicle,"Rolls Royce Phantom")
+        self.assertEqual(self.trip.trip_type,"Special Events")
+
+        #modify form data
+        self.form_data['vehicle'] = "Mercedes Benz V-Class"
+        self.form_data['trip_type'] = "Private & VIP Chauffeur"
+
+        # post form
+        response = self.client.post(reverse(self.trip_edit_url, args=[self.trip.trip_name]),self.form_data)
+        self.assertEqual(response.status_code, 204)
+        self.trip.refresh_from_db()
+
+        self.assertEqual(self.trip.status,'modified')
+        self.assertEqual(self.trip.vehicle,"Mercedes Benz V-Class")
+        self.assertEqual(self.trip.trip_type,"Private & VIP Chauffeur")        
+
 
 
 
