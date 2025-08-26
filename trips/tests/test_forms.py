@@ -184,6 +184,23 @@ class TripsFormTest(TestCase):
 
         self.assertEqual(self.trip.status,'cancelled')
 
+    def test_driver_can_start_a_confirmed_trip_changing_trip_status_changes_to_in_progress(self):
+        
+        self.login_user('passenger')
+    
+        self.create_test_trip()
+        self.trip.status='confirmed'        
+        self.trip.save()
+        # self.trip.refresh_from_db()
+        self.assertEqual(self.trip.status,'confirmed')
+
+        # post form
+        response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]))
+        self.assertEqual(response.status_code, 204)
+        self.trip.refresh_from_db()
+
+        self.assertEqual(self.trip.status,'in_progress')        
+
 
 
 
