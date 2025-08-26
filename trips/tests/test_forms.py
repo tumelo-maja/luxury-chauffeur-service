@@ -170,6 +170,19 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.vehicle,"Mercedes Benz V-Class")
         self.assertEqual(self.trip.trip_type,"Private & VIP Chauffeur")        
 
+    def test_passenger_can_cancel_existing_trip_changing_trip_status_changes_to_cancelled(self):
+        
+        self.login_user('passenger')
+    
+        self.create_test_trip()
+        self.assertEqual(self.trip.status,'pending')
+
+        # post form
+        response = self.client.post(reverse(self.trip_cancel_url, args=[self.trip.trip_name]))
+        self.assertEqual(response.status_code, 204)
+        self.trip.refresh_from_db()
+
+        self.assertEqual(self.trip.status,'cancelled')
 
 
 
