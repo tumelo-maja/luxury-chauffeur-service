@@ -35,7 +35,10 @@ def profile_view(request, username):
     if username == request.user or request.user.profile.user_type == "manager":
         profile = get_object_or_404(User, username=username).profile
     else:
-        raise Http404()        
+        try:
+            profile = request.user.profile
+        except:
+            raise Http404() 
 
     user_status = profile.status
     context = {
