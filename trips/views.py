@@ -437,7 +437,7 @@ def trip_review_view(request, trip_name):
 
 
 @login_required
-def rate_trip_view(request, trip_name):
+def trip_feedback_view(request, trip_name):
     """
     Handles trip rating by either passenger or driver users.
 
