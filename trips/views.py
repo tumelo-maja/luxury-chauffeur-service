@@ -578,7 +578,10 @@ def driver_action_view(request, trip_name):
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)  
     # ensure user has driver role and allocated to this trip:
-    check_user_permission(request, trip)
+    if trip.driver.profile.user != request.user:
+        context = {'error': "You are not authorized to access this resource",}
+        return render(request, 'partials/modal-error.html', context)  
+    
     if trip.status not in ['confirmed', 'in_progress']:
         context = {'error': f"This action is not allowed for trip with status: {trip.status}",}
         return render(request, 'partials/modal-error.html', context)  
@@ -588,12 +591,10 @@ def driver_action_view(request, trip_name):
             trip.start_trip()
             request.user.profile.update_status('engaged')
             messages.success(request, "Success! Trip started.")
-        elif trip.status == 'in_progress':
+        else:
             trip.end_trip()
             request.user.profile.update_status('available')
             messages.success(request, "Success! Trip ended.")
-        else:
-            return HttpResponseForbidden("Action not authorized for this trip.")
 
         return redirect('trips')            
 

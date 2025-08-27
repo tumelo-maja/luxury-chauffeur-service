@@ -148,7 +148,7 @@ class TripsFormTest(TestCase):
         response = self.client.post(self.trip_request_url, self.form_data)
         self.assertEqual(Trip.objects.filter(passenger=self.profile_passenger).count(),2)
 
-    def test_passenger_can_edit_existing_trip_changing_trip_status_changes_to_modified(self):
+    def test_passenger_can_edit_existing_trip_changing_its_status_changes_to_modified(self):
         
         self.login_user('passenger')
     
@@ -170,7 +170,7 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.vehicle,"Mercedes Benz V-Class")
         self.assertEqual(self.trip.trip_type,"Private & VIP Chauffeur")        
 
-    def test_passenger_can_cancel_existing_trip_changing_trip_status_changes_to_cancelled(self):
+    def test_passenger_can_cancel_existing_trip_changing_its_status_changes_to_cancelled(self):
         
         self.login_user('passenger')
     
@@ -184,7 +184,7 @@ class TripsFormTest(TestCase):
 
         self.assertEqual(self.trip.status,'cancelled')
 
-    def test_driver_can_start_a_confirmed_trip_changing_trip_status_changes_to_in_progress(self):
+    def test_driver_can_start_a_confirmed_trip_changing_its_status_changes_to_in_progress(self):
         
         self.login_user('passenger')
     
@@ -194,6 +194,12 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.status,'confirmed')
 
         # post form
+        # as passenger
+        response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]), follow=True)
+        self.assertContains(response, "You are not authorized to access this resource",  status_code=200)
+
+        self.client.logout()
+        self.login_user('driver')
         response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]), follow=True)
         self.assertContains(response, "Success! Trip started.",  status_code=200)
         self.trip.refresh_from_db()
@@ -201,7 +207,7 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.status,'in_progress')        
 
 
-    def test_driver_can_end_a_trip_in_progress_changing_trip_status_changes_to_completed(self):
+    def test_driver_can_end_a_trip_in_progress_changing_its_status_changes_to_completed(self):
         
         self.login_user('passenger')
     
@@ -211,13 +217,30 @@ class TripsFormTest(TestCase):
         self.assertEqual(self.trip.status,'in_progress')
 
         # post form
+        self.client.logout()
+        self.login_user('driver')
         response = self.client.post(reverse(self.trip_action_url, args=[self.trip.trip_name]), follow=True)
         self.assertContains(response, "Success! Trip ended.",  status_code=200)
-        self.trip.refresh_from_db()
 
+
+        self.trip.refresh_from_db()
         self.assertEqual(self.trip.status,'completed')    
 
+    def test_manager_can_approve_a_pending_or_modified_trip_changing_its_status_changes_to_confirmed(self):
+        
+        self.login_user('passenger')
+        self.create_test_trip()
+        self.trip.status='pending'        
+        self.trip.save()
 
+        # post form
+        self.client.logout()
+        self.login_user('manager')   
+        response = self.client.post(reverse(self.trip_review_url, args=[self.trip.trip_name]),{'request_outcome':'approve',}, follow=True)
+        self.assertContains(response, "Success! Trip confirmed.",  status_code=200)
+        
+        self.trip.refresh_from_db()
+        self.assertEqual(self.trip.status,'confirmed')    
     
 
 
