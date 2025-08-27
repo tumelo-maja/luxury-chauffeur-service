@@ -197,12 +197,15 @@ body {
     border-radius: 5px;
     margin-bottom: 15px;
     cursor: pointer;
-    transition: 0.2s ease-in-out;
+    transition: 0.1s ease-in-out;
     text-align: center;
+    color: white;
 }
 
-.navbar-item:hover {
-    background-color: #2f3e46;
+.navbar-item:hover,
+.navbar-item.active {
+    background-color: white;
+    color: purple;
 }
 
 .navbar-item .nav-link {
@@ -210,7 +213,7 @@ body {
     font-size: 15px;
     font-weight: 400;
     letter-spacing: 1.5px;
-    color: white;
+    color: inherit;
     position: relative;
 }
 

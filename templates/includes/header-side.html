@@ -15,41 +15,41 @@
                         <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
                 </div>
                 <ul class="nav-list">
-                    <li class="navbar-item">
-                        <a href="{{ home_url }}" class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}">
+                    <li class="navbar-item {% if request.path == home_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ home_url }}'" title="Home">
+                        <a href="{{ home_url }}" class="nav-link">
                             <i class="fa-solid fa-house"></i>
                             <span class="link-text">Home</span>
                         </a>
                     </li>
                     {% if request.user.is_authenticated %}
-                    <li class="navbar-item">
-                        <a href="{{ trips_url }}" class="nav-link {% if request.path == trips_url %}active" aria-current="page{% endif %}">
+                    <li class="navbar-item {% if request.path == trips_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ trips_url }}'" title="Trips">
+                        <a href="{{ trips_url }}" class="nav-link">
                             <i class="fa-solid fa-qrcode"></i>
                             <span class="link-text">Trips</span>
                         </a>
                     </li>
-                    <li class="navbar-item">
-                        <a href="{{ profile_url }}" class="nav-link {% if request.path == profile_url %}active" aria-current="page{% endif %}">
+                    <li class="navbar-item {% if request.path == profile_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ profile_url }}'" title="Profile">
+                        <a href="{{ profile_url }}" class="nav-link">
                             <i class="fa-solid fa-user"></i>
                             <span class="link-text">Profile</span>
                         </a>
                     </li>
-                    <li class="navbar-item">
-                        <a href="{{ chauffeurs_url }}" class="nav-link {% if request.path == chauffeurs_url %}active" aria-current="page{% endif %}">
+                    <li class="navbar-item {% if request.path == chauffeurs_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ chauffeurs_url }}'" title="Drivers">
+                        <a href="{{ chauffeurs_url }}" class="nav-link">
                             <i class="fa-solid fa-car-side"></i>
                             <span class="link-text">Drivers</span>
                         </a>
                     </li>
                     </li>
-                    <li class="navbar-item">
-                        <a href="{{ settings_url }}" class="nav-link {% if request.path == settings_url %}active" aria-current="page{% endif %}">
+                    <li class="navbar-item {% if request.path == settings_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ settings_url }}'" title="Settings">
+                        <a href="{{ settings_url }}" class="nav-link">
                             <i class="fa-solid fa-gears"></i>
                             <span class="link-text">Settings</span>
                         </a>
                     </li>
                     {% endif %}
-                    <li class="navbar-item">
-                        <a href="{{ contact_url }}" class="nav-link {% if request.path == contact_url %}active" aria-current="page{% endif %}">
+                    <li class="navbar-item {% if request.path == contact_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ contact_url }}'" title="Contact">
+                        <a href="{{ contact_url }}" class="nav-link">
                             <i class="fa-solid fa-envelope-circle-check"></i>
                             <span class="link-text">Contact</span>
                         </a>
