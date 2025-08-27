@@ -157,7 +157,7 @@ $(document).ready(function () {
                     });
             };
 
-            const updateCalendar = () => {
+            async function  updateCalendar() {
                 const currentYear = currentDate.getFullYear();
                 const currentMonth = currentDate.getMonth();
 
@@ -173,57 +173,53 @@ $(document).ready(function () {
 
                 monthYear.text(monthYearString);
 
-                getMonthlyTrips(currentYear, currentMonth + 1)
-                    .then(trips => {
+                const trips = await getMonthlyTrips(currentYear, currentMonth + 1);
+                let datesHTML = '';
+                for (let i = firstDayIndex; i > 0; i--) {
+                    const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
+                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
+                }
 
-                        let datesHTML = '';
-                        for (let i = firstDayIndex; i > 0; i--) {
-                            const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
-                            datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
-                        }
+                for (let i = 1; i <= totalDays; i++) {
+                    const date = new Date(currentYear, currentMonth, i);
+                    let todayDate = new Date();
 
-                        for (let i = 1; i <= totalDays; i++) {
-                            const date = new Date(currentYear, currentMonth, i);
-                            let todayDate = new Date();
+                    let clickedDate = new Date(date);
+                    clickedDate.setHours(todayDate.getHours() + 1, todayDate.getMinutes() + 30);
+                    const datetimeNow = clickedDate.toISOString().slice(0, 16);
 
-                            let clickedDate = new Date(date);
-                            clickedDate.setHours(todayDate.getHours() + 1, todayDate.getMinutes()+30);
-                            const datetimeNow = clickedDate.toISOString().slice(0, 16);
+                    todayDate.setHours(0, 0, 0, 0);
+                    const activeClass = date.toDateString() === todayDate.toDateString() ? 'active' : '';
+                    const pastDays = date < todayDate ? 'past-days' : '';
+                    const dateString = date.toLocaleDateString();
 
-                            todayDate.setHours(0, 0, 0, 0);
-                            const activeClass = date.toDateString() === todayDate.toDateString() ? 'active' : '';
-                            const pastDays = date < todayDate ? 'past-days' : '';
-                            const dateString = date.toLocaleDateString();
+                    let tripCount = trips.filter(trip => trip.travel_date === dateString).length;
+                    let tripCountStr = tripCount > 9 ? '9+' : `${tripCount}`;
 
-                            let tripCount = trips.filter(trip => trip.travel_date === dateString).length;
-                            let tripCountStr = tripCount > 9 ? '9+' : `${tripCount}`;
+                    const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
 
-                            const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
+                    let htmxCreateTrip = '';
+                    if (date >= todayDate && userType === 'passenger') {
+                        htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"`;
+                    }
 
-                            let htmxCreateTrip = '';
-                            if (date >= todayDate && userType === 'passenger') {
-                                htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"`;
-                            }
-
-                            datesHTML += `<div class="date-wrapper">
+                    datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass} ${pastDays}"${htmxCreateTrip}>${i}</div>
                                     ${tripCount > 0 ? tripElement : ''}
                                   </div>`
-                        }
+                }
 
-                        for (let i = 1; i <= 7 - lastDayIndex; i++) {
-                            const nextDate = new Date(currentYear, currentMonth + 1, i);
-                            datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
+                for (let i = 1; i <= 7 - lastDayIndex; i++) {
+                    const nextDate = new Date(currentYear, currentMonth + 1, i);
+                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
 
-                        }
+                }
 
-                        datesElement.html(datesHTML);
+                datesElement.html(datesHTML);
 
-                        $('.cal-date').each(function () {
-                            htmx.process(this);
-                        })
-
-                    });
+                $('.cal-date').each(function () {
+                    htmx.process(this);
+                })
             }
 
             $(prevBtn).click(() => {
