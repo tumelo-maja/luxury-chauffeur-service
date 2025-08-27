@@ -100,8 +100,8 @@ class PassengerProfile(models.Model):
         Profile, on_delete=models.CASCADE, related_name='passenger_profile')
     emergency_name = models.CharField(max_length=100)
     emergency_phone = models.CharField(max_length=15)
-    average_rating = models.FloatField(null=True, blank=True)
-    count_rating = models.IntegerField(null=True, blank=True)
+    average_rating = models.FloatField(default=0.0)
+    count_rating = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Passenger: {self.profile.user.username}"
@@ -120,9 +120,10 @@ class PassengerProfile(models.Model):
         if trips.exists():
             rating_items = [
                 trip.driver_rating for trip in trips if trip.driver_rating is not None]
-            self.count_rating = len(rating_items)
-            self.average_rating = sum(rating_items) / len(rating_items)
-            self.save()
+            if len(rating_items):
+                self.count_rating = len(rating_items)
+                self.average_rating = sum(rating_items) / len(rating_items)
+                self.save()
 
     def get_rating_levels(self, trips):
         """
@@ -153,8 +154,8 @@ class DriverProfile(models.Model):
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='driver_profile')
     experience = models.IntegerField(default=2)
-    average_rating = models.FloatField(null=True, blank=True)
-    count_rating = models.IntegerField(null=True, blank=True)
+    average_rating = models.FloatField(default=0.0)
+    count_rating = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Driver: {self.profile.user.username}"
@@ -173,9 +174,10 @@ class DriverProfile(models.Model):
         if trips.exists():
             rating_items = [
                 trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
-            self.count_rating = len(rating_items)
-            self.average_rating = sum(rating_items) / len(rating_items)
-            self.save()
+            if len(rating_items):
+                self.count_rating = len(rating_items)
+                self.average_rating = sum(rating_items) / len(rating_items)
+                self.save()
 
     def get_rating_levels(self, trips):
         """
