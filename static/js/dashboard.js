@@ -137,7 +137,7 @@ $(document).ready(function () {
     // Setup trips Calendar view  - Dashsetup
     function setupTripsCalendar() {
 
-        const userType = $('.profile-type').data('profile-type')
+        const userType = $('#user-name').data('profile-type')
         htmx.on('htmx:afterSwap', (e) => {
 
             const monthYear = $('#monthYear');
@@ -187,7 +187,7 @@ $(document).ready(function () {
                             let todayDate = new Date();
 
                             let clickedDate = new Date(date);
-                            clickedDate.setHours(todayDate.getHours() + 1, todayDate.getMinutes());
+                            clickedDate.setHours(todayDate.getHours() + 1, todayDate.getMinutes()+30);
                             const datetimeNow = clickedDate.toISOString().slice(0, 16);
 
                             todayDate.setHours(0, 0, 0, 0);

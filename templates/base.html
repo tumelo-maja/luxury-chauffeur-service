@@ -44,7 +44,7 @@
                         {% if request.user.is_authenticated %}
                         <div class="dropdown-head">
                             <img class="avatar-image" src="{{ user.profile.avatar }}" />
-                            <span id="user-name" class="ml-2 mr-1">{{ user.profile.name }}</span>
+                            <span id="user-name" class="ml-2 mr-1" data-profile-type="{{ user.profile.user_type }}">{{ user.profile.name }}</span>
                             <span class="arrow-icon"><i class="fa-solid fa-chevron-down"></i></span>
                         </div>
                         <div class="dropdown-body hidden-item">

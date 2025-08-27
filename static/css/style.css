@@ -198,6 +198,7 @@ body {
     margin-bottom: 15px;
     cursor: pointer;
     transition: 0.2s ease-in-out;
+    text-align: center;
 }
 
 .navbar-item:hover {
@@ -303,6 +304,9 @@ body {
     opacity: 1;
 }
 
+.header-main.active .navbar-item{
+    text-align: left;
+}
 
 .profile-container {
     display: flex;
