@@ -255,7 +255,7 @@ def check_trip_overlap(passenger, form):
         passenger_id= passenger,
         travel_datetime__gte=window_start,
         travel_datetime__lt=window_end
-        ).exclude(status__in=["cancelled", "completed"]).exists()
+        ).exclude(status__in=["cancelled", "completed",'rejected']).exists()
 
     if trips_in_window:
         form.add_error("travel_datetime","You already have another trip scheduled within 1 hour of this time.")

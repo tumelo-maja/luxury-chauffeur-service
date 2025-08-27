@@ -78,7 +78,7 @@ class TripRequestForm(ModelForm):
         travel_datetime = self.cleaned_data.get('travel_datetime')
 
         now = timezone.now()
-        min_allowed_time = now + timedelta(minutes=90) # fixed 1-hour+ UK timezone
+        min_allowed_time = now + timedelta(minutes=30)
 
         if travel_datetime < min_allowed_time:
             raise forms.ValidationError("Travel time must be at least 30 minutes from now and not in the past.")
