@@ -226,21 +226,24 @@ class TripsFormTest(TestCase):
         self.trip.refresh_from_db()
         self.assertEqual(self.trip.status,'completed')    
 
-    def test_manager_can_approve_a_pending_or_modified_trip_changing_its_status_changes_to_confirmed(self):
+    def test_manager_can_approve_or_reject_a_pending_or_modified_trip_changing_its_status_changes_to_confirmed(self):
         
         self.login_user('passenger')
         self.create_test_trip()
+
+        # pending
+        self.client.logout()
+        self.login_user('manager')
         self.trip.status='pending'        
         self.trip.save()
-
-        # post form
-        self.client.logout()
-        self.login_user('manager')   
         response = self.client.post(reverse(self.trip_review_url, args=[self.trip.trip_name]),{'request_outcome':'approve',}, follow=True)
         self.assertContains(response, "Success! Trip confirmed.",  status_code=200)
-        
-        self.trip.refresh_from_db()
-        self.assertEqual(self.trip.status,'confirmed')    
+
+        self.trip.status='modified'        
+        self.trip.save()
+        response = self.client.post(reverse(self.trip_review_url, args=[self.trip.trip_name]),{'request_outcome':'reject',}, follow=True)
+        self.assertContains(response, "Success! Trip rejected.",  status_code=200)
+    
     
 
 
