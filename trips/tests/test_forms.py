@@ -239,11 +239,46 @@ class TripsFormTest(TestCase):
         response = self.client.post(reverse(self.trip_review_url, args=[self.trip.trip_name]),{'request_outcome':'approve',}, follow=True)
         self.assertContains(response, "Success! Trip confirmed.",  status_code=200)
 
+        # modified
         self.trip.status='modified'        
         self.trip.save()
         response = self.client.post(reverse(self.trip_review_url, args=[self.trip.trip_name]),{'request_outcome':'reject',}, follow=True)
         self.assertContains(response, "Success! Trip rejected.",  status_code=200)
     
-    
+
+    def test_passenger_or_driver_can_submit_trip_feedback_form_for_completed_trips(self):
+        
+        self.login_user('passenger')
+        self.create_test_trip()
+        self.trip.status='completed'        
+        self.trip.save()
+
+        form_data ={
+            'passenger_rating': 5,
+            'passenger_rating_comments': 'Driver was awesome',
+        }
+        response = self.client.post(reverse(self.trip_feedback_url, args=[self.trip.trip_name]),form_data, follow=True)
+        self.assertContains(response, "Success! Trip feedback submitted.",  status_code=200)          
+
+
+        # driver
+        self.client.logout()
+        self.login_user('driver')
+        form_data ={
+            'driver_rating': 3,
+            'driver_rating_comments': 'My passenger ok',
+        }
+        response = self.client.post(reverse(self.trip_feedback_url, args=[self.trip.trip_name]),form_data, follow=True)
+        self.assertContains(response, "Success! Trip feedback submitted.",  status_code=200)        
+
+
+        trips_completed = Trip.objects.filter(status='completed')
+
+        self.profile_passenger.update_rating(trips_completed)
+        self.profile_driver.update_rating(trips_completed)
+   
+ 
+        self.assertEqual(self.profile_passenger.average_rating,3.0) 
+        self.assertEqual(self.profile_driver.average_rating,5.0) 
 
 
