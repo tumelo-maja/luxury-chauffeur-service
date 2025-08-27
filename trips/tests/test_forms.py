@@ -50,20 +50,11 @@ class TripsFormTest(TestCase):
         cls.trip_request_url = reverse("trip-request")
         cls.login_url = reverse("account_login")
         cls.login_url = reverse("account_login")
-        cls.dash_details_url ='dash-details'
-        cls.trip_detail_url = "trip-detail"
         cls.trip_edit_url = "trip-edit"
         cls.trip_cancel_url = "trip-cancel"
         cls.trip_feedback_url = "trip-feedback"
         cls.trip_action_url = "trip-action"
         cls.trip_review_url = "trip-review"
-        cls.trip_manager_overview_url = reverse("manager-overview")
-
-        # choice variables
-        cls.vehicle_choices = ["Rolls Royce Phantom", "Range Rover Vogue",
-                               "Mercedes Benz V-Class", "Premium Limousine", "Classic Vintage Cars",]
-        cls.trip_types = ["Airport Transfers", "Special Events",
-                          "Corporate Chauffeur", "Private & VIP Chauffeur",]
         
         cls.form_data = {
                     "location_start": "Lux Hotel",

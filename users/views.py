@@ -249,7 +249,16 @@ def user_signup(request):
                 request, f"{role.capitalize()}'s account created successfully.")
             send_email_confirmation(request, user)
 
-            return redirect('account-success')
+            # return redirect('account-success')
+            return render(request, 'users/account-created.html',{'user_email': user.email })
+        
+        else:
+            context = {
+                'form': form,
+                'user_type': role,
+            }            
+            return render(request, 'account/signup-form.html', context)
+
     else:
 
         form = MainSignupForm()

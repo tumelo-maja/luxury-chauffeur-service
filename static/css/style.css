@@ -713,6 +713,7 @@ body {
     transform: translateY(-20px);
     transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     max-width: 600px;
+    margin-bottom: 20px;
 }
 
 .message.show {
@@ -756,12 +757,9 @@ body {
     margin-left: 20px;
 }
 
-/* #delete-btn {
-    width: auto;
-    height: 35px;
-    padding: 5px 10px;
-    background-color: rgb(205, 17, 17);
-} */
+.account-container span {
+    color: purple;
+}
 
 /* Chauffeur page */
 .chauffeurs-container {
