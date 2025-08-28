@@ -214,7 +214,10 @@ body {
     font-weight: 400;
     letter-spacing: 1.5px;
     color: inherit;
-    position: relative;
+    /* position: relative; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .nav-link i {
@@ -222,11 +225,13 @@ body {
 }
 
 .nav-link .link-text {
-    position: absolute;
-    top: 3px;
-    left: 35px;
+    display: none;
     opacity: 0;
     transition: 0.2s ease-in-out;
+}
+
+.header-main.active .link-text {
+    display: inline-block;
 }
 
 .avatar-image {
