@@ -146,16 +146,15 @@ $(document).ready(function () {
              * Fetch trips for a given year and month.
              * Returns a list of trip objects from the backend.
              */            
-            function getMonthlyTrips(year, month) {
-
-                return fetch(`/trips/calendar/subsets/?year=${year}&month=${month}`)
-                    .then(response => response.json())
-                    .then(data => data.trips || [])
-
-                    .catch(error => {
-                        return [];
-                    });
-            };
+            async function getMonthlyTrips(year, month) {
+                try {
+                    const response = await fetch(`/trips/calendar/subsets/?year=${year}&month=${month}`);
+                    const data = await response.json();
+                    return data.trips || [];
+                } catch (error) {
+                    return [];
+                }
+            }
 
             /**
              * Render and update the calendar UI elements for the displayed month.
@@ -180,7 +179,7 @@ $(document).ready(function () {
                 const trips = await getMonthlyTrips(currentYear, currentMonth + 1);
                 let datesHTML = '';
                 for (let i = firstDayIndex; i > 0; i--) {
-                    const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
+                    const prevDate = new Date(currentYear, currentMonth, 1 - i);
                     datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
                 }
 
