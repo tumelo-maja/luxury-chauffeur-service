@@ -11,9 +11,9 @@
     <div class="main-nav">
         <nav class="navbar">
             <div class="navbar-nav">
-                <div class="navbar-logo">
+                <a class="navbar-logo" href="{{ home_url }}" >
                         <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
-                </div>
+                </a>
                 <ul class="nav-list">
                     <li class="navbar-item {% if request.path == home_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ home_url }}'" title="Home">
                         <a href="{{ home_url }}" class="nav-link">
@@ -22,29 +22,28 @@
                         </a>
                     </li>
                     {% if request.user.is_authenticated %}
-                    <li class="navbar-item {% if request.path == trips_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ trips_url }}'" title="Trips">
-                        <a href="{{ trips_url }}" class="nav-link">
-                            <i class="fa-solid fa-qrcode"></i>
-                            <span class="link-text">Trips</span>
-                        </a>
-                    </li>
-                    <li class="navbar-item {% if request.path == profile_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ profile_url }}'" title="Profile">
-                        <a href="{{ profile_url }}" class="nav-link">
-                            <i class="fa-solid fa-user"></i>
-                            <span class="link-text">Profile</span>
-                        </a>
-                    </li>
                     <li class="navbar-item {% if request.path == chauffeurs_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ chauffeurs_url }}'" title="Drivers">
                         <a href="{{ chauffeurs_url }}" class="nav-link">
                             <i class="fa-solid fa-car-side"></i>
                             <span class="link-text">Drivers</span>
                         </a>
                     </li>
+                    <li class="navbar-item {% if request.path == trips_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ trips_url }}'" title="Trips">
+                        <a href="{{ trips_url }}" class="nav-link">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span class="link-text">Trips</span>
+                        </a>
                     </li>
                     <li class="navbar-item {% if request.path == settings_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ settings_url }}'" title="Settings">
                         <a href="{{ settings_url }}" class="nav-link">
                             <i class="fa-solid fa-gears"></i>
                             <span class="link-text">Settings</span>
+                        </a>
+                    </li>
+                    <li class="navbar-item {% if request.path == profile_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ profile_url }}'" title="Profile">
+                        <a href="{{ profile_url }}" class="nav-link">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="link-text">Profile</span>
                         </a>
                     </li>
                     {% endif %}
