@@ -1,0 +1,14 @@
+{% extends 'layouts/box.html' %}
+{% load socialaccount %}
+
+{% block content %}
+
+<h1>Select your Sign-in role</h1>
+<p>Please select the user type to use for login</p>
+
+<div class="role-container">
+    <a class="button-purple button-style" href="{% provider_login_url provider %}?role=passenger">Passenger</a>
+    <a class="button-purple button-style" href="{% provider_login_url provider %}?role=driver">Driver</a>
+</div>
+
+{% endblock %}

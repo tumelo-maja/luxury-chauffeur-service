@@ -284,3 +284,21 @@ def account_success(request):
     Rendered account success page.
     """
     return render(request, 'users/account-created.html')
+
+def social_login_role_view(request, provider):
+    """
+    Render the role selection page before initiating a social login.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        The current HTTP request object.
+    provider : str
+        The name of the social authentication provider (e.g., 'github', 'google').
+
+    Returns
+    -------
+    initiates authentication request for the given 'provider' to log the user in 
+    """
+    context = {'provider': provider}
+    return render(request, "users/social-login-role.html", context)

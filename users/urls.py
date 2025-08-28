@@ -7,6 +7,7 @@ urlpatterns = [
     path('account/success/', account_success, name='account-success'),
     path('signup/', signup_type, name='signup_type'),
     path('signup/role/', user_signup, name='user_signup'),
+    path('social/role/<provider>', social_login_role_view, name='social-role'),
     path('edit/', profile_edit_view, name='profile-edit'),
     path('onboarding/', profile_edit_view, name='profile-onboarding'),
     path('settings/', profile_settings_view, name='profile-settings'),
