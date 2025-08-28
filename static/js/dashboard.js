@@ -16,21 +16,27 @@ $(document).ready(function () {
         }
     });
 
-    // Setup List Trips view - Dashsetup
+    /**
+     * Initialize the List Trips view.
+     * Applies event listeners for filtering and sorting of trips.
+     * Re-applies bindings after htmx has rendered html content.
+     */
     function setupTripsList() {
         htmx.on('htmx:afterSwap', (e) => {
 
+            // Toggles the filter dropdown list
             $('#filter-button').on('click', function () {
                 $('#filter-options').toggleClass('show');
             });
 
+            // Adds event listeners to filter options and runs filterTrips()
             $('#filter-options li').on('click', function () {
                 $('#filter-options li').removeClass('current-filter');
                 $(this).addClass('current-filter');
-
                 filterTrips();
             });
 
+            // Adds event listeners to collapse the filter and sort options for clicks outside these containers
             $(document).on('click', function (e) {
                 if (!$(e.target).closest('#sort-button, #sort-options').length) {
                     $('#sort-options').removeClass('show');
@@ -40,7 +46,10 @@ $(document).ready(function () {
                 }
             });
 
-
+            /**
+             * Filter trips in the list based on the currently selected filter option.
+             * Updates the DOM to show/hide trips accordingly.
+             */
             function filterTrips() {
                 const status = $('.current-filter').data('status');
 
@@ -72,18 +81,21 @@ $(document).ready(function () {
                 $('#filter-button .set-value').text($('.current-filter').text());
             }
 
-
             $('#sort-button').on('click', function () {
                 $('#sort-options').toggleClass('show');
             });          
 
+            // adds 'current-sort' class to the selected filter options - used in sortTrips()
             $('#sort-options li').on('click', function () {
                 $('#sort-options li').removeClass('current-sort');
                 $(this).addClass('current-sort');
                 sortTrips();
             });
 
-            // sort trip-list li elements basedOn field
+            /**
+             * Sort trips in the list based on the selected sort option.
+             * Updates DOM to display sorted trips.
+             */
             function sortTrips() {
                 const [sortField, order] = $('.current-sort').data('sort').split('_');
                 const trips = $('.trip-list .trip-item');
@@ -109,25 +121,16 @@ $(document).ready(function () {
                 $('#sort-options').removeClass('show');
                 const iconType = order === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
                 $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
-
-                console.log("running sort - cool");
-
             }
         });
     }
 
-    setTimeout(() => {
-
-        $('.rating-item').each(function (rateIndex) {
-            const ratingValue = parseFloat($(this).find('.rating-value').text());
-            const ratingsTotal = parseInt($('.ratings-total-count').text());
-            let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100, 2);
-            $(this).find('.rating-fill').css('width', newRatingFill + '%');
-        });
-
-    }, 200);
-
-    // Setup trips Calendar view  - Dashsetup
+    /**
+     * Initialize the Calendar view.
+     * Fetches trips for the current month and renders them in a calendar grid.
+     * Displays current user's trips in the calendar
+     * Allows navigation between months and trip creation for passenger users.
+     */
     function setupTripsCalendar() {
 
         const userType = $('#user-name').data('profile-type')
@@ -139,6 +142,10 @@ $(document).ready(function () {
             const nextBtn = $('#nextBtn');
             let currentDate = new Date();
 
+            /**
+             * Fetch trips for a given year and month.
+             * Returns a list of trip objects from the backend.
+             */            
             function getMonthlyTrips(year, month) {
 
                 return fetch(`/trips/calendar/subsets/?year=${year}&month=${month}`)
@@ -150,6 +157,10 @@ $(document).ready(function () {
                     });
             };
 
+            /**
+             * Render and update the calendar UI elements for the displayed month.
+             * Displays trip counts for each day of the month.
+             */            
             async function  updateCalendar() {
                 const currentYear = currentDate.getFullYear();
                 const currentMonth = currentDate.getMonth();
@@ -191,6 +202,7 @@ $(document).ready(function () {
 
                     const tripElement = `<div class="day-trips"><span class= "day-trip-count">${tripCountStr}</span> <i class="fa-solid fa-car-rear"></i></div>`;
 
+                    // add htmx attributes for trip request - passenger users only
                     let htmxCreateTrip = '';
                     if (date >= todayDate && userType === 'passenger') {
                         htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"`;
@@ -205,21 +217,23 @@ $(document).ready(function () {
                 for (let i = 1; i <= 7 - lastDayIndex; i++) {
                     const nextDate = new Date(currentYear, currentMonth + 1, i);
                     datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
-
                 }
 
                 datesElement.html(datesHTML);
 
+                // re-adds htmx event listeners for htmx attributes
                 $('.cal-date').each(function () {
                     htmx.process(this);
                 })
             }
 
+            // Handles navigating to the previous month and runs updateCalendar()
             $(prevBtn).click(() => {
                 currentDate.setMonth(currentDate.getMonth() - 1);
                 updateCalendar();
             })
 
+            // Handles navigating to the next month and runs updateCalendar()
             $(nextBtn).click(() => {
                 currentDate.setMonth(currentDate.getMonth() + 1);
                 updateCalendar();
@@ -231,7 +245,10 @@ $(document).ready(function () {
 
 
     // Setup trips manager view  - Dashsetup
-
+    /**
+     * Initialize the Trips Manager view.
+     * Adds event listeners for tab navigation.
+     */
     function setupTripsManager() {
         htmx.on('htmx:afterSwap', (e) => {
             $('.manager-all .nav-link').on('click', function () {
@@ -243,6 +260,9 @@ $(document).ready(function () {
     }
 
     // handle dashboard button clicks - dashsetup
+    /**
+     * Highlight the clicked dashboard items clicked.
+     */    
     function setupDashButtons() {
         $('.dash-item').removeClass('selected');
         $(this).addClass('selected');
