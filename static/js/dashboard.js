@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     htmx.on('htmx:afterSwap', (e) => {
-        $('#ListViewButton').on('click', setupTripsList);
+        $('#listViewButton').on('click', setupTripsList);
         $('#calendarViewButton').on('click', setupTripsCalendar);
         $('#managerViewButton').on('click', setupTripsManager);
         $('.dash-item').on('click', setupDashButtons);
@@ -44,7 +44,7 @@ $(document).ready(function () {
             function filterTrips() {
                 const status = $('.current-filter').data('status');
 
-                const trips = $('#trip_list .trip-item');
+                const trips = $('.trip-list .trip-item');
                 let visibleTrips = 0;
 
                 trips.each(function (trip_idx) {
@@ -68,21 +68,14 @@ $(document).ready(function () {
 
                 }
 
-                $('#trip_list .filtered').first().click();
-
                 $('#filter-options').removeClass('show');
                 $('#filter-button .set-value').text($('.current-filter').text());
             }
 
-            //
-            htmx.on('htmx:beforeSwap', (e) => {
-                if ($(e.target).id === $('#trip_list').id && !e.detail.xhr.response) {
-                    detailID = $('#tripDetail').data('id')
-                    $(`#trip_list #${detailID}`).click();
-                    filterTrips();
-                    sortTrips();
-                }
-            })
+
+            $('#sort-button').on('click', function () {
+                $('#sort-options').toggleClass('show');
+            });          
 
             $('#sort-options li').on('click', function () {
                 $('#sort-options li').removeClass('current-sort');
@@ -93,8 +86,7 @@ $(document).ready(function () {
             // sort trip-list li elements basedOn field
             function sortTrips() {
                 const [sortField, order] = $('.current-sort').data('sort').split('_');
-                const trips = $('#trip_list .trip-item');
-
+                const trips = $('.trip-list .trip-item');
 
                 trips.sort(function (a, b) {
                     const aValue = $(a).data(sortField);
@@ -111,13 +103,14 @@ $(document).ready(function () {
                     }
                 });
 
-                $('#trip_list ol').html(trips);
-                $('#trip_list .filtered').first().click();
+                $('.trip-list ul').html(trips);
 
                 const fieldStr = $('.current-sort').find('span').text();
                 $('#sort-options').removeClass('show');
                 const iconType = order === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
                 $('#sort-button').html(`<i class="fa-solid ${iconType}"></i> Sort: <span class="set-value">${fieldStr}</span>`);
+
+                console.log("running sort - cool");
 
             }
         });

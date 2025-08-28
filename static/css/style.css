@@ -2676,10 +2676,6 @@ body {
         position: relative;
     }
 
-    .trip-wrapper ul {
-        width: 100%;
-    }
-
     .trip-item {
         width: 90%;
     }
