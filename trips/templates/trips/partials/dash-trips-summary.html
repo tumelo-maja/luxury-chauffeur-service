@@ -2,10 +2,16 @@
 <p class="all-trips">Total Trips: <span id="total-trips">{{ stats.all }}</span></p>
 <ul>
     <li class="stats-item stats-completed"><span class="stat-value completed">{{ stats.completed }}</span> <span class="stat-label">Completed</span></li>
-    <li class="stats-item stats-cancelled"><span class="stat-value cancelled">{{ stats.cancelled }}</span> <span class="stat-label">Cancelled</span>
+    <li class="stats-item stats-in-progress"><span class="stat-value in-progress">{{ stats.progress }}</span> <span class="stat-label">In Progress</span>
     </li>
-    <li class="stats-item stats-pending"><span class="stat-value pending">{{ stats.pending }}</span> <span class="stat-label">Pending</span>
-    </li>
+    <li class="stats-item stats-confirmed"><span class="stat-value confirmed">{{ stats.confirmed }}</span> <span class="stat-label">Confirmed</span>
+    </li>       
     <li class="stats-item stats-pending"><span class="stat-value pending">{{ stats.modified }}</span> <span class="stat-label">Modified</span>
-    </li>
+    </li>    
+    <li class="stats-item stats-pending"><span class="stat-value pending">{{ stats.pending }}</span> <span class="stat-label">Pending</span>
+    </li> 
+    <li class="stats-item stats-cancelled"><span class="stat-value cancelled">{{ stats.cancelled }}</span> <span class="stat-label">Cancelled</span>
+    </li>    
+    <li class="stats-item stats-rejected"><span class="stat-value rejected">{{ stats.rejected }}</span> <span class="stat-label">Rejected</span>
+    </li>    
 </ul>

@@ -72,6 +72,9 @@ def dash_details_view(request, partial):
                 'completed': trips_completed.count(),
                 'pending': trips.filter(status='pending').count(),
                 'modified': trips.filter(status='modified').count(),
+                'confirmed': trips.filter(status='confirmed').count(),
+                'rejected': trips.filter(status='rejected').count(),
+                'progress': trips.filter(status='in_progress').count(),
                 'all': trips.count(),
             },            
         }

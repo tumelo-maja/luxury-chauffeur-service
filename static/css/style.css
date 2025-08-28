@@ -1753,8 +1753,8 @@ body {
 .dash-stats ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 28px;
-    justify-content: space-around;
+    gap: 20px;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -1772,7 +1772,13 @@ body {
     border: 3px solid green;
 }
 
-.stats-cancelled {
+.stats-in-progress,
+.stats-confirmed {
+    border: 3px solid #4a99b1;
+}
+
+.stats-cancelled,
+.stats-rejected {
     border: 3px solid red;
 }
 
@@ -1795,7 +1801,13 @@ body {
     color: green
 }
 
-.stat-value.cancelled {
+.stat-value.in-progress,
+.stat-value.confirmed {
+    color: #366f80;
+}
+
+.stat-value.cancelled,
+.stat-value.rejected {
     color: red
 }
 
@@ -1808,18 +1820,6 @@ body {
     text-align: center;
     margin-bottom: 15px;
     font-weight: bold;
-}
-
-.dash-details {
-    margin: 20px 0 0;
-    padding: 15px 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.dash-details section {
-    padding-top: 10px;
 }
 
 .dash-ratings {
@@ -1892,8 +1892,10 @@ body {
 }
 
 .dash-activities {
+    margin: 20px 0 0;
     width: 100%;
     border-radius: 12px;
+    padding-top: 10px;
 }
 
 /* Dash actiivities  */
@@ -2558,7 +2560,7 @@ body {
         width: 100%;
     }
 
-    .dash-details {
+    .dash-activities {
         padding: 15px 5px;
     }
 
@@ -2609,32 +2611,17 @@ body {
         display: none;
     }
 
-    .dash-activities {
-        flex: 1 0 calc(70% - 35px);
-        min-width: calc(70% - 35px);
-    }
-
     .dash-tab-btn {
         width: 100px;
         font-size: 12px;
     }
-
-    /* .dashboard-container {
-        flex-grow: 1;
-        margin: 0;
-        padding: 25px;
-        min-height: 600px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    } */
 
     .dash-stats {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 60%;
+        width: 90%;
     }
 
     .dash-ratings {
@@ -2748,12 +2735,7 @@ body {
 
     .stats-item {
         height: 80px;
-        width: 140px;
-    }
-
-    .dash-activities {
-        margin: 10px 20px;
-
+        width: 110px;
     }
 
     .header-main.active {
