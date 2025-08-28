@@ -23,6 +23,8 @@
     <h2 class="form-subhead">
         {% if user_type == 'driver' %}
         Driver Information
+        {% elif user.profile.user_type == 'manager' %}
+        Manager Information
         {% else %}
         Passenger Information
         {% endif %}
