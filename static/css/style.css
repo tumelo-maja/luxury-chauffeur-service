@@ -1860,10 +1860,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    /* border: 1px solid red; */
     margin: 15px 0 20px;
-    /* position: relative; */
-
 }
 
 .rating-bar {
@@ -1872,21 +1869,23 @@ body {
     width: 125px;
     height: 15px;
     margin: 5px 20px 5px 5px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    position: relative;
 }
 
 .rating-fill {
     background-color: purple;
+    border-radius: 5px;
     width: 0;
     height: 100%;
 }
 
 .rating-value {
     color: black;
-    /* position: absolute;
-    bottom: 0;
-    right: 0; */
-    font-size: 18px;
+    position: absolute;
+    top: -8px;
+    right: -50px;
+    font-size: 20px;
     text-align: left;
     width: 45px;
 }

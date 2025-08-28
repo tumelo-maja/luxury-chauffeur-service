@@ -3,7 +3,7 @@
 <p class="ratings-total">No ratings</p>
 {% else %}
 <p class="ratings-total">Average: <span class="ratings-total-value">{{ user_profile.average_rating | floatformat:1 }} 
-</span><span class="ratings-total-count">({{ user_profile.count_rating }}) reviews</span></p>
+</span>(<span class="ratings-total-count">{{ user_profile.count_rating }}</span>) reviews</p>
 {% endif %}
 <ol>
     <li class="rating-item stars-5">
@@ -38,7 +38,7 @@
         <span class="icon-number">1 <i class="fa-solid fa-star"></i></span>
         <div class="rating-bar">
             <div class="rating-fill"></div>
-            <span id="rating-value-1" class="rating-value">{{ rating_levels.star_2 }}</span>
+            <span id="rating-value-1" class="rating-value">{{ rating_levels.star_1 }}</span>
         </div>
     </li>        
 </ol>

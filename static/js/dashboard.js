@@ -5,7 +5,23 @@ $(document).ready(function () {
         $('#calendarViewButton').on('click', setupTripsCalendar);
         $('#managerViewButton').on('click', setupTripsManager);
         $('.dash-item').on('click', setupDashButtons);
+
+        updateRatingBars();       
     });
+
+    /**
+     * Update the width of rating bars based on their individual values
+     * relative to the total count of ratings.
+     */    
+    function updateRatingBars() {
+        const ratingsTotal = parseInt($('.ratings-total-count').text());
+
+        $('.rating-item').each(function () {
+            const ratingValue = parseFloat($(this).find('.rating-value').text());
+            let newRatingFill = Math.round((ratingValue / ratingsTotal) * 100);
+            $(this).find('.rating-fill').css('width', newRatingFill + '%');
+        });
+    }    
 
     $('#mobileDashMenu').change(function () {
         const selectedOption = $(this).find('option:selected')[0];
