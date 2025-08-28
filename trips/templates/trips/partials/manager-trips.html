@@ -14,7 +14,7 @@
         {% if trips %}
         {% for trip in trips %}
         <tr>
-            <td>{{ trip.location_end_short }}</td>
+            <td>{{ trip.location_end }}</td>
             <td>{{ trip.travel_datetime | date:"d/m/Y - H:i" }}</td>
             <td><span class="status-tab status-{{ trip.status_class }}">{{ trip.status_str }}</span></td>
             <td>

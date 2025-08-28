@@ -1769,21 +1769,21 @@ body {
 }
 
 .stats-completed {
-    border: 3px solid green;
+    border: 2px solid green;
 }
 
 .stats-in-progress,
 .stats-confirmed {
-    border: 3px solid #4a99b1;
+    border: 2px solid #4a99b1;
 }
 
 .stats-cancelled,
 .stats-rejected {
-    border: 3px solid red;
+    border: 2px solid red;
 }
 
 .stats-pending {
-    border: 3px solid orange;
+    border: 2px solid orange;
 }
 
 .stats-item .stat-label {

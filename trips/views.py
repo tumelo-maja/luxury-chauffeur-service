@@ -118,7 +118,7 @@ def trips_list_view(request):
         trips = Trip.objects.all()
 
     context = {
-        'trips': trips.order_by('-updated_on')[:4],
+        'trips': trips.order_by('-updated_on')[:5],
         'user': request.user,
     }
 
