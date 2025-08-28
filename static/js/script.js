@@ -145,6 +145,4 @@ $(document).ready(function () {
         $sectionWrapper.toggleClass('active');
         console.log("navbar toggled");
     });
-
-
 });

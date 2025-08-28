@@ -74,6 +74,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        /**
+         * Update the outcome text message based on the selected radio button.
+         * 
+         * If the "approve" option is checked, show a green "Approved" message.
+         * Otherwise, show a red "Rejected" message.
+         */        
         function updateOutcomeText() {
             if ($('#approve').is(':checked')) {
                 $('#outcome-text').html('<span class="approve-text">This trip will be Approved.</span>');
