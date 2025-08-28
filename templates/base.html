@@ -53,12 +53,12 @@
                                 <li class="menu-item"><a href="{% url 'trips' %}">Trips</a>
                                 </li>
                                 <li class="menu-item"><a href="{% url 'profile-settings' %}">Settings</a></li>
-                                <li class="menu-item"><a href="{% url 'account_logout' %}">Log Out</a></li>
+                                <li class="menu-item"><a href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
                         </div>
                         {% else %}
-                        <a href="{% url 'account_login' %}">Login</a>
-                        <a href="{% url 'signup_type' %}">Signup</a>
+                        <a class="auth-link" href="{% url 'account_login' %}">Login</a>
+                        <a class="auth-link" href="{% url 'signup_type' %}">Signup</a>
                         {% endif %}
 
                     </div>

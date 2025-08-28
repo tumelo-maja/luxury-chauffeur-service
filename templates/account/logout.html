@@ -11,14 +11,14 @@
 <div class="signup-head">
     <img src="{% static 'images/lux_chauffeurs_logo.png' %}" alt="lux chauffeurs logo">
 </div>
-<h1>Log Out</h1>
+<h1>Logout</h1>
 <p class="auth-text">
     Are you sure you want to logout?
 </p>
 <form method="post" action="{{ logout_url }}" class="box-form">
     {% csrf_token %}
     <div class="form-buttons">
-        <button type="submit" class="button-purple">Log Out</button>
+        <button type="submit" class="button-purple">Logout</button>
     </div>
 </form>
 {% endblock content %}
