@@ -98,7 +98,6 @@
                         class="fa-solid fa-pen-to-square"></i></button>
                 {% elif trip.status_class == 'completed' %}
                     {% if user_trip_rating %}
-
                     <div class="rated-wrapper">
                         <p>You gave a {{ user_trip_rating }}-star rating for this trip</p>
                         <ol class="rated-stars">
@@ -113,7 +112,6 @@
                             {% endfor %}
                         </ol>
                     </div>
-
                     {% else %}
                     <button type="button" class="trip-rate trip-btn" id="rateTripButton"
                         hx-get="{% url 'trip-feedback' trip.trip_name %}" hx-target="#baseDialog">Rate Trip <i
@@ -158,21 +156,27 @@
                 {% else %}
                     <p class="no-more-changes">No actions can be taken for this trip.</p>
                 {% endif %}
-
-            {% else %}
-                {% if trip.status_class == 'modified' or trip.status_class == 'pending' %}
-                <div class="flex justify-center w-full">
-                    <button type="button" class="trip-rate trip-btn" id="startTripButton"
-                        hx-get="{% url 'trip-review' trip.trip_name %}" hx-target="#baseDialog">Review Trip
-                        <i class="fa-solid fa-car-side"></i>
-                    </button>
-                </div>
-                {% else %}
-                <p class="no-more-changes">No actions can be taken for this trip.</p>
-                {% endif %}
-
-            {% endif %}
-
         </div>
-    </div>
+        {% else %}
+        <div class="trip-controls justify-center">
+            {% if trip.status_class == 'modified' or trip.status_class == 'pending' %}
+            <div class="flex justify-center w-full">
+                <button type="button" class="trip-rate trip-btn" id="startTripButton"
+                    hx-get="{% url 'trip-review' trip.trip_name %}" hx-target="#baseDialog">Review Trip
+                    <i class="fa-solid fa-car-side"></i>
+                </button>
+            </div>
+            {% else %}
+            <p class="no-more-changes">No actions can be taken for this trip.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% if trip.status_class == 'completed' %}        
+        <div class="trip-costs sum-item">
+            <p>
+                <span class="cost-label sub-head">Total:</span>
+                <span class="cost-value bold-value">£ {{ trip.total_cost | floatformat:2 }}</span>
+            </p>
+        </div>  
+        {% endif %}       
 </div>
