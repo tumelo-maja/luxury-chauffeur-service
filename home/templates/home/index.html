@@ -28,7 +28,7 @@
                     <h3>Airport Transfers</h3>
                     <p>Effortless, timely pick-ups and drop-offs to and from all major airports, ensuring a smooth
                         start or end to your travels.</p>
-                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Airport%20Transfers" hx-target="#baseDialog" class="button-book"
+                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Airport%20Transfers" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                 </div>
                 <div class="service-item">
@@ -36,7 +36,7 @@
                     <h3>Corporate Chauffeur</h3>
                     <p>Professional, discreet drivers for business meetings and corporate events, ensuring
                         punctuality and comfort.</p>
-                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Corporate%20Chauffeur" hx-target="#baseDialog" class="button-book"
+                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Corporate%20Chauffeur" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                         </div>
             </div>
@@ -46,7 +46,7 @@
                     <h3>All Special Events</h3>
                     <p>Elegant and luxurious vehicles for weddings, galas, and other significant occasions, designed
                         to make your event unforgettable.</p>
-                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Special%20Events" hx-target="#baseDialog" class="button-book"
+                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Special%20Events" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                 </div>
                 <div class="service-item">
@@ -54,7 +54,7 @@
                     <h3>Private & VIP Chauffeur</h3>
                     <p>Personalized chauffeur services for VIPs, ensuring maximum comfort and security for your
                         private or high-profile travels.</p>
-                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Private%20%26%20VIP%20Chauffeur" hx-target="#baseDialog" class="button-book"
+                    <div data-hx-get="{% url 'trip-request' %}?trip-type=Private%20%26%20VIP%20Chauffeur" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 200</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 180</span></div>
-                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Rolls%20Royce%20Phantom" hx-target="#baseDialog" class="button-book"
+                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Rolls%20Royce%20Phantom" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 170</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 150</span></div>
-                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Range%20Rover%20Vogue" hx-target="#baseDialog" class="button-book"
+                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Range%20Rover%20Vogue" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 150</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 130</span></div>
-                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Mercedes%20Benz%20V-Class" hx-target="#baseDialog" class="button-book"
+                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Mercedes%20Benz%20V-Class" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 250</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 230</span></div>
-                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Premium%20Limousine" hx-target="#baseDialog" class="button-book"
+                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Premium%20Limousine" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="vehicle-detail base-rate"><span>Hourly rate</span><span>£ 250</span></div>
                         <div class="vehicle-detail add-rate"><span>4hrs+ rate</span><span>£ 230</span></div>
-                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Classic%20Vintage%20Cars" hx-target="#baseDialog" class="button-book"
+                        <div data-hx-get="{% url 'trip-request' %}?vehicle=Classic%20Vintage%20Cars" {% if request.user.is_authenticated %} data-hx-target="#baseDialog" {% else %} data-hx-target="body" {% endif %} class="button-book"
             aria-label="create a new trip">Book now</div>
                     </div>
                 </div>
