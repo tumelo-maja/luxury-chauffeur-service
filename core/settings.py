@@ -202,9 +202,6 @@ LOGIN_REDIRECT_URL = '/'
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-CSRF_COOKIE_SECURE= True
-SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
 
 # Email Settings
 EMAIL_HOST = 'smtp.gmail.com'
