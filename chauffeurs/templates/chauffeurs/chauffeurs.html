@@ -11,7 +11,7 @@
 </section>
 
 <!-- Chauffeurs section -->
-<section class="chauffeurs-container">
+<div class="chauffeurs-container">
     {% if chauffeurs %}
     {% for chauffuer in chauffeurs %}
     
@@ -29,17 +29,17 @@
                 {% endif %}
             </p>
         </div>
-        <p class="chauffeur-body">Experience: <span id="experience">
+        <p class="chauffeur-body">Experience: <span>
                 {{ chauffuer.experience }} Years</span>
         </p>
-        <button type="button" hx-get="{% url 'trip-request' %}?driver={{ chauffuer.id }}" hx-target="#baseDialog" class="chauffeur-cta"
-            aria-label="create a new trip">Book Chauffeur</button>
+        <div data-hx-get="{% url 'trip-request' %}?driver={{ chauffuer.id }}" data-hx-target="#baseDialog" class="chauffeur-cta"
+            title="create a new trip">Book Chauffeur</div>
     </div>
     {% endfor %}
     {% else %}
     <p>There are no drivers</p>
     {% endif %}
-</section>
+</div>
 
 {% endblock %}
 
