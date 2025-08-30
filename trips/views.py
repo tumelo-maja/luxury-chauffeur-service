@@ -230,6 +230,7 @@ def trip_request_view(request):
     }
     return render(request, 'trips/trip-request.html', context)
 
+@login_required
 def check_trip_overlap(passenger, form):
     """
     Validate the passenger has another trip scheduled within one hour of the current request.
