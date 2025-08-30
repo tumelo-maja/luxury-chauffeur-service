@@ -16,7 +16,7 @@ def home_view(request):
     -------
     The rendered homepage - no database queries used.
     """    
-    return render(request, 'home/home.html')
+    return render(request, 'home/index.html')
 
 
 def contact_form_view(request):
