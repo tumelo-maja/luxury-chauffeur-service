@@ -2,30 +2,30 @@
 <h2 class="dash-header">Manage Passengers, Driver and Trips</h2>
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" 
+    <button class="nav-link active" 
     id="tab-trips"
         data-hx-get="{% url 'manager-tabs' 'trips' %}"
         data-hx-target="#managerTable" 
         data-hx-swap="innerHTML" 
         data-hx-trigger="load, click"
         data-tab="trips">Trips
-    </a>
+    </button>
   </li>
   <li class="nav-item">
-    <a class="nav-link"
+    <button class="nav-link"
     id="tab-passengers"
      data-hx-get="{% url 'manager-tabs' 'passengers' %}"
         data-hx-target="#managerTable" 
         data-hx-swap="innerHTML" 
-        data-tab="passengers">Passengers</a>
+        data-tab="passengers">Passengers</button>
   </li>
   <li class="nav-item">
-    <a class="nav-link" 
+    <button class="nav-link" 
     id="tab-drivers"
     data-hx-get="{% url 'manager-tabs' 'drivers' %}"
         data-hx-target="#managerTable" 
         data-hx-swap="innerHTML" 
-        data-tab="drivers">Drivers</a>
+        data-tab="drivers">Drivers</button>
   </li>
 </ul>
 <div id="managerTable" class="table-wrapper">
