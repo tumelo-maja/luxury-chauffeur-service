@@ -18,8 +18,8 @@
             <td>{{ trip.travel_datetime | date:"d/m/Y - H:i" }}</td>
             <td><span class="status-tab status-{{ trip.status_class }}">{{ trip.status_str }}</span></td>
             <td>
-                <button type="button" class="action-link" hx-get="{% url 'trip-detail' trip.trip_name %}"
-                    hx-target="#baseDialog">View Details
+                <button type="button" class="action-link" data-hx-get="{% url 'trip-detail' trip.trip_name %}"
+                    data-hx-target="#baseDialog">View Details
                 </button>
             </td>
             <td class="name-col">

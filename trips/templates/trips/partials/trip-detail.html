@@ -91,10 +91,10 @@
         {% if user.profile.user_type == 'passenger' %}
         <div class="trip-controls {% if trip.status_class == 'completed' or trip.status_class == 'in-progress' %}justify-center{% endif %}">
                 {% if trip.status_class != 'cancelled' and trip.status_class != 'completed' %}
-                <button type="button" class="trip-cancel trip-btn" hx-get="{% url 'trip-cancel' trip.trip_name %}"
-                    hx-target="#baseDialog">Cancel Trip <i class="fa-solid fa-trash-can"></i></button>
+                <button type="button" class="trip-cancel trip-btn" data-hx-get="{% url 'trip-cancel' trip.trip_name %}"
+                    data-hx-target="#baseDialog">Cancel Trip <i class="fa-solid fa-trash-can"></i></button>
                 <button type="button" class="trip-edit trip-btn" id="editTripButton"
-                    hx-get="{% url 'trip-edit' trip.trip_name %}" hx-target="#baseDialog">Edit Trip <i
+                    data-hx-get="{% url 'trip-edit' trip.trip_name %}" data-hx-target="#baseDialog">Edit Trip <i
                         class="fa-solid fa-pen-to-square"></i></button>
                 {% elif trip.status_class == 'completed' %}
                     {% if user_trip_rating %}
@@ -114,7 +114,7 @@
                     </div>
                     {% else %}
                     <button type="button" class="trip-rate trip-btn" id="rateTripButton"
-                        hx-get="{% url 'trip-feedback' trip.trip_name %}" hx-target="#baseDialog">Rate Trip <i
+                        data-hx-get="{% url 'trip-feedback' trip.trip_name %}" data-hx-target="#baseDialog">Rate Trip <i
                             class="fa-solid fa-list-check"></i></button>
                     {% endif %}
                 {% else %}
@@ -126,11 +126,11 @@
 
                 {% if trip.status_class == 'confirmed' %}
                 <button type="button" class="trip-rate trip-btn" id="startTripButton"
-                    hx-get="{% url 'trip-action' trip.trip_name %}" hx-target="#baseDialog">Start Trip
+                    data-hx-get="{% url 'trip-action' trip.trip_name %}" data-hx-target="#baseDialog">Start Trip
                     <i class="fa-solid fa-car-side"></i></button>
                 {% elif trip.status_class == 'in-progress' %}
                 <button type="button" class="trip-rate trip-btn" id="startTripButton"
-                    hx-get="{% url 'trip-action' trip.trip_name %}" hx-target="#baseDialog">End Trip
+                    data-hx-get="{% url 'trip-action' trip.trip_name %}" data-hx-target="#baseDialog">End Trip
                     <i class="fa-solid fa-ban"></i></button>
                 {% elif trip.status_class == 'completed' %}
                     {% if user_trip_rating %}
@@ -150,7 +150,7 @@
                     </div>
                     {% else %}
                     <button type="button" class="trip-rate trip-btn" id="rateTripButton"
-                        hx-get="{% url 'trip-feedback' trip.trip_name %}" hx-target="#baseDialog">Rate Trip <i
+                        data-hx-get="{% url 'trip-feedback' trip.trip_name %}" data-hx-target="#baseDialog">Rate Trip <i
                             class="fa-solid fa-list-check"></i></button>
                     {% endif %}
                 {% else %}
@@ -162,7 +162,7 @@
             {% if trip.status_class == 'modified' or trip.status_class == 'pending' %}
             <div class="flex justify-center w-full">
                 <button type="button" class="trip-rate trip-btn" id="startTripButton"
-                    hx-get="{% url 'trip-review' trip.trip_name %}" hx-target="#baseDialog">Review Trip
+                    data-hx-get="{% url 'trip-review' trip.trip_name %}" data-hx-target="#baseDialog">Review Trip
                     <i class="fa-solid fa-car-side"></i>
                 </button>
             </div>

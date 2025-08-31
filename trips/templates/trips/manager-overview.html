@@ -4,27 +4,27 @@
   <li class="nav-item">
     <a class="nav-link active" 
     id="tab-trips"
-        hx-get="{% url 'manager-tabs' 'trips' %}"
-        hx-target="#managerTable" 
-        hx-swap="innerHTML" 
-        hx-trigger="load, click, tripStatusChanged from:body"
+        data-hx-get="{% url 'manager-tabs' 'trips' %}"
+        data-hx-target="#managerTable" 
+        data-hx-swap="innerHTML" 
+        data-hx-trigger="load, click"
         data-tab="trips">Trips
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link"
     id="tab-passengers"
-     hx-get="{% url 'manager-tabs' 'passengers' %}"
-        hx-target="#managerTable" 
-        hx-swap="innerHTML" 
+     data-hx-get="{% url 'manager-tabs' 'passengers' %}"
+        data-hx-target="#managerTable" 
+        data-hx-swap="innerHTML" 
         data-tab="passengers">Passengers</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" 
     id="tab-drivers"
-    hx-get="{% url 'manager-tabs' 'drivers' %}"
-        hx-target="#managerTable" 
-        hx-swap="innerHTML" 
+    data-hx-get="{% url 'manager-tabs' 'drivers' %}"
+        data-hx-target="#managerTable" 
+        data-hx-swap="innerHTML" 
         data-tab="drivers">Drivers</a>
   </li>
 </ul>
