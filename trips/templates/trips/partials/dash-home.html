@@ -7,7 +7,7 @@
 <section class="dash-ratings" >
     {% include 'trips/partials/dash-ratings.html' %}
 </section>
-<section class="dash-activities" id="dashTable" hx-get="{% url 'trips-list' %}"
-    hx-trigger="load, tripListChanged from:body">
+<section class="dash-activities" id="dashTable" data-hx-get="{% url 'trips-list' %}"
+    data-hx-trigger="load">
     {% include 'trips/partials/dash-table.html' %}
 </section>

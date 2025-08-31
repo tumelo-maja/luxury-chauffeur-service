@@ -43,7 +43,7 @@
                     <div class="account relative">
                         {% if request.user.is_authenticated %}
                         <div class="dropdown-head">
-                            <img class="avatar-image" src="{{ user.profile.avatar }}" />
+                            <img class="avatar-image" src="{{ user.profile.avatar }}" alt="user's profile avatar">
                             <span id="user-name" class="ml-2 mr-1" data-profile-type="{{ user.profile.user_type }}">{{ user.profile.name }}</span>
                             <span class="arrow-icon"><i class="fa-solid fa-chevron-down"></i></span>
                         </div>
