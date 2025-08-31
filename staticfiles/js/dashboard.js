@@ -220,7 +220,7 @@ $(document).ready(function () {
                     // add htmx attributes for trip request - passenger users only
                     let htmxCreateTrip = '';
                     if (date >= todayDate && userType === 'passenger') {
-                        htmxCreateTrip = `hx-get="/trips/request/?datetime=${datetimeNow}" hx-target="#baseDialog"`;
+                        htmxCreateTrip = `data-hx-get="/trips/request/?datetime=${datetimeNow}" data-hx-target="#baseDialog"`;
                     }
 
                     datesHTML += `<div class="date-wrapper">
