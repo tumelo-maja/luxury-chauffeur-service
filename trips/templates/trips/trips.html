@@ -13,16 +13,16 @@
             <label for="mobileDashMenu">Go to:</label>
             <select name="mobileDashMenu" id="mobileDashMenu">
 
-                <option value="summary" class="dash-item selected" data-hx-get="{% url 'dash-details' 'home' %}"
-                    data-hx-target="#display-container" data-hx-trigger="load, click" id="summaryViewOption">Summary</option>
+                <option value="summary" class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
+                    hx-target="#display-container" hx-trigger="load, click" id="summaryViewOption">Summary</option>
                 <option value="listview" class="dash-item" id="listViewOption"
-                    data-hx-get="{% url 'dash-details' 'list-view' %}" data-hx-target="#display-container" data-hx-trigger="click">
+                    hx-get="{% url 'dash-details' 'list-view' %}" hx-target="#display-container" hx-trigger="click">
                     Trips - List</option>
-                <option value="calendaview" class="dash-item" id="calendarViewOption" data-hx-get="{% url 'calendar-view' %}"
-                    data-hx-target="#display-container" data-hx-trigger="click"> Trips - Calendar</option>
+                <option value="calendaview" class="dash-item" id="calendarViewOption" hx-get="{% url 'calendar-view' %}"
+                    hx-target="#display-container" hx-trigger="click"> Trips - Calendar</option>
                 {% if user.profile.user_type == 'manager' %}
-                <option value="manager" class="dash-item" id="managerViewOption" data-hx-get="{% url 'manager-overview' %}"
-                    data-hx-target="#display-container" data-hx-trigger="click">Manager</option>
+                <option value="manager" class="dash-item" id="managerViewOption" hx-get="{% url 'manager-overview' %}"
+                    hx-target="#display-container" hx-trigger="click">Manager</option>
                 {% endif %}
             </select>
         </div>
@@ -32,26 +32,26 @@
             <div class="dash-body">
                 <ul class="menu-large">
                     <li>
-                        <div class="dash-item selected" data-hx-get="{% url 'dash-details' 'home' %}"
-                            data-hx-target="#display-container" data-hx-trigger="load, click"><i
+                        <div class="dash-item selected" hx-get="{% url 'dash-details' 'home' %}"
+                            hx-target="#display-container" hx-trigger="load, click"><i
                                 class="fa-solid fa-table-cells"></i><span>Summary</span></div>
                     </li>
                     <li>
-                        <div class="dash-item" id="listViewButton" data-hx-get="{% url 'dash-details' 'list-view' %}"
-                            data-hx-target="#display-container" data-hx-trigger="click">
+                        <div class="dash-item" id="listViewButton" hx-get="{% url 'dash-details' 'list-view' %}"
+                            hx-target="#display-container" hx-trigger="click">
                             <i class="fa-solid fa-list"></i><span>List</span>
                         </div>
                     </li>
                     <li>
-                        <div class="dash-item" id="calendarViewButton" data-hx-get="{% url 'calendar-view' %}"
-                            data-hx-target="#display-container" data-hx-trigger="click">
+                        <div class="dash-item" id="calendarViewButton" hx-get="{% url 'calendar-view' %}"
+                            hx-target="#display-container" hx-trigger="click">
                             <i class="fa-solid fa-calendar-days"></i><span>Calendar</span>
                         </div>
                     </li>
                     {% if user.profile.user_type == 'manager' %}
                     <li>
-                        <div class="dash-item" id="managerViewButton" data-hx-get="{% url 'manager-overview' %}"
-                            data-hx-target="#display-container" data-hx-trigger="click">
+                        <div class="dash-item" id="managerViewButton" hx-get="{% url 'manager-overview' %}"
+                            hx-target="#display-container" hx-trigger="click">
                             <i class="fa-solid fa-user-tie"></i><span>Manager</span>
                         </div>
                     </li>
@@ -62,8 +62,8 @@
             </div>
             {% if user.profile.user_type == 'passenger' %}
             <div class="dash-tail">
-                <div class="dash-button" aria-label="create a new trip" data-hx-get="{% url 'trip-request' %}"
-                    data-hx-target="#baseDialog">+ Create Trip
+                <div class="dash-button" aria-label="create a new trip" hx-get="{% url 'trip-request' %}"
+                    hx-target="#baseDialog">+ Create Trip
                 </div>
             </div>
             {% endif %}
