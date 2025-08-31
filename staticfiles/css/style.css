@@ -980,6 +980,8 @@ body {
     text-align: center;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    user-select: none;
 }
 
 .button-book:hover {
@@ -1279,6 +1281,8 @@ body {
     bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
+    cursor: pointer;
+    user-select: none;    
 }
 
 .sum-item {
@@ -1702,6 +1706,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    user-select: none;
 }
 
 .dash-item.selected {
@@ -1725,6 +1731,8 @@ body {
     text-align: center;
     margin-bottom: 30px;
     padding: 5px 15px;
+    cursor: pointer;
+    user-select: none;    
 }
 
 .dashboard-container {
