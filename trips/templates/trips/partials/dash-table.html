@@ -21,8 +21,8 @@
             <td class="mobile-table">{{ trip.updated_on | date:"d/m/Y" }}</td>
             <td class="text-center">{{ trip.status_str }}</td>
             <td class="text-center">
-                <button type="button" class="dash-tab-btn" hx-get="{% url 'trip-detail' trip.trip_name %}"
-                    hx-target="#baseDialog">View Details
+                <button type="button" class="dash-tab-btn" data-hx-get="{% url 'trip-detail' trip.trip_name %}"
+                    data-hx-target="#baseDialog">View Details
                 </button>
 
             </td>
