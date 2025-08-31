@@ -63,10 +63,10 @@
             {% if user.profile.user_type == 'passenger' %}
             <div class="dash-tail">
                 <div class="dash-button" aria-label="create a new trip" hx-get="{% url 'trip-request' %}"
-                    hx-target="#baseDialog">+ Create Trip
+                    hx-target="#baseDialog">+ Create Trip</div>
                 </div>
+                {% endif %}
             </div>
-            {% endif %}
             <div id="display-container" class="dashboard-container"></div>
         </div>
 </main>
