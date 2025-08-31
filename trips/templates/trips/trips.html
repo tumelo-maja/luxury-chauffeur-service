@@ -56,7 +56,7 @@
             </div>
             {% if user.profile.user_type == 'passenger' %}
             <div class="dash-tail">
-                <div class="dash-button" aria-label="create a new trip"
+                <div class="dash-button" title="create a new trip"
                     data-hx-get="{% url 'trip-request' %}" data-hx-target="#baseDialog">+ Create Trip
                 </div>
             </div>
