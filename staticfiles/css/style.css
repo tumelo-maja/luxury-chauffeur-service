@@ -512,9 +512,9 @@ body {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    -webkit-transition: 0.2 ease;
-    -o-transition: 0.2 ease;
-    transition: 0.2 ease;
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
 }
 
 .cross-head .navbar-toggler:hover {
@@ -3155,7 +3155,7 @@ body {
 
 .container-404 {
     margin: 0 auto;
-    padding: auto 32px;
+    padding: 0 32px;
     text-align: center;
 }
 
