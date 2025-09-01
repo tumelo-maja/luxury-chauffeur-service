@@ -267,8 +267,8 @@ def check_trip_overlap(request, form):
 
     if trips_in_window:
         form.add_error("travel_datetime",
-                       ("You already have another trip",
-                        " scheduled within 1 hour of this time."))
+                       "You already have another trip" +
+                        " scheduled within 1 hour of this time.")
 
     return form
 
@@ -431,13 +431,13 @@ def trip_review_view(request, trip_name):
     warning_texts = []
     if driver_window_trips.count():
         warning_texts.append(
-            (f"The driver has {driver_window_trips.count()}",
-             f" other trips within {check_window_hrs} hours of this time:"))
+            f"The driver has {driver_window_trips.count()}" +
+             f" other trips within {check_window_hrs} hours of this time:")
 
     if passenger_window_trips.count():
         warning_texts.append(
-            (f"The passenger has {passenger_window_trips.count()}",
-             f" other trips within {check_window_hrs} hours of this time:"))
+            f"The passenger has {passenger_window_trips.count()}" +
+             f" other trips within {check_window_hrs} hours of this time:")
 
     context = {
         'trip': trip,
@@ -605,8 +605,8 @@ def driver_action_view(request, trip_name):
     if trip.status not in ['confirmed', 'in_progress']:
 
         context = {
-            'error': (f"This action is not allowed ",
-                      f"for trip with status: {trip.status}"), }
+            'error': f"This action is not allowed "+
+                      f"for trip with status: {trip.status}", }
         return render(request, 'partials/modal-error.html', context)
 
     if request.method == "POST":

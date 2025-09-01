@@ -82,8 +82,9 @@ class TripRequestForm(ModelForm):
         min_allowed_time = now + timedelta(minutes=30)
 
         if travel_datetime < min_allowed_time:
-            raise forms.ValidationError(("Travel time must be at least",
-                                         " 30 minutes from now and not in the past."))
+            raise forms.ValidationError(
+                "Travel time must be at least" +
+                 " 30 minutes from now and not in the past.")
 
         return travel_datetime
 
