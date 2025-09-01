@@ -1,9 +1,15 @@
+/*globals flatpickr, bootstrap, htmx*/
+/**
+ * Add Event Listener to run only after HTML document has completely loaded
+ * - All code within this eventlistener will be accessible to the browser once the page has loaded.
+ * 
+ */
 $(document).ready(function () {
 
     /**
      * Toggles dropdown visibility and arrow rotation
      * when the dropdown header is clicked.
-     */    
+     */
     $(".dropdown-head").click(function () {
         $(".arrow-icon").toggleClass('rotate');
         $(".dropdown-body").toggleClass('hidden-item');
@@ -52,7 +58,7 @@ $(document).ready(function () {
         $($slideElements[manual]).addClass('active');
         $($slideElements[manual]).removeClass('hidden-item');
         $($buttonElements[manual]).addClass('active');
-    }
+    };
 
     /**
      * Handle carousel navigation button clicks.
@@ -92,10 +98,10 @@ $(document).ready(function () {
                     repeater();
                 }
             }, 4000);
-        }
+        };
 
         repeater();
-    }
+    };
 
     repeat();
 
@@ -124,29 +130,27 @@ $(document).ready(function () {
             modal.show();
             initializeFlatpicker();
         }
-    })
+    });
 
     /**
      * Close modal after HTMX request if response is redirect
      * and reload page.
      */    
     htmx.on('htmx:afterRequest', (e) => {
-        // console.log
-        console.log(e)
+
         const responsePath = e.detail.pathInfo.responsePath;
-        console.log(`responsePath: ${responsePath}`)
         if (responsePath === "/trips/") {
             modal.hide();
             location.reload();
         }
-    })    
+    });   
 
     /**
      * Clears the modal content when it is hidden.
      */    
     htmx.on('hidden:bs.modal', (e) => {
         document.getElementById('baseDialog').innerHTML = '';
-    })
+    });
 
     // navbar toggle elements
     const $mainHead = $('.header-main');
