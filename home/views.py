@@ -15,7 +15,7 @@ def home_view(request):
     Returns
     -------
     The rendered homepage - no database queries used.
-    """    
+    """
     return render(request, 'home/index.html')
 
 
@@ -30,8 +30,8 @@ def contact_form_view(request):
     Renders a success message partial if form submitted successfully.
     Re-renders the form with validation errors.
     An email with inquiry details is sent to the site `admin`,
-    Visitors can request a copy of their submitted inquiry. 
-    """    
+    Visitors can request a copy of their submitted inquiry.
+    """
     if request.method == 'POST':
         form = UserContactForm(request.POST)
         if form.is_valid():
@@ -43,16 +43,17 @@ def contact_form_view(request):
             receive_copy = form.cleaned_data['receive_copy']
 
             context = {
-                        'enquiry': {
-                            'name': name,
-                            'email': email,
-                            'phone': phone,
-                            'message': message,
-                        },
-                        'subtitle': 'You have received a new enquiry from the website:',
-                        'recipient': 'Admin',
-                    }
-            
+                'enquiry': {
+                    'name': name,
+                    'email': email,
+                    'phone': phone,
+                    'message': message,
+                },
+                'subtitle':
+                'You have received a new enquiry from the website:',
+                'recipient': 'Admin',
+            }
+
             html_message = render_to_string('home/enquiry-email.html', context)
             text_message = strip_tags(html_message)
 
@@ -61,15 +62,19 @@ def contact_form_view(request):
                 subject='New Website Enquiry from ' + name,
                 message=text_message,
                 from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.ADMIN_EMAIL,],
+                recipient_list=[settings.ADMIN_EMAIL],
                 html_message=html_message,
-            )  
+            )
 
             if receive_copy:
-                context['recipient']= name
-                context['subtitle']= 'Thank you for contacting Lux Chauffeurs. We have received your enquiry and will get back to you as soon as possible.'
-                
-                html_message = render_to_string('home/enquiry-email.html', context)
+                context['recipient'] = name
+                context['subtitle'] = (
+                    'Thank you for contacting Lux Chauffeurs. ',
+                    'We have received your enquiry and ',
+                    'will get back to you as soon as possible.')
+
+                html_message = render_to_string(
+                    'home/enquiry-email.html', context)
                 text_message = strip_tags(html_message)
                 send_mail(
                     subject='Copy of Your Enquiry with Lux Chauffeurs',
@@ -77,13 +82,12 @@ def contact_form_view(request):
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[email],
                     html_message=html_message,
-                )                 
+                )
 
             return render(request, 'partials/success_message.html')
     else:
         form = UserContactForm()
 
-    context ={'form': form,}
+    context = {'form': form, }
 
     return render(request, 'home/contact.html', context)
-

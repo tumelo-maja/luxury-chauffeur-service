@@ -41,7 +41,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = (os.getenv('IS_DEVELOPMENT', 'False') == 'True')
 
 ALLOWED_HOSTS = ['127.0.0.1',
-                 '.herokuapp.com',]
+                 '.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000/",
@@ -214,7 +214,7 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-ACCOUNT_LOGIN_METHODS = {'email','username'}
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
