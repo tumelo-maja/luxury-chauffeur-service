@@ -26,6 +26,7 @@ body {
     display: -ms-flexbox;
     display: flex;
     background-color: #360136;
+    font-family: "Oswald", sans-serif;
 }
 
 .main {
