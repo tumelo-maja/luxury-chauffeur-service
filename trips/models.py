@@ -53,7 +53,6 @@ class Trip(models.Model):
         (5, "5 Stars"),
     ]
 
-
     trip_name = models.CharField(
         max_length=128, unique=True, default=shortuuid.uuid)
     passenger = models.ForeignKey(
@@ -71,19 +70,22 @@ class Trip(models.Model):
         max_length=50, choices=STATUS_CHOICES, default="pending")
     vehicle = models.CharField(max_length=100, choices=VEHICLE_CHOICES)
 
-    passenger_rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True)
-    driver_rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True)
+    passenger_rating = models.IntegerField(
+        choices=RATING_CHOICES, null=True, blank=True)
+    driver_rating = models.IntegerField(
+        choices=RATING_CHOICES, null=True, blank=True)
     passenger_rating_comments = models.TextField(blank=True, null=True)
     driver_rating_comments = models.TextField(blank=True, null=True)
 
     start_time = models.DateTimeField(null=True, blank=True)
-    end_time = models.DateTimeField(null=True, blank=True)    
+    end_time = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ["-travel_datetime"]
 
     def __str__(self):
-        return f"Trip {self.id} for {self.passenger} - {self.location_end} ({self.travel_datetime})"
+        return (f"Trip {self.id} for {self.passenger} - ",
+                f"{self.location_end} ({self.travel_datetime})")
 
     @property
     def status_class(self):
@@ -92,17 +94,15 @@ class Trip(models.Model):
     @property
     def status_str(self):
         return self.status.replace('_', ' ').capitalize()
-    
+
     @property
     def duration(self):
 
         if not self.start_time or not self.end_time:
-            return 1 #assume 1 hour  
+            return 1
         else:
             return (self.end_time - self.start_time).total_seconds() / 3600
-        
-        
-    
+
     def start_trip(self):
         self.driver.profile.update_status('engaged')
         self.passenger.profile.update_status('engaged')
@@ -129,8 +129,6 @@ class Trip(models.Model):
         else:
             rate = self.VEHICLE_RATES[self.vehicle]['rate_2hr_plus']
 
-
-        total_cost = round(rate * self.duration,2)
+        total_cost = round(rate * self.duration, 2)
 
         return total_cost
-

@@ -33,27 +33,30 @@ def dash_details_view(request, partial):
     request : HttpRequest
         The HTTP request object.
     partial : str
-        The dashboard section to render; passed as query parameter in the template
+        The dashboard section to render.
+        passed as query parameter in the template.
 
     Returns
     -------
     Rendered dashboard partial template.
     For the 'home' partial, context is rendered for the summary display
     """
-    context={}
+    context = {}
 
     if partial == 'home':
-        status_completed='completed'
+        status_completed = 'completed'
         user_status = request.user.profile.status
 
         if request.user.profile.user_type == "passenger":
             user_profile = request.user.profile.passenger_profile
-            trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
+            trips = Trip.objects.filter(
+                passenger=request.user.profile.passenger_profile)
             trips_completed = trips.filter(status=status_completed)
-            
+
         elif request.user.profile.user_type == "driver":
             user_profile = request.user.profile.driver_profile
-            trips = Trip.objects.filter(driver=request.user.profile.driver_profile)
+            trips = Trip.objects.filter(
+                driver=request.user.profile.driver_profile)
             trips_completed = trips.filter(status=status_completed)
 
         elif request.user.profile.user_type == "manager":
@@ -76,15 +79,17 @@ def dash_details_view(request, partial):
                 'rejected': trips.filter(status='rejected').count(),
                 'progress': trips.filter(status='in_progress').count(),
                 'all': trips.count(),
-            },            
+            },
         }
-    
-    elif partial =="list-view":
+
+    elif partial == "list-view":
 
         if request.user.profile.user_type == "passenger":
-            trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
+            trips = Trip.objects.filter(
+                passenger=request.user.profile.passenger_profile)
         elif request.user.profile.user_type == "driver":
-            trips = Trip.objects.filter(driver=request.user.profile.driver_profile)
+            trips = Trip.objects.filter(
+                driver=request.user.profile.driver_profile)
         elif request.user.profile.user_type == "manager":
             trips = Trip.objects.all()
 
@@ -93,7 +98,7 @@ def dash_details_view(request, partial):
             'user': request.user
         }
 
-    return render(request, f'trips/partials/dash-{partial}.html',context)
+    return render(request, f'trips/partials/dash-{partial}.html', context)
 
 
 @login_required
@@ -111,7 +116,8 @@ def trips_list_view(request):
     Rendered trips list template for recent trips.
     """
     if request.user.profile.user_type == "passenger":
-        trips = Trip.objects.filter(passenger=request.user.profile.passenger_profile)
+        trips = Trip.objects.filter(
+            passenger=request.user.profile.passenger_profile)
     elif request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(driver=request.user.profile.driver_profile)
     elif request.user.profile.user_type == "manager":
@@ -165,7 +171,7 @@ def trip_detail_view(request, trip_name):
 @login_required
 def trip_request_view(request):
     """
-    Displays a modal containing a trip request view. 
+    Displays a modal containing a trip request view.
     Handles trip creating trip requests
 
     Parameters
@@ -175,13 +181,16 @@ def trip_request_view(request):
 
     Returns
     -------
-    Rendered trip request form in a modal or 204 HttpResponse if successfully submitted.
+    Rendered trip request form in a modal
+        or redirect if successfully submitted.
     """
-    if request.user.profile.user_type != "passenger":
+    user_type = request.user.profile.user_type
+    if user_type != "passenger":
         messages.warning(request, "Only passenger users can create trips")
-        context = {'error': f"Trip requests from {request.user.profile.user_type}s not allowed.",}
+        context = {
+            'error': f"Trip requests from {user_type}s not allowed.", }
         return render(request, 'partials/modal-error.html', context)
-    
+
     if request.method == "POST":
         form = TripRequestForm(request.POST)
         form = check_trip_overlap(request, form)
@@ -194,11 +203,10 @@ def trip_request_view(request):
 
             messages.success(request, "Success! Trip created.")
 
-            return redirect('trips')                     
+            return redirect('trips')
 
     else:
         form = TripRequestForm()
-
 
         driver_id = request.GET.get('driver')
         if driver_id:
@@ -211,21 +219,25 @@ def trip_request_view(request):
         vehicle = request.GET.get('vehicle')
         if vehicle:
             form.fields['vehicle'].initial = vehicle
-        
+
         trip_datetime = request.GET.get('datetime')
         if trip_datetime:
-            form.fields['travel_datetime'].initial = datetime.strptime(trip_datetime, '%Y-%m-%dT%H:%M')
+            form.fields['travel_datetime'].initial = datetime.strptime(
+                trip_datetime, '%Y-%m-%dT%H:%M')
 
     context = {
         'form': form,
     }
     return render(request, 'trips/trip-request.html', context)
 
+
 @login_required
 def check_trip_overlap(request, form):
     """
-    Validate the passenger has another trip scheduled within one hour of the current request.
-    1-hour window is defined locally, a window is created -1hr and +1hr of `travel_datetime`
+    Validate the passenger does not have another trip
+        scheduled within one hour of the current request.
+    1-hour window is defined locally,
+        a window is created -1hr and +1hr of `travel_datetime`
 
     Parameters
     ----------
@@ -237,30 +249,34 @@ def check_trip_overlap(request, form):
     Returns
     -------
     forms
-        The same form instance, with an error added to `travel_datetime` if a conflicting trip exists.
-    """  
+        The same form instance, with an error
+            added to `travel_datetime` if a conflicting trip exists.
+    """
     raw_datetime = form.data.get("travel_datetime")
     travel_datetime = timezone.make_aware(parse_datetime(raw_datetime))
 
     timedelta_window = timedelta(minutes=60)
     window_start = travel_datetime - timedelta_window
     window_end = travel_datetime + timedelta_window
-    
+
     trips_in_window = Trip.objects.filter(
-        passenger= request.user.profile.passenger_profile,
+        passenger=request.user.profile.passenger_profile,
         travel_datetime__gte=window_start,
         travel_datetime__lt=window_end
-        ).exclude(status__in=["cancelled", "completed",'rejected']).exists()
+    ).exclude(status__in=["cancelled", "completed", 'rejected']).exists()
 
     if trips_in_window:
-        form.add_error("travel_datetime","You already have another trip scheduled within 1 hour of this time.")
+        form.add_error("travel_datetime",
+                       ("You already have another trip",
+                        " scheduled within 1 hour of this time."))
 
-    return form   
+    return form
+
 
 @login_required
 def trip_edit_view(request, trip_name):
     """
-    Displays a modal containing a trip edit view. 
+    Displays a modal containing a trip edit view.
     Handles trip editing trip existing requests
 
     Parameters
@@ -272,7 +288,8 @@ def trip_edit_view(request, trip_name):
 
     Returns
     -------
-    Rendered pre-filled trip edit form in a modal or 204 HttpResponse if successfully submitted.
+    Rendered pre-filled trip edit form in a modal
+        or redirect if successfully submitted.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
     check_user_permission(request, trip)
@@ -288,8 +305,7 @@ def trip_edit_view(request, trip_name):
 
             messages.success(request, "Success! Trip modified.")
 
-            return redirect('trips') 
-                   
+            return redirect('trips')
 
     else:
         form = TripRequestForm(instance=trip)
@@ -306,7 +322,7 @@ def trip_edit_view(request, trip_name):
 @login_required
 def trip_cancel_view(request, trip_name):
     """
-    Displays a confirmation modal for canceling an existing trip. 
+    Displays a confirmation modal for canceling an existing trip.
     Handles trip editing trip existing requests
 
     Parameters
@@ -318,7 +334,8 @@ def trip_cancel_view(request, trip_name):
 
     Returns
     -------
-    Rendered trip cancel confirmation form in a modal or 204 HttpResponse if successfully submitted.
+    Rendered trip cancel confirmation form in a modal
+        or redirect if successfully submitted.
     """
     trip = get_object_or_404(Trip, trip_name=trip_name)
     check_user_permission(request, trip)
@@ -331,7 +348,7 @@ def trip_cancel_view(request, trip_name):
         trip.save()
 
         messages.success(request, "Success! Trip cancelled.")
-        return redirect('trips')            
+        return redirect('trips')
 
     context = {
         'trip': trip,
@@ -347,7 +364,8 @@ def trip_review_view(request, trip_name):
     Displays a review confirmation modal for manager
     Handles passenger review of a completed trip.
     Manager user can allocated different 'driver' to the trip if needed.
-    Warning texts are displayed to cause Manager about driver and passenger's other trips within 6-hour window
+    Warning texts are displayed about
+        driver and passenger's other trips within 6-hour window
 
     Parameters
     ----------
@@ -365,7 +383,7 @@ def trip_review_view(request, trip_name):
     trip = get_object_or_404(Trip, trip_name=trip_name)
     if request.user.profile.user_type != "manager":
         raise Http404()
-    
+
     if request.method == "POST":
         form = TripRequestForm(instance=trip)
         request_outcome = request.POST.get('request_outcome')
@@ -379,7 +397,7 @@ def trip_review_view(request, trip_name):
         trip.save()
         messages.success(request, f"Success! Trip {trip.status}.")
 
-        return redirect('trips')            
+        return redirect('trips')
 
     else:
         form = TripRequestForm(instance=trip)
@@ -413,11 +431,13 @@ def trip_review_view(request, trip_name):
     warning_texts = []
     if driver_window_trips.count():
         warning_texts.append(
-            f"The driver has {driver_window_trips.count()} other trips within {check_window_hrs} hours of this time:")
+            (f"The driver has {driver_window_trips.count()}",
+             f" other trips within {check_window_hrs} hours of this time:"))
 
     if passenger_window_trips.count():
         warning_texts.append(
-            f"The passenger has {passenger_window_trips.count()} other trip(s) within {check_window_hrs} hours of this time:")
+            (f"The passenger has {passenger_window_trips.count()}",
+             f" other trips within {check_window_hrs} hours of this time:"))
 
     context = {
         'trip': trip,
@@ -464,7 +484,7 @@ def trip_feedback_view(request, trip_name):
             form.save()
             messages.success(request, "Success! Trip feedback submitted.")
 
-            return redirect('trips')            
+            return redirect('trips')
 
     if request.user.profile.user_type == "passenger":
         form = PassengerRatingForm(instance=trip)
@@ -496,7 +516,7 @@ def trips_calendar_view(request):
     Returns
     -------
     Rendered calendar template.
-    """    
+    """
     return render(request, 'trips/partials/dash-calendar-view.html')
 
 
@@ -534,7 +554,7 @@ def trips_calendar_subsets_view(request):
             passenger=request.user.profile.passenger_profile,
             travel_datetime__gte=start_datetime,
             travel_datetime__lt=end_datetime)
-        
+
     elif request.user.profile.user_type == "driver":
         trips = Trip.objects.filter(
             driver=request.user.profile.driver_profile,
@@ -545,13 +565,17 @@ def trips_calendar_subsets_view(request):
         trips = Trip.objects.filter(
             travel_datetime__gte=start_datetime,
             travel_datetime__lt=end_datetime
-        ) 
+        )
 
-    monthly_trips = [{'travel_datetime': trip.travel_datetime.date().isoformat(),
-                      'travel_date': trip.travel_datetime.strftime("%d/%m/%Y"), }
+    travel_datetime = trip.travel_datetime.date().isoformat()
+    travel_date = trip.travel_datetime.strftime("%d/%m/%Y")
+
+    monthly_trips = [{'travel_datetime': travel_datetime,
+                      'travel_date': travel_date, }
                      for trip in trips]
 
     return JsonResponse({'trips': monthly_trips})
+
 
 @login_required
 def driver_action_view(request, trip_name):
@@ -569,18 +593,22 @@ def driver_action_view(request, trip_name):
     Returns
     -------
     204 HttpResponse if form submitted successfully.
-    HttpResponseForbidden  is raised if action is invalid/not allowed for a given trip.
+    HttpResponseForbidden  is raised
+        if action is invalid/not allowed for a given trip.
     """
-    trip = get_object_or_404(Trip, trip_name=trip_name)  
+    trip = get_object_or_404(Trip, trip_name=trip_name)
     # ensure user has driver role and allocated to this trip:
     if trip.driver.profile.user != request.user:
-        context = {'error': "You are not authorized to access this resource",}
-        return render(request, 'partials/modal-error.html', context)  
-    
+        context = {'error': "You are not authorized to access this resource", }
+        return render(request, 'partials/modal-error.html', context)
+
     if trip.status not in ['confirmed', 'in_progress']:
-        context = {'error': f"This action is not allowed for trip with status: {trip.status}",}
-        return render(request, 'partials/modal-error.html', context)  
-        
+
+        context = {
+            'error': (f"This action is not allowed ",
+                      f"for trip with status: {trip.status}"), }
+        return render(request, 'partials/modal-error.html', context)
+
     if request.method == "POST":
         if trip.status == 'confirmed':
             trip.start_trip()
@@ -591,7 +619,7 @@ def driver_action_view(request, trip_name):
             request.user.profile.update_status('available')
             messages.success(request, "Success! Trip ended.")
 
-        return redirect('trips')            
+        return redirect('trips')
 
     context = {
         'trip': trip,
@@ -606,7 +634,6 @@ def driver_action_view(request, trip_name):
         return HttpResponseForbidden("Action not authorized for this trip.")
 
 
-
 @login_required
 def manager_overview_view(request):
     """
@@ -619,7 +646,7 @@ def manager_overview_view(request):
     """
     if request.user.profile.user_type != "manager":
         raise Http404()
-        
+
     return render(request, 'trips/manager-overview.html')
 
 
@@ -643,7 +670,6 @@ def manager_tabs_view(request, tab_name):
     """
     if request.user.profile.user_type != "manager":
         raise Http404()
-    
 
     if tab_name == "trips":
         trips = Trip.objects.all()[:20]
@@ -662,27 +688,31 @@ def manager_tabs_view(request, tab_name):
         context = {
             'passengers': passengers,
         }
-        return render(request, 'trips/partials/manager-passengers.html', context)
+        return render(request,
+                      'trips/partials/manager-passengers.html',
+                      context)
 
     elif tab_name == "drivers":
         drivers = DriverProfile.objects.all()
         for driver in drivers:
             driver.update_rating(
                 driver.trips_driver.filter(status='completed'))
-                    
+
         context = {
             'drivers': drivers,
         }
         return render(request, 'trips/partials/manager-drivers.html', context)
 
+
 def check_user_permission(request, trip):
 
-    if request.user.profile.user_type == "manager":
+    user_type = request.user.profile.user_type
+    user = request.user
+    if user_type == "manager":
         return
-    elif request.user.profile.user_type == "driver" and trip.driver.profile.user == request.user:
+    elif user_type == "driver" and trip.driver.profile.user == user:
         return
-    elif request.user.profile.user_type == "passenger" and trip.passenger.profile.user == request.user:
+    elif user_type == "passenger" and trip.passenger.profile.user == user:
         return
     else:
         raise Http404()
-

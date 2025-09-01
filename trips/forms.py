@@ -11,8 +11,9 @@ class TripRequestForm(ModelForm):
     """
     Form for passengers to make a trip request.
 
-    Provides fields for pickup and destination locations, travel date/time, 
-    driver assignment, vehicle selection, trip type, and optional comments. 
+    Provides fields for pickup and destination locations,
+    travel date/time, driver assignment, vehicle selection,
+    trip type, and optional comments.
     Includes validation to prevent scheduling trips in the past or too soon.
 
     Fields
@@ -32,7 +33,6 @@ class TripRequestForm(ModelForm):
     comments : str, optional
         Any additional instructions or notes for the trip.
     """
-
 
     class Meta:
         model = Trip
@@ -66,7 +66,8 @@ class TripRequestForm(ModelForm):
 
     def clean_travel_datetime(self):
         """
-        Validate that the travel_datetime is not from the past or within 30 minutes from current time.
+        Validate that the travel_datetime is not
+            from the past or within 30 minutes from current time.
 
         An error is raised if the condition is not met.
 
@@ -74,16 +75,18 @@ class TripRequestForm(ModelForm):
         -------
         str
             The cleaned travel_datetime.
-        """        
+        """
         travel_datetime = self.cleaned_data.get('travel_datetime')
 
         now = timezone.now()
         min_allowed_time = now + timedelta(minutes=30)
 
         if travel_datetime < min_allowed_time:
-            raise forms.ValidationError("Travel time must be at least 30 minutes from now and not in the past.")
+            raise forms.ValidationError(("Travel time must be at least",
+                                         " 30 minutes from now and not in the past."))
 
         return travel_datetime
+
 
 class PassengerRatingForm(forms.ModelForm):
     """
