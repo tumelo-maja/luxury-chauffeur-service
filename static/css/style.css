@@ -269,10 +269,6 @@ body {
     transition: 0.2s ease-in-out;
 }
 
-.header-main.active .link-text {
-    display: inline-block;
-}
-
 .avatar-image {
     width: 40px;
     height: 40px;
@@ -281,10 +277,6 @@ body {
        object-fit: cover;
     border: 1px solid black;
     padding: 3px;
-}
-
-.header-main.active .link-text {
-    opacity: 1;
 }
 
 .cross-head-wrapper {
@@ -3230,6 +3222,11 @@ body {
 
 @media screen and (min-width: 768px) {
 
+    .header-main.active .link-text {
+        display: inline-block;
+        opacity: 1;
+    }
+        
     .section-wrapper {
         width: 97%;
     }
