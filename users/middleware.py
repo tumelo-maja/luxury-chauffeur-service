@@ -18,10 +18,8 @@ class StoreUserRoleMiddleware:
         Stores the 'role' argument, passed with the request, in the session.
     """
 
-
     def __init__(self, get_response):
         self.get_response = get_response
-
 
     def __call__(self, request):
         """
@@ -32,8 +30,9 @@ class StoreUserRoleMiddleware:
         Returns
         -------
         HttpResponse
-            The response object passed to the next view with `role` in its session.        
-        """        
+            The response object passed to
+                the next view with `role` in its session.
+        """
         role = request.GET.get('role')
         if role in ['driver', 'passenger']:
             request.session['role'] = role

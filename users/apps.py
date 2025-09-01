@@ -17,6 +17,7 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         """
-        Triggered when Django starts to defined and register the signal handlers in `users.signals`.
+        Triggered when Django starts to defined
+            and register the signal handlers in `users.signals`.
         """        
         import users.signals

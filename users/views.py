@@ -35,10 +35,7 @@ def profile_view(request, username):
     if username == request.user or request.user.profile.user_type == "manager":
         profile = get_object_or_404(User, username=username).profile
     else:
-        try:
-            profile = request.user.profile
-        except:
-            raise Http404() 
+        profile = request.user.profile
 
     user_status = profile.status
     context = {
@@ -52,15 +49,17 @@ def profile_view(request, username):
 @login_required
 def profile_edit_view(request):
     """
-    Display a user's profile page with editable fields. Logged-in users can only edit their own profiles.
+    Display a user's profile page with editable fields.
+    Logged-in users can only edit their own profiles.
 
-    Rendered fields are user-role specific ie. according the associated user_type Profile
+    Rendered fields are user-role specific
+    ie. according the associated user_type Profile
 
     Returns
     -------
     Rendered profile edit page for the logged-in user.
     Form validation and feedback are displayed as needed.
-    User shown confirmation if profile update was successful. 
+    User shown confirmation if profile update was successful.
     """
     profile_user = request.user.profile
     profile_form = ProfileEditForm(instance=profile_user)
@@ -119,7 +118,8 @@ def profile_edit_view(request):
 @login_required
 def profile_settings_view(request):
     """
-    Displays the profile settings page containing logged-in user's email address.
+    Displays the profile settings page containing
+    logged-in user's email address.
 
     Returns
     -------
@@ -131,7 +131,8 @@ def profile_settings_view(request):
 @login_required
 def profile_settings_partial_view(request):
     """
-    Swaps the email address display element with an editable, pre-filled email field from a partial template.
+    Swaps the email address display element with an editable,
+    pre-filled email field from a partial template.
 
     Returns
     -------
@@ -141,7 +142,8 @@ def profile_settings_partial_view(request):
     """
     if request.htmx:
         form = ProfileSettingsForm(instance=request.user)
-        return render(request, 'users/partials/settings-form.html', {'form': form})
+        context = {'form': form}
+        return render(request, 'users/partials/settings-form.html', context)
 
     if request.method == "POST":
         form = ProfileSettingsForm(request.POST, instance=request.user)
@@ -150,7 +152,8 @@ def profile_settings_partial_view(request):
 
             # Check if the email already exists
             email = form.cleaned_data['email']
-            if User.objects.filter(email=email).exclude(id=request.user.id).exists():
+            if User.objects.filter(email=email).exclude(
+                    id=request.user.id).exists():
                 messages.warning(request, f"{email} is already in use.")
                 return redirect('profile-settings')
 
@@ -172,7 +175,8 @@ def profile_settings_partial_view(request):
 @login_required
 def profile_emailverify(request):
     """
-    Manually trigger sending of an email verification message for the logged-in user.
+    Manually trigger sending of an email
+    verification message for the logged-in user.
 
     Returns
     -------
@@ -185,9 +189,11 @@ def profile_emailverify(request):
 @login_required
 def profile_delete_view(request):
     """
-    Displays a 'delete account' confirmation for the logged-in user and warns users about the next steps.
+    Displays a 'delete account' confirmation for the
+    logged-in user and warns users about the next steps.
 
-    If confirmed, user is logged-out and the account is removed from the database.
+    If confirmed, user is logged-out and
+    the account is removed from the database.
 
     Returns
     -------
@@ -249,17 +255,18 @@ def user_signup(request):
                 PassengerProfile.objects.create(profile=profile)
 
             messages.success(
-                request, f"{role.capitalize()}'s account created successfully.")
+                request,
+                f"{role.capitalize()}'s account created successfully.")
             send_email_confirmation(request, user)
 
-            # return redirect('account-success')
-            return render(request, 'users/account-created.html',{'user_email': user.email })
-        
+            context = {'user_email': user.email}
+            return render(request, 'users/account-created.html', context)
+
         else:
             context = {
                 'form': form,
                 'user_type': role,
-            }            
+            }
             return render(request, 'account/signup-form.html', context)
 
     else:
@@ -285,6 +292,7 @@ def account_success(request):
     """
     return render(request, 'users/account-created.html')
 
+
 def social_login_role_view(request, provider):
     """
     Render the role selection page before initiating a social login.
@@ -294,11 +302,13 @@ def social_login_role_view(request, provider):
     request : HttpRequest
         The current HTTP request object.
     provider : str
-        The name of the social authentication provider (e.g., 'github', 'google').
+        The name of the social authentication
+        provider (e.g., 'github', 'google').
 
     Returns
     -------
-    initiates authentication request for the given 'provider' to log the user in 
+    initiates authentication request
+    for the given 'provider' to log the user in
     """
     context = {'provider': provider}
     return render(request, "users/social-login-role.html", context)

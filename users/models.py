@@ -68,22 +68,21 @@ class Profile(models.Model):
     @property
     def avatar(self):
         """
-        Set user avatar to the cloudinary url if user added an image else the default user avatar in static folder is used .
+        Set user avatar to the cloudinary url if user added an image
+            else the default user avatar in static folder is used .
         """
         try:
-            # avatar = self.image.url
-            # if avatar is None:
-            #     raise TypeError
             if self.image and self.image.public_id != "placeholder":
                 return self.image.url
             raise ValueError
-        except:
+        except ValueError:
             avatar = static('images/avatar.png')
         return avatar
 
     def update_status(self, status):
         """
-        Updates the status field with value specified by `status` argument  then saves.
+        Updates the status field with value specified
+            by `status` argument  then saves.
         """
         self.status = status
         self.save()
@@ -94,7 +93,8 @@ class PassengerProfile(models.Model):
     Passenger role-specific profile.
     Related to `Profile` model by one-to-one relationship.
 
-    Stores emergency contact information and ratings received from user's completed trips.
+    Stores emergency contact information and
+        ratings received from user's completed trips.
     """
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='passenger_profile')
@@ -110,7 +110,7 @@ class PassengerProfile(models.Model):
     @admin.display(ordering="profile")
     def status(self):
         return self.profile.status
-    
+
     def update_rating(self, trips):
         """
         Update passenger's rating statistics.
@@ -119,7 +119,8 @@ class PassengerProfile(models.Model):
         """
         if trips.exists():
             rating_items = [
-                trip.driver_rating for trip in trips if trip.driver_rating is not None]
+                trip.driver_rating
+                for trip in trips if trip.driver_rating is not None]
             if len(rating_items):
                 self.count_rating = len(rating_items)
                 self.average_rating = sum(rating_items) / len(rating_items)
@@ -148,7 +149,8 @@ class DriverProfile(models.Model):
     Driver role-specific profile.
     Related to `Profile` model by one-to-one relationship.
 
-    Stores driver status, experience and ratings received from user's completed trips.
+    Stores driver status, experience and
+        ratings received from user's completed trips.
     """
 
     profile = models.OneToOneField(
@@ -159,12 +161,12 @@ class DriverProfile(models.Model):
 
     def __str__(self):
         return f"Driver: {self.profile.user.username}"
-    
+
     @property
     @admin.display(ordering="profile")
     def status(self):
         return self.profile.status
-    
+
     def update_rating(self, trips):
         """
         Update driver's rating statistics.
@@ -173,7 +175,8 @@ class DriverProfile(models.Model):
         """
         if trips.exists():
             rating_items = [
-                trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+                trip.passenger_rating
+                for trip in trips if trip.passenger_rating is not None]
             if len(rating_items):
                 self.count_rating = len(rating_items)
                 self.average_rating = sum(rating_items) / len(rating_items)
@@ -202,7 +205,8 @@ class ManagerProfile(models.Model):
     Manager role-specific profile.
     Related to `Profile` model by one-to-one relationship.
 
-    Stores experience and ratings received from passenger and drivers's completed and rated trips.
+    Stores experience and ratings received from
+        passenger and drivers's completed and rated trips.
     """
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='manager_profile')
@@ -215,7 +219,6 @@ class ManagerProfile(models.Model):
     driver_average_rating = models.DecimalField(
         null=True, blank=True, max_digits=2, decimal_places=1)
 
-
     def __str__(self):
         return f"Manager: {self.profile.user.username}"
 
@@ -223,22 +226,25 @@ class ManagerProfile(models.Model):
     @admin.display(ordering="profile")
     def status(self):
         return self.profile.status
-    
+
     def update_rating(self, trips):
         """
         Updates the passengers and drivers rating statistics.
 
-        Driver and passenger's `*_count_rating` and `*_average_rating` fields are calculated and saved
+        Driver and passenger's `*_count_rating`
+            and`*_average_rating` fields are calculated and saved
         """
         if trips.exists():
             passenger_rating_items = [
-                trip.passenger_rating for trip in trips if trip.passenger_rating is not None]
+                trip.passenger_rating
+                for trip in trips if trip.passenger_rating is not None]
             self.passenger_count_rating = len(passenger_rating_items)
             self.passenger_average_rating = sum(
                 passenger_rating_items) / len(passenger_rating_items)
 
             driver_rating_items = [
-                trip.driver_rating for trip in trips if trip.driver_rating is not None]
+                trip.driver_rating
+                for trip in trips if trip.driver_rating is not None]
             self.driver_count_rating = len(driver_rating_items)
             self.driver_average_rating = sum(
                 driver_rating_items) / len(driver_rating_items)
@@ -247,8 +253,10 @@ class ManagerProfile(models.Model):
 
     def get_rating_levels(self, trips):
         """
-        Get all passenger's ratings by levels from all completed and rated trip.
-        only passenger rating is used to reflect overall performance of the service.
+        Get all passenger's ratings by levels
+            from all completed and rated trip.
+        only passenger rating is used to reflect
+            overall performance of the service.
 
         Returns
         -------

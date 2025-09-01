@@ -27,12 +27,14 @@ class ProfileEditForm(ModelForm):
         User's contact number.
     home_address : str
         User's home address.
-    """    
-    phone = forms.IntegerField(label='Contact Number',
-                            widget=forms.TextInput(attrs={'placeholder': 'E.g. 07512345679',
-                                                          'pattern': "^[0-9]{10,15}$",
-                                                          'title': 'Phone number must be between 10 and 15 digits.',
-                                                          }),)
+    """
+    phone = forms.IntegerField(
+        label='Contact Number',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'E.g. 07512345679',
+            'pattern': "^[0-9]{10,15}$",
+            'title': 'Phone number must be between 10 and 15 digits.',
+            }),)
 
     class Meta:
         model = Profile
@@ -62,7 +64,7 @@ class MainSignupForm(UserCreationForm):
         Password confirmation.
     role : str
         Hidden field used to capture user type (driver, passenger).
-    """    
+    """
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
@@ -70,24 +72,32 @@ class MainSignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+        fields = (
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'password1',
+            'password2')
 
     def clean_email(self):
         """
         Validate that the provided email is unique.
 
-        An error is raised if the email is already registered on another account.
+        An error is raised
+            if the email is already registered on another account.
 
         Returns
         -------
         str
             The cleaned email address.
-        """        
+        """
         email = self.cleaned_data.get('email')
 
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already in use by another user.")
-        
+            raise forms.ValidationError(
+                "This email is already in use by another user.")
+
         return email
 
 
@@ -99,11 +109,12 @@ class DriverEditForm(ModelForm):
     ------
     experience : int
         Years of driving experience.
-    """    
+    """
     class Meta:
         model = DriverProfile
         fields = ['experience']
         labels = {'experience': 'Years of driving experience'}
+
 
 class ManagerEditForm(ModelForm):
     """
@@ -113,11 +124,12 @@ class ManagerEditForm(ModelForm):
     ------
     experience : int
         Years of customer service experience.
-    """    
+    """
     class Meta:
         model = ManagerProfile
         fields = ['experience']
         labels = {'experience': 'Years of customer service'}
+
 
 class PassengerEditForm(ModelForm):
     """
@@ -129,7 +141,7 @@ class PassengerEditForm(ModelForm):
         Emergency contact name.
     emergency_phone : str
         Emergency contact phone number.
-    """    
+    """
     class Meta:
         model = PassengerProfile
         fields = ['emergency_name', 'emergency_phone']
@@ -143,7 +155,7 @@ class ProfileSettingsForm(ModelForm):
     ------
     email : str
         Updated email address for the user.
-    """    
+    """
     email = forms.EmailField(required=True)
 
     class Meta:
