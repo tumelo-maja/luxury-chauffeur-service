@@ -352,11 +352,6 @@ body {
     background-color: white;
 }
 
-/* .section-wrapper .site {
-    width: 97%;
-    width: calc(100% - 160px);
-} */
-
 .header-main {
     width: 0;
     height: 100vh;
@@ -446,7 +441,6 @@ body {
 }
 
 .profile-type {
-    /* width: 200px; */
     border: 1px solid black;
     border-radius: 12px;
     padding: 5px 10px;
@@ -480,9 +474,6 @@ body {
 .profile-link:hover {
     text-decoration: none;
 }
-
-/* togleeeeeeeeeer */
-
 
 .cross-head {
     padding: 18px 15px 18px 10px;
@@ -575,7 +566,6 @@ body {
 }
 
 .hero-item {
-    /* z-index: 1; */
     width: 100%;
     -webkit-clip-path: circle(0% at 0 50%);
             clip-path: circle(0% at 0 50%);
@@ -871,7 +861,6 @@ body {
     position: absolute;
     left: 0;
     top: 0;
-    /* max-width: 600px; */
     width: 100%;
     margin: 20px auto;
     padding: 0 20px;
@@ -917,7 +906,6 @@ body {
     -webkit-transform: translateY(0);
         -ms-transform: translateY(0);
             transform: translateY(0);
-    /* transform: translate(50%, 0); */
 
 }
 
@@ -925,7 +913,6 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    /* flex-direction: column; */
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -1114,7 +1101,6 @@ body {
 }
 
 .vehicle img {
-    /* width: 280px; */
     width: 100%;
     height: auto;
     border-radius: 15px 15px 0 0;
@@ -1257,14 +1243,12 @@ body {
     -webkit-transform: scale(1.04);
         -ms-transform: scale(1.04);
             transform: scale(1.04);
-    /* box-shadow: 0 4px #091f0a; */
     color: purple;
     background-color: white;
     border: 2px solid purple;
 }
 
 /* get started section  */
-
 .steps-container {
     background-color: purple;
     width: 100%;
@@ -1394,7 +1378,6 @@ body {
 
 /* trip view */
 .trips-container {
-    /* border: 1px solid darkgray; */
     border-radius: 8px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1451,7 +1434,6 @@ body {
 
 .trip-list ul {
     width: 270px;
-    /* padding-right: 15px; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1560,7 +1542,6 @@ body {
     background-color: #fff;
     padding-bottom: 10px;
     border-radius: 12px;
-    /* margin-top: 50px; */
 }
 
 .no-trip {
@@ -1655,7 +1636,6 @@ body {
     border: 1px solid gray;
     border-radius: 10px;
     height: 30px;
-    /* width: max-content; */
     text-align: center;
     font-weight: bold;
     font-style: italic;
@@ -1717,11 +1697,6 @@ body {
 }
 
 .trip-image {
-    /* height: 130px;
-    width: 150px;
-    border-radius: 50%;
-    border: 1px solid red;
-    overflow: hidden; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1952,7 +1927,6 @@ body {
     width: 80%;
     height: 1px;
     background-color: gray;
-    /* margin: 40px 0; */
 }
 
 .signin-body {
@@ -2409,7 +2383,6 @@ body {
     width: 125px;
     height: 15px;
     margin: 5px 20px 5px 5px;
-    /* overflow: hidden; */
     position: relative;
 }
 
@@ -2464,7 +2437,6 @@ body {
 
 .empty-col p {
     text-align: center;
-    /* width: 100%; */
 }
 
 
@@ -2705,7 +2677,6 @@ body {
 .manager-table td {
     padding: 6px;
     border: 1px solid #ddd;
-    /* min-width: 90px; */
 }
 
 .manager-table tbody tr:nth-child(odd) {
@@ -3226,7 +3197,7 @@ body {
         display: inline-block;
         opacity: 1;
     }
-        
+
     .section-wrapper {
         width: 97%;
     }
