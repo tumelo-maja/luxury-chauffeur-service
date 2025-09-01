@@ -1,3 +1,9 @@
+/*globals htmx*/
+/**
+ * Add Event Listener to run only after HTML document has completely loaded
+ * - All code within this eventlistener will be accessible to the browser once the page has loaded.
+ * 
+ */
 $(document).ready(function () {
 
     htmx.on('htmx:afterSwap', (e) => {
@@ -149,7 +155,7 @@ $(document).ready(function () {
      */
     function setupTripsCalendar() {
 
-        const userType = $('#user-name').data('profile-type')
+        const userType = $('#user-name').data('profile-type');
         htmx.on('htmx:afterSwap', (e) => {
 
             const monthYear = $('#monthYear');
@@ -196,7 +202,7 @@ $(document).ready(function () {
                 let datesHTML = '';
                 for (let i = firstDayIndex; i > 0; i--) {
                     const prevDate = new Date(currentYear, currentMonth, 1 - i);
-                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`
+                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${prevDate.getDate()}</div></div>`;
                 }
 
                 for (let i = 1; i <= totalDays; i++) {
@@ -226,12 +232,12 @@ $(document).ready(function () {
                     datesHTML += `<div class="date-wrapper">
                                     <div class="cal-date ${activeClass} ${pastDays}"${htmxCreateTrip}>${i}</div>
                                     ${tripCount > 0 ? tripElement : ''}
-                                  </div>`
+                                  </div>`;
                 }
 
                 for (let i = 1; i <= 7 - lastDayIndex; i++) {
                     const nextDate = new Date(currentYear, currentMonth + 1, i);
-                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`
+                    datesHTML += `<div class="date-wrapper"><div class="cal-date inactive">${nextDate.getDate()}</div></div>`;
                 }
 
                 datesElement.html(datesHTML);
@@ -239,20 +245,20 @@ $(document).ready(function () {
                 // re-adds htmx event listeners for htmx attributes
                 $('.cal-date').each(function () {
                     htmx.process(this);
-                })
+                });
             }
 
             // Handles navigating to the previous month and runs updateCalendar()
             $(prevBtn).click(() => {
                 currentDate.setMonth(currentDate.getMonth() - 1);
                 updateCalendar();
-            })
+            });
 
             // Handles navigating to the next month and runs updateCalendar()
             $(nextBtn).click(() => {
                 currentDate.setMonth(currentDate.getMonth() + 1);
                 updateCalendar();
-            })
+            });
 
             updateCalendar();
         });
