@@ -124,22 +124,22 @@ $(document).ready(function () {
             modal.show();
             initializeFlatpicker();
         }
-        console.log("all before swap:")
-        console.log(e.detail.xhr.status)
     })
 
     /**
-     * Show modal after HTMX swap into #baseDialog
-     * and reinitialize Flatpickr inside the modal.
+     * Close modal after HTMX request if response is redirect
+     * and reload page.
      */    
-    htmx.on('htmx:beforeSwap', (e) => {
+    htmx.on('htmx:afterRequest', (e) => {
         // console.log
-        console.log("all before swap:")
-        console.log(e.detail.xhr.status)
-        if (e.detail.xhr.status === 302) {
+        console.log(e)
+        const responsePath = e.detail.pathInfo.responsePath;
+        console.log(`responsePath: ${responsePath}`)
+        if (responsePath === "/trips/") {
             modal.hide();
+            location.reload();
         }
-    })
+    })    
 
     /**
      * Clears the modal content when it is hidden.
