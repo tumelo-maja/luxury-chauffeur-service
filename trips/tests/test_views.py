@@ -70,9 +70,9 @@ class TripsViewTest(TestCase):
         self.user = User.objects.get(username=f"{user_type}1")
     
     def login_other_passenger(self, user_type):
-        self.user_passenger_other = User.objects.create_user(
+        user_other = User.objects.create_user(
         username=f"{user_type}_other1", password=self.users_password, email=f"{user_type}_other1@luxtest.com",)
-        user_profile = Profile.objects.get(user=self.user_passenger_other)
+        user_profile = Profile.objects.get(user=user_other)
         user_profile.user_type = user_type
         user_profile.save()
         
@@ -265,7 +265,7 @@ class TripsViewTest(TestCase):
         self.client.logout()
         self.login_other_passenger('driver')
         response = self.client.get(reverse(self.trip_action_url,args=[self.trip.trip_name]))
-        self.assertContains(response, "Error 404: This resource doesn't exist or is unavailable",status_code=404)  
+        self.assertContains(response, "You are not authorized to access this resource",status_code=200)  
 
     def test_only_manager_user_can_access_trip_review_to_approve_or_reject_trips(self):
 

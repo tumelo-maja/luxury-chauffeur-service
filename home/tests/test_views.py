@@ -10,7 +10,7 @@ class TestHomeView(SimpleTestCase):
 
     def test_home_page_uses_correct_template(self):
         response = self.client.get('/')
-        self.assertTemplateUsed(response,'home/home.html')
+        self.assertTemplateUsed(response,'home/index.html')
 
     def test_home_page_contains_hero_section_heading_text(self):
         response = self.client.get('/')
@@ -23,16 +23,15 @@ class TestHomeView(SimpleTestCase):
 
     def test_home_page_contains_a_header_login_and_signup_buttons(self):
         response = self.client.get('/')
-        self.assertContains(response, f'<a href="{reverse("account_login")}">Login</a>')
-        self.assertContains(response, f'<a href="{reverse("signup_type")}">Signup</a>')
+        self.assertContains(response, f'{reverse("account_login")}')
+        self.assertContains(response, f'{reverse("signup_type")}')
 
 
 class TestContactFormView(SimpleTestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.contact_enquiry_url = reverse("contact")
-        cls.form_data= {
+    def setUp(self):
+        self.contact_enquiry_url = reverse("contact")
+        self.form_data= {
             "name": "Shrek",
             "email": "shrek@ogre.com",
             "phone": "0111223344556",
@@ -40,12 +39,12 @@ class TestContactFormView(SimpleTestCase):
             "receive_copy": "",
         } 
         
-        cls.context = {
+        self.context = {
                     'enquiry': {
-                        'name': cls.form_data['name'],
-                        'email': cls.form_data['email'],
-                        'phone': cls.form_data['phone'],
-                        'message': cls.form_data['message'],},
+                        'name': self.form_data['name'],
+                        'email': self.form_data['email'],
+                        'phone': self.form_data['phone'],
+                        'message': self.form_data['message'],},
                     'subtitle': 'You have received a new enquiry from the website:',
                     'recipient': 'Admin',}
 

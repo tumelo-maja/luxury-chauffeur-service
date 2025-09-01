@@ -184,7 +184,7 @@ def trip_request_view(request):
     
     if request.method == "POST":
         form = TripRequestForm(request.POST)
-        form = check_trip_overlap(request.user.profile.passenger_profile, form)
+        form = check_trip_overlap(request, form)
 
         if form.is_valid():
 
@@ -194,13 +194,7 @@ def trip_request_view(request):
 
             messages.success(request, "Success! Trip created.")
 
-            return redirect('trips')            
-
-        else:
-            context = {
-                'form': form,
-            }
-            return render(request, 'trips/trip-request.html', context)            
+            return redirect('trips')                     
 
     else:
         form = TripRequestForm()
@@ -222,24 +216,21 @@ def trip_request_view(request):
         if trip_datetime:
             form.fields['travel_datetime'].initial = datetime.strptime(trip_datetime, '%Y-%m-%dT%H:%M')
 
-
-    min_valid_time = datetime.now() + timedelta(hours=1)
-
     context = {
         'form': form,
     }
     return render(request, 'trips/trip-request.html', context)
 
 @login_required
-def check_trip_overlap(passenger, form):
+def check_trip_overlap(request, form):
     """
     Validate the passenger has another trip scheduled within one hour of the current request.
     1-hour window is defined locally, a window is created -1hr and +1hr of `travel_datetime`
 
     Parameters
     ----------
-    passenger : int or UUID
-        The primary key (ID) of the passenger making the trip request.
+    request : HttpRequest
+        The HTTP request object.
     form : TripRequestForm
         The submitted form instance containing the `travel_datetime` field.
 
@@ -254,9 +245,9 @@ def check_trip_overlap(passenger, form):
     timedelta_window = timedelta(minutes=60)
     window_start = travel_datetime - timedelta_window
     window_end = travel_datetime + timedelta_window
-
+    
     trips_in_window = Trip.objects.filter(
-        passenger_id= passenger,
+        passenger= request.user.profile.passenger_profile,
         travel_datetime__gte=window_start,
         travel_datetime__lt=window_end
         ).exclude(status__in=["cancelled", "completed",'rejected']).exists()

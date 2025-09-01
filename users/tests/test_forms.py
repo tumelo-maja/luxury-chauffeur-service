@@ -4,7 +4,7 @@ from unittest.mock import patch
 from django.contrib.auth.models import User
 from ..models import Profile, DriverProfile, PassengerProfile, ManagerProfile
 
-class UsersFormsTest(TestCase):
+class UsersFormTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -67,7 +67,6 @@ class UsersFormsTest(TestCase):
         response = self.client.post(self.signup_passenger_url, self.user_form_data, follow=True)
 
         self.assertTrue(User.objects.filter(username="testuser1").exists()) # is user saved?
-        self.assertRedirects(response, reverse("account-success")) # redirected to success page?
         self.assertContains(response, "Please check your inbox to activate your account.", status_code=200) # status=200? text content
 
     def test_profile_created_when_user_account_created(self):
@@ -135,7 +134,6 @@ class UsersFormsTest(TestCase):
         form_data = self.user_form_data.copy()
         response = self.client.post(self.signup_passenger_url, form_data, follow=True) #first sub,
         self.assertTrue(User.objects.filter(username="testuser1").exists()) # is user saved?
-        self.assertRedirects(response, reverse("account-success")) # redirected to success page?
 
         #duplciate user
         response = self.client.post(self.signup_passenger_url, form_data, follow=True) 

@@ -124,6 +124,21 @@ $(document).ready(function () {
             modal.show();
             initializeFlatpicker();
         }
+        console.log("all before swap:")
+        console.log(e.detail.xhr.status)
+    })
+
+    /**
+     * Show modal after HTMX swap into #baseDialog
+     * and reinitialize Flatpickr inside the modal.
+     */    
+    htmx.on('htmx:beforeSwap', (e) => {
+        // console.log
+        console.log("all before swap:")
+        console.log(e.detail.xhr.status)
+        if (e.detail.xhr.status === 302) {
+            modal.hide();
+        }
     })
 
     /**

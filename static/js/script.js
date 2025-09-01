@@ -127,6 +127,21 @@ $(document).ready(function () {
     })
 
     /**
+     * Close modal after HTMX request if response is redirect
+     * and reload page.
+     */    
+    htmx.on('htmx:afterRequest', (e) => {
+        // console.log
+        console.log(e)
+        const responsePath = e.detail.pathInfo.responsePath;
+        console.log(`responsePath: ${responsePath}`)
+        if (responsePath === "/trips/") {
+            modal.hide();
+            location.reload();
+        }
+    })    
+
+    /**
      * Clears the modal content when it is hidden.
      */    
     htmx.on('hidden:bs.modal', (e) => {
