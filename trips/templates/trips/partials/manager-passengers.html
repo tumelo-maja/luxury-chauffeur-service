@@ -20,7 +20,7 @@
                 {% endif %}
             </td>
             <td>
-                <a href="{% url 'profile'  passenger.profile.user.username %}" class="profile-link">{{ passenger.profile.name }}</a>
+                <a href="{% url 'profile'  passenger.profile.user.username %}" class="profile-link" aria-label="link user's profile">{{ passenger.profile.name }}</a>
             </td>
             <td>{{ passenger.profile.user.email }}</td>
             <td>

@@ -9,7 +9,7 @@
 <form method='POST' class="flex">
     {% csrf_token %}
     <button type="submit" class="button-red button-style" id="delete-btn" >Yes, I want to delete my account</button>
-    <a class="button-style button-gray" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    <a class="button-style button-gray" href="{{ request.META.HTTP_REFERER }}"  aria-label="cancel action">Cancel</a>
 </form>
 
 {% endblock %}

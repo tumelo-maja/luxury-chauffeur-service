@@ -36,10 +36,10 @@
     <div class="flex justify-around w-full">
         {% if is_new_user %}
         <button type="submit">Complete Profile</button>
-        <a class="button-style button-gray items-center" href="{% url 'home' %}">Skip</a>
+        <a class="button-style button-gray items-center" href="{% url 'home' %}"  aria-label="skip step">Skip</a>
         {% else %}
         <button type="submit">Save Changes</button>
-        <a class="button-style button-gray items-center" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+        <a class="button-style button-gray items-center" href="{{ request.META.HTTP_REFERER }}" aria-label="cancel action">Cancel</a>
         {% endif %}
 
     </div>

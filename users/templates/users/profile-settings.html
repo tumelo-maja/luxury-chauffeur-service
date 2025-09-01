@@ -16,7 +16,7 @@
             </td>
             <td class="row-value">
                 <a id="email-edit" class="row-action blue"
-                    hx-get="{% url 'profile-settingschange' %}" hx-target="#email-address" hx-swap="innerHTML">
+                    data-hx-get="{% url 'profile-settingschange' %}" data-hx-target="#email-address" data-hx-swap="innerHTML"  aria-label="edit email address">
                     Edit
                 </a>
             </td>
@@ -32,7 +32,7 @@
             </td>
             <td class="row-value">
                 {% if not user.emailaddress_set.first.verified %}
-                <a href="{% url 'profile-emailverify' %}" class="row-action blue">
+                <a href="{% url 'profile-emailverify' %}" class="row-action blue" aria-label="verify email address">
                     Verify
                 </a>
                 {% endif %}
@@ -47,7 +47,7 @@
                 Once deleted, account cannot be recovered.
             </td>
             <td class="row-value">
-                <a href="{% url 'profile-delete' %}" class="row-action red">
+                <a href="{% url 'profile-delete' %}" class="row-action red" aria-label="delete account">
                     Delete
                 </a>
             </td>

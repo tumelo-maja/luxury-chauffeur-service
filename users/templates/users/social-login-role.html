@@ -9,8 +9,8 @@
 <p>Please select the user type to use for login</p>
 
 <div class="role-container">
-    <a class="button-purple button-style" href="{% provider_login_url provider %}?role=passenger">Passenger</a>
-    <a class="button-purple button-style" href="{% provider_login_url provider %}?role=driver">Driver</a>
+    <a class="button-purple button-style" href="{% provider_login_url provider %}?role=passenger" aria-label="login using passenger user type">Passenger</a>
+    <a class="button-purple button-style" href="{% provider_login_url provider %}?role=driver" aria-label="login using driver user type">Driver</a>
 </div>
 
 {% endblock %}

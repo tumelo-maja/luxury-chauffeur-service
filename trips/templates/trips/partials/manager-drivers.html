@@ -15,7 +15,7 @@
         {% for driver in drivers %}
         <tr>
             <td>
-                <a href="{% url 'profile'  driver.profile.user.username %}" class="profile-link">{{ driver.profile.name }}</a>
+                <a href="{% url 'profile'  driver.profile.user.username %}" class="profile-link"  aria-label="link user's profile">{{ driver.profile.name }}</a>
             </td>
             <td>{{ driver.profile.email }}</td>
             <td>

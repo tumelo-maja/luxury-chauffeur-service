@@ -23,10 +23,10 @@
                 </button>
             </td>
             <td class="name-col">
-                <a href="{% url 'profile'  trip.passenger.profile.user.username %}" class="profile-link">{{ trip.passenger.profile.name }}</a>
+                <a href="{% url 'profile'  trip.passenger.profile.user.username %}" class="profile-link" aria-label="link passenger's profile" >{{ trip.passenger.profile.name }}</a>
             </td>
             <td class="name-col">
-                <a href="{% url 'profile'  trip.driver.profile.user.username %}" class="profile-link">{{ trip.driver.profile.name }}</a>
+                <a href="{% url 'profile'  trip.driver.profile.user.username %}" class="profile-link" aria-label="link driver's profile">{{ trip.driver.profile.name }}</a>
             </td>
         </tr>
         {% endfor %}

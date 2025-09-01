@@ -23,7 +23,7 @@
         {% endif %}            
     </div>
     {% if profile.user == user %}
-    <a class="button-purple my-5 " href="{% url 'profile-edit' %}">Edit Profile</a>
+    <a class="button-purple my-5 " href="{% url 'profile-edit' %}" aria-label="edit profile">Edit Profile</a>
     {% endif %}
 
 </div>
