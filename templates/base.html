@@ -12,9 +12,9 @@
     <link rel="manifest" href="{% static 'favicons/site.webmanifest' %}">
 
     <title>Lux Chauffeurs | {% block title %}{% endblock %}</title>
-    <!-- HTMX and extension -->
+    <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org/dist/htmx.js" defer></script>
-    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js" defer></script>
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -35,7 +35,7 @@
         <div class="site">
             <div class="cross-head-wrapper">
                 <div class="cross-head">
-                    <button class="navbar-toggler">
+                    <button class="navbar-toggler" aria-label="toggle side navigation">
                         <i class="fa-solid fa-bars-staggered"></i>
                     </button>
                     <div class="account relative">
