@@ -2286,7 +2286,7 @@ body {
 }
 
 .stats-pending {
-    border: 2px solid orange;
+    border: 2px solid #7a5000;
 }
 
 .stats-item .stat-label {
@@ -2315,7 +2315,7 @@ body {
 }
 
 .stat-value.pending {
-    color: #ffa500
+    color: #7a5000
 }
 
 .all-trips {
@@ -2419,7 +2419,7 @@ body {
 }
 
 .activity-table th {
-    background-color: rgba(128, 0, 128, 0.54);
+    background-color: #360136;
     color: white;
     text-align: center;
 }
