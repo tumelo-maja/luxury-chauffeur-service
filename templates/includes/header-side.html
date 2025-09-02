@@ -16,39 +16,39 @@
                 </a>
                 <ul class="nav-list">
                     <li class="navbar-item {% if request.path == home_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ home_url }}'" title="Home">
-                        <a href="{{ home_url }}" class="nav-link">
+                        <a href="{{ home_url }}" class="nav-link" aria-label="Home">
                             <i class="fa-solid fa-house"></i>
                             <span class="link-text">Home</span>
                         </a>
                     </li>
                     {% if request.user.is_authenticated %}
                     <li class="navbar-item {% if request.path == chauffeurs_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ chauffeurs_url }}'" title="Drivers">
-                        <a href="{{ chauffeurs_url }}" class="nav-link">
+                        <a href="{{ chauffeurs_url }}" class="nav-link" aria-label="Chauffeurs">
                             <i class="fa-solid fa-car-side"></i>
                             <span class="link-text">Chauffeurs</span>
                         </a>
                     </li>
                     <li class="navbar-item {% if request.path == trips_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ trips_url }}'" title="Trips">
-                        <a href="{{ trips_url }}" class="nav-link">
+                        <a href="{{ trips_url }}" class="nav-link" aria-label="Trips">
                             <i class="fa-solid fa-qrcode"></i>
                             <span class="link-text">Trips</span>
                         </a>
                     </li>
                     <li class="navbar-item {% if request.path == settings_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ settings_url }}'" title="Settings">
-                        <a href="{{ settings_url }}" class="nav-link">
+                        <a href="{{ settings_url }}" class="nav-link" aria-label="Settings">
                             <i class="fa-solid fa-gears"></i>
                             <span class="link-text">Settings</span>
                         </a>
                     </li>
                     <li class="navbar-item {% if request.path == profile_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ profile_url }}'" title="Profile">
-                        <a href="{{ profile_url }}" class="nav-link">
+                        <a href="{{ profile_url }}" class="nav-link" aria-label="Profile">
                             <i class="fa-solid fa-user"></i>
                             <span class="link-text">Profile</span>
                         </a>
                     </li>
                     {% endif %}
                     <li class="navbar-item {% if request.path == contact_url %}active" aria-current="page{% endif %}" onclick="window.location.href='{{ contact_url }}'" title="Contact">
-                        <a href="{{ contact_url }}" class="nav-link">
+                        <a href="{{ contact_url }}" class="nav-link" aria-label="Contact">
                             <i class="fa-solid fa-envelope-circle-check"></i>
                             <span class="link-text">Contact</span>
                         </a>
