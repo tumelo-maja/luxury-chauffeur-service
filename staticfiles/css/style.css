@@ -42,10 +42,6 @@ body {
     padding: 0 10px;
 }
 
-/* .push-footer {
-    flex: 1 0 auto;
-} */
-
 .extend-full {
     padding: 10% 0 50%;
 }
@@ -92,7 +88,7 @@ body {
     margin-bottom: 15px;
     font-size: 1.3rem;
     font-weight: 700;
-    color: purple;
+    color: #800080;
     text-transform: capitalize;
 }
 
@@ -100,7 +96,7 @@ body {
     width: 100%;
     font-size: 0.875rem;
     text-align: left;
-    color: #6B7280;
+    color: #545964;
 }
 
 .settings-table input {
@@ -231,7 +227,7 @@ body {
     -o-transition: 0.1s ease-in-out;
     transition: 0.1s ease-in-out;
     text-align: center;
-    color: white;
+    color: #ffffff;
 }
 
 .navbar-item:hover,
@@ -405,7 +401,7 @@ body {
 }
 
 .profile-container img.driver {
-    border: 5px solid gold;
+    border: 5px solid #FFD700;
 }
 
 .profile-container img.manager {
@@ -452,17 +448,17 @@ body {
 }
 
 .profile-type.passenger {
-    background-color: greenyellow;
+    background-color: #adff2f;
     color: #360136;
 }
 
 .profile-type.driver {
-    background-color: gold;
+    background-color: #ffd700;
     color: #360136;
 }
 
 .profile-type.manager {
-    background-color: rgb(201, 136, 201);
+    background-color: #D39CD3;
     color: #360136;
 }
 
@@ -747,9 +743,8 @@ body {
 .menu-item a {
     width: 100%;
     display: inline-block;
+    font-weight: 600;
 }
-
-
 
 /* Modal style */
 .modal-container h1 {
@@ -1054,7 +1049,7 @@ body {
 }
 
 .chauffeur-rating i {
-    color: gold;
+    color: #FFD700;
     text-shadow: 1px 1px 1px purple, 0px 0px 1px purple;
 }
 
@@ -1270,7 +1265,7 @@ body {
 .steps-container .step-label {
     font-size: 1.3rem;
     text-align: center;
-    color: gold;
+    color: #FFD700;
     font-weight: 700;
     margin-top: 16px;
 }
@@ -1296,7 +1291,7 @@ body {
 }
 
 .step .icon {
-    color: gold;
+    color: #FFD700;
     font-size: 2.5rem;
     border-radius: 50%;
     display: -webkit-box;
@@ -1329,7 +1324,7 @@ body {
 }
 
 .step .step-text a {
-    color: gold;
+    color: #FFD700;
 }
 
 .started-text {
@@ -1791,8 +1786,8 @@ body {
 .trip-input input:focus,
 .trip-input textarea:focus {
     border: 2px solid purple;
-    -webkit-box-shadow: 0 0 10px gold;
-            box-shadow: 0 0 10px gold;
+    -webkit-box-shadow: 0 0 10px #FFD700;
+            box-shadow: 0 0 10px #FFD700;
 }
 
 .form-fields {
@@ -2320,7 +2315,7 @@ body {
 }
 
 .stat-value.pending {
-    color: orange
+    color: #ffa500
 }
 
 .all-trips {
@@ -2358,7 +2353,7 @@ body {
 }
 
 .icon-number i {
-    color: gold;
+    color: #FFD700;
     text-shadow: 1px 1px 1px purple, 0px 0px 1px purple;
 }
 
@@ -2378,7 +2373,7 @@ body {
 }
 
 .rating-bar {
-    background-color: rgb(175, 128, 175);
+    background-color: #af80af;
     border-radius: 5px;
     width: 125px;
     height: 15px;
