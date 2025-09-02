@@ -8,7 +8,8 @@ class Trip(models.Model):
     """
     Handles trip instance creation.
 
-    Stores details about the trip instance including passenger, driver, travel_date etc., methods and other properties.
+    Stores details about the trip instance including
+        passenger, driver, travel_date etc., methods and other properties.
 
     """
 
@@ -56,7 +57,8 @@ class Trip(models.Model):
     trip_name = models.CharField(
         max_length=128, unique=True, default=shortuuid.uuid)
     passenger = models.ForeignKey(
-        PassengerProfile, on_delete=models.CASCADE, related_name='trips_passenger')
+        PassengerProfile, on_delete=models.CASCADE,
+        related_name='trips_passenger')
     location_start = models.CharField(max_length=200)
     location_end = models.CharField(max_length=200)
     travel_datetime = models.DateTimeField(null=True, blank=True)
